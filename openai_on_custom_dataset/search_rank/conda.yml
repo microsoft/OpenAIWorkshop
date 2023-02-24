@@ -1,0 +1,12 @@
+name: sentence_transformer_emb
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9.12
+  - pip=21.3.1
+  - pip:
+    - azureml-mlflow==1.49.0
+    - azureml-defaults==1.49.0
+    - pandas==1.3.5
+    - sentence-transformers==2.2.2
+    - azure-search-documents==11.3.0

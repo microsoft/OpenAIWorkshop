@@ -1,7 +1,11 @@
-# Project
+# Using Azure OpenAI like a Pro to build powerful AI applications 
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+- Open AI basics on LLMs, APIs and Application scenarios
+- Prompt engineering
+- Build your first AOAI application with PowerApp + Open AI SDK for Python developers
+- Build a natural language query application on SQL data 
+- Advanced: Build an AOAI data pipeline to extract insights from unstructured data
+- Advanced: Create an Open AI agent on your own  dataset
 
 As the maintainer of this project, please make a few updates:
 

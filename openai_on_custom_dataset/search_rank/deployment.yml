@@ -1,0 +1,16 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: green
+endpoint_name: custom-embedding #setup replace `mlops-workshop-endpoint` with your own endpoint name defined in endpoint.yml
+code_configuration:
+  code: ./
+  scoring_script: score.py
+environment:
+  conda_file: ./conda.yml
+  image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:20230103.v1
+instance_type: Standard_DS4_v2
+instance_count: 1
+environment_variables:
+  AZSEARCH_KEY: "eqrgFdoK00zeV1swQWQPohGAYhvxu0lvbvOiNl5ahmAzSeByMebH"
+  INDEX_NAME: "maya-index"
+  EMB_MODEL: 'sentence-transformers/msmarco-distilbert-base-dot-prod-v3'
+  AZSEARCH_EP: "https://cogsearch001.search.windows.net"
