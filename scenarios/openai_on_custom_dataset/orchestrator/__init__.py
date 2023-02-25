@@ -8,6 +8,9 @@ import os
 import ssl
 import json
 import os
+from azure.core.credentials import AzureKeyCredential
+from azure.search.documents import SearchClient
+
 GPT_ENGINE = os.getenv("GPT_ENGINE")
 PROMPT_URL = os.getenv("PROMPT_URL")
 PROMPT_KEY = os.getenv("PROMPT_KEY")
@@ -18,6 +21,17 @@ openai.api_type = "azure"
 openai.api_key = os.getenv("OPENAI_API_KEY")  # SET YOUR OWN API KEY HERE
 openai.api_base = os.getenv("OPENAI_RESOURCE_ENDPOINT")  # SET YOUR RESOURCE ENDPOINT
 openai.api_version = "2022-06-01-preview"
+admin_key = os.environ.get("AZSEARCH_KEY") # Cognitive Search Admin Key
+index_name = os.environ.get("INDEX_NAME") # Cognitive Search index name
+credential = AzureKeyCredential(admin_key)
+
+# Create an SDK client
+endpoint = os.environ.get("AZSEARCH_EP")
+
+search_client = SearchClient(endpoint=endpoint,
+                    index_name=index_name,
+                    api_version="2021-04-30-Preview",
+                    credential=credential)
 
 def run_openai(prompt, engine=GPT_ENGINE):
     """Recognize entities in text using OpenAI's text classification API."""
@@ -28,6 +42,19 @@ def run_openai(prompt, engine=GPT_ENGINE):
         max_tokens=2048,
     )
     return response.choices[0].text
+def azcognitive_score(user_query, topk):
+    results = search_client.search(search_text=user_query, include_total_count=True, query_type='semantic', query_language='en-us',semantic_configuration_name='maya2')
+    document=""
+    i=0
+    while i < topk:
+        try:
+            item = next(results)
+            document += (item['completion']+ ": "+ item['context'])
+        except:
+            break
+        i+=1
+    return f"Answer this question \"{user_query}\" using only the following information  \n <context> {document} </context>"
+
 def tprompt_score(prompt, topk):
     data = {
     "inputs": [prompt],
@@ -77,7 +104,7 @@ def custom_emb_score(prompt, topk):
 
         
         result = json.loads(response.read())
-        result = result+" \n "+ prompt
+        result = f"Answer this question \"{prompt}\" using only the following information  \n <context> {result} </context>"
         return result
 
     except urllib.error.HTTPError as error:
@@ -91,9 +118,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     search_engine = req.params.get('search_engine')
     dataset = req.params.get('dataset')
     topk = int(req.params.get('num_search_result'))
-    print("prompt: ", prompt)
-    print("search_engine: ", search_engine)
-    print("topk: ", topk)
     if not prompt:
         try:
             req_body = req.get_json()
@@ -103,6 +127,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             prompt = req_body.get('prompt')
     if search_engine == "custom embedding":
         gpt_prompt = custom_emb_score(prompt, topk)
+    elif search_engine=='azure semantic search':
+        gpt_prompt = azcognitive_score(prompt,topk)
     else:
 
         gpt_prompt = tprompt_score(prompt,topk)
