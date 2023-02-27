@@ -1,5 +1,12 @@
 # Using Azure OpenAI on custom dataset
-### This solution allows OpenAI agent to answer questions on a custom dataset.
+### Scenario summary:
+This scenario allows use cases to use Open AI as an intelligent agent to answer questions from end users or assist them using knowledge of a proprietary corpus and domain.
+Examples can be: 
+- Giving direct answer to questions about specific product, service and process based on a knowledge corpus that can be updated frequently. This is an alternative to search where the result is direct & summarized knowledge answer to the question. This is similiar to Bing Chat on proprietary data.
+- Giving recommendation & assistance: based on information that can be implicitly gathered about the user, formulate useful content for the user according to a particular purpose. For example, a travel website may utilize user's personal information, past posts, transaction history to tailor the recommendation when user need to be helped with creating next trip idea/itenerary
+
+
+
 ### Architecture Diagram
 ![OpenAI on custom dataset](../../documents/media/openaioncustomdataset.png)
 From the user's query, the solution uses two-stage information retrieval to retrieve the content that best matches the user query. 
