@@ -24,7 +24,7 @@ def run_openai(prompt, engine=GPT_ENGINE):
     response = openai.Completion.create(
         engine=engine,
         prompt=prompt,
-        temperature=1,
+        temperature=0,
         max_tokens=2048,
     )
     return response.choices[0].text
@@ -67,7 +67,7 @@ def execute_sql_query(query):
 
 def get_sales_sql_query(nlquery):
     return f"""
-Given table [SalesLT].[SalesOrderHeader] with following columns
+Given tables [SalesLT].[SalesOrderHeader] with following columns
  [SalesOrderID]
       ,[RevisionNumber]
       ,[OrderDate]
@@ -176,12 +176,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     count =0
     result = "I cannot understand question can you try again?"
     sql_query="NA"
-    openai_query = get_sales_sql_query(prompt)
     while count <10:
         try:
             openai_query = get_sales_sql_query(prompt)
-            # kusto_query = run_openai(openai_query)
-            # result = query_data(kusto_query)
             sql_query = run_openai(openai_query)
             result= execute_sql_query(sql_query)
             break
