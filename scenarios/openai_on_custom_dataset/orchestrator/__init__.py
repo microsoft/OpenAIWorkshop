@@ -12,8 +12,7 @@ from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 
 GPT_ENGINE = os.getenv("GPT_ENGINE")
-PROMPT_URL = os.getenv("PROMPT_URL")
-PROMPT_KEY = os.getenv("PROMPT_KEY")
+
 openai.api_type = "azure"
 openai.api_key = os.getenv("OPENAI_API_KEY")  # SET YOUR OWN API KEY HERE
 openai.api_base = os.getenv("OPENAI_RESOURCE_ENDPOINT")  # SET YOUR RESOURCE ENDPOINT
@@ -40,14 +39,15 @@ def run_openai(prompt, engine=GPT_ENGINE):
     )
     return response.choices[0].text
 def azcognitive_score(user_query, topk):
-    results = search_client.search(search_text=user_query, include_total_count=True, query_type='semantic', query_language='en-us',semantic_configuration_name='maya2')
+    results = search_client.search(search_text=user_query, include_total_count=True, query_type='semantic', query_language='en-us',semantic_configuration_name='semantic-config1')
     document=""
     i=0
     while i < topk:
         try:
             item = next(results)
-            document += (item['completion']+ ": "+ item['context'])
-        except:
+            document += (item['text'])
+        except Exception as e:
+            print(e)
             break
         i+=1
     return f"Answer this question \"{user_query}\" using only the following information  \n <context> {document} </context>"
@@ -56,10 +56,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     prompt = req.params.get('prompt')
-    search_engine = req.params.get('search_engine')
-    dataset = req.params.get('dataset')
+    #search_engine = req.params.get('search_engine')
+    #dataset = req.params.get('dataset')
     topk = int(req.params.get('num_search_result'))
-    if not prompt:
+    if prompt is None:
         try:
             req_body = req.get_json()
         except ValueError:
