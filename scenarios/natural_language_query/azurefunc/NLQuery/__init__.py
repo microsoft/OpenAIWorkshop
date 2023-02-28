@@ -1,8 +1,5 @@
 import logging
 import azure.functions as func
-from azure.kusto.data import KustoClient, KustoConnectionStringBuilder, ClientRequestProperties
-from azure.kusto.data.exceptions import KustoServiceError
-from azure.kusto.data.helpers import dataframe_from_result_table
 import openai
 from datetime import timedelta
 import numpy as np
@@ -130,36 +127,6 @@ Table [SalesLT].[ProductCategory] with following columns
  Write a SQL server query for following question:
  {nlquery}
     """
-def get_query(nlquery):
-    return f"""
-    generate a query in kusto format for following question {nlquery}. 
-    The table's name is anomaly_output with columns: location, car_type, count and timestamp
-    """
-
-def query_data(query = "anomaly_output | take(10)"):
-
-
-    cluster = ""
-
-    # In case you want to authenticate with AAD application.
-    client_id = ""
-    client_secret = ""
-
-    # read more at https://docs.microsoft.com/en-us/onedrive/find-your-office-365-tenant-id
-    authority_id = ""
-
-    kcsb = KustoConnectionStringBuilder.with_aad_application_key_authentication(cluster, client_id, client_secret, authority_id)
-    client = KustoClient(kcsb)
-    db = ""
-    
-
-    response = client.execute(db, query)
-
-
-    # we also support dataframes:
-    dataframe = dataframe_from_result_table(response.primary_results[0])
-
-    return dataframe.to_html()
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
