@@ -29,8 +29,12 @@ This implementation scenario focuses on building a Nautual Language to query fro
 ### Deployment
 Azure services deployment
 1: Setup Azure SQL database with ssample data
+
 2: Deploy Azure Function App
+
 3: Deploy the Open API model on Open AI
+
 3: Depoy the Power App
+
 4: Deploy client Power App
 
