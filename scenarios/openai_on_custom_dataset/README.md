@@ -24,4 +24,4 @@ In stage 1, full text search in Azure Cognitive Search is used to retrieve a num
 3. Deploy client Power App
 4. Test
 
-test
+testdfd
