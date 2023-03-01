@@ -3,7 +3,7 @@
 
 This scenario allows users to use Open AI as an intelligent agent to get business questions prompts from end users and generating SQL queries from the prompts.This implementation scenario focuses on building a Nautual Language to query from business questions and genarte the queries for database retrieval 
 ### Architecture Diagram
-<img width="925" alt="image" src="https://user-images.githubusercontent.com/50298139/222232002-cee2d89e-58fb-4436-9bc6-20f085f332d7.png">
+<img width="679" alt="image" src="https://user-images.githubusercontent.com/50298139/222238765-ee9c9e9c-c3e7-44d0-9de7-68f63aed652f.png">
 
 ### Solution Flow
 
