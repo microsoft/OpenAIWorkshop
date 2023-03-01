@@ -106,7 +106,7 @@ Deploy Azure Resources namely - Azure Function App to host facade for OpenAI and
 
     ![](../../documents/media/powerapps3.png)
 
-    Click on Import to the import the package into powerapps environment. 
+    Click on Import to import the package into powerapps environment. 
 
     ![](../../documents/media/powerapps4.png)
 
