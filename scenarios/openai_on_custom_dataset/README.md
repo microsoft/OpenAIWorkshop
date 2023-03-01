@@ -139,5 +139,3 @@ The Azure Function App also deploys the function code needed for powerapps autom
     Select an  FAQ from dropdown and click Search. This is should bring up the answers powered by Open AI GPT-3 Models. 
 
 
-
-    ![](../../documents/media/powerapps6.png)
