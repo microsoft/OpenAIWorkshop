@@ -12,6 +12,7 @@ Step 2 fomulate prompt to Open AI: from the context information and depending on
 
 This implementation scenario focuses on building a Nautual Language to query from business questions and genarte the queries for database retrieval 
 ### Architecture Diagram
+<img width="734" alt="image" src="https://user-images.githubusercontent.com/50298139/222230864-62186056-d811-4692-a31b-54580ed61689.png">
 
 
 ### Deployment
