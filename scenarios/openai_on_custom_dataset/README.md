@@ -18,6 +18,13 @@ In stage 1, full text search in Azure Cognitive Search is used to retrieve a num
 ### Deployment
 
 1. Azure services deployment
+
+Deploy Azure Resources namely - Azure Function App to host facade for OpenAI and Search APIs and Azure Search Service. 
+
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fanildwarepo%2FPurview-ADB-Lineage-Solution-Accelerator%2Frelease%2F2.1%2Fassets%2Flineage-setup%2Fpurview-lineage-accelerator-template-no-dnszone.json)
+
+
 - Step 1: Setup Azure Cognitive Search and prepare data
 - Step 2: Automated orchestrator service with Azure Function App
 2. Test Azure service deployment
