@@ -5,14 +5,20 @@ This scenario allows use cases to use Open AI as an intelligent agent to get bus
 
 Generating SQL queries from the natural language 
 Giving direct answer to questions about specific product, service and process by excuting the query from SQL database.
+
+
 Regardless of the application scenario, the solution flow is:
 
-Step 1 Provide the context information: context information can be provided to system 
-Step 2 fomulate prompt to Open AI: from the context information and depending on the goal of user, formulate GPT prompt to generate a SQL query to get the final response to end user. 
+Step 1: Provide the context information: context information can be provided to system through a form, we are using Power App form, this information is submitted to Azure function
+Step 2: Azure function passes the context information to Open AI Engine to convert the user context information to SQL Query
+Step 3: Azure Open AI engine converts the user context ask into SQL query and pass the query back to Azure function
+Step 4: The genrated SQL query is passed from function to Azure SQL databse 
+Step 5: The query is executed on SQL database and results are returned to Azure function
+Step 6: The query resuilts are retunrd to end user 
 
 This implementation scenario focuses on building a Nautual Language to query from business questions and genarte the queries for database retrieval 
 ### Architecture Diagram
-<img width="734" alt="image" src="https://user-images.githubusercontent.com/50298139/222230864-62186056-d811-4692-a31b-54580ed61689.png">
+<img width="925" alt="image" src="https://user-images.githubusercontent.com/50298139/222232002-cee2d89e-58fb-4436-9bc6-20f085f332d7.png">
 
 
 ### Deployment
