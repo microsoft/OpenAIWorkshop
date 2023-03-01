@@ -35,10 +35,10 @@ Deploy Azure Resources namely - Azure Function App to host facade for OpenAI and
 
 - Step 1: Setup Azure Cognitive Search and prepare data
 
-    * ### Enable Semantic Search on Azure Portal. Navigate to Semantic Search blade and select Free plan. 
+    * Enable Semantic Search on Azure Portal. Navigate to Semantic Search blade and select Free plan. 
         ![](../../documents/media/enable-semantic-search.png)
 
-    * ### Create Search Index, Sematic Configuration and Index a few documents.
+    * Create Search Index, Sematic Configuration and Index a few documents.
       Run the below commands from cmd prompt to conifgure python environment. 
 
             
