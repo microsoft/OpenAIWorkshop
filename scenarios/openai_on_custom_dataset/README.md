@@ -111,6 +111,8 @@ Deploy Azure Resources namely - Azure Function App to host facade for OpenAI and
     ![](../../documents/media/powerapps4.png)
 
     This will import the Power App canvas app and Semantic-Search Power Automate Flow into the workspace. 
+    
+    ![](../../documents/media/powerapps7.png)
 
     Edit the Power Automate Flow and update Azure Function Url. 
     
