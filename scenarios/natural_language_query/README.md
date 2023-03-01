@@ -7,7 +7,13 @@ Generating SQL queries from the natural language
 Giving direct answer to questions about specific product, service and process by excuting the query from SQL database.
 
 
-Regardless of the application scenario, the solution flow is:
+
+
+This implementation scenario focuses on building a Nautual Language to query from business questions and genarte the queries for database retrieval 
+### Architecture Diagram
+<img width="925" alt="image" src="https://user-images.githubusercontent.com/50298139/222232002-cee2d89e-58fb-4436-9bc6-20f085f332d7.png">
+
+### Solution Flow
 
 Step 1: Provide the context information: context information can be provided to system through a form, we are using Power App form, this information is submitted to Azure function
 
@@ -20,11 +26,6 @@ Step 4: The genrated SQL query is passed from function to Azure SQL databse
 Step 5: The query is executed on SQL database and results are returned to Azure function
 
 Step 6: The query resuilts are retunrd to end user 
-
-This implementation scenario focuses on building a Nautual Language to query from business questions and genarte the queries for database retrieval 
-### Architecture Diagram
-<img width="925" alt="image" src="https://user-images.githubusercontent.com/50298139/222232002-cee2d89e-58fb-4436-9bc6-20f085f332d7.png">
-
 
 ### Deployment
 Azure services deployment
