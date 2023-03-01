@@ -24,6 +24,8 @@ credential = AzureKeyCredential(admin_key)
 # Create an SDK client
 endpoint = os.environ.get("AZSEARCH_EP")
 
+semantic_config = os.environ.get("SEMANTIC_CONFIG")
+
 search_client = SearchClient(endpoint=endpoint,
                     index_name=index_name,
                     api_version="2021-04-30-Preview",
@@ -39,7 +41,7 @@ def run_openai(prompt, engine=GPT_ENGINE):
     )
     return response.choices[0].text
 def azcognitive_score(user_query, topk):
-    results = search_client.search(search_text=user_query, include_total_count=True, query_type='semantic', query_language='en-us',semantic_configuration_name='semantic-config1')
+    results = search_client.search(search_text=user_query, include_total_count=True, query_type='semantic', query_language='en-us',semantic_configuration_name=semantic_config)
     document=""
     i=0
     while i < topk:

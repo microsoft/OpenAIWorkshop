@@ -17,17 +17,104 @@ From the user's query, the solution uses two-stage information retrieval to retr
 In stage 1, full text search in Azure Cognitive Search is used to retrieve a number of relevant documents. In stage 2, the search result is applied with pretrained NLP model and embedding search to further narrow down the the most relavant content. The content is used by orchestrator service to form a prompt to OpenAI deployment of LLM. The OpenAI service returns result which is then sent to Power App client application.
 ### Deployment
 
+
+### Prerequisites
+
+[PostMan Client Installed](https://www.postman.com/downloads/)
+
+
+
 1. Azure services deployment
 
 Deploy Azure Resources namely - Azure Function App to host facade for OpenAI and Search APIs and Azure Search Service. 
 
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fanildwarepo%2FPurview-ADB-Lineage-Solution-Accelerator%2Frelease%2F2.1%2Fassets%2Flineage-setup%2Fpurview-lineage-accelerator-template-no-dnszone.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fanildwarepo%2FOpenAIWorkshop%2Fmain%2Fscenarios%2Fopenai_on_custom_dataset%2Fdeploy%2Fazure-deploy.json%3Ftoken%3DGHSAT0AAAAAAB647FGDJN6PKBFHRLVI62USY77A5AQ)
+
 
 
 - Step 1: Setup Azure Cognitive Search and prepare data
+
+    * ### Enable Semantic Search on Azure Portal. Navigate to Semantic Search blade and select Free plan. 
+        ![](../../documents/media/enable-semantic-search.png)
+
+    * ### Create Search Index, Sematic Configuration and Index a few documents.
+      Run the below commands from cmd prompt to conifgure python environment. 
+
+            
+            git clone <repo>
+            cd OpenAIWorkshop\scenarios\openai_on_custom_dataset
+            conda create env -n openaiworkshop python=3.9
+            conda activate openaiworkshop
+            pip install -r .\orchestrator\requirements.txt
+
+     Update Azure Search, Open AI endpoints and API Keys in the secrets.env
+
+     Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
+
+
+            .\search-indexer.py
+            
+        
+
 - Step 2: Automated orchestrator service with Azure Function App
+
+    Update the below configuration in Azure Function App configuration blade. 
+
+            {
+                "name": "GPT_ENGINE",
+                "value": "text-davinci-003",
+                "slotSetting": false
+            },
+            {
+                "name": "INDEX_NAME",
+                "value": "azure-aml-docs",
+                "slotSetting": false
+            },
+            {
+                "name": "OPENAI_API_KEY",
+                "value": "<>",
+                "slotSetting": false
+            },
+            {
+                "name": "OPENAI_RESOURCE_ENDPOINT",
+                "value": "https://<>.openai.azure.com/",
+                "slotSetting": false
+            }
+
 2. Test Azure service deployment
+
+    Launch Postman and test the Azure Function to make sure it is returning results. 
+
+    ![](../../documents/media/postman.png)
+
 3. Deploy client Power App
+
+    Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
+
+    ![](../../documents/media/powerapps1.png)
+
+    From the top nav bar, click Import Canvas App and upload the Semantic-Search-Package.zip file from this git repo path. 
+
+    ![](../../documents/media/powerapps2.png)
+
+    ![](../../documents/media/powerapps3.png)
+
+    Click on Import to the import the package into powerapps environment. 
+
+    ![](../../documents/media/powerapps4.png)
+
+    This will import the Power App canvas app and Semantic-Search Power Automate Flow into the workspace. 
+
+    Edit the Power Automate Flow and update Azure Function Url. 
+    
+    ![](../../documents/media/powerapps5.png)
+
 4. Test
 
+    Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp.
+    Select an  FAQ from dropdown and click Search. This is should bring up the answers powered by Open AI GPT-3 Models. 
+
+
+
+    ![](../../documents/media/powerapps6.png)

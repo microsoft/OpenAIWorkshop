@@ -29,7 +29,7 @@ CHUNK_SIZE = 10 #int(os.getenv("CHUNK_SIZE"))
 #TEXT_SEARCH_EMBEDDING_ENGINE = 'text-search-curie-doc-001'
 TEXT_SEARCH_EMBEDDING_ENGINE = 'text-embedding-ada-002'
 
-num_processes = 4 #multiprocessing.cpu_count() - 1
+num_processes = 2 #multiprocessing.cpu_count() - 1
 
 
 
@@ -46,12 +46,9 @@ search_client = SearchClient(endpoint=SEARCH_ENDPOINT,
                       index_name=SEARCH_INDEX,
                       credential=credential)
 
-index_name = "openai-workshop"
-
-
 
 index_schema = {
-  "name": index_name,
+  "name": SEARCH_INDEX,
   "fields": [
     {
       "name": "id",
@@ -131,6 +128,28 @@ index_schema = {
   "defaultScoringProfile": "",
   "corsOptions": None,
   "analyzers": [],
+  "semantic": {
+     "configurations": [
+       {
+         "name": "semantic-config",
+         "prioritizedFields": {
+           "titleField": {
+                 "fieldName": "title"
+               },
+           "prioritizedContentFields": [
+             {
+               "fieldName": "text"
+             }            
+           ],
+           "prioritizedKeywordsFields": [
+             {
+               "fieldName": "text"
+             }             
+           ]
+         }
+       }
+     ]
+  },
   "charFilters": [],
   "tokenFilters": [],
   "tokenizers": [],
@@ -139,7 +158,7 @@ index_schema = {
 
 def delete_search_index():
     try:
-        url = SEARCH_ENDPOINT + "indexes/" + index_name + api_version 
+        url = SEARCH_ENDPOINT + "indexes/" + SEARCH_INDEX + api_version 
         response  = requests.delete(url, headers=headers)
         print("Index deleted")
     except Exception as e:
@@ -159,7 +178,7 @@ def create_search_index():
 
 def add_document_to_index(documents):
     try:
-        url = SEARCH_ENDPOINT + "indexes/" + index_name + "/docs/index" + api_version
+        url = SEARCH_ENDPOINT + "indexes/" + SEARCH_INDEX + "/docs/index" + api_version
         response  = requests.post(url, headers=headers, json=documents)
         print(f"{len(documents['value'])} Documents added")
     except Exception as e:
