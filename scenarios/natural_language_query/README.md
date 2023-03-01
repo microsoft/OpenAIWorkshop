@@ -4,6 +4,7 @@
 This scenario allows users to use Open AI as an intelligent agent to get business questions prompts from end users and generating SQL queries from the prompts.This implementation scenario focuses on building a Nautual Language to query from business questions and genarte the queries for database retrieval 
 ### Architecture Diagram
 <img width="693" alt="image" src="https://user-images.githubusercontent.com/50298139/222239136-9149247e-b6e9-4b8b-8519-be7c8f3723b4.png">
+
 ### Solution Flow
 
 Step 1: Context information is provided to system through a Power App form, this information is submitted to Azure function
