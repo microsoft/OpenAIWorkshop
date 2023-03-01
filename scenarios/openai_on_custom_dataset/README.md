@@ -81,6 +81,11 @@ Deploy Azure Resources namely - Azure Function App to host facade for OpenAI and
                 "name": "OPENAI_RESOURCE_ENDPOINT",
                 "value": "https://<>.openai.azure.com/",
                 "slotSetting": false
+            },
+            {
+                "name": "SEMANTIC_CONFIG",
+                "value": "semantic-config",
+                "slotSetting": false
             }
 
 2. Test Azure service deployment
