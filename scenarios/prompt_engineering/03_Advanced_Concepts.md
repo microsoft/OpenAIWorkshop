@@ -1,5 +1,16 @@
 # Advanced Concepts
 
+## Topics
+
+  - [Introduction](#introduction)
+  - [Zero-Shot Prompts](#zero-shot-prompts)
+  - [One-Shot Prompts](#one-shot-prompts)
+  - [Few-Shot Prompts](#few-shot-prompts)
+
+---
+
+## Introduction
+
 At this point you have experienced the power and flexibility of prompts. Tuning prompts to get the desired results is the idea behind prompt engineering.
 
 We will now cover some more advanced topics to tune our outputs without introducing fine-tuning of our GPT models.
