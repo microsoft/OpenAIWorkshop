@@ -6,19 +6,21 @@ We will now cover some more advanced topics to tune our outputs without introduc
 
 Let's take a simple classification example:
 
-Prompt:
+*Prompt:*
 ```
 Classify the sentiment of the text below.
 
 Text: I think this movie was terrible. What a waste of time.
 ```
 
-Output:
+*Output:*
 ```
 Negative
 ```
 
 The output seems to be correct, but we could improve it by providing more information to the model if we wanted a more granular classification. Let's do this via a Zero-Shot prompt.
+
+---
 
 ## Zero-Shot Prompts
 
@@ -26,39 +28,45 @@ The GPT LLMs are trained on such large amount of data that they are capable of u
 
 We could refine the example below by being more descriptive about our instructions.
 
-Prompt:
+*Prompt:*
 ```
 Classify the sentiment of the text below into very negative, negative, neutral, positive, very positive.
 
 Text: I think this movie was terrible. What a waste of time.
 ```
 
-Output:
+*Output:*
 ```
 Very Negative
 ```
 
 This is called Zero-Shot. A precise instruction leading to the desired output without any example.
 
+---
+
 ## One-Shot Prompts
 
 Sometimes it may be easier to provide an example to the model to learn from. This is called 'One-Shot' prompt.
 
-First, a Zero-Shot Prompt:
+First, let's do a Zero Shot prompt.
+
+*Prompt:*
 ```
 Tell me in which city a university is located.
 
 University: UCLA
 ```
 
-Output:
+*Output:*
 ```
 City: Los Angeles, California
 ```
 
 Let's say you wanted to have a specific output for this prompt. You could provide an example to the model to learn from.
 
-One-Shot Prompt variation:
+Here's a One-Shot Prompt that leads to the same output.
+
+*Prompt:*
 ```
 Tell me in which city a university is located.
 
@@ -68,24 +76,28 @@ City: Los Angeles, CA, USA
 University: MIT
 ```
 
-Output:
+*Output:*
 ```
 City: Cambridge, MA, USA
 ```
 
 Note that you could have used Zero-Shot prompt for this example as well. But, One-Shot prompts are more flexible and can be used to fine-tune the model to your needs.
 
-Zero-Shot Prompt equivalent:
+Here's a Zero-Shot Prompt equivalent.
+
+*Prompt:*
 ```
 Tell me in which city a university is located. Provide the city name, state code and country, comma separated as one line.
 
 University: UCLA
 ```
 
-Output:
+*Output:*
 ```
 City: Los Angeles, CA, USA
 ```
+
+---
 
 ## Few-Shot Prompts
 
@@ -95,14 +107,14 @@ Here's an example of entity extractions which is well fitted to Few-Shot prompts
 
 Let's try it first with a Zero-Shot prompt.
 
-Prompt (Zero Shot):
+*Prompt:*
 ```
 Generate a JSON document which provides Name, position and company from the text below.
 
 Text: Fred is a serial entrepreneur. Co-founder and CEO of Platform.sh, he previously co-founded Commerce Guys, a leading Drupal ecommerce provider. His mission is to guarantee that as we continue on an ambitious journey to profoundly transform how cloud computing is used and perceived, we keep our feet well on the ground continuing the rapid growth we have enjoyed up until now.
 ```
 
-Output:
+*Output:*
 ```
 {
   "Name": "Fred",
@@ -111,9 +123,11 @@ Output:
 }
 ```
 
-Not exactly what we expect (only 'Platform.sh' should come back in 'Company'), and it may be difficult to express that in a Zero-Shot prompt. Let's try a Few-Shot prompt. Note that we're going to drop the instructions and just provide the desired output.
+Not exactly what we expect (only 'Platform.sh' should come back in 'Company'), and it may be difficult to express that in a Zero-Shot prompt. 
 
-Prompt (One Shot):
+Let's try a Few-Shot prompt. Note that we're going to drop the instructions and just provide the desired output.
+
+*Prompt:*
 ```
 Text: Fred is a serial entrepreneur. Co-founder and CEO of Platform.sh, he previously co-founded Commerce Guys, a leading Drupal ecommerce provider. His mission is to guarantee that as we continue on an ambitious journey to profoundly transform how cloud computing is used and perceived, we keep our feet well on the ground continuing the rapid growth we have enjoyed up until now.
 
@@ -129,7 +143,7 @@ Text: Microsoft (the word being a portmanteau of "microcomputer software") was f
 JSON:
 ```
 
-Output:
+*Output:*
 ```
 {
   "Name": "Microsoft",
@@ -140,10 +154,11 @@ Output:
 }
 ```
 
-Note that the output is not what we want here, but there hasn't been enough example to understand if the goal is to extract key entities or certain entities only. A few shots prompt will clarify this.
+Note that the output is not what we want here, but there hasn't been enough example to understand if the goal is to extract key entities or certain entities only.
 
+A few shots prompt will clarify this.
 
-Prompt (Few Shots):
+*Prompt:*
 ```
 Text: Fred is a serial entrepreneur. Co-founder and CEO of Platform.sh, he previously co-founded Commerce Guys, a leading Drupal ecommerce provider. His mission is to guarantee that as we continue on an ambitious journey to profoundly transform how cloud computing is used and perceived, we keep our feet well on the ground continuing the rapid growth we have enjoyed up until now.
 
@@ -168,7 +183,7 @@ Text: Franck Riboud was born on 7 November 1955 in Lyon. He is the son of Antoin
 JSON:
 ```
 
-Output:
+*Output:*
 ```
 {
   "Name": "Franck Riboud",
@@ -177,3 +192,9 @@ Output:
 }
 ```
 Now we can see that the model clearly understands that we want to only extract 3 entities from the text and nothing else.
+
+---
+
+[Previous Section (Sample Scenarios)](./02_sample_scenarios.md)
+
+[Next Section (Fine Tuning)](./04_fine_tuning.md)]
