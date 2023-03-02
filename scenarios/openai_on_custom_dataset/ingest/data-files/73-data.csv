@@ -1,5 +1,0 @@
-page-number-73-line-number-44,"'name=""train step"",'
-'script_name=""train.py"",'
-""arguments=[' -- training_data',""
-""input_ds. as_named_input( 'training_data' ) . as_mount() , ' -- max_epocs', 5,""
-"

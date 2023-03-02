@@ -1,9 +1,0 @@
-page-number-214-line-number-48,"'some missing values when you inspected the dataset. These missing values must e'
-'cleaned so that the model can analyze the data correctly.'
-'Remove a column'
-""When you train a model, you have to do something aout the data that's missing. In this""
-""dataset, the normalized-losses column is missing many values, so you'll exclude that""
-'column from the model altogether.'
-'1. In the datasets and component palette to the left of the canvas, click Component'
-'and search for the Select Columns in Dataset component.'
-"

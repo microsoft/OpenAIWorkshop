@@ -1,9 +1,0 @@
-page-number-66-line-number-48,"'\xc2\x7 SDK v1'
-'Python'
-'# Run pipeline with parallel run step'
-'from azureml.core import Experiment'
-'pipeline = Pipeline(workspace=ws, steps=[parallelrun_step])'
-""experiment = Experiment(ws, 'digit_identification' )""
-'pipeline_run = experiment.sumit(pipeline)'
-'pipeline_run.wait_for_completion(show_output=True)'
-"

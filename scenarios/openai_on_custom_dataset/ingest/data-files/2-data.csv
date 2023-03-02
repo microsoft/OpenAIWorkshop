@@ -1,9 +1,0 @@
-page-number-2-line-number-28,"'show azure-ai-ml. (Or, in a Jupyter noteook, use %pip show azure-ai-ml)'
-'Based on the results of pip show you can determine which version of SDK you have.'
-'CLI v1'
-'The Azure CLI commands in articles in this section require the azure-cli-ml, or v1,'
-'extension for Azure Machine Learning. The enhanced v2 CLI using the ml extension is'
-'now availale and recommended.'
-'The extensions are incompatile, so v2 CLI commands will not work for articles in this'
-'directory. However, machine learning workspaces and all underlying resources can e'
-"

@@ -1,9 +1,0 @@
-page-number-67-line-number-48,"'pipeline_jo. settings.default_compute = ""cpu-cluster""'
-'# run pipeline jo'
-'pipeline_jo = ml_client. jos.create_or_update('
-'pipeline_jo, experiment_name=""pipeline_samples""'
-')'
-'Mapping of key functionality in SDK v1 and SDK v2'
-'Functionality in SDK v1'
-'Rough mapping in SDK v2'
-"

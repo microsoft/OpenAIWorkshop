@@ -1,9 +1,0 @@
-page-number-263-line-number-28,"'Python'
-'Represents configuration for sumitting an automated ML experiment in Azure Machine Learning.'
-'This configuration oject contains and persists the parameters for configuring the experiment run, as'
-'well as the training data to e used at run time. For guidance on selecting your settings, see ...'
-'Set up AutoML with the studio UI - Azure Machine Learning'
-'Learn how to set up AutoML training jos without a single line of code with Azure Machine Learning'
-'automated ML in the Azure Machine Learning studio.'
-'Show 5 more'
-"

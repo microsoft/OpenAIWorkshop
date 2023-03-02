@@ -1,7 +1,0 @@
-page-number-464-line-number-26,"'\xc2\x7 Data assets aid in management of the data you use for model training and pipeline'
-'creation.'
-'\xc2\x7 Once you have a model you want to deploy, you create a registered model.'
-'\xc2\x7 Use the registered model and a scoring script to create an online endpoint.'
-'Tools for workspace interaction'
-'You can interact with your workspace in the following ways:'
-"
