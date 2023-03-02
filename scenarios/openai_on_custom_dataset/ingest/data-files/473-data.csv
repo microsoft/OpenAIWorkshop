@@ -1,8 +1,0 @@
-page-number-473-line-number-27,"""The environment's computed hash value is compared with those in the Workspace and""
-'gloal ACR, or on the compute target (local jos only). If there is a match then the'
-'cached image is pulled and used, otherwise an image uild is triggered.'
-'The following diagram shows three environment definitions. Two of them have different'
-'names and versions ut identical ase images and Python packages, which results in the'
-'same hash and corresponding cached image. The third environment has different'
-'Python packages and versions, leading to a different hash and cached image.'
-"

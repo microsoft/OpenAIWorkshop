@@ -1,9 +1,0 @@
-page-number-174-line-number-28,"'max_concurrent_trials: 2'
-'You can then sumit the jo to train an image model.'
-'Azure CLI'
-'APPLIES TO:'
-'-'
-'Azure CLI ml extension v2 (current)'
-'To sumit your AutoML jo, you run the following CLI v2 command with the path to'
-'your .yml file, workspace name, resource group and suscription ID.'
-"

@@ -1,8 +1,0 @@
-page-number-493-line-number-27,"'1. The client signs in to Azure AD and gets an Azure Resource Manager token.'
-'2. The client presents the token to Azure Resource Manager and to all Azure Machine'
-'Learning.'
-'3. Azure Machine Learning provides a Machine Learning service token to the user'
-'compute target (for example, Azure Machine Learning compute cluster). This token'
-'is used y the user compute target to call ack into the Machine Learning service'
-'after the jo is complete. The scope is limited to the workspace.'
-"
