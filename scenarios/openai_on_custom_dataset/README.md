@@ -43,8 +43,8 @@ The Azure Function App also deploys the function code needed for powerapps autom
     
         ![](../../documents/media/enable-semantic-search.png)
 
-    * Create Search Index, Sematic Configuration and Index a few documents.
-      Run the below commands from cmd prompt to conifgure python environment. 
+    *   Create Search Index, Sematic Configuration and Index a few documents.
+        Run the below commands from cmd prompt to conifgure python environment. 
 
             
             git clone <repo>
@@ -53,7 +53,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
             conda activate openaiworkshop
             pip install -r .\orchestrator\requirements.txt
 
-    * To configure Azure Search manully without using the above python approach, please follow the steps below
+    *   To configure Azure Search manully without using the above python approach, please follow the steps below
 
         - In the storage container, that is created as part of the template in step 1, create a blob container. 
         - Upload the data files in the ./data-files folder in this folder to the blob container using Azure Portal UI.
@@ -63,9 +63,9 @@ The Azure Function App also deploys the function code needed for powerapps autom
         - In the Customize Target Index, use id as the Azure Document Key and mark text as the Searchable Field. 
         - This should index the chunked sample
 
-     Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
-     Rename secrets.rename to secrets.env. (This is recommended to prevent secrets from leaking into external environments.)
-     The secrets.env should be placed in the ingest folder along side the python script file search-indexer.py.
+    *   Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
+        Rename secrets.rename to secrets.env. (This is recommended to prevent secrets from leaking into external environments.)
+        The secrets.env should be placed in the ingest folder along side the python script file search-indexer.py.
 
             AZURE_OPENAI_API_KEY=""
             AZURE_OPENAI_ENDPOINT="https://<>.openai.azure.com/"
@@ -78,8 +78,9 @@ The Azure Function App also deploys the function code needed for powerapps autom
             AFR_API_KEY=""
             INDEX_NAME="azure-ml-docs"
 
-     Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
-     The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service. 
+    *   This is an optional step. The document processing, chunking, indexing can all be scripted using any preferred language. 
+        This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
+        The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service. 
      
 
             cd .\scenarios\openai_on_custom_dataset\ingest\
