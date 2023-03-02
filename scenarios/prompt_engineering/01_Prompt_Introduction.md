@@ -1,11 +1,13 @@
 # Introduction to Prompt Engineering
 ## Topics
 
-- [What is a prompt](#what-is-a-prompt)
-- [What is prompt engineering](#what-is-prompt-engineering)
+- [What is a prompt?](#what-is-a-prompt)
+- [What is prompt engineering?](#what-is-prompt-engineering)
 - [Basic Prompt Examples](#basic-prompt-examples)
 - [Elements of a Prompt](#elements-of-a-prompt)
 - [General Tips for Designing Prompts](#general-tips-for-designing-prompts)
+
+**Note:** This link leads to another file, but it is a [Glossary of Terms](./prompt_engineering/9999_glossary.md) covering many of the technical terms used the following guides.
 
 ## What is a prompt?
 ![image](https://www.closerscopy.com/img/blinking-cursor-v2.gif)
@@ -172,8 +174,9 @@ Not all the components are required for a prompt and the format depends on the t
 ---
 ## General Tips for Designing Prompts
 
-Here are some tips to keep in mind while you are designing your prompts:
+> **Note:** We are not examing hyperparameters in this section, however, here's a quick link to some pointers on hyperparameters: [Basic Overview of Azure OpenAI Service Hyperparameters](./prompt_engineering/9998_hyperparameters.md)
 
+Here are some tips to keep in mind while you are designing your prompts:
 
 ### Start Simple
 As you get started with designing prompts, you should keep in mind that it is really an iterative process that requires experimentation to get optimal results. Using a simple playground like [Azure's OpenAI Studio's Playground](https://oai.azure.com/portal/playground) will allow you to test out ideas quickly and easily. The model won't be offended if you ask it to do very similar things over and over again!
