@@ -177,5 +177,6 @@ Edit the Power Automate Flow and update Azure Function Url. Optionaly num_search
 
 Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp.
 Select an  FAQ from dropdown and click Search. This is should bring up the answers powered by Open AI GPT-3 Models. 
+Feel free to make changes to the PowerApps UI to add your own functionality and UI layout. You can explore expanding PowerAutomate flow to connect to other APIs to provide useful reference links to augment the response returned from OpenAI.
 
 
