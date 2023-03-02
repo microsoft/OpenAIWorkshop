@@ -12,7 +12,7 @@ Regardless of the application scenario, the solution flow is:
 This implementation scenario focuses on building a knowledge retrieval chatbot application on top of unstructured data corpus but the same design can be used for recommendation & generative scenarios.
 
 ### Architecture Diagram
-![OpenAI on custom dataset](../../documents/media/openaioncustomdataset.png)
+![OpenAI on custom dataset](../../documents/media/AzureCognitiveSearchOpenAIArchitecture.png)
 From the user's query, the solution uses two-stage information retrieval to retrieve the content that best matches the user query. 
 In stage 1, full text search in Azure Cognitive Search is used to retrieve a number of relevant documents. In stage 2, the search result is applied with pretrained NLP model and embedding search to further narrow down the the most relavant content. The content is used by orchestrator service to form a prompt to OpenAI deployment of LLM. The OpenAI service returns result which is then sent to Power App client application.
 ### Deployment
@@ -90,11 +90,12 @@ The Azure Function App also deploys the function code needed for powerapps autom
             cd .\scenarios\openai_on_custom_dataset\ingest\
             python .\search-indexer.py
             
+
     *   Optional Manual Approach. If you prefer to not use the python/automated approach above, the below steps can be followed without automation script. 
         To configure Azure Search, please follow the steps below
 
         - In the storage container, that is created as part of the template in step 1, create a blob container. 
-        - Upload the data files in the ./data-files folder in this folder to the blob container using Azure Portal UI.
+        - Extract the data files in the .scenarios/data/data-files.zip folder and update this folder to the blob container using Azure Portal UI.   The data-files.zip contains the Azure ML sample pdf document chunked as individual files per page.  
         - Import data in Azure Search as shown below. Choose the blob container and provide the blob-folder name in to continue. 
 
             ![](../../documents/media/search1.png)
