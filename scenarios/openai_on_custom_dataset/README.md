@@ -20,14 +20,25 @@ In stage 1, full text search in Azure Cognitive Search is used to retrieve a num
 
 ### Prerequisites
 
-* [PostMan Client Installed](https://www.postman.com/downloads/) 
+* [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Functions.  
 * Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 
+* Azure Open AI already provisioned and text-davinci-003 model is deployed. Other deployments can also be used, the configs below needs to be updated accordingly.  
+* Conda is recommended if local laptops are used as pip install might interfere with existing python deployment.
 
 
 
 ## 1. Azure services deployment
 
 Deploy Azure Resources namely - Azure Function App to host facade for OpenAI and Search APIs, Azure Search Service and a Azure Form Recognizer resource.
+
+Here are the SKUs that are needed for the provisioned Azure Resources
+
+- Azure Function App - Consumption Plan
+- Azure Cognitive Search - Standard (To support semantic search)
+- Azure Forms Recognizer - Standard (To support analyzing 500 page document)
+- Azure Storage - general purpose V1 (Needed for Azure Function App and uploading sample documents)
+
+
 The Azure Function App also deploys the function code needed for powerapps automate flow. 
 
 
@@ -44,8 +55,8 @@ The Azure Function App also deploys the function code needed for powerapps autom
     
         ![](../../documents/media/enable-semantic-search.png)
 
-    *   Create Search Index, Sematic Configuration and Index a few documents.
-        Run the below commands from cmd prompt to conifgure python environment. 
+    *   Create Search Index, Sematic Configuration and Index a few documents using automated script. The script can be run multiple times without any side affects.
+        Run the below commands from cmd prompt to conifgure python environment. Conda is optional if running in Azure Cloud Shell or if an isolated python environment is needed. 
 
             
             git clone <repo>
@@ -54,19 +65,11 @@ The Azure Function App also deploys the function code needed for powerapps autom
             conda activate openaiworkshop
             pip install -r .\orchestrator\requirements.txt
 
-    *   To configure Azure Search manully without using the above python approach, please follow the steps below
-
-        - In the storage container, that is created as part of the template in step 1, create a blob container. 
-        - Upload the data files in the ./data-files folder in this folder to the blob container using Azure Portal UI.
-        - Import data in Azure Search as shown below. Choose the blob container and provide the blob-folder name in to continue. 
-
-            ![](../../documents/media/search1.png)
-        - In the Customize Target Index, use id as the Azure Document Key and mark text as the Searchable Field. 
-        - This should index the chunked sample
 
     *   Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
         Rename secrets.rename to secrets.env. (This is recommended to prevent secrets from leaking into external environments.)
         The secrets.env should be placed in the ingest folder along side the python script file search-indexer.py.
+        The endpoints below needs to have the trailing '/' at end for the search-indexer to run correctly.
 
             AZURE_OPENAI_API_KEY=""
             AZURE_OPENAI_ENDPOINT="https://<>.openai.azure.com/"
@@ -79,7 +82,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
             AFR_API_KEY=""
             INDEX_NAME="azure-ml-docs"
 
-    *   This is an optional step. The document processing, chunking, indexing can all be scripted using any preferred language. 
+    *   The document processing, chunking, indexing can all be scripted using any preferred language. 
         This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
         The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service. 
      
@@ -87,7 +90,16 @@ The Azure Function App also deploys the function code needed for powerapps autom
             cd .\scenarios\openai_on_custom_dataset\ingest\
             python .\search-indexer.py
             
-        
+    *   Optional Manual Approach. If you prefer to not use the python/automated approach above, the below steps can be followed without automation script. 
+        To configure Azure Search, please follow the steps below
+
+        - In the storage container, that is created as part of the template in step 1, create a blob container. 
+        - Upload the data files in the ./data-files folder in this folder to the blob container using Azure Portal UI.
+        - Import data in Azure Search as shown below. Choose the blob container and provide the blob-folder name in to continue. 
+
+            ![](../../documents/media/search1.png)
+        - In the Customize Target Index, use id as the Azure Document Key and mark text as the Searchable Field. 
+        - This should index the chunked sample
 
 ## Step 2: Automated orchestrator service with Azure Function App
 
@@ -121,7 +133,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 ## Step 3. Test Azure service deployment
 
-Launch Postman and test the Azure Function to make sure it is returning results. 
+Launch Postman and test the Azure Function to make sure it is returning results. The num_search_result query parameter can be altered to retrieve more or less search results. Notice the query parameter num_search_result in the screen shot below. 
 
 ![](../../documents/media/postman.png)
 
@@ -154,7 +166,7 @@ This will import the Power App canvas app and Semantic-Search Power Automate Flo
 ![](../../documents/media/powerapps7.png)
 
 
-Edit the Power Automate Flow and update Azure Function Url. 
+Edit the Power Automate Flow and update Azure Function Url. Optionaly num_search_result query parameter can be altered.
 
 
 
