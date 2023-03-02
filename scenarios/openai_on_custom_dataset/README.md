@@ -127,27 +127,38 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 ## Step 4. Deploy client Power App
 
-    Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
+Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
 
-    ![](../../documents/media/powerapps1.png)
+![](../../documents/media/powerapps1.png)
 
-    From the top nav bar, click Import Canvas App and upload the Semantic-Search-Package.zip file from this git repo path. 
 
-    ![](../../documents/media/powerapps2.png)
+From the top nav bar, click Import Canvas App and upload the Semantic-Search-Package.zip file from this git repo path. 
 
-    ![](../../documents/media/powerapps3.png)
 
-    Click on Import to import the package into powerapps environment. 
+![](../../documents/media/powerapps2.png)
 
-    ![](../../documents/media/powerapps4.png)
 
-    This will import the Power App canvas app and Semantic-Search Power Automate Flow into the workspace. 
-    
-    ![](../../documents/media/powerapps7.png)
+![](../../documents/media/powerapps3.png)
 
-    Edit the Power Automate Flow and update Azure Function Url. 
-    
-    ![](../../documents/media/powerapps5.png)
+
+Click on Import to import the package into powerapps environment. 
+
+
+![](../../documents/media/powerapps4.png)
+
+
+This will import the Power App canvas app and Semantic-Search Power Automate Flow into the workspace. 
+
+
+
+![](../../documents/media/powerapps7.png)
+
+
+Edit the Power Automate Flow and update Azure Function Url. 
+
+
+
+![](../../documents/media/powerapps5.png)
 
 ## Step 5. Test
 
