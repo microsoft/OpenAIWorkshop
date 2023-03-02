@@ -9,9 +9,9 @@ This scenario allows users to use Open AI as an intelligent agent to get busines
 
 Step 1: Context information is provided to system through a Power App form, this information is submitted to Azure function
 
-Step 2: Azure function passes the context information to Open AI Engine to convert the user context information prompt to SQL Query
+Step 2: Azure Open AI engine converts the user context prompt to SQL query and passes the query to Azure function
 
-Step 3: Azure Open AI engine converts the user context prompt to SQL query and passes the query to Azure function
+Step 3: Azure function passes the context information to Open AI Engine to convert the user context information prompt to SQL Query
 
 Step 4: The Azure function passes the genrated SQL query text and executes the query on Azure SQL databse 
 
