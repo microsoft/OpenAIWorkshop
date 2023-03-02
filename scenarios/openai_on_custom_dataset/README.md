@@ -65,6 +65,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
      Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
      Rename secrets.rename to secrets.env. (This is recommended to prevent secrets from leaking into external environments.)
+     The secrets.env should be placed in the ingest folder along side the python script file search-indexer.py.
 
             AZURE_OPENAI_API_KEY=""
             AZURE_OPENAI_ENDPOINT="https://<>.openai.azure.com/"
