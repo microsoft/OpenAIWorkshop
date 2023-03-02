@@ -12,15 +12,15 @@ Welcome to the Azure OpenAI workshop! In this workshop, you will learn how to us
 
 - [Open AI basics on LLMs, APIs and Application scenarios](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/models).
 - [Prompt engineering](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/prompt_engineering).
-- Common NLP tasks: summarization, classification, entity recognition, sentiment analysis.
-- Generative tasks: generic content generation, code generation.
-- Conversational dialog.
-- Zero shot, few-shot and in-context learning.
+  - Common NLP tasks: summarization, classification, entity recognition, sentiment analysis.
+  - Generative tasks: generic content generation, code generation.
+  - Conversational dialog.
+  - Zero shot, few-shot and in-context learning.
 
 ### Build,
 
 - [Your first AOAI application with PowerApp](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/powerapp_and_python).
-- [A natural language query application on SQL data](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query).
+- Advanced: [A natural language query application on SQL data](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query).
 - Advanced: [An AOAI data pipeline to extract insights from unstructured data](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/openai_batch_pipeline).
 - Advanced: [Make ChatGPT works on your own proprietary dataset](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/openai_on_custom_dataset).
 
