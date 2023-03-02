@@ -1,14 +1,41 @@
 # Using Azure OpenAI like a Pro to build powerful AI applications 
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+[Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/overview) provides REST API access to OpenAI's powerful language models including the GPT-3, Codex and Embeddings model series. These models can be easily adapted to your specific task including but not limited to content generation, summarization, semantic search, and natural language to code translation. Users can access the service through REST APIs, Python SDK, or our web-based interface in the Azure OpenAI Studio.
 
-As the maintainer of this project, please make a few updates:
+## Introduction
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+Welcome to the Azure OpenAI workshop! In this workshop, you will learn how to use the Azure OpenAI service to create AI powered solutions. You will get hands-on experience with the latest AI technologies and will learn how to use Azure OpenAI API. 
+
+## Goal
+
+### To understand,
+
+- [Open AI basics on LLMs, APIs and Application scenarios](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/models).
+- [Prompt engineering](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/prompt_engineering).
+- Common NLP tasks: summarization, classification, entity recognition, sentiment analysis.
+- Generative tasks: generic content generation, code generation.
+- Conversational dialog.
+- Zero shot, few-shot and in-context learning.
+
+### Build,
+
+- [Your first AOAI application with PowerApp](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/powerapp_and_python).
+- [A natural language query application on SQL data](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query).
+- Advanced: [An AOAI data pipeline to extract insights from unstructured data](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/openai_batch_pipeline).
+- Advanced: [Make ChatGPT works on your own proprietary dataset](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/openai_on_custom_dataset).
+
+## Format
+
+- All use cases have examples and instructions in a github repo
+- Instructor will run through an overview of solutions and steps
+- Audience will follow and build the solution in their environment
+
+## Audience
+
+- Power Users
+- Software Engineers
+- Data Scientist
+- AI architects and Managers
 
 ## Contributing
 
@@ -24,7 +51,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-## Trademarks
+## Trademarks 
 
 This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
 trademarks or logos is subject to and must follow 
