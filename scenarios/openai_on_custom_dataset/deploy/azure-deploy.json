@@ -181,7 +181,7 @@
             },
             {
               "name": "AZSEARCH_KEY",
-              "value": "[listKeys(resourceId('Microsoft.Search/searchServices/apiKeys', concat(format('search-{0}', uniqueString(resourceGroup().id)), '/default')), '2020-08-01').primaryKey]"
+              "value": "[listKeys(resourceId('Microsoft.Search/searchServices/apiKeys', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2020-08-01').primaryKey]"
             },
             {
                 "name": "INDEX_NAME",
