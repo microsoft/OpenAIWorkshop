@@ -1,0 +1,13 @@
+page-number-298-line-number-32,"'Transformers'
+'Transformers are a model architecture that is suited for solving prolems containing'
+'sequences such as text or time-series data. They consist of encoder and decoder'
+'layers 2. The encoder takes an input and maps it to a numerical representation'
+'containing information such as context. The decoder uses information from the encoder'
+'to produce an output such as translated text. What makes transformers different from'
+'other architectures containing encoders and decoders are the attention su-layers.'
+'Attention is the idea of focusing on specific parts of an input ased on the importance'
+'of their context in relation to other inputs in a sequence. For example, when'
+'summarizing a news article, not all sentences are relevant to descrie the main idea. By'
+'focusing on key words throughout the article, summarization can e done in a single'
+'sentence, the headline.'
+"

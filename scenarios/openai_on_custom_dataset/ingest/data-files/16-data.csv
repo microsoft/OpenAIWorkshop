@@ -1,0 +1,12 @@
+page-number-16-line-number-31,"'custom_model'
+'mlflow_model'
+'triton_model'
+'Workspace'
+'The workspace is the top-level resource for Azure Machine Learning, providing a'
+'centralized place to work with all the artifacts you create when you use Azure Machine'
+'Learning. The workspace keeps a history of all jos, including logs, metrics, output, and'
+'a snapshot of your scripts. The workspace stores references to resources like datastores'
+'and compute. It also holds all assets like models, environments, components and data'
+'asset.'
+'Next steps'
+"

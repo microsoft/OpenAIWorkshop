@@ -1,0 +1,10 @@
+page-number-342-line-number-29,"'Cross-validation'
+'Cross-validation (CV) is the process of taking many susets of your full training data'
+'and training a model on each suset. The idea is that a model could get ""lucky"" and'
+""have great accuracy with one suset, ut y using many susets the model won't""
+'achieve this high accuracy every time. When doing CV, you provide a validation holdout'
+'dataset, specify your CV folds (numer of susets) and automated ML will train your'
+'model and tune hyperparameters to minimize error on your validation set. One CV fold'
+'could e overfitted, ut y using many of them it reduces the proaility that your final'
+'model is overfitted. The tradeoff is that CV does result in longer training times and thus'
+"

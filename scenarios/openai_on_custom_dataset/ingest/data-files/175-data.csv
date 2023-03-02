@@ -1,0 +1,11 @@
+page-number-175-line-number-30,"'Azure CLI ml extension v2 (current)'
+'YAML'
+'limits:'
+'timeout_minutes: 60'
+'max_trials: 10'
+'max_concurrent_trials: 2'
+'The following code defines the search space in preparation for the hyperparameter'
+'sweep for each defined architecture, yolov5 and fasterrcnn_resnet50_fpn. In the search'
+'space, specify the range of values for learning_rate, optimizer, Ir_scheduler, etc., for'
+'AutoML to choose from as it attempts to generate a model with the optimal primary'
+"

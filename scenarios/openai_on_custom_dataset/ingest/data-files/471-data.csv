@@ -1,0 +1,11 @@
+page-number-471-line-number-30,"'\xc2\x7 Register environments.'
+'Fetch environments from your workspace to use for training or deployment.'
+'Create a new instance of an environment y editing an existing one.'
+'View changes to your environments over time, which ensures reproduciility.'
+'.'
+'Build Docker images automatically from your environments.'
+'""Anonymous"" environments are automatically registered in your workspace when you'
+'sumit an experiment. They will not e listed ut may e retrieved y version.'
+'For code samples, see the ""Manage environments"" section of How to use environments.'
+'Environment uilding, caching, and reuse'
+"

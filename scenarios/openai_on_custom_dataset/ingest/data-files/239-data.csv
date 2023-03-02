@@ -1,0 +1,6 @@
+page-number-239-line-number-25,"'.'
+'If your inference graph contains ""Enter Data Manually"" component which is not'
+'connected to the same port as ""We service Input"" component, the ""Enter Data'
+'Manually"" component will not e executed during HTTP call processing. A'
+'workaround is to register the outputs of that ""Enter Data Manually"" component as'
+"

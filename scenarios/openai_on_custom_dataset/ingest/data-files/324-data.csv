@@ -1,0 +1,15 @@
+page-number-324-line-number-74,"""AutoML regression models can't inherently deal with stochastic trends, or other well-""
+'known prolems associated with non-stationary time series. As a result, out-of-sample'
+'forecast accuracy can e poor if such trends are present.'
+'AutoML automatically analyzes time series dataset to determine stationarity. When non-'
+'stationary time series are detected, AutoML applies a differencing transform'
+'automatically to mitigate the impact of non-stationary ehavior.'
+'Model sweeping'
+'After data has een prepared with missing data handling and feature engineering,'
+'AutoML sweeps over a set of models and hyper-parameters using a model'
+'recommendation service . The models are ranked ased on validation or cross-'
+'validation metrics and then, optionally, the top models may e used in an ensemle'
+'model. The est model, or any of the trained models, can e inspected, downloaded, or'
+'deployed to produce forecasts as needed. See the model sweeping and selection article'
+'for more details.'
+"

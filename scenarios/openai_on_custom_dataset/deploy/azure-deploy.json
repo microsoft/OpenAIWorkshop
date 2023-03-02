@@ -80,20 +80,7 @@
       "metadata": {
         "description": "OpenAI API key."
       }
-    },
-    "AZSEARCH_EP" : {
-      "type": "string",
-      "metadata": {
-        "description": "Azure Search endpoint. https://<search-endpoint-name>.search.windows.net/"
-      }
-    },
-    "AZSEARCH_KEY" : {
-      "type": "string",
-      "metadata": {
-        "description": "Azure Search API key."
-      }
     }
-    
   },
   "variables": {
     "hostingPlanName": "[parameters('functionAppName')]",
@@ -190,11 +177,11 @@
             },
             {
               "name": "AZSEARCH_EP",
-              "value": "[parameters('AZSEARCH_EP')]"
+              "value": "[concat('https://',format('search-{0}', uniqueString(resourceGroup().id)),'.search.windows.net/')]"
             },
             {
               "name": "AZSEARCH_KEY",
-              "value": "[parameters('AZSEARCH_KEY')]"
+              "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2020-08-01').primaryKey]"
             },
             {
                 "name": "INDEX_NAME",
@@ -218,7 +205,8 @@
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
         "[resourceId('Microsoft.Insights/components', variables('applicationInsightsName'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Search/searchServices', format('search-{0}', uniqueString(resourceGroup().id)))]"
       ]
     },
     {
@@ -249,4 +237,5 @@
    
     
   ]
+  
 }

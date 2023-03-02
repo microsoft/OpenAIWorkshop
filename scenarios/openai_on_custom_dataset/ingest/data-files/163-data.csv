@@ -1,0 +1,16 @@
+page-number-163-line-number-35,"'Python'
+'endpoint = ml_client. online_endpoints.get(name=online_endpoint_name)'
+'print ('
+'f\' Endpint ""{endpoint. name}"" with provisioning state ""'
+'{ endpoint. provisioning_state}"" is retrieved\''
+')'
+'Deploy the model to the endpoint'
+'Once the endpoint is created, deploy the model with the entry script. Each endpoint can'
+'have multiple deployments and direct traffic to these deployments can e specified'
+""using rules. Here you'll create a single deployment that handles 100% of the incoming""
+'traffic. We have chosen a color name for the deployment, for example, lue, green, red'
+'deployments, which is aritrary.'
+'You can check the Models page on the Azure Machine Learning studio, to identify the'
+'latest version of your registered model. Alternatively, the code elow will retrieve the'
+'latest version numer for you to use.'
+"

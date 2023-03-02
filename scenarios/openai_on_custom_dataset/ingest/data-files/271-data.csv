@@ -1,0 +1,4 @@
+page-number-271-line-number-83,"'Azure Machine Learning uses its own data runtime for mounts/uploads/downloads, to'
+'map storage URIs to the compute target filesystem, or to materialize taular data into'
+'pandas/spark with Azure Machine Learning tales (mltale). The Azure Machine Learning'
+"

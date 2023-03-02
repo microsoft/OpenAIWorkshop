@@ -11,6 +11,7 @@ from azure.ai.formrecognizer import DocumentAnalysisClient
 from dotenv import load_dotenv
 import os
 import requests
+import csv
 
 from pathlib import Path  # Python 3.6+ only
 env_path = Path('.') / 'secrets.env'
@@ -201,7 +202,18 @@ def process_afr_result(result):
         }
         docs.append(search_doc)   
         add_document_to_index(page_idx, {"value": docs})
-        
+        #create_chunked_data_files(page_idx, search_doc)
+
+def create_chunked_data_files(page_idx, search_doc):
+    try:
+        output_path = os.path.join(os.getcwd(), "data-files", f'{page_idx}-data.csv')
+        with open(output_path, 'w') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([search_doc['id'], search_doc['text']])
+            
+    except Exception as e:
+        print(e)
+    
 
 try:    
     print(f"Analyze sample azure machine learning document from url: {formUrl}")

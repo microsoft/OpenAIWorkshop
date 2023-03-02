@@ -1,0 +1,15 @@
+page-number-79-line-number-34,"'model_path=""./model.onnx"")'
+'# configure an environment'
+'from azureml.core import Environment'
+""env = Environment (name='myenv' )""
+""python_packages = ['nltk', 'numpy', 'onnxruntime' ]""
+'for package in python_packages :'
+'env.python.conda_dependencies.add_pip_package (package)'
+'# configure an inference configuration with a scoring script'
+'from azureml.core.model import InferenceConfig'
+'inference_config = InferenceConfig('
+'environment=env,'
+'source_directory=""./source_dir"",'
+'entry_script=""./score.py"",'
+')'
+"

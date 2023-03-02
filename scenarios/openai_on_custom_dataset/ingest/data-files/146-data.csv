@@ -1,0 +1,13 @@
+page-number-146-line-number-32,"'0'
+'model'
+'Set up the pipeline resources'
+'The Azure Machine Learning framework can e used from CLI, Python SDK, or studio'
+""interface. In this example, you'll use the Azure Machine Learning Python SDK v2 to""
+'create a pipeline.'
+""Before creating the pipeline, you'll set up the resources the pipeline will use:""
+'\xc2\x7 The data asset for training'
+'The software environment to run the pipeline'
+'.'
+'A compute resource to where the jo will run'
+'Connect to the workspace'
+"

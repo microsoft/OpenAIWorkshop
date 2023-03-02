@@ -1,0 +1,12 @@
+page-number-306-line-number-31,"'the training lirary. For instance, an ONNX model will return a ModelProto while a'
+'decision tree trained with Scikit-Learn model will return a DecisionTreeClassifier'
+'oject. Use mlflow .< flavor>.load_model () to do so.'
+'Loading ack a model for running inference: You can load models using MLflow'
+'SDK and otain a wrapper where MLflow warranties there will e a predict'
+""function. It doesn't matter which flavor you are using, every MLflow model needs""
+'to implement this contract. Furthermore, MLflow warranties that this function can'
+'e called using arguments of type pandas . DataFrame, numpy .ndarray or'
+'dict[string, numpyndarray] (depending on the signature of the model). MLflow'
+'handles the type conversion to the input type the model actually expects. Use'
+'mlflow.pyfunc.load_model() to do so.'
+"

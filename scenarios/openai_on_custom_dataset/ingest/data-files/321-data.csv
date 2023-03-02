@@ -1,0 +1,5 @@
+page-number-321-line-number-64,"'where H is the forecast horizon, Imax is the maximum lag order, and Swindow is the'
+""window size for rolling aggregation features. If you're using cross-validation, the""
+'minimum numer of oservations is,'
+'Tcy =2H+(ncy-1)nstep + max(/max> >window) +1,'
+"

@@ -1,0 +1,17 @@
+page-number-149-line-number-36,"'type=AssetTypes. URI_FILE,'
+'description=""Dataset for credit card defaults"",'
+'tags={""source_type"": ""we"", ""source"": ""UCI ML Repo""},'
+'version=""1.0.0"",'
+')'
+'This code just created a Data asset, ready to e consumed as an input y the pipeline'
+""that you'll define in the next sections. In addition, you can register the data to your""
+'workspace so it ecomes reusale across pipelines.'
+'Registering the data asset will enale you to:'
+'.'
+'Reuse and share the data asset in future pipelines'
+'Use versions to track the modification to the data asset'
+'\xc2\x7 Use the data asset from Azure Machine Learning designer, which is Azure Machine'
+""Learning's GUI for pipeline authoring""
+""Since this is the first time that you're making a call to the workspace, you may e asked""
+""to authenticate. Once the authentication is complete, you'll then see the dataset""
+"

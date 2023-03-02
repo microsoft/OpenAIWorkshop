@@ -1,0 +1,6 @@
+page-number-61-line-number-45,"'outputs=[metrics_data, saved_model])'
+'#Find and register est model'
+'conda_dep = CondaDependencies ()'
+'conda_dep.add_pip_package(""azureml-sdk"")'
+'rcfg = RunConfiguration(conda_dependencies=conda_dep)'
+"

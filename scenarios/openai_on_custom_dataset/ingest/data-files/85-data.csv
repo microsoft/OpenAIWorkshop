@@ -1,0 +1,8 @@
+page-number-85-line-number-27,"'Auth mode'
+""No auth isn't supported for managed online endpoint. If you use the upgrade scripts, it""
+'will convert it to key auth. For key auth, the original keys will e used. Token-ased auth'
+'is also supported.'
+'TLS'
+""For ACI service secured with HTTPS, you don't need to provide your own certificates""
+'anymore, all the managed online endpoints are protected y TLS.'
+"

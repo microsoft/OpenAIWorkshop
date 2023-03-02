@@ -1,0 +1,16 @@
+page-number-207-line-number-35,"'A green success message appears at the top of the Jo screen stating that the'
+'deployment was started successfully. The progress of the deployment can e'
+'found in the Model summary pane under Deploy status.'
+'Once deployment succeeds, you have an operational we service to generate'
+'predictions.'
+'Proceed to the Next steps to learn more aout how to consume your new we service,'
+""and test your predictions using Power BI's uilt in Azure Machine Learning support.""
+'Clean up resources'
+'Deployment files are larger than data and experiment files, so they cost more to store.'
+'Delete only the deployment files to minimize costs to your account, or if you want to'
+'keep your workspace and experiment files. Otherwise, delete the entire resource group,'
+""if you don't plan to use any of the files.""
+'Delete the deployment instance'
+'Delete just the deployment instance from the Azure Machine Learning studio, if you'
+'want to keep the resource group and workspace for other tutorials and exploration.'
+"

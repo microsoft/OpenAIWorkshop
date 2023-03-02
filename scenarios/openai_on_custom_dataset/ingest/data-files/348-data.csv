@@ -1,0 +1,6 @@
+page-number-348-line-number-25,"'A component may have a set of parameters that you can use to configure the'
+""component's internal algorithms. When you select a component on the canvas, the""
+""component's parameters are displayed in the Properties pane to the right of the canvas.""
+'You can modify the parameters in that pane to tune your model. You can set the'
+'compute resources for individual components in the designer.'
+"

@@ -1,0 +1,12 @@
+page-number-121-line-number-31,"'Running machine learning pipelines with a Spark component'
+'Points to consider'
+'Managed (Automatic) Spark compute works well for most user scenarios that require'
+'quick access to distriuted computing through Apache Spark. However, to make an'
+'informed decision, users should consider the advantages and disadvantages of this'
+'approach.'
+'Advantages:'
+'\xc2\x7 No dependencies on other Azure resources to e created for Apache Spark (Azure'
+'Synapse infrastructure operates under the hood).'
+'\xc2\x7 No required suscription permissions to create Azure Synapse-related resources.'
+'No need for SQL pool quotas.'
+"

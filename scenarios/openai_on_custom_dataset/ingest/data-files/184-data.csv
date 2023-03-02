@@ -1,0 +1,10 @@
+page-number-184-line-number-29,"'.'
+""An Azure suscription. If you don't have an Azure suscription, create a free""
+'account2.'
+'Download the ankmarketing_train.csv data file. The y column indicates if a'
+'customer suscried to a fixed term deposit, which is later identified as the target'
+'column for predictions in this tutorial.'
+'Create a workspace'
+'An Azure Machine Learning workspace is a foundational resource in the cloud that you'
+'use to experiment, train, and deploy machine learning models. It ties your Azure'
+"

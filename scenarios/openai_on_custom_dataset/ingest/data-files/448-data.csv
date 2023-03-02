@@ -1,0 +1,14 @@
+page-number-448-line-number-33,"'regression).'
+'The fairness assessment capailities of this component come from the Fairlearn2'
+'package. Fairlearn provides a collection of model fairness assessment metrics and'
+'unfairness mitigation algorithms.'
+'\xc2\xae Note'
+'A fairness assessment is not a purely technical exercise. The Fairlearn open-source'
+'package can identify quantitative metrics to help you assess the fairness of a'
+""model, ut it won't perform the assessment for you. You must perform a qualitative""
+'analysis to evaluate the fairness of your own models. The sensitive features noted'
+'earlier are an example of this kind of qualitative analysis.'
+'Parity constraints for mitigating unfairness'
+""After you understand your model's fairness issues, you can use the mitigation""
+'algorithms in the Fairlearn 2 open-source package to mitigate those issues. These'
+"

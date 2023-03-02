@@ -1,0 +1,19 @@
+page-number-114-line-number-58,"'+ R'
+'asic-ci202209201721 \xc2\x7 Kernel ... CPU 0% RAM 2% Last saved a few second:'
+'Recommended (Compute Instances)'
+'asic-ci202209201721 -'
+'Running'
+'4 Cores, 14 GB (RAM), 28 GB (Disk),'
+'3. You can run code cells either y using Shift + Enter, or y selecting the Run cell'
+'tool to the right of the cell. Use one of these methods to run the cell now.'
+'Run cell'
+'D'
+'[ ]'
+'1'
+'print(""Hello, world!"")'
+'Press shift + enter to run'
+'+ Code + Markdown'
+'4. The rackets to the left of the cell now have a numer inside. The numer'
+""represents the order in which cells were run. Since this is the first cell you've run,""
+""you'll see [1] next to the cell. You also see the output of the cell, Hello, world !.""
+"

@@ -1,0 +1,12 @@
+page-number-46-line-number-31,"'description=""Model created from local file.""'
+')'
+'ml_client.models.create_or_update(file_model)'
+'Use model in an experiment/jo'
+'.'
+'SDK v1'
+'Python'
+""model = run.register_model(model_name='run-model-example',""
+""model_path='outputs/model/' )""
+""print(model.name, model.id, model.version, sep='\\t' )""
+'\xc2\x7 SDK v2'
+"

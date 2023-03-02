@@ -1,0 +1,15 @@
+page-number-261-line-number-54,"'& Locks'
+'-'
+'2. In the list, select the resource group that you created.'
+'3. Select Delete resource group.'
+'Type == all'
+'Location == all @'
+'Show hidden types'
+'Deleting the resource group also deletes all resources that you created in the designer.'
+'Delete individual assets'
+'In the designer where you created your experiment, delete individual assets y selecting'
+'them and then selecting the Delete utton.'
+'The compute target that you created here automatically autoscales to zero nodes when'
+""it's not eing used. This action is taken to minimize charges. If you want to delete the""
+'compute target, take these steps:'
+"

@@ -1,0 +1,12 @@
+page-number-126-line-number-10,"'Contains functionality for interacting with existing and creating new MLTale files. With the mltale'
+'package you can load, transform, and analyze data in any Python environment, including Jupyter'
+'Noteooks or your favorite Python IDE.'
+'Package models - Azure Machine Learning'
+'Package a model. Models can e packaged as either a docker image, which you can then download,'
+'or you can create a Dockerfile and use it to uild the image.'
+'Use Apache Spark in a machine learning pipeline (deprecated) - Azure Machine'
+'Learning'
+'Link your Azure Synapse Analytics workspace to your Azure machine learning pipeline to use Apache'
+'Spark for data manipulation.'
+'Show 5 more'
+"

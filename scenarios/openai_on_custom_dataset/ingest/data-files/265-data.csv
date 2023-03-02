@@ -1,0 +1,10 @@
+page-number-265-line-number-29,"'and actions (vers) are used etween SDK and CLI. For example, to list an asset, the'
+'list action can e used in oth CLI and SDK. The same list action can e used to list'
+'a compute, model, environment, and so on.'
+'Use cases for SDK v2'
+'The SDK v2 is useful in the following scenarios:'
+'\xc2\x7 Use Python functions to uild a single step or a complex workflow'
+'SDK v2 allows you to uild a single command or a chain of commands like Python'
+'functions - the command has a name, parameters, expects input, and returns'
+'output.'
+"

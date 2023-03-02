@@ -1,0 +1,9 @@
+page-number-388-line-number-28,"""with open(filename, 'w' ) as f:""
+'pickle.dump(model, f)'
+'mlflow.log_artifact(filename)'
+'Models'
+'A model in MLflow is also an artifact. However, we make stronger assumptions aout'
+'this type of artifacts. Such assumptions provide a clear contract etween the saved files'
+'and what they mean. When you log your models as artifacts (simple files), you need to'
+'know what the model uilder meant for each of them in order to know how to load the'
+"

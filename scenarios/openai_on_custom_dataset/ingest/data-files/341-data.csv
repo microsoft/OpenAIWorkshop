@@ -1,0 +1,14 @@
+page-number-341-line-number-33,"""statistical ias, to ensure your training data doesn't include isolated patterns that won't""
+'exist in live-prediction data. This scenario can e difficult to solve, ecause there may'
+'not e overfitting etween your train and test sets, ut there may e overfitting present'
+'when compared to live test data.'
+'Prevent target leakage'
+'Target leakage is a similar issue, where you may not see overfitting etween train/test'
+'sets, ut rather it appears at prediction-time. Target leakage occurs when your model'
+'""cheats"" during training y having access to data that it shouldn\'t normally have at'
+'prediction-time. For example, if your prolem is to predict on Monday what a'
+'commodity price will e on Friday, ut one of your features accidentally included data'
+""from Thursdays, that would e data the model won't have at prediction-time since it""
+'cannot see into the future. Target leakage is an easy mistake to miss, ut is often'
+'characterized y anormally high accuracy for your prolem. If you are attempting to'
+"

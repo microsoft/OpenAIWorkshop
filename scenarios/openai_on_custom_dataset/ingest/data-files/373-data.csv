@@ -1,0 +1,11 @@
+page-number-373-line-number-30,"'versions for etter usaility and flexiility. For more information on V2 data'
+'assets, see Work with data using SDK v2. For more information on the new'
+'V2 experience, see What is v2.'
+'For more information on supported input options, see Accessing data from atch'
+'endpoints jos.'
+'Specify the storage output location to any datastore and path. By default, atch'
+""endpoints store their output to the workspace's default lo store, organized y the Jo""
+'Name (a system-generated GUID).'
+'Security'
+'\xc2\x7 Authentication: Azure Active Directory Tokens'
+"

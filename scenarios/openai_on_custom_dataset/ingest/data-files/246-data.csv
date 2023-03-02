@@ -1,0 +1,7 @@
+page-number-246-line-number-46,"'Standard_NC12 VM nodes that automatically scales down to 0 nodes after 120'
+'seconds of inactivity.'
+'For more information on VM sizes, see sizes for Linux virtual machines in Azure.'
+'4. Right-click the specification file and select AzureML: Execute YAML.'
+'After a few minutes, the new compute target appears in the Compute > Compute'
+'clusters node of your workspace.'
+"

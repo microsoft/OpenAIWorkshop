@@ -20,28 +20,32 @@ In stage 1, full text search in Azure Cognitive Search is used to retrieve a num
 
 ### Prerequisites
 
-[PostMan Client Installed](https://www.postman.com/downloads/)
+* [PostMan Client Installed](https://www.postman.com/downloads/) 
+* Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 
 
 
 
-1. Azure services deployment
+## 1. Azure services deployment
 
 Deploy Azure Resources namely - Azure Function App to host facade for OpenAI and Search APIs, Azure Search Service and a Azure Form Recognizer resource.
 The Azure Function App also deploys the function code needed for powerapps automate flow. 
 
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fanildwarepo%2FOpenAIWorkshop%2Fmain%2Fscenarios%2Fopenai_on_custom_dataset%2Fdeploy%2Fazure-deploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FOpenAIWorkshop%2Fanildwa-dev%2Fscenarios%2Fopenai_on_custom_dataset%2Fdeploy%2Fazure-deploy.json)
 
 
 
 - Step 1: Setup Azure Cognitive Search and prepare data
 
+    As part of data preperation step, to work in Open AI, the documents are chunked into smaller units(20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with a python script below. 
+    To make it easy for the labs, the sample document has already been chunked and provided in the repo. 
+
     * Enable Semantic Search on Azure Portal. Navigate to Semantic Search blade and select Free plan. 
     
         ![](../../documents/media/enable-semantic-search.png)
 
-    * Create Search Index, Sematic Configuration and Index a few documents.
-      Run the below commands from cmd prompt to conifgure python environment. 
+    *   Create Search Index, Sematic Configuration and Index a few documents.
+        Run the below commands from cmd prompt to conifgure python environment. 
 
             
             git clone <repo>
@@ -50,8 +54,19 @@ The Azure Function App also deploys the function code needed for powerapps autom
             conda activate openaiworkshop
             pip install -r .\orchestrator\requirements.txt
 
-     Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
-     Rename secrets.rename to secrets.env. (This is recommended to prevent secrets from leaking into external environments.)
+    *   To configure Azure Search manully without using the above python approach, please follow the steps below
+
+        - In the storage container, that is created as part of the template in step 1, create a blob container. 
+        - Upload the data files in the ./data-files folder in this folder to the blob container using Azure Portal UI.
+        - Import data in Azure Search as shown below. Choose the blob container and provide the blob-folder name in to continue. 
+
+            ![](../../documents/media/search1.png)
+        - In the Customize Target Index, use id as the Azure Document Key and mark text as the Searchable Field. 
+        - This should index the chunked sample
+
+    *   Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
+        Rename secrets.rename to secrets.env. (This is recommended to prevent secrets from leaking into external environments.)
+        The secrets.env should be placed in the ingest folder along side the python script file search-indexer.py.
 
             AZURE_OPENAI_API_KEY=""
             AZURE_OPENAI_ENDPOINT="https://<>.openai.azure.com/"
@@ -64,8 +79,9 @@ The Azure Function App also deploys the function code needed for powerapps autom
             AFR_API_KEY=""
             INDEX_NAME="azure-ml-docs"
 
-     Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
-     The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service. 
+    *   This is an optional step. The document processing, chunking, indexing can all be scripted using any preferred language. 
+        This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
+        The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service. 
      
 
             cd .\scenarios\openai_on_custom_dataset\ingest\
@@ -73,7 +89,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
             
         
 
-- Step 2: Automated orchestrator service with Azure Function App
+## Step 2: Automated orchestrator service with Azure Function App
 
     Update the below configuration in Azure Function App configuration blade. 
 
@@ -103,39 +119,50 @@ The Azure Function App also deploys the function code needed for powerapps autom
                 "slotSetting": false
             }
 
-2. Test Azure service deployment
+## Step 3. Test Azure service deployment
 
-    Launch Postman and test the Azure Function to make sure it is returning results. 
+Launch Postman and test the Azure Function to make sure it is returning results. 
 
-    ![](../../documents/media/postman.png)
+![](../../documents/media/postman.png)
 
-3. Deploy client Power App
+## Step 4. Deploy client Power App
 
-    Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
+Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
 
-    ![](../../documents/media/powerapps1.png)
+![](../../documents/media/powerapps1.png)
 
-    From the top nav bar, click Import Canvas App and upload the Semantic-Search-Package.zip file from this git repo path. 
 
-    ![](../../documents/media/powerapps2.png)
+From the top nav bar, click Import Canvas App and upload the Semantic-Search-Package.zip file from this git repo path. 
 
-    ![](../../documents/media/powerapps3.png)
 
-    Click on Import to import the package into powerapps environment. 
+![](../../documents/media/powerapps2.png)
 
-    ![](../../documents/media/powerapps4.png)
 
-    This will import the Power App canvas app and Semantic-Search Power Automate Flow into the workspace. 
-    
-    ![](../../documents/media/powerapps7.png)
+![](../../documents/media/powerapps3.png)
 
-    Edit the Power Automate Flow and update Azure Function Url. 
-    
-    ![](../../documents/media/powerapps5.png)
 
-4. Test
+Click on Import to import the package into powerapps environment. 
 
-    Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp.
-    Select an  FAQ from dropdown and click Search. This is should bring up the answers powered by Open AI GPT-3 Models. 
+
+![](../../documents/media/powerapps4.png)
+
+
+This will import the Power App canvas app and Semantic-Search Power Automate Flow into the workspace. 
+
+
+
+![](../../documents/media/powerapps7.png)
+
+
+Edit the Power Automate Flow and update Azure Function Url. 
+
+
+
+![](../../documents/media/powerapps5.png)
+
+## Step 5. Test
+
+Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp.
+Select an  FAQ from dropdown and click Search. This is should bring up the answers powered by Open AI GPT-3 Models. 
 
 

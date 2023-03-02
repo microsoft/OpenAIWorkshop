@@ -1,0 +1,13 @@
+page-number-58-line-number-32,"'Python'
+'from azureml.core import ScriptRunConfig, Experiment, Workspace'
+'from azureml. train.hyperdrive import RandomParameterSampling,'
+'BanditPolicy, HyperDriveConfig, PrimaryMetricGoal'
+'from azureml.train.hyperdrive import choice, loguniform'
+""dataset = Dataset.get_y_name(ws, 'mnist-dataset' )""
+'# list the files referenced y mnist dataset'
+'dataset.to_path()'
+'#define the search space for your hyperparameters'
+'param_sampling = RandomParameterSampling('
+'{'
+""' -- atch-size': choice(25, 50, 100),""
+"

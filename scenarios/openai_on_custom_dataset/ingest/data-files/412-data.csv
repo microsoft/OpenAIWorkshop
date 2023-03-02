@@ -1,0 +1,13 @@
+page-number-412-line-number-32,"'step is a component. For example, considering a simple machine learning task of using'
+'historical data to train a sales forecasting model, you may want to uild a sequential'
+'workflow with data processing, model training, and model evaluation steps. For complex'
+'tasks, you may want to further reak down. For example, split one single data'
+'processing step into data ingestion, data cleaning, data pre-processing, and feature'
+'engineering steps.'
+'Once the steps in the workflow are defined, the next thing is to specify how each step is'
+'connected in the pipeline. For example, to connect your data processing step and model'
+'training step, you may want to define a data processing component to output a folder'
+'that contains the processed data. A training component takes a folder as input and'
+'outputs a folder that contains the trained model. These inputs and outputs definition'
+'will ecome part of your component interface definition.'
+"

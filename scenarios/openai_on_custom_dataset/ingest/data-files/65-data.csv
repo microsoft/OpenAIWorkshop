@@ -1,0 +1,18 @@
+page-number-65-line-number-37,"""parallel jo to predict input data in a pipelines jo. You'll see how to uild a parallel jo, and how to use it""
+'in a pipeline jo for oth SDK v1 and SDK v2.'
+'Prerequisites'
+'\xc2\x7 Prepare your SDK v2 environment: Install the Azure Machine Learning SDK v2 for Python'
+'\xc2\x7 Understand the asis of SDK v2 pipeline: How to create Azure Machine Learning pipeline with Python'
+'SDK v2'
+'Create parallel step'
+'SDK v1'
+'Python'
+'# Create the configuration to wrap the inference script'
+'from azureml.pipeline.steps import ParallelRunStep, ParallelRunConfig'
+'parallel_run_config = ParallelRunConfig('
+'source_directory=scripts_folder,'
+'entry_script=script_file,'
+'mini_atch_size=PipelineParameter(name=""atch_size_param"", default_value=""5""),'
+'error_threshold=10,'
+'output_action=""append_row"",'
+"

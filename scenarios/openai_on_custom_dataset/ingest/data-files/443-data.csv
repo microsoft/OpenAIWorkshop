@@ -1,0 +1,9 @@
+page-number-443-line-number-68,"'Model-'
+'agnostic'
+'Besides the interpretaility techniques descried aove, we support another SHAP-'
+'ased explainer, called Taular Explainer. Depending on the model, Taular Explainer'
+'uses one of the supported SHAP explainers:'
+'.'
+'Tree Explainer for all tree-ased models'
+'Deep Explainer for deep neural network (DNN) models'
+"
