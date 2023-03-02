@@ -121,9 +121,9 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 ## Step 3. Test Azure service deployment
 
-    Launch Postman and test the Azure Function to make sure it is returning results. 
+Launch Postman and test the Azure Function to make sure it is returning results. 
 
-    ![](../../documents/media/postman.png)
+![](../../documents/media/postman.png)
 
 ## Step 4. Deploy client Power App
 
@@ -162,7 +162,7 @@ Edit the Power Automate Flow and update Azure Function Url.
 
 ## Step 5. Test
 
-    Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp.
-    Select an  FAQ from dropdown and click Search. This is should bring up the answers powered by Open AI GPT-3 Models. 
+Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp.
+Select an  FAQ from dropdown and click Search. This is should bring up the answers powered by Open AI GPT-3 Models. 
 
 
