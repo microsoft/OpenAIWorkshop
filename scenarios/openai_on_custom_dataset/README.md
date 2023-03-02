@@ -31,7 +31,7 @@ In stage 1, full text search in Azure Cognitive Search is used to retrieve a num
 
 Deploy Azure Resources namely - Azure Function App to host facade for OpenAI and Search APIs, Azure Search Service and a Azure Form Recognizer resource.
 
-Here are the SKUs that are needed for the provisioned Azure Resources
+Here are the SKUs that are needed for the Azure Resources:
 
 - Azure Function App - Consumption Plan
 - Azure Cognitive Search - Standard (To support semantic search)
@@ -55,7 +55,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
     
         ![](../../documents/media/enable-semantic-search.png)
 
-    *   Create Search Index, Sematic Configuration and Index a few documents using automated script. The script can be run multiple times without any side affects.
+    *   Create Search Index, Sematic Configuration and Index a few documents using automated script. The script can be run multiple times without any side effects.
         Run the below commands from cmd prompt to conifgure python environment. Conda is optional if running in Azure Cloud Shell or if an isolated python environment is needed. 
 
             
