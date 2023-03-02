@@ -36,6 +36,9 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 - Step 1: Setup Azure Cognitive Search and prepare data
 
+    As part of data preperation step, to work in Open AI, the documents are chunked into smaller units(20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with a python script below. 
+    To make it easy for the labs, the sample document has already been chunked and provided in the repo. 
+
     * Enable Semantic Search on Azure Portal. Navigate to Semantic Search blade and select Free plan. 
     
         ![](../../documents/media/enable-semantic-search.png)
@@ -49,6 +52,16 @@ The Azure Function App also deploys the function code needed for powerapps autom
             conda create env -n openaiworkshop python=3.9
             conda activate openaiworkshop
             pip install -r .\orchestrator\requirements.txt
+
+    * To configure Azure Search manully without using the above python approach, please follow the steps below
+
+        - In the storage container, that is created as part of the template in step 1, create a blob container. 
+        - Upload the data files in the ./data-files folder in this folder to the blob container using Azure Portal UI.
+        - Import data in Azure Search as shown below. Choose the blob container and provide the blob-folder name in to continue. 
+
+            ![](../../documents/media/search1.png)
+        - In the Customize Target Index, use id as the Azure Document Key and mark text as the Searchable Field. 
+        - This should index the chunked sample
 
      Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
      Rename secrets.rename to secrets.env. (This is recommended to prevent secrets from leaking into external environments.)
