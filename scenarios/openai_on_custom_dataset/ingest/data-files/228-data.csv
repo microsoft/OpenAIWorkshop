@@ -1,9 +1,0 @@
-page-number-228-line-number-28,"'Create a real-time inference pipeline'
-'To deploy your pipeline, you must first convert the training pipeline into a real-time'
-'inference pipeline. This process removes training components and adds we service'
-'inputs and outputs to handle requests.'
-'-.'
-'Note'
-'Create inference pipeline only supports training pipelines which contain only the'
-'designer uilt-in components and must have a component like Train Model which'
-"

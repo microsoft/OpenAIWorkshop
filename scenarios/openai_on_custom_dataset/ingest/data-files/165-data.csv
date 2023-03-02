@@ -1,9 +1,0 @@
-page-number-165-line-number-28,"')'
-'Clean up resources'
-""If you're not going to use the endpoint, delete it to stop using the resource. Make sure""
-'no other deployments are using an endpoint efore you delete it.'
-'1 Note'
-'Expect this step to take approximately 6 to 8 minutes.'
-'Python'
-'ml_client.online_endpoints.egin_delete(name=online_endpoint_name)'
-"

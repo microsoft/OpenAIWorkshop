@@ -1,8 +1,0 @@
-page-number-123-line-number-67,"'.'
-'Running machine learning pipelines with a Spark component'
-'An attached Synapse Spark pool provides access to native Azure Synapse features. The'
-'user is responsile for the Synapse Spark pool provisioning, attaching, configuration,'
-'and management.'
-'The Spark session configuration for an attached Synapse Spark pool also offers an'
-'option to define a session timeout (in minutes). The session timeout ehavior resemles'
-"

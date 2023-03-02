@@ -1,9 +1,0 @@
-page-number-218-line-number-28,"'The remaining data will e availale through the right output port.'
-'7. In the Split Data details pane, expand Node info.'
-'8. Select the Comment text ox and enter Split the dataset into training set (0.7) and'
-'test set (0.3).'
-'Train the model'
-'Train the model y giving it a dataset that includes the price. The algorithm constructs a'
-'model that explains the relationship etween the features and the price as presented y'
-'the training data.'
-"

@@ -1,7 +1,0 @@
-page-number-285-line-number-46,"'* Use the pipeline as a reusale template for specific scenarios, such as'
-'retraining or atch scoring.'
-'* Track and version data sources, inputs, and outputs for your workflow.'
-'* Your workflow is implemented y different teams that work on specific'
-'steps independently. Steps can then e joined together in a pipeline to'
-'implement the workflow.'
-"

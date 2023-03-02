@@ -46,10 +46,7 @@
       "type": "string",
       "defaultValue": "python",
       "allowedValues": [
-        "dotnet",
-        "node",
-        "python",
-        "java"
+        "python"
       ],
       "metadata": {
         "description": "The language worker runtime to load in the function app."
