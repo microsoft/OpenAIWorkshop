@@ -20,11 +20,12 @@ In stage 1, full text search in Azure Cognitive Search is used to retrieve a num
 
 ### Prerequisites
 
-[PostMan Client Installed](https://www.postman.com/downloads/)
+* [PostMan Client Installed](https://www.postman.com/downloads/) 
+* Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 
 
 
 
-1. Azure services deployment
+## 1. Azure services deployment
 
 Deploy Azure Resources namely - Azure Function App to host facade for OpenAI and Search APIs, Azure Search Service and a Azure Form Recognizer resource.
 The Azure Function App also deploys the function code needed for powerapps automate flow. 
@@ -88,7 +89,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
             
         
 
-- Step 2: Automated orchestrator service with Azure Function App
+## Step 2: Automated orchestrator service with Azure Function App
 
     Update the below configuration in Azure Function App configuration blade. 
 
@@ -118,13 +119,13 @@ The Azure Function App also deploys the function code needed for powerapps autom
                 "slotSetting": false
             }
 
-2. Test Azure service deployment
+## Step 3. Test Azure service deployment
 
     Launch Postman and test the Azure Function to make sure it is returning results. 
 
     ![](../../documents/media/postman.png)
 
-3. Deploy client Power App
+## Step 4. Deploy client Power App
 
     Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
 
@@ -148,7 +149,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
     
     ![](../../documents/media/powerapps5.png)
 
-4. Test
+## Step 5. Test
 
     Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp.
     Select an  FAQ from dropdown and click Search. This is should bring up the answers powered by Open AI GPT-3 Models. 
