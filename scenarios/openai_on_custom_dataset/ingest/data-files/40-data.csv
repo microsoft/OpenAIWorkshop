@@ -1,0 +1,14 @@
+page-number-40-line-number-33,"""datastore_paths = [(datastore, 'animals' ) ]""
+'animal_ds = Dataset. File.from_files(path=datastore_paths)'
+'# create a FileDataset from image and lael files ehind pulic we'
+'urls'
+'we_paths ='
+""['https://azureopendatastorage.lo.core.windows.net/mnist/train-""
+""images-idx3-uyte.gz',""
+""'https://azureopendatastorage.lo.core.windows.net/mnist/train-laels-""
+""idx1-uyte.gz' ]""
+'mnist_ds = Dataset. File.from_files(path=we_paths)'
+'.'
+'SDK v2'
+'o Create a URI_FOLDER type data asset'
+"

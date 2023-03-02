@@ -1,0 +1,9 @@
+page-number-139-line-number-28,"'[int(m.version) for m in'
+'ml_client.models.list(name=registered_model_name) ]'
+')'
+'Deploy the latest version of the model.'
+'-.'
+'Note'
+'Expect this deployment to take approximately 6 to 8 minutes.'
+'Python'
+"

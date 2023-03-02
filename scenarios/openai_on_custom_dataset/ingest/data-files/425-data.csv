@@ -1,0 +1,18 @@
+page-number-425-line-number-37,"'meaningful control over otherwise highly autonomous Al systems.'
+'Accountaility in Azure Machine Learning: Machine learning operations (MLOps) is'
+'ased on DevOps principles and practices that increase the efficiency of Al workflows.'
+'Azure Machine Learning provides the following MLOps capailities for etter'
+'accountaility of your Al systems:'
+'.'
+'Register, package, and deploy models from anywhere. You can also track the'
+""associated metadata that's required to use the model.""
+'Capture the governance data for the end-to-end machine learning lifecycle. The'
+'logged lineage information can include who is pulishing models, why changes'
+'were made, and when models were deployed or used in production.'
+'.'
+'Notify and alert on events in the machine learning lifecycle. Examples include'
+'experiment completion, model registration, model deployment, and data drift'
+'detection.'
+'Monitor applications for operational issues and issues related to machine learning.'
+'Compare model inputs etween training and inference, explore model-specific'
+"

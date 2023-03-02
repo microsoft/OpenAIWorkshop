@@ -1,0 +1,9 @@
+page-number-25-line-number-28,"'and cloud. We also recommend using MLflow for tracking and model logging. See the'
+'MLflow concept article for details.'
+'Production model deployment'
+'We recommend v2 for production model deployment. Managed endpoints astract the'
+'IT overhead and provide a performant solution for deploying and scoring models, oth'
+'for online (near real-time) and atch (massively parallel) scenarios.'
+'Kuernetes deployments are supported in v2 through AKS or Azure Arc, enaling Azure'
+'cloud and on-premises deployments managed y your organization.'
+"

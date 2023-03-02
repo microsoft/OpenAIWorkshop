@@ -1,0 +1,12 @@
+page-number-101-line-number-71,"'afss://<FILE_SYSTEM_NAME>@<STORAGE_ACCOUNT_NAME>.dfs.core.windows.net/<PATH_TO_DA'
+'TA> format. Here, <FILE_SYSTEM_NAME> matches the container name.'
+'Python'
+'import pyspark . pandas as pd'
+'from pyspark.ml. feature import Imputer'
+'df = pd.read_csv('
+'""afss://<FILE_SYSTEM_NAME>@<STORAGE_ACCOUNT_NAME>.dfs.core.windows.net/data'
+'/titanic.csv"",'
+'index_col=""PassengerId"",'
+'imputer = Imputer(inputCols=[""Age""], outputCol=""Age"") . setStrategy('
+'""mean""'
+"

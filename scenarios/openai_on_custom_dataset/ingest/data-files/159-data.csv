@@ -1,0 +1,10 @@
+page-number-159-line-number-29,"'To code the pipeline, you use a specific @dsl.pipeline decorator that identifies the'
+'Azure Machine Learning pipelines. In the decorator, we can specify the pipeline'
+'description and default resources like compute and storage. Like a Python function,'
+'pipelines can have inputs. You can then create multiple instances of a single pipeline'
+'with different inputs.'
+'Here, we used input data, split ratio and registered model name as input variales. We'
+'then call the components and connect them via their inputs/outputs identifiers. The'
+'outputs of each step can e accessed via the . outputs property.'
+'Python'
+"

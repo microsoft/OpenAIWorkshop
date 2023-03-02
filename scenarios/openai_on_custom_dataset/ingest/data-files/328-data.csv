@@ -1,0 +1,17 @@
+page-number-328-line-number-36,"'penalized likelihood methods[2.'
+'2. Sweep over regression models and rank them, along with the est time series'
+'models from phase 1, according to their primary metric values from validation sets.'
+'3. Build an ensemle model from the top ranked models, calculate its validation'
+'metric, and rank it with the other models.'
+'The model with the top ranked metric value at the end of phase 3 is designated the est'
+'model.'
+'1 Important'
+""AutoML's final phase of model selection always calculates metrics on out-of-""
+'sample data. That is, data that was not used to fit the models. This helps to protect'
+'against over-fitting.'
+'AutoML has two validation configurations - cross-validation and explicit validation data.'
+'In the cross-validation case, AutoML uses the input configuration to create data splits'
+'into training and validation folds. Time order must e preserved in these splits, so'
+'AutoML uses so-called Rolling Origin Cross Validation which divides the series into'
+'training and validation data using an origin time point. Sliding the origin in time'
+"

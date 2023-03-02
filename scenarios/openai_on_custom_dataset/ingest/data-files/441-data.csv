@@ -1,0 +1,17 @@
+page-number-441-line-number-36,"'account age. Here, age, account size, and account age are features. Feature importance'
+""tells you how each data field affects the model's predictions. For example, although you""
+'might use age heavily in the prediction, account size and account age might not affect'
+'the prediction values significantly. Through this process, data scientists can explain'
+""resulting predictions in ways that give stakeholders visiility into the model's most""
+'important features.'
+'By using the classes and methods in the Responsile Al dashoard and y using SDK v2'
+'and CLI v2, you can:'
+'\xc2\x7 Explain model prediction y generating feature-importance values for the entire'
+'model (gloal explanation) or individual data points (local explanation).'
+'.'
+'Achieve model interpretaility on real-world datasets at scale.'
+'.'
+'Use an interactive visualization dashoard to discover patterns in your data and its'
+'explanations at training time.'
+'By using the classes and methods in the SDK v1, you can:'
+"

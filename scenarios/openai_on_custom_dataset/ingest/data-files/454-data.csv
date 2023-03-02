@@ -1,0 +1,16 @@
+page-number-454-line-number-35,"'small mean squared error, asymptotic normality, and construction of confidence'
+'intervals.'
+'What other tools does Microsoft provide for'
+'causal inference?'
+'\xc2\x7 Project Azua \xc2\xf provides a novel framework that focuses on end-to-end causal'
+'inference.'
+""Azua's DECI (deep end-to-end causal inference) technology is a single model that""
+'can simultaneously do causal discovery and causal inference. The user provides'
+'data, and the model can output the causal relationships among all variales.'
+'By itself, this approach can provide insights into the data. It enales the calculation'
+'of metrics such as individual treatment effect (ITE), average treatment effect (ATE),'
+'and conditional average treatment effect (CATE). You can then use these'
+'calculations to make optimal decisions.'
+'The framework is scalale for large data, in terms of oth the numer of variales'
+'and the numer of data points. It can also handle missing data entries with mixed'
+"

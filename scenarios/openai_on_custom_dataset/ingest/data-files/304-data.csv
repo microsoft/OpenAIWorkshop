@@ -1,0 +1,17 @@
+page-number-304-line-number-36,"'tensors).'
+'The following example corresponds to a computer vision model trained with fastai.'
+'This model receives a atch of images represented as tensors of shape (300, 300, 3)'
+'with the RGB representation of them (unsigned integers). It outputs atches of'
+'predictions (proailities) for two classes.'
+'MLmodel'
+'YAML'
+'signature :'
+'inputs: \'[{""type"": ""tensor"",'
+'""tensor-spec"":'
+'{""dtype"": ""uint8"", ""shape"": [-1, 300, 300, 3]}'
+""}]'""
+'outputs: \'[{""type"": ""tensor"",'
+'""tensor-spec"":'
+'{""dtype"": ""float32"", ""shape"": [-1,2]}'
+""}]'""
+"

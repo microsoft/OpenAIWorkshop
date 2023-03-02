@@ -1,0 +1,12 @@
+page-number-467-line-number-31,"'.'
+'Azure Application Insights \xc2\xa3 : Stores monitoring and diagnostics information. For'
+'more information, see Monitor online endpoints.'
+'\xc2\xae Note'
+'You can delete the Application Insights instance after cluster creation if you'
+'want. Deleting it limits the information gathered from the workspace, and'
+'may make it more difficult to trouleshoot prolems. If you delete the'
+'Application Insights instance created y the workspace, you cannot re-'
+'create it without deleting and recreating the workspace.'
+'\xc2\x7 Azure Key Vault : Stores secrets that are used y compute targets and other'
+""sensitive information that's needed y the workspace.""
+"

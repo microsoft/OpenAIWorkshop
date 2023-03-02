@@ -1,0 +1,10 @@
+page-number-313-line-number-29,"'Feature engineering is the process of using domain knowledge of the data to create'
+'features that help ML algorithms learn etter. In Azure Machine Learning, scaling and'
+'normalization techniques are applied to facilitate feature engineering. Collectively, these'
+'techniques and feature engineering are referred to as featurization.'
+'For automated machine learning experiments, featurization is applied automatically, ut'
+'can also e customized ased on your data. Learn more aout what featurization is'
+'included and how AutoML helps prevent over-fitting and imalanced data in your'
+'models.'
+'\xc2\xae Note'
+"

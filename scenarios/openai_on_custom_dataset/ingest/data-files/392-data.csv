@@ -1,0 +1,16 @@
+page-number-392-line-number-35,"'- cffi == 1.15.0'
+'- configparser == 3.7.4'
+'- defusedxml == 0.7.1'
+'- fastai == 2.4.1'
+'- google-api-core == 2.7.1'
+'- ipython == 8.2.0'
+'- psutil == 5.9.0'
+'name: mlflow-env'
+'(-)'
+'\xc2\xae Note'
+'MLflow environments and Azure Machine Learning environments are different'
+'concepts. While the former opperates at the level of the model, the latter operates'
+'at the level of the workspace (for registered environments) or jos/deployments'
+'(for annonymous environments). When you deploy MLflow models in Azure'
+""Machine Learning, the model's environment is uilt and used for deployment.""
+"

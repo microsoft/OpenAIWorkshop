@@ -1,0 +1,16 @@
+page-number-78-line-number-14,"'Data for training and scoring.'
+'azure.ai.ml.operations.DatastoreOperations class'
+'Represents a client for performing operations on Datastores. You should not instantiate this class'
+'directly. Instead, you should create MLClient and use this client via the property MLClient.datastores'
+'Upgrade data management to SDK v2 - Azure Machine Learning'
+'Upgrade data management from v1 to v2 of Azure Machine Learning SDK'
+'Upgrade script run to SDK v2 - Azure Machine Learning'
+'Upgrade how to run a script from SDK v1 to SDK v2'
+'azure.ai.ml.entities.ManagedOnlineDeployment class'
+'Managed Online endpoint deployment entity.'
+'azure.ai.ml.entities.Jo class'
+""Base class for jo, can't e instantiated directly.""
+'Upgrade datastore management to SDK v2 - Azure Machine Learning'
+'Upgrade datastore management from v1 to v2 of Azure Machine Learning SDK'
+'Show 5 more'
+"

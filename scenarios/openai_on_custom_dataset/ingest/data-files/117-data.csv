@@ -1,0 +1,18 @@
+page-number-117-line-number-37,"'tutorials'
+'o Data'
+'I Inhr'
+""2. The SDK v1 folder can e used with the previous, v1 version of the SDK. If you're""
+""just starting, you won't need these samples.""
+'3. Use noteooks in the SDK v2 folder for examples that show the current version of'
+'the SDK, v2.'
+'4. Select the noteook SDK v2/tutorials/azureml-in-a-day/azureml-in-a-day.ipyn.'
+""You'll see a read-only version of the noteook.""
+'5. To get your own copy, you can select Clone this noteook. This action will also'
+""copy the rest of the folder's content for that noteook. No need to do that now,""
+""though, as you're going to instead clone the whole folder.""
+'Clone tutorials folder'
+'You can also clone an entire folder. The tutorials folder is a good place to start learning'
+'more aout how Azure Machine Learning works.'
+'1. Open the SDK v2 folder.'
+'2. Select the "" ... "" at the right of tutorials folder to get the menu, then select Clone.'
+"

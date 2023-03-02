@@ -1,0 +1,11 @@
+page-number-472-line-number-30,"'The second step is optional, and the environment may instead come from the Docker'
+""uild context or ase image. In this case you're responsile for installing any Python""
+'packages, y including them in your ase image, or specifying custom Docker steps.'
+""You're also responsile for specifying the correct location for the Python executale. It is""
+'also possile to use a custom Docker ase image.'
+'Image caching and reuse'
+'If you use the same environment definition for another jo, Azure Machine Learning'
+'reuses the cached image from the Workspace ACR to save time.'
+'To view the details of a cached image, check the Environments page in Azure Machine'
+'Learning studio or use MLClient.environments to get and inspect the environment.'
+"

@@ -1,0 +1,10 @@
+page-number-398-line-number-29,"'script.'
+'You also provide the configuration of the target deployment platform. For example, the'
+'VM family type, availale memory, and numer of cores. When the image is created,'
+'components required y Azure Machine Learning are also added. For example, assets'
+'needed to run the we service.'
+'Batch scoring'
+'Batch scoring is supported through atch endpoints. For more information, see'
+'endpoints.'
+'Online endpoints'
+"

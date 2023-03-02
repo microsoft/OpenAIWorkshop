@@ -1,0 +1,10 @@
+page-number-252-line-number-29,"'3. From the directory where you added the configuration file, clone the the AzureML-'
+'Examples repository 2 .'
+'Bash'
+'git clone https://githu.com/Azure/azureml-examples.git -- depth 1'
+'4. Start the noteook server from the directory, which now contains the clone and'
+'the config file.'
+'Bash'
+'jupyter noteook'
+'Next steps'
+"

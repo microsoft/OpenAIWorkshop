@@ -1,0 +1,13 @@
+page-number-229-line-number-72,"'% Select Columns in Dataset'
+'Exclude normalized losses'
+'MD-Automoile_price_prediction -...'
+'E- Apply Transformation'
+'0'
+'C'
+'B .: Score Model'
+'We Service Output'
+'E Evaluate Model'
+'When you select Create inference pipeline, several things happen:'
+'\xc2\x7 The trained model is stored as a Dataset component in the component'
+'palette. You can find it under My Datasets.'
+"

@@ -1,0 +1,15 @@
+page-number-376-line-number-34,"""to production. It's optimized for oth cloud and edge and works on Linux, Windows,""
+'and Mac. Written in C++, it also has C, Python, C#, Java, and JavaScript (Node.js) APls'
+'for usage in a variety of environments. ONNX Runtime supports oth DNN and'
+'traditional ML models and integrates with accelerators on different hardware such as'
+'TensorRT on NVidia GPUs, OpenVINO on Intel processors, DirectML on Windows, and'
+'more. By using ONNX Runtime, you can enefit from the extensive production-grade'
+'optimizations, testing, and ongoing improvements.'
+'ONNX Runtime is used in high-scale Microsoft services such as Bing, Office, and Azure'
+'Cognitive Services. Performance gains are dependent on a numer of factors, ut these'
+'Microsoft services have seen an average 2x performance gain on CPU. In addition to'
+'Azure Machine Learning services, ONNX Runtime also runs in other products that'
+'support Machine Learning workloads, including:'
+'\xc2\x7 Windows: The runtime is uilt into Windows as part of Windows Machine Learning'
+'and runs on hundreds of millions of devices.'
+"

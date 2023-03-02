@@ -1,0 +1,14 @@
+page-number-226-line-number-93,"'Files in dataset'
+'4'
+'workspace = Workspace(suscription_id, resource_group, workspace_name)'
+'Current version'
+""dataset.download(target_path='.', overwrite=False)""
+'Latest version'
+'1'
+""dataset = Dataset.get_y_name(workspace, name='TD-Sample_1 :_ Regression _-_ Aut""
+'To delete a dataset, go to the storage account y using the Azure portal or Azure'
+'Storage Explorer and manually delete those assets.'
+'Next steps'
+""In part two, you'll learn how to deploy your model as a real-time endpoint.""
+'Continue to deploying models'
+"

@@ -1,0 +1,12 @@
+page-number-396-line-number-31,"'When you clone your pipeline, you iterate your pipeline design without losing your old'
+'versions.'
+'Create reusale software environments'
+""By using Machine Learning environments, you can track and reproduce your projects'""
+'software dependencies as they evolve. You can use environments to ensure that uilds'
+'are reproducile without manual software configurations.'
+'Environments descrie the pip and conda dependencies for your projects. You can use'
+'them for training and deployment of models. For more information, see What are'
+'Machine Learning environments ?.'
+'Register, package, and deploy models from'
+'anywhere'
+"

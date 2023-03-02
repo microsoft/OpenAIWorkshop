@@ -1,0 +1,9 @@
+page-number-88-line-number-28,"'as executale:'
+'Bash'
+'chmod +x migrate-service.sh'
+'7. After the deployment is completes successfully, you can verify the endpoint with'
+'the az ml online-endpoint invoke command.'
+'Contact us'
+'If you have any questions or feedack on the upgrade script, contact us at'
+'moeonoard@microsoft.com.'
+"

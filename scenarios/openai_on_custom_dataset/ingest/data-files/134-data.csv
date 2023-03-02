@@ -1,0 +1,9 @@
+page-number-134-line-number-48,"'y_test = test_df. pop( ""default payment next month"")'
+'# convert the dataframe values to array'
+'X_test = test_df.values'
+'print(f""Training with data of shape {X_train. shape}"")'
+'clf = GradientBoostingClassifier('
+'n_estimators=args.n_estimators, learning_rate=args. learning_rate'
+')'
+'clf.fit(X_train, y_train)'
+"

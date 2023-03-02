@@ -1,0 +1,7 @@
+page-number-397-line-number-26,"'TagName=TagValue without spaces.'
+""You can't delete a registered model that's eing used in an active deployment.""
+'For more information, Work with models in Azure Machine Learning.'
+'Package and deug models'
+""Before you deploy a model into production, it's packaged into a Docker image. In most""
+'cases, image creation happens automatically in the ackground during deployment. You'
+"

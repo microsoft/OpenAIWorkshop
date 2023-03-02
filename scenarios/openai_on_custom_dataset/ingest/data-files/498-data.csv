@@ -1,0 +1,10 @@
+page-number-498-line-number-29,"'we rowser, and makes calls to Azure services to perform tasks such as'
+'training a model, using designer, or viewing datasets. Some of these calls use'
+'a different communication flow than if you are using the SDK, CLI, REST API,'
+'or VS Code.'
+'\xc2\x7 Using Azure Machine Learning studio, SDK, CLI, or REST API to work with:'
+'\xc2\x7 Compute instances and clusters'
+'\xc2\x7 Azure Kuernetes Service'
+'\xc2\x7 Docker images managed y Azure Machine Learning'
+'Q Tip'
+"

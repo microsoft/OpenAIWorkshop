@@ -1,0 +1,12 @@
+page-number-247-line-number-31,"'to run the training script. For more information on curated environments, see Azure'
+'Machine Learning curated environments.'
+'To sumit the training jo:'
+'1. Open the jo.yml file.'
+'2. Right-click the file in the text editor and select AzureML: Execute YAML.'
+'At this point, a request is sent to Azure to run your experiment on the selected compute'
+'target in your workspace. This process takes several minutes. The amount of time to run'
+'the training jo is impacted y several factors like the compute type and training data'
+'size. To track the progress of your experiment, right-click the current run node and'
+'select View Jo in Azure portal.'
+'When the dialog requesting to open an external wesite appears, select Open.'
+"

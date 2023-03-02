@@ -1,0 +1,5 @@
+page-number-158-line-number-44,"'-- registered_model_name ${{inputs.registered_model_name}}'
+'-- model ${ {outputs.model} }'
+'# </component>'
+'Now create and register the component:'
+"

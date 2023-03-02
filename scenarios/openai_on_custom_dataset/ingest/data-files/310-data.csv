@@ -1,0 +1,12 @@
+page-number-310-line-number-31,"'models predict numerical output values ased on independent predictors. In regression,'
+'the ojective is to help estalish the relationship among those independent predictor'
+'variales y estimating how one variale impacts the others. For example, automoile'
+'price ased on features like, gas mileage, safety rating, etc.'
+'See an example of regression and automated machine learning for predictions in these'
+'Python noteooks: Hardware Performance 2 .'
+'Time-series forecasting'
+""Building forecasts is an integral part of any usiness, whether it's revenue, inventory,""
+'sales, or customer demand. You can use automated ML to comine techniques and'
+'approaches and get a recommended, high-quality time-series forecast. You can find the'
+'list of algorithms supported y AutoML here.'
+"
