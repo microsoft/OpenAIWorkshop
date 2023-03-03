@@ -157,4 +157,4 @@ Given sufficient examples and instructions, the model can fill in the missing va
 
 [Previous Section (Code Generation)](./06_Code_Generation.md)
 
-[Next Section (Recommendations)](../08_Recommendations.md)
+[Next Section (Recommendations)](./08_Recommendations.md)
