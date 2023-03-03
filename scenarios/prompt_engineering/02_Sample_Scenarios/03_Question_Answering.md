@@ -44,4 +44,4 @@ The response listed above is a concise summarization of the supplied text and it
 
 [Previous Section (Information Extraction)](./02_Information_Extraction.md)
 
-[Next Section (Classification)](./02_Classification.md)
+[Next Section (Text Classification)](./04_Text_Classification.md)

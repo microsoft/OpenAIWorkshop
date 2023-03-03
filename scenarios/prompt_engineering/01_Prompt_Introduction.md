@@ -301,4 +301,4 @@ Some of the examples above were adopted from the ["Best practices for prompt eng
 [Democratizing Artificial Intelligence Research, Education, and Technologies's Prompt Engineering Guide](https://github.com/dair-ai/Prompt-Engineering-Guide)
 
 ---
-[Next Section (Text Summarization)](./02_Text_Summarization.md)
+[Next Section (Sample Scenarios)](./02_Sample_Scenarios/01_Text_Summarization.md)
