@@ -1,4 +1,4 @@
-# Generating Data
+# Data Generation
 
 ## Topics
 
