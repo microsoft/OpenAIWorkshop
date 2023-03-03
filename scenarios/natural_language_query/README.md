@@ -27,10 +27,10 @@ Step 6: Azure function returns the results to end user
 - Step 1: Create SQL server with Sample database
   Please provide the database name as "oaisqldemo" and server name as "oaisqldemo"
     As part of data preperation step, please foolow the below link to create the SQL database in the resourcegroup you wil like to host your databbase and openai service  https://www.sqlshack.com/create-an-azure-sql-database-with-built-in-sample-data/
-    
-
-<img width="674" alt="image" src="https://user-images.githubusercontent.com/50298139/222620873-0cb5201d-d587-41aa-b58d-d0b2bf73785e.png">
 <img width="905" alt="image" src="https://user-images.githubusercontent.com/50298139/222620998-e30223f8-b44a-4524-a80a-3aba68ce30ee.png">
+Please click "Set admin" and provide the functionname which in diagram is "azureopenaidemo" as the Admin Name
+<img width="674" alt="image" src="https://user-images.githubusercontent.com/50298139/222620873-0cb5201d-d587-41aa-b58d-d0b2bf73785e.png">
+
 
 
    
