@@ -55,28 +55,8 @@ az functionapp deployment source config-zip -g <resource_group> -n <app_name> --
 
 Update the function configuration in Azure Function App configuration blade, add below parameters from your Open AI API deployment parameters 
 
+
            [
-  {
-    "name": "GPT_ENGINE",
-    "value": "text-davinci-003",
-    "slotSetting": false
-  },
-  {
-    "name": "OPENAI_API_KEY",
-    "value": "6b134b679f0e4a5b90925cdca6eaf391",
-    "slotSetting": false
-  },
-  {
-    "name": "OPENAI_RESOURCE_ENDPOINT",
-    "value": "https://azopenaidemo.openai.azure.com/",
-    "slotSetting": false
-  },
-  {
-    "name": "SQL_Server_Name",
-    "value": "oaisqldemo.database.windows.net",
-    "slotSetting": false
-  }
-]
 Configuration Blade
 
 <img width="876" alt="image" src="https://user-images.githubusercontent.com/50298139/222794270-8a16e80d-a108-4d7c-8039-7d85a71711af.png">
