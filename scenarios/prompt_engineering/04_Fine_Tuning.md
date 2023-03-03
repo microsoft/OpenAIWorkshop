@@ -71,4 +71,4 @@ Hosting a Fine Tune model also has its cost but on medium to high volume that co
 
 ---
 
-[Previous Section (Advanced Concepts)](./02_Advanced_Concepts.md)
+[Previous Section (Advanced Concepts)](./03_Advanced_Concepts.md)
