@@ -88,7 +88,6 @@ This will import the Power App canvas app and Semantic-Search Power Automate Flo
 
 <img width="746" alt="image" src="https://user-images.githubusercontent.com/50298139/222619006-e9eaa507-836b-4ba7-bf1f-d78e0d84479d.png">
 
-<img width="706" alt="image" src="https://user-images.githubusercontent.com/50298139/222617320-e84339ba-ecd7-46dd-88e2-a1879df84a5a.png">
 
  Edit the Power Automate Flow and update Azure Function Url. 
 
