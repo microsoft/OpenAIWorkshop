@@ -89,10 +89,10 @@ Click on Import to import the package into powerapps environment. This will impo
 
 <img width="706" alt="image" src="https://user-images.githubusercontent.com/50298139/222617320-e84339ba-ecd7-46dd-88e2-a1879df84a5a.png">
 
-In the Flows Pane, PowerAutomate Flow needs to be enabled. At this point, the powerapp can be run as is. It connects to a pre-built Azure Function App. 
+In the Flows Pane, PowerAutomate Flow needs to be enabled. At this point, the powerapp can be run as is. It connects to a pre-built Azure Function App. Edit the Power Automate Flow and update Azure Function Url. 
 
 <img width="928" alt="image" src="https://user-images.githubusercontent.com/50298139/222619285-09a545a9-73c3-4dd9-a1b6-c9cc2ca7e440.png">
-Edit the Power Automate Flow and update Azure Function Url. 
+
 
 
 
