@@ -45,7 +45,7 @@ First create a function App
 The function zip file "azurefunc.zip" can be downloaded from below link
 <img width="1003" alt="image" src="https://user-images.githubusercontent.com/50298139/222626030-ea7faa93-cdfd-4aaf-af0b-fe0ade76d5ed.png">
 
-Run the below command and provide the function Zip file "azurefunc.zip" to install the function file. Please provdie the resourve group name ,function app name which you have created in earlier step and the zip filw which you dowmloaded in earlier step
+Run the below command and provide the function Zip file "azurefunc.zip" to install the function file. Please provdie the resourcce group name ,function app name (created in earlier step) and the zip file which you dowmloaded in earlier step
 
 
 az functionapp deployment source config-zip -g <resource_group> -n <app_name> --src <zip_file_path>
