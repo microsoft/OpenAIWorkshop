@@ -146,7 +146,7 @@ Navigate to https://make.powerapps.com/ and click on Apps on the left navigation
 ![](../../documents/media/powerapps1.png)
 
 
-From the top nav bar, click Import Canvas App and upload the Semantic-Search-Package.zip file from this git repo path. 
+From the top nav bar, click Import Canvas App and upload the Semantic-Search-App-Template_20230303012916.zip file from this git repo path. 
 
 
 ![](../../documents/media/powerapps2.png)
