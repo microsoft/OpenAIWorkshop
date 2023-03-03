@@ -134,7 +134,8 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 ## Step 3. Test Azure service deployment
 
-Launch Postman and test the Azure Function to make sure it is returning results. The num_search_result query parameter can be altered to retrieve more or less search results. Notice the query parameter num_search_result in the screen shot below. 
+Launch Postman and test the Azure Function to make sure it is returning results. The num_search_result query parameter can be altered to retrieve more or less search results. Notice the query parameter num_search_result in the screen shot below. num_search_result is a mandatory query parameter.
+
 
 ![](../../documents/media/postman.png)
 
@@ -167,6 +168,10 @@ This will import the Power App canvas app and Semantic-Search Power Automate Flo
 
 ![](../../documents/media/powerapps7.png)
 
+
+In the Flows Pane, PowerAutomate Flow needs to be enabled. At this point, the powerapp can be run as is. It connects to a pre-built Azure Function App. 
+
+![](../../documents/media/powerapps8.png)
 
 Edit the Power Automate Flow and update Azure Function Url. Optionaly num_search_result query parameter can be altered.
 
