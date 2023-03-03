@@ -32,9 +32,15 @@ Please click "Set admin" and provide the functionname which in diagram is "azure
 
 
    
-## Step 2: Automated orchestrator service with Azure Function App
+## Step 2: Deploy Azure Function App
 
-    Update the below configuration in Azure Function App configuration blade. 
+Run the below command and provide the function Zip file Zip file 
+
+az functionapp deployment source config-zip -g <resource_group> -n \
+<app_name> --src <zip_file_path>
+
+
+Update the function configuration in Azure Function App configuration blade, replace the name of the end point, key and GPT_ENGINE with your OPen AI API deployment parameters 
 
             {
                 "name": "GPT_ENGINE",

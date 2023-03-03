@@ -4,6 +4,7 @@
 
   - [What is Fine Tuning?](#what-is-fine-tuning)
   - [When would you consider Fine Tuning vs Prompt Engineering?](#when-would-you-consider-fine-tuning-vs-prompt-engineering)
+  - [Operation Cost Considerations](#operation-cost-considerations)
 
 
 ---
@@ -53,6 +54,14 @@ You might consider prompt engineering when you have a limited or no dataset, and
 **IMPORTANT NOTE**: Both methods require some trial and error, but fine-tuning usually takes more time and resources than prompt engineering, and it is not always necessary to fine-tune a model to get the desired results. It is therefore preferable to start with prompt engineering and only consider fine-tuning if you are unable to get the desired results.
 
 ---
+
+## Operation Cost Considerations
+
+Prompt engineering could be less cost effective if you need to provide a large amount of instructions to accomplish something similar than what you would get with a Fine Tuned model as you'd consume tokens with every request sent.
+
+Hosting a Fine Tune model also has its cost but on medium to high volume that cost would be mostly irrelevant, so operational cost efficiency could be a driver for Fine Tuning.
+
+---
 ## References
 
 [OpenAI Fine Tuning](https://platform.openai.com/docs/guides/fine-tuning)
@@ -62,4 +71,4 @@ You might consider prompt engineering when you have a limited or no dataset, and
 
 ---
 
-[Previous Section (Advanced Concepts)](./02_Advanced_Concepts.md)
+[Previous Section (Advanced Concepts)](./03_Advanced_Concepts.md)
