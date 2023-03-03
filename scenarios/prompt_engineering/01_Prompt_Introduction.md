@@ -7,7 +7,7 @@
 - [Elements of a Prompt](#elements-of-a-prompt)
 - [General Tips for Designing Prompts](#general-tips-for-designing-prompts)
 
-**Note:** This link leads to another file, but it is a [Glossary of Terms](./prompt_engineering/9999_glossary.md) covering many of the technical terms used the following guides.
+**Note:** This link leads to another file, but it is a [Glossary of Terms](./prompt_engineering/99_glossary.md) covering many of the technical terms used the following guides.
 
 ## What is a prompt?
 ![image](https://www.closerscopy.com/img/blinking-cursor-v2.gif)
@@ -174,7 +174,7 @@ Not all the components are required for a prompt and the format depends on the t
 ---
 ## General Tips for Designing Prompts
 
-> **Note:** We are not examing hyperparameters in this section, however, here's a quick link to some pointers on hyperparameters: [Basic Overview of Azure OpenAI Service Hyperparameters](./prompt_engineering/9998_hyperparameters.md)
+> **Note:** We are not examing hyperparameters in this section, however, here's a quick link to some pointers on hyperparameters: [Basic Overview of Azure OpenAI Service Hyperparameters](./prompt_engineering/98_hyperparameters.md)
 
 Here are some tips to keep in mind while you are designing your prompts:
 
@@ -265,41 +265,36 @@ engineering when interacting with a large language model using an 8th grade read
 ```
 
 ### To do or not to do?
-Another common tip when designing prompts is to avoid phrasing things in the passive tone and negative i.e. "Should not..", "can not", "You must not.." etc. Instead, describe what should be done instead i.e. "Do this [task] when presented with [this scenario]. This encourages more specificity on the prompt and focuses on the details that lead to good responses from the model.
+Another common tip when designing prompts is to avoid saying what not to do but say what to do instead. This encourages more specificity and focus on the details that lead to good responses from the model.
 
 Here is an example of an IT Support chatbot failing to uphold our instructions because the instructions are phrased in a negative manner. 
 
 *Prompt:*
 ```
-The following is an exchange between a support agent and a customer. The customer has forgotten their password 
-and is locked out of their account. Do not ask for the password or personal information while assisting them.
+The following is an exchange between an IT Support Agent and a customer. The customer is locked out of their account. DO NOT ASK FOR THEIR PASSWORD. DO NOT ASK ABOUT PERSONAL INFORMATION.
 
 Customer: I cannot log into my account.
-Agent:
+IT Support Agent:
 ```
 
 *Output:*
 ```
-I'm sorry to hear that. Can you tell me what email address you used to sign up for the account?
+Okay, I understand. Can you please tell me the email address you are trying to login with?
 ```
 
 Here is a better prompt:
 
 *Prompt:*
 ```
-The following is an exchange between a support agent and a customer. The customer has forgotten their password and
-is locked out of their account. No personal information such as name, email address, account number, or phone number
-should be exchanged. If personal information is required to assist the customer, ask them to click on the
-"Forgot Password?" link at the sign-on page and follow the on-screen instructions.
+The following is an exchange between an IT Support Agent and a customer. The customer is locked out of their account. The IT Support Agent must not discuss personal information such as username, password, name, email address, account number, or phone number, or security questions. If the IT Support Agent needs personal information to assist the customer, the IT Support Agent must ask them to click on the "Forgot Password?" link at the sign-on page and follow the on-screen instructions.
 
 Customer: I cannot log into my account.
-Agent:
+IT Support Agent:
 ```
 
 *Output:*
 ```
-I apologize for the inconvenience. Can you please click on the "Forgot Password?" link at the sign-on page
-and follow the on-screen instructions to reset your password?
+I apologize that you are having difficulty accessing your account. Please click on the "Forgot Password?" link at the sign-on page and follow the on-screen instructions to reset your password and access your account.
 ```
 
 Some of the examples above were adopted from the ["Best practices for prompt engineering with OpenAI API" article](https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-openai-api) and the 
