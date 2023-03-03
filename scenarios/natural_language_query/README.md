@@ -28,7 +28,7 @@ Create SQL server with Sample database,please provide the database name as **"oa
 <img width="905" alt="image" src="https://user-images.githubusercontent.com/50298139/222620998-e30223f8-b44a-4524-a80a-3aba68ce30ee.png">
 
 
-Please click "Set admin" and **provide your functionname** example function name in below diagram is "azureopenaidemo" as the Admin Name
+Please click "Set admin" and **provide your functionname** which you created as in step 2 in below diagram is "azureopenaidemo" as the Admin Name
 <img width="674" alt="image" src="https://user-images.githubusercontent.com/50298139/222620873-0cb5201d-d587-41aa-b58d-d0b2bf73785e.png">
 
 
