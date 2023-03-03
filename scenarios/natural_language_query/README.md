@@ -48,11 +48,6 @@ Clone the repository to VS Code and open the cloned folder in VS Code, right cli
 
 <img width="284" alt="image" src="https://user-images.githubusercontent.com/50298139/222796264-4d70c370-75bc-475b-b3ac-5a63338f790d.png">
 
-
-az functionapp deployment source config-zip -g <resource_group> -n <app_name> --src <zip_file_path>
-
-
-
 Update the function configuration in Azure Function App configuration blade, add below parameters from your Open AI API deployment parameters 
 
 
