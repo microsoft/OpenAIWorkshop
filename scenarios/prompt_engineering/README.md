@@ -1,17 +1,15 @@
 # Prompt Engineering
 ## [Introduction](./01_Prompt_Introduction.md)
+## Sample Scenarios
+* [Text Summarization](./02_Sample_Scenarios/01_Text_Summarization.md)
+* [Information Extraction](./02_Sample_Scenarios/02_Information_Extraction.md)
+* [Question Answering](./02_Sample_Scenarios/03_Question_Answering.md)
+* [Text Classification](./02_Sample_Scenarios/04_Text_Classification.md)
+* [Conversation](./02_Sample_Scenarios/05_Conversation.md)
+* [Code Generation](./02_Sample_Scenarios/06_Code_Generation.md)
+* [Data Generation](./02_Sample_Scenarios/07_Data_Generation.md)
+* [Recommendations](./02_Sample_Scenarios/08_Recommendations.md)
 ## [Advanced Concepts](./03_Advanced_Concepts.md)
 ## [Fine Tuning](./04_Fine_Tuning.md)
-## Sample Scenarios
-* [Text Summarization](./02_Text_Summarization.md)
-* [Information Extraction](./02_Information_Extraction.md)
-* [Question Answering](./02_Question_Answering.md)
-* [Text Classification](./02_Text_Classification.md)
-* [Conversation](./02_Conversation.md)
-* [Code Generation](./02_Code_Generation.md)
-* [Recommendations](./02_Recommendations.md)
-* [Generating Data](./02_Generating_Data.md)
 ## [Hyperparamaters Overview](./98_Hyperparameters_Overview.md)
 ## [Glossary](./99_Glossary.md)
-
-

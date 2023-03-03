@@ -208,4 +208,4 @@ Now we can see that the model clearly understands that we want to only extract 3
 
 [Previous Section (Sample Scenarios)](./02_Sample_Scenarios.md)
 
-[Next Section (Fine Tuning)](./04_Fine_Tuning.md)]
+[Next Section (Fine Tuning)](./04_Fine_Tuning.md)
