@@ -60,6 +60,8 @@ Update the function configuration in Azure Function App configuration blade, rep
                 "slotSetting": false
             }
 
+<img width="922" alt="image" src="https://user-images.githubusercontent.com/50298139/222626792-9c786927-7965-41df-88be-3c9609032678.png">
+
 
 
 
