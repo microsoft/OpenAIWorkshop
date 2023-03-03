@@ -130,6 +130,6 @@ Please note how comprehensive the output is. You'll most likely want to control 
 
 ---
 
-[Previous Section (Information Extraction)](./02_Information_Extraction.md)]
+[Previous Section (Information Extraction)](./02_Information_Extraction.md)
 
-[Next Section (Classification)](./02_Classification.md)]
+[Next Section (Classification)](./02_Classification.md)

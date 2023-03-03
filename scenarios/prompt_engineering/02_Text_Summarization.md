@@ -88,4 +88,4 @@ Abstract: Jupiter is the fifth planet from the Sun and is the brightest object i
 
 [Previous Section (Prompt Introduction)](./01_Prompt_Introduction.md)
 
-[Next Section (Information Extraction)](./02_Information_Extraction.md)]
+[Next Section (Information Extraction)](./02_Information_Extraction.md)
