@@ -56,7 +56,7 @@ Configuration Blade
 
 <img width="876" alt="image" src="https://user-images.githubusercontent.com/50298139/222794270-8a16e80d-a108-4d7c-8039-7d85a71711af.png">
 
-Once function is deployed, please test on the function from function console in azure portal
+Once function is deployed, please test the function from function console in azure portal
 
 <img width="920" alt="image" src="https://user-images.githubusercontent.com/50298139/222808013-01227e88-98a0-47ac-a42f-268b64654da2.png">
 
