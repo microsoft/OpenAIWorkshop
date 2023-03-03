@@ -22,6 +22,8 @@ This codex can be used for a variety of tasks such as completing code snippets, 
 
 ## Parameters Setup
 
+**Note:** Switch your Deployments to a 'code-davinci-002' model.
+
 **Note:** Increase the Max Length (tokens) variable slider to 1,200 tokens to allow for longer code outputs to be generated for your use cases.
 
 **Note**: Please setup a "stop sequences" item in the prompt to let the model know when to stop generating code. For example, you can add the following to the prompt: "#" (type # and then press 'tab' to enable that stop sequence). The model will look at your prompt to complete the prompt but will not try to continue to generate more output based on the prompt 'context'.
@@ -112,6 +114,8 @@ HAVING COUNT(t.TrackId) > 10
 ```
 
 You can leverage the power of this codex for more advanced scenarios like helping you refactor code, document code, create unit tests and more. Remember that you can provide as much context as needed to the prompt to help the codex generate the code you need.
+
+**Note:** Switch your 'Deployments' back to a 'text-davinci-002' or 'text-davinci-003' model for the rest of the scenarios.
 
 ---
 
