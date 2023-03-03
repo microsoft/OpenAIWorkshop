@@ -56,7 +56,7 @@ az functionapp deployment source config-zip -g <resource_group> -n <app_name> --
 Update the function configuration in Azure Function App configuration blade, add below parameters from your Open AI API deployment parameters 
 
 
-           [
+           
 Configuration Blade
 
 <img width="876" alt="image" src="https://user-images.githubusercontent.com/50298139/222794270-8a16e80d-a108-4d7c-8039-7d85a71711af.png">
