@@ -42,10 +42,11 @@ First create a function App
 <img width="395" alt="image" src="https://user-images.githubusercontent.com/50298139/222745311-e0659d19-2c4f-4a06-b563-c6cbcb06e115.png">
 
 
-The function zip file "azurefunc.zip" can be downloaded from below link
-<img width="1003" alt="image" src="https://user-images.githubusercontent.com/50298139/222626030-ea7faa93-cdfd-4aaf-af0b-fe0ade76d5ed.png">
 
-Run the below command and provide the function Zip file "azurefunc.zip" to install the function file. Please provdie the resourcce group name ,function app name (created in earlier step) and the zip file which you dowmloaded in earlier step
+
+Clone the repository to VS Code and open the cloned folder in VS Code, right click the "natural_language_query" and click "Deploy to Function App". Please ensure VS Code is linked to your Azure subscription and Azure function where you have deployed the function app in previous step
+
+<img width="602" alt="image" src="https://user-images.githubusercontent.com/50298139/222793570-fd8614f0-9097-4557-b6e8-10e095d1cf46.png">
 
 
 az functionapp deployment source config-zip -g <resource_group> -n <app_name> --src <zip_file_path>
