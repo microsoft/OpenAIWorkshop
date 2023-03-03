@@ -24,7 +24,7 @@ Step 6: Azure function returns the results to end user
 
 
 
-Create SQL server with Sample database,please provide the database name as **"oaisqldemo"** and server name as **"oaisqldemo"**.Follow the links in below step to create the SQL database in the resourcegroup where you wil like to host your databbase and openai service  https://www.sqlshack.com/create-an-azure-sql-database-with-built-in-sample-data/
+Create SQL server with Sample database,please provide the database name as **"oaisqldemo"**.Follow the links in below step to create the SQL database in the resourcegroup where you wil like to host your databbase and openai service  https://www.sqlshack.com/create-an-azure-sql-database-with-built-in-sample-data/
 <img width="905" alt="image" src="https://user-images.githubusercontent.com/50298139/222620998-e30223f8-b44a-4524-a80a-3aba68ce30ee.png">
 
 
@@ -55,25 +55,31 @@ az functionapp deployment source config-zip -g <resource_group> -n <app_name> --
 
 Update the function configuration in Azure Function App configuration blade, add below parameters from your Open AI API deployment parameters 
 
-            {
-                "name": "GPT_ENGINE",
-                "value": "<Name of your Davinci model deployment>,
-                "slotSetting": false
-            },
-            {
-                "name": "OPENAI_API_KEY",
-                "value": "<>",
-                "slotSetting": false
-            },
-            {
-                "name": "OPENAI_RESOURCE_ENDPOINT",
-                "value": "https://<>.openai.azure.com/",
-                "slotSetting": false
-            }
+           [
+  {
+    "name": "GPT_ENGINE",
+    "value": "text-davinci-003",
+    "slotSetting": false
+  },
+  {
+    "name": "OPENAI_API_KEY",
+    "value": "6b134b679f0e4a5b90925cdca6eaf391",
+    "slotSetting": false
+  },
+  {
+    "name": "OPENAI_RESOURCE_ENDPOINT",
+    "value": "https://azopenaidemo.openai.azure.com/",
+    "slotSetting": false
+  },
+  {
+    "name": "SQL_Server_Name",
+    "value": "oaisqldemo.database.windows.net",
+    "slotSetting": false
+  }
+]
 Configuration Blade
 
-<img width="922" alt="image" src="https://user-images.githubusercontent.com/50298139/222626792-9c786927-7965-41df-88be-3c9609032678.png">
-
+<img width="876" alt="image" src="https://user-images.githubusercontent.com/50298139/222794270-8a16e80d-a108-4d7c-8039-7d85a71711af.png">
 
 
 
