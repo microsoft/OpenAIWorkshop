@@ -80,16 +80,17 @@ Click on Import to import the package into powerapps environment. This will impo
 
 <img width="929" alt="image" src="https://user-images.githubusercontent.com/50298139/222617513-10bf28ae-a2d7-4211-a702-a951098e3c3c.png">
 
+
 <img width="926" alt="image" src="https://user-images.githubusercontent.com/50298139/222618019-49eab211-1c77-474c-a3aa-8f377df26255.png">
 
-
+This will import the Power App canvas app and Semantic-Search Power Automate Flow into the workspace.
 
 
 <img width="746" alt="image" src="https://user-images.githubusercontent.com/50298139/222619006-e9eaa507-836b-4ba7-bf1f-d78e0d84479d.png">
 
 <img width="706" alt="image" src="https://user-images.githubusercontent.com/50298139/222617320-e84339ba-ecd7-46dd-88e2-a1879df84a5a.png">
 
-In the Flows Pane, PowerAutomate Flow needs to be enabled. At this point, the powerapp can be run as is. It connects to a pre-built Azure Function App. Edit the Power Automate Flow and update Azure Function Url. 
+ Edit the Power Automate Flow and update Azure Function Url. 
 
 <img width="928" alt="image" src="https://user-images.githubusercontent.com/50298139/222619285-09a545a9-73c3-4dd9-a1b6-c9cc2ca7e440.png">
 
