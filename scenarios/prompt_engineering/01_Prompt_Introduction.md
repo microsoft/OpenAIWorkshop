@@ -305,7 +305,5 @@ and follow the on-screen instructions to reset your password?
 Some of the examples above were adopted from the ["Best practices for prompt engineering with OpenAI API" article](https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-openai-api) and the 
 [Democratizing Artificial Intelligence Research, Education, and Technologies's Prompt Engineering Guide](https://github.com/dair-ai/Prompt-Engineering-Guide)
 
-
-
-
-
+---
+[Next Section (Text Summarization)](./02_Text_Summarization.md)]
