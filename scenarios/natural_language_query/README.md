@@ -37,6 +37,8 @@ Please click "Set admin" and **provide your functionname** example function name
 ## Step 2: Deploy Azure Function App
 
 First create a function App 
+
+
 <img width="395" alt="image" src="https://user-images.githubusercontent.com/50298139/222745311-e0659d19-2c4f-4a06-b563-c6cbcb06e115.png">
 
 
