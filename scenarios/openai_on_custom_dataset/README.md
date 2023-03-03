@@ -140,6 +140,7 @@ Launch Postman and test the Azure Function to make sure it is returning results.
 
 ## Step 4. Deploy client Power App
 
+From the powerapp folder, download Semantic-Search-App-Template_20230303012916.zip powerapp package. This has a powerapp and powerautomate template app pre-built.
 Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
 
 ![](../../documents/media/powerapps1.png)
