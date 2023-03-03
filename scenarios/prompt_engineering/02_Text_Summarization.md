@@ -2,6 +2,9 @@
 
 ## Topics
 
+- [Unstructured Text Summarization](#unstructured-text-summarization)
+- [Semi-Structured Text Summarization](#semi-structured-text-summarization)
+
 ---
 
 ## Unstructured Text Summarization
