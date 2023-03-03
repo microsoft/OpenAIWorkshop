@@ -76,7 +76,6 @@ Click on Import to import the package into powerapps environment.
 
 
 <img width="767" alt="image" src="https://user-images.githubusercontent.com/50298139/222616796-8254cf53-e6d4-4cb4-b321-960615338006.png">
-<img width="827" alt="image" src="https://user-images.githubusercontent.com/50298139/222617130-ce142de3-1aae-40bd-94e1-b86dfdf93e74.png">
 <img width="929" alt="image" src="https://user-images.githubusercontent.com/50298139/222617513-10bf28ae-a2d7-4211-a702-a951098e3c3c.png">
 <img width="926" alt="image" src="https://user-images.githubusercontent.com/50298139/222618019-49eab211-1c77-474c-a3aa-8f377df26255.png">
 
