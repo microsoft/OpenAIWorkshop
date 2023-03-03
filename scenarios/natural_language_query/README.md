@@ -55,7 +55,7 @@ Step 6: Azure function returns the results to end user
 
 ## Step 3. Deploy client Power App
 
-From the powerapp folder, download Semantic-Search-App-Template_20230303012916.zip powerapp package. This has a powerapp and powerautomate template app pre-built.
+From the powerapp folder, download "NLQuery PowerApp Export.zip" powerapp package. This has a powerapp and powerautomate template app pre-built.
 Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
 
 ![](../../documents/media/powerapps1.png)
@@ -70,17 +70,19 @@ From the top nav bar, click Import Canvas App and upload the Semantic-Search-App
 
 
 
-Click on Import to import the package into powerapps environment. 
+Click on Import to import the package into powerapps environment. This will import the Power App canvas app and Power Automate Flow into the workspace. 
+
 
 
 
 
 <img width="767" alt="image" src="https://user-images.githubusercontent.com/50298139/222616796-8254cf53-e6d4-4cb4-b321-960615338006.png">
+
 <img width="929" alt="image" src="https://user-images.githubusercontent.com/50298139/222617513-10bf28ae-a2d7-4211-a702-a951098e3c3c.png">
+
 <img width="926" alt="image" src="https://user-images.githubusercontent.com/50298139/222618019-49eab211-1c77-474c-a3aa-8f377df26255.png">
 
 
-This will import the Power App canvas app and Power Automate Flow into the workspace. 
 
 
 <img width="746" alt="image" src="https://user-images.githubusercontent.com/50298139/222619006-e9eaa507-836b-4ba7-bf1f-d78e0d84479d.png">
