@@ -42,11 +42,11 @@ az functionapp deployment source config-zip -g <resource_group> -n \
 <app_name> --src <zip_file_path>
 
 
-Update the function configuration in Azure Function App configuration blade, replace the name of the end point, key and GPT_ENGINE with your OPen AI API deployment parameters 
+Update the function configuration in Azure Function App configuration blade, add below parameters from your Open AI API deployment parameters 
 
             {
                 "name": "GPT_ENGINE",
-                "value": "text-davinci-003",
+                "value": "<Name of your Davinci model deployment>,
                 "slotSetting": false
             },
             {
