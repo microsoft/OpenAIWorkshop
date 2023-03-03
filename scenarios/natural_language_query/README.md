@@ -24,9 +24,11 @@ Step 6: Azure function returns the results to end user
 
 
 
-Create SQL server with Sample database,please provide the database name as "oaisqldemo" and server name as "oaisqldemo".Follow the links in below step to create the SQL database in the resourcegroup where you wil like to host your databbase and openai service  https://www.sqlshack.com/create-an-azure-sql-database-with-built-in-sample-data/
+Create SQL server with Sample database,please provide the database name as **"oaisqldemo"** and server name as **"oaisqldemo"**.Follow the links in below step to create the SQL database in the resourcegroup where you wil like to host your databbase and openai service  https://www.sqlshack.com/create-an-azure-sql-database-with-built-in-sample-data/
 <img width="905" alt="image" src="https://user-images.githubusercontent.com/50298139/222620998-e30223f8-b44a-4524-a80a-3aba68ce30ee.png">
-Please click "Set admin" and provide the functionname which in diagram is "azureopenaidemo" as the Admin Name
+
+
+Please click "Set admin" and **provide your functionname** example function name in below diagram is "azureopenaidemo" as the Admin Name
 <img width="674" alt="image" src="https://user-images.githubusercontent.com/50298139/222620873-0cb5201d-d587-41aa-b58d-d0b2bf73785e.png">
 
 
@@ -34,17 +36,27 @@ Please click "Set admin" and provide the functionname which in diagram is "azure
    
 ## Step 2: Deploy Azure Function App
 
-Run the below command and provide the function Zip file Zip file 
-
-az functionapp deployment source config-zip -g <resource_group> -n \
-<app_name> --src <zip_file_path>
+First create a function App 
 
 
-Update the function configuration in Azure Function App configuration blade, replace the name of the end point, key and GPT_ENGINE with your OPen AI API deployment parameters 
+<img width="395" alt="image" src="https://user-images.githubusercontent.com/50298139/222745311-e0659d19-2c4f-4a06-b563-c6cbcb06e115.png">
+
+
+The function zip file "azurefunc.zip" can be downloaded from below link
+<img width="1003" alt="image" src="https://user-images.githubusercontent.com/50298139/222626030-ea7faa93-cdfd-4aaf-af0b-fe0ade76d5ed.png">
+
+Run the below command and provide the function Zip file "azurefunc.zip" to install the function file. Please provdie the resourcce group name ,function app name (created in earlier step) and the zip file which you dowmloaded in earlier step
+
+
+az functionapp deployment source config-zip -g <resource_group> -n <app_name> --src <zip_file_path>
+
+
+
+Update the function configuration in Azure Function App configuration blade, add below parameters from your Open AI API deployment parameters 
 
             {
                 "name": "GPT_ENGINE",
-                "value": "text-davinci-003",
+                "value": "<Name of your Davinci model deployment>,
                 "slotSetting": false
             },
             {
@@ -57,6 +69,9 @@ Update the function configuration in Azure Function App configuration blade, rep
                 "value": "https://<>.openai.azure.com/",
                 "slotSetting": false
             }
+Configuration Blade
+
+<img width="922" alt="image" src="https://user-images.githubusercontent.com/50298139/222626792-9c786927-7965-41df-88be-3c9609032678.png">
 
 
 
@@ -85,7 +100,7 @@ Click on Import to import the package into powerapps environment. This will impo
 
 
 
-<img width="767" alt="image" src="https://user-images.githubusercontent.com/50298139/222616796-8254cf53-e6d4-4cb4-b321-960615338006.png">
+<img width="1003" alt="image" src="https://user-images.githubusercontent.com/50298139/222625951-3bfc11be-7f34-4efc-94fd-112c9d5c8c2d.png">
 
 <img width="929" alt="image" src="https://user-images.githubusercontent.com/50298139/222617513-10bf28ae-a2d7-4211-a702-a951098e3c3c.png">
 
