@@ -46,7 +46,7 @@ First create a function App
 
 Clone the repository to VS Code and open the cloned folder in VS Code, right click the "natural_language_query" and click "Deploy to Function App". Please ensure VS Code is linked to your Azure subscription and Azure function where you have deployed the function app in previous step
 
-<img width="602" alt="image" src="https://user-images.githubusercontent.com/50298139/222793570-fd8614f0-9097-4557-b6e8-10e095d1cf46.png">
+<img width="284" alt="image" src="https://user-images.githubusercontent.com/50298139/222796264-4d70c370-75bc-475b-b3ac-5a63338f790d.png">
 
 
 az functionapp deployment source config-zip -g <resource_group> -n <app_name> --src <zip_file_path>
