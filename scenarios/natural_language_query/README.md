@@ -24,11 +24,11 @@ Step 6: Azure function returns the results to end user
 
 
 
-Create SQL server with Sample database,please provide the database name as **"oaisqldemo"** and server name as **"oaisqldemo"**.Follow the links in below step to create the SQL database in the resourcegroup where you wil like to host your databbase and openai service  https://www.sqlshack.com/create-an-azure-sql-database-with-built-in-sample-data/
+Create SQL server with Sample database,please provide the database name as **"oaisqldemo"**.Follow the links in below step to create the SQL database in the resourcegroup where you wil like to host your databbase and openai service  https://www.sqlshack.com/create-an-azure-sql-database-with-built-in-sample-data/
 <img width="905" alt="image" src="https://user-images.githubusercontent.com/50298139/222620998-e30223f8-b44a-4524-a80a-3aba68ce30ee.png">
 
 
-Please click "Set admin" and **provide your functionname** example function name in below diagram is "azureopenaidemo" as the Admin Name
+Please click "Set admin" and **provide your functionname** which you created as in step 2 
 <img width="674" alt="image" src="https://user-images.githubusercontent.com/50298139/222620873-0cb5201d-d587-41aa-b58d-d0b2bf73785e.png">
 
 
@@ -42,37 +42,23 @@ First create a function App
 <img width="395" alt="image" src="https://user-images.githubusercontent.com/50298139/222745311-e0659d19-2c4f-4a06-b563-c6cbcb06e115.png">
 
 
-The function zip file "azurefunc.zip" can be downloaded from below link
-<img width="1003" alt="image" src="https://user-images.githubusercontent.com/50298139/222626030-ea7faa93-cdfd-4aaf-af0b-fe0ade76d5ed.png">
-
-Run the below command and provide the function Zip file "azurefunc.zip" to install the function file. Please provdie the resourcce group name ,function app name (created in earlier step) and the zip file which you dowmloaded in earlier step
 
 
-az functionapp deployment source config-zip -g <resource_group> -n <app_name> --src <zip_file_path>
+Clone the repository to VS Code and open the cloned folder in VS Code, right click the "natural_language_query" and click "Deploy to Function App". Please ensure VS Code is linked to your Azure subscription and Azure function where you have deployed the function app in previous step
 
-
+<img width="284" alt="image" src="https://user-images.githubusercontent.com/50298139/222796264-4d70c370-75bc-475b-b3ac-5a63338f790d.png">
 
 Update the function configuration in Azure Function App configuration blade, add below parameters from your Open AI API deployment parameters 
 
-            {
-                "name": "GPT_ENGINE",
-                "value": "<Name of your Davinci model deployment>,
-                "slotSetting": false
-            },
-            {
-                "name": "OPENAI_API_KEY",
-                "value": "<>",
-                "slotSetting": false
-            },
-            {
-                "name": "OPENAI_RESOURCE_ENDPOINT",
-                "value": "https://<>.openai.azure.com/",
-                "slotSetting": false
-            }
+
+           
 Configuration Blade
 
-<img width="922" alt="image" src="https://user-images.githubusercontent.com/50298139/222626792-9c786927-7965-41df-88be-3c9609032678.png">
+<img width="876" alt="image" src="https://user-images.githubusercontent.com/50298139/222794270-8a16e80d-a108-4d7c-8039-7d85a71711af.png">
 
+Once function is deployed, please test the function from function console in azure portal
+
+<img width="920" alt="image" src="https://user-images.githubusercontent.com/50298139/222808013-01227e88-98a0-47ac-a42f-268b64654da2.png">
 
 
 
@@ -113,7 +99,7 @@ This will import the Power App canvas app and Semantic-Search Power Automate Flo
 <img width="746" alt="image" src="https://user-images.githubusercontent.com/50298139/222619006-e9eaa507-836b-4ba7-bf1f-d78e0d84479d.png">
 
 
- Click on the flows and edit the Power Automate Flow and update Azure Function Url. 
+ Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**
 
 <img width="928" alt="image" src="https://user-images.githubusercontent.com/50298139/222619285-09a545a9-73c3-4dd9-a1b6-c9cc2ca7e440.png">
 

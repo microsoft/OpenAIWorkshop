@@ -1,4 +1,4 @@
-# Classification
+# Text Classification
 
 ## Topics
 
@@ -52,6 +52,6 @@ You've tought the model to rank between 1 and 5 stars based on the review. You c
 
 ---
 
-[Previous Section (Information Extraction)](./02_Information_Extraction.md)
+[Previous Section (Question Answering)](./03_Question_Answering.md)
 
-[Next Section (Conversation)](./02_Conversation.md)
+[Next Section (Conversation)](./05_Conversation.md)

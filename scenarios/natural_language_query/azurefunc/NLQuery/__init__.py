@@ -29,7 +29,7 @@ def run_openai(prompt, engine=GPT_ENGINE):
 
 def execute_sql_query(query):
     #logging.info('Python HTTP trigger function processed a request.')
-    server="oaisqldemo.database.windows.net"
+    server=os.getenv("SQL_Server_Name")
     database="oaisqldemo"
     driver="{ODBC Driver 17 for SQL Server}"
     db_token = ''

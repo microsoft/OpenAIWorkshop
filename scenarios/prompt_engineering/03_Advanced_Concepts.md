@@ -206,6 +206,6 @@ Now we can see that the model clearly understands that we want to only extract 3
 
 ---
 
-[Previous Section (Sample Scenarios)](./02_Sample_Scenarios.md)
+[Previous Section (Sample Scenarios)](./02_Sample_Scenarios/01_Text_Summarization.md)
 
-[Next Section (Fine Tuning)](./04_Fine_Tuning.md)]
+[Next Section (Fine Tuning)](./04_Fine_Tuning.md)

@@ -126,10 +126,10 @@ According to the traffic laws of California, Jane Doe was at fault for running a
 
 **IMPORTANT NOTE**: You may have to increase the 'Max length (tokens)' parameter if the output gets cut off (you'll probably need to increase it to 500+ tokens).
 
-Please note how comprehensive the output is. You'll most likely want to control the format of the output to fit your needs and existing systems. For this, One Shot or Few Shots learning are great techniques to consider. See [Advanced Concepts](./02_Advanced_Concepts.md) for more information.
+Please note how comprehensive the output is. You'll most likely want to control the format of the output to fit your needs and existing systems. For this, One Shot or Few Shots learning are great techniques to consider. See [Advanced Concepts](../02_Advanced_Concepts.md) for more information.
 
 ---
 
-[Previous Section (Information Extraction)](./02_Information_Extraction.md)
+[Previous Section (Text Summarization)](./01_Text_Summarization.md)
 
-[Next Section (Classification)](./02_Classification.md)
+[Next Section (Question Answering)](./03_Question_Answering.md)
