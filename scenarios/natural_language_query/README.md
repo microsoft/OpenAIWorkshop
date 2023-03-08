@@ -42,7 +42,7 @@ a. Login to Azure Portal and open the "Cloud Shell"
 
 b. Go to scenarios/natural_language_query/azurefunc/ folder
 
-d. Open the "create-func.ps1" script and provide the location, resourcegrGroup, storageaccountname, and functionname.Save the file
+d. Open the "create-func.ps1" script and provide the values for location, resourcegrGroup, storageaccountname, and functionname parameters.Save the file
 
 e. Run the "create-func.ps1" script and it will create the function App with function
 
