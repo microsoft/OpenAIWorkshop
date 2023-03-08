@@ -59,11 +59,29 @@ c. Go to SQL server, under "settings", click "Azure Active Directory" and click 
 
 
 
+## Step 3. Test the function App
+
+a. Go to Function App and click "Functions" and click deployed function "NLQuery"
 
 
+<img width="1159" alt="image" src="https://user-images.githubusercontent.com/50298139/223866900-d86c34c3-1934-4c6c-987b-f80e87591f6a.png">
+
+b. Click "Code + Test" 
+
+<img width="1139" alt="image" src="https://user-images.githubusercontent.com/50298139/223867081-f7eae62e-2a1f-4c10-817a-d12ddc392d8e.png">
+
+c.  Click Test/Run -> select "GET" in "HTTP method" dropdown, click + next to "Query" and enter "prompt" in Name field and "show top 10 products" in value field. Click "Run"
 
 
-## Step 3. Deploy client Power App
+<img width="1166" alt="image" src="https://user-images.githubusercontent.com/50298139/223867936-97ad6fe2-0d39-4f5b-b305-0ae933cd53b7.png">
+
+
+d. The "Output" tab will have the query results 
+
+Note : Please press the Run again if the output tab does not print the records
+
+
+## Step 4. Deploy client Power App
 
 From the powerapp folder, download "NLQuery PowerApp Export.zip" powerapp package. This has a powerapp and powerautomate template app pre-built.
 Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
