@@ -8,3 +8,5 @@ azure-kusto-data==4.0.2
 pandas
 pyodbc
 azure-search-documents==11.4.0b3
+azure-ai-formrecognizer
+python-dotenv
