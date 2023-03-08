@@ -42,7 +42,9 @@ func azure functionapp publish functionname --force --python
 ## Step 2: Configure Azure Function App
 
 
-a. Go to deployed function and cick "Configuration" -> "Application Settings" and click on "Advance edit" and copy the updated ""config-func.txt" values in the editor. DO not delete the existing contents in "Advance edit", just update ""config-func.txt" values before the last line and ']' mark. After copying the values click "OK"
+a. Open func-config.txt in scenarios/natural_language_query/azurefunc folder and provide the Open AI engine, Open AI rest end point, SQL server and SQL database name
+
+b. Go to deployed function and cick "Configuration" -> "Application Settings" and click on "Advance edit" and copy the "func-config.txt" values in the editor. DO not delete the existing contents in "Advance edit", just update ""config-func.txt" values before the last line and ']' mark. After copying the values click "OK"
 
 <img width="919" alt="image" src="https://user-images.githubusercontent.com/50298139/223740863-166c6bba-bc5e-44ab-969b-cf5d1e77c6c1.png">
 
