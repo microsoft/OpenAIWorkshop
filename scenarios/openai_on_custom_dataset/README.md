@@ -27,7 +27,7 @@ In stage 1, full text search in Azure Cognitive Search is used to retrieve a num
 
 
 
-## 1. Azure services deployment
+## 1. Deploy Azure Services
 
 Deploy Azure Resources, namely an Azure Function App for abstracting access to OpenAI and Search APIs, Azure Search Service, and an Azure Form Recognizer resource.
 
@@ -108,7 +108,7 @@ The deployed Azure Function App includes code to invoke a Power Automate Flow, w
         - In the Customize Target Index window, use id as the Azure Document Key and text as the Searchable Field. 
         - As a result, with this configuration, the chunked sample will be indexed
 
-## Step 2: Automated orchestrator service with Azure Function App
+## Step 2: Configure Orchestration with Azure Function Apps
 
     Review the Azure Function App's __Configuration__ blade within the Settings section for the resource in the Portal. Double check that the Application Settings mentioned below are available by name, and briefly review the Hidden value to ensure that they match expected values. The OPENAI_API_KEY and OPENAI_RESOURCE_ENDPOINT values should be auto-populated with the values you looked up in the Portal and provided earlier in the lab.
 
@@ -138,14 +138,14 @@ The deployed Azure Function App includes code to invoke a Power Automate Flow, w
                 "slotSetting": false
             }
 
-## Step 3. Test Azure service deployment
+## Step 3. Test Azure service deployment via Postman
 
 Launch Postman and test the Azure Function to make sure it returns results. The num_search_result query parameter can be altered to retrieve more or less search results. Notice the query parameter num_search_result in the screenshot below. A parameter named "code" also needs to be supplied to match the one of your Function's __App key__ values (either the _master or default values in the __App key__ blade of the resource in the Portal.
 
 
 ![](../../documents/media/postman.png)
 
-## Step 4. Deploy client Power App
+## Step 4. Deploy client application via Power Apps
 
 From the powerapp folder of the openai_on_custom_dataset folder of this repo, download the Semantic-Search-App-Template_20230303012916.zip powerapp package. This has a prebuilt Canvas app including Power App and Power Automate components.
 Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
@@ -185,10 +185,10 @@ Edit the Power Automate Flow and update Azure Function URL in the HTTP activity.
 
 ![](../../documents/media/powerapps5.png)
 
-## Step 5. Test
+## Step 5. Launch and Test End-to-End via Power Apps
 
 Click on the play button on the top right corner in the Power Apps Portal to launch the Power App.
-Select an FAQ from dropdown and click Search. This returns answers powered by Open AI GPT-3 Models. 
+Select an FAQ from dropdown and click Search. Also experiment with custom search terms. This returns answers powered by Open AI GPT-3 Models. 
 Feel free to make changes to the PowerApps UI to add your own functionality and UI layout. You can explore expanding Power Automate flow to connect to other APIs to provide useful reference links to augment the response returned from OpenAI.
 
 
