@@ -74,34 +74,40 @@ The deployed Azure Function App includes code to invoke a Power Automate Flow, w
             The endpoints below needs to have the trailing '/' at end for the search-indexer to run correctly.
         
             After moving and renaming the secrets.rename file to secrets.env in the openai_on_custom_dataset/ingest directory, use the "code filename" command to alter the contents of the file below with a text editor. See the Notes section below if necessary to retrieve the associated values.
-     
+            
+   
+            ```
             AZSEARCH_EP="https://<>.search.windows.net/"
             AZSEARCH_KEY=""
             AFR_ENDPOINT="https://westus2.api.cognitive.microsoft.com/"
             AFR_API_KEY=""
             INDEX_NAME="azure-ml-docs"
-        
+            ```
+   
+   
             __Note__:
-        *   Ensure that the <> in __AZSEARCH_EP__ is substituted with the value for your Search Service resource available on the __Overview__ blade in the Portal.
-        *   Substitute __AZSEARCH_KEY__ with the __Query key__ value available on the __Keys__ blade for the Search Service in the Portal.
-        *   Replace the __AFR_API_KEY__ with the available on the __App keys__ blade for the Azure Function App resource in the Portal. Either _master or default key values can be used.
-        *   Replace the region prefix in the __AFR_ENDPOINT__ value (e.g. westus2 to eastus) if the Azure Function was deployed in a region other than West US 2.
+            *   Ensure that the <> in __AZSEARCH_EP__ is substituted with the value for your Search Service resource available on the __Overview__ blade in the Portal.
+            *   Substitute __AZSEARCH_KEY__ with the __Query key__ value available on the __Keys__ blade for the Search Service in the Portal.
+            *   Replace the __AFR_API_KEY__ with the available on the __App keys__ blade for the Azure Function App resource in the Portal. Either _master or default key values can be used.
+            *   Replace the region prefix in the __AFR_ENDPOINT__ value (e.g. westus2 to eastus) if the Azure Function was deployed in a region other than West US 2.
 
 
         *   The document processing, chunking, indexing can all be scripted using any preferred language, with Python demonstrated here. Run the below script to create a search index, add semantic configuration and populate sample documents from the Azure Docs extracts used by this lab. 
         The search indexer chunks a sample PDF document (500 pages) which is downloaded from Azure Docs and chunks each page into 20 lines. Each chunk is created as a new search document in the index. The PDF document processing is achieved using the Azure Form Recognizer service. 
      
-
+   
+            ```
             cd .\scenarios\openai_on_custom_dataset\ingest\
             python .\search-indexer.py
-            
+            ```
 
+   
     *   __Option B (Azure Portal approach)__:  If you prefer to not use the programmatic approach outlined above in Option A, visit the [Azure Portal](https://portal.azure.com) and complete the storage account and Azure Search configuration as described below.
         
         Import data
 
         - Navigate to the resource group used by the lab deployment. Once selected, find the Storage account resource auto-provisioned by the template used in step 1. Click on the __Storage Acccount__ name, click on the __Blob service__ link, and create a blob container.  
-        - Extract the data files in the .scenarios/data/data-files.zip folder and update this folder to the blob container using the [Azure Portal UI](https://portal.azure.com/#cloudshell/). The data-files.zip contains the Azure ML sample PDF document chunked as individual files per page.  
+        - Extract the data files in the .scenarios/data/data-files.zip folder and update this folder to the blob container. The data-files.zip contains the Azure ML sample PDF document chunked as individual files per page.  
         - Import data to Azure Search as shown below. Choose the blob container and provide the blob-folder name to continue. 
 
             ![](../../documents/media/search1.png)
