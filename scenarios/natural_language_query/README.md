@@ -25,9 +25,13 @@ Step 6: Azure function returns the results to end user
 
 
 a. Login to Azure Portal and open the "Cloud Shell"
+
 b. Clone the respository "https://github.com/microsoft/OpenAIWorkshop.git"
+
 c. Go to scenarios/natural_language_query folder
+
 d. Open the "create-sql.ps1" script and provide the location, resourcegrGroup, server,database,login, password, subscription, tenantid information. Save the file
+
 e. Run the "create-sql.ps1" script and it will create the SQL server with sample database
 
 Please click "Set admin" and **provide your functionname** which you created as in step 2 
@@ -39,22 +43,30 @@ Please click "Set admin" and **provide your functionname** which you created as 
 ## Step 2: Deploy Azure Function App
 
 a. Login to Azure Portal and open the "Cloud Shell"
+
 b. Go to scenarios/natural_language_query/azurefunc/ folder
+
 d. Open the "create-func.ps1" script and provide the location, resourcegrGroup, storageaccountname, and functionname.Save the file
+
 e. Run the "create-func.ps1" script and it will create the function App with function
+
 f. Once function is created, go to function and cick "Configuration" under Settings
+
 g. Open the "config-func.txt" in the scenarios/natural_language_query/ folder and provide your GPT_ENGINE, OPEN_API_KEY, OPENAI_RESOURCE_ENDPOINT, SQL_DB_NAME, and SQL_SERVER_NAME values
+
 h. Under "Application Settings", click on "Advance edit" and copy the updated ""config-func.txt" values in the editor. DO not delete the existing contents in "Advance edit", just add the updated ""config-func.txt" values
 
 <img width="919" alt="image" src="https://user-images.githubusercontent.com/50298139/223740863-166c6bba-bc5e-44ab-969b-cf5d1e77c6c1.png">
 
 
 i. Save the changes
+
 j. Under Settings in function click on "Identity" , under "System assigned" set the "Status" to "On", Save the changes
 
 <img width="929" alt="image" src="https://user-images.githubusercontent.com/50298139/223740677-b00bcefb-8dbf-4a49-b67b-2254d43669be.png">
 
 h. Go to SQL server, under "settings", click "Azure Active Directory" and click "Set admin", on right side provide the name of function app which you have provided in point b. Add the name and click 
+
 i. Copy the updated values and click OK
 
 <img width="947" alt="image" src="https://user-images.githubusercontent.com/50298139/223740181-eaa03b0e-e654-49b9-86ce-b77e763a66ad.png">
