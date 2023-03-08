@@ -111,13 +111,13 @@ c. Click on Import to import the package into powerapps environment. This will i
 
 <img width="926" alt="image" src="https://user-images.githubusercontent.com/50298139/222618019-49eab211-1c77-474c-a3aa-8f377df26255.png">
 
-This will import the Power App canvas app and Semantic-Search Power Automate Flow into the workspace.
+d. This will import the Power App canvas app and Semantic-Search Power Automate Flow into the workspace.
 
 
 <img width="746" alt="image" src="https://user-images.githubusercontent.com/50298139/222619006-e9eaa507-836b-4ba7-bf1f-d78e0d84479d.png">
 
 
- Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**
+ e. Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**
 
 <img width="928" alt="image" src="https://user-images.githubusercontent.com/50298139/222619285-09a545a9-73c3-4dd9-a1b6-c9cc2ca7e440.png">
 
@@ -127,8 +127,12 @@ This will import the Power App canvas app and Semantic-Search Power Automate Flo
 <img width="492" alt="image" src="https://user-images.githubusercontent.com/50298139/222619362-c786a8f7-a070-4846-837b-6b083b82f6c6.png">
 ## Step 5. Test
 
-Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp and click submit
-. 
-Feel free to make changes to the PowerApps UI to add your own functionality and UI layout. You can explore expanding PowerAutomate flow to connect to other APIs to provide useful reference links to augment the response returned from OpenAI.
+a. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
+
+b.  Search the App which you deployed in step 4 and run it
+
+<img width="851" alt="image" src="https://user-images.githubusercontent.com/50298139/223872137-3882ba80-e9d6-4198-a5e4-2ebc0ed485b5.png">
+
+
 
 
