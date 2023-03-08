@@ -79,8 +79,9 @@ To make it easy for the labs, the sample document has already been chunked and p
         python .\search-indexer.py
         
 
-*   Optional Manual Approach. If you prefer to not use the python/automated approach above, the below steps can be followed without automation script. 
-    To configure Azure Search, please follow the steps below
+###   Optional Manual Approach. 
+If you prefer to not use the python/automated approach above, the below steps can be followed without automation script. 
+To configure Azure Search, please follow the steps below.
 
     - In the storage container, that is created as part of the template in step 1, create a blob container. 
     - Extract the data files in the .scenarios/data/data-files.zip folder and update this folder to the blob container using Azure Portal UI.   The data-files.zip contains the Azure ML sample pdf document chunked as individual files per page.  
