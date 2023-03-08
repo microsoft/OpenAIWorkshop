@@ -31,64 +31,64 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 ## 2. Setup Azure Cognitive Search and prepare data
 
-    As part of data preperation step, to work in Open AI, the documents are chunked into smaller units(20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with a python script below. 
-    To make it easy for the labs, the sample document has already been chunked and provided in the repo. 
+As part of data preperation step, to work in Open AI, the documents are chunked into smaller units(20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with a python script below. 
+To make it easy for the labs, the sample document has already been chunked and provided in the repo. 
 
-    * Enable Semantic Search on Azure Portal. Navigate to Semantic Search blade and select Free plan. 
+* Enable Semantic Search on Azure Portal. Navigate to Semantic Search blade and select Free plan. 
     
-        ![](../../documents/media/enable-semantic-search.png)
+    ![](../../documents/media/enable-semantic-search.png)
 
-    *   Create Search Index, Sematic Configuration and Index a few documents using automated script. The script can be run multiple times without any side effects.
-        Run the below commands from cmd prompt to conifgure python environment. Conda is optional if running in Azure Cloud Shell or if an isolated python environment is needed. 
+*   Create Search Index, Sematic Configuration and Index a few documents using automated script. The script can be run multiple times without any side effects.
+    Run the below commands from cmd prompt to conifgure python environment. Conda is optional if running in Azure Cloud Shell or if an isolated python environment is needed. 
 
-            
-            git clone https://github.com/microsoft/OpenAIWorkshop.git
-            cd OpenAIWorkshop\scenarios\openai_on_custom_dataset
-            
-            # conda steps are optional
-            conda create env -n openaiworkshop python=3.9 
-            conda activate openaiworkshop
-            
-            
-            pip install -r .\orchestrator\requirements.txt
+        
+        git clone https://github.com/microsoft/OpenAIWorkshop.git
+        cd OpenAIWorkshop\scenarios\openai_on_custom_dataset
+        
+        # conda steps are optional
+        conda create env -n openaiworkshop python=3.9 
+        conda activate openaiworkshop
+        
+        
+        pip install -r .\orchestrator\requirements.txt
 
 
-    *   Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
-        Rename secrets.rename to secrets.env. (This is recommended to prevent secrets from leaking into external environments.)
-        The secrets.env should be placed in the ingest folder along side the python script file search-indexer.py.
-        The endpoints below needs to have the trailing '/' at end for the search-indexer to run correctly.
+*   Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
+    Rename secrets.rename to secrets.env. (This is recommended to prevent secrets from leaking into external environments.)
+    The secrets.env should be placed in the ingest folder along side the python script file search-indexer.py.
+    The endpoints below needs to have the trailing '/' at end for the search-indexer to run correctly.
 
-            cd ingest
-            # open secrets.env using code editor such as nano or code
-            code secrets.env
+        cd ingest
+        # open secrets.env using code editor such as nano or code
+        code secrets.env
 
-        Add the below entries with correct values to secrets.env.
+    Add the below entries with correct values to secrets.env.
 
-            AZSEARCH_EP="https://<>.search.windows.net/"
-            AZSEARCH_KEY=""
-            AFR_ENDPOINT="https://westus2.api.cognitive.microsoft.com/"
-            AFR_API_KEY=""
-            INDEX_NAME="azure-ml-docs"
+        AZSEARCH_EP="https://<>.search.windows.net/"
+        AZSEARCH_KEY=""
+        AFR_ENDPOINT="https://westus2.api.cognitive.microsoft.com/"
+        AFR_API_KEY=""
+        INDEX_NAME="azure-ml-docs"
 
-    *   The document processing, chunking, indexing can all be scripted using any preferred language. 
-        This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
-        The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service. 
-     
+*   The document processing, chunking, indexing can all be scripted using any preferred language. 
+    This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
+    The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service. 
+    
 
-            cd .\scenarios\openai_on_custom_dataset\ingest\
-            python .\search-indexer.py
-            
+        cd .\scenarios\openai_on_custom_dataset\ingest\
+        python .\search-indexer.py
+        
 
-    *   Optional Manual Approach. If you prefer to not use the python/automated approach above, the below steps can be followed without automation script. 
-        To configure Azure Search, please follow the steps below
+*   Optional Manual Approach. If you prefer to not use the python/automated approach above, the below steps can be followed without automation script. 
+    To configure Azure Search, please follow the steps below
 
-        - In the storage container, that is created as part of the template in step 1, create a blob container. 
-        - Extract the data files in the .scenarios/data/data-files.zip folder and update this folder to the blob container using Azure Portal UI.   The data-files.zip contains the Azure ML sample pdf document chunked as individual files per page.  
-        - Import data in Azure Search as shown below. Choose the blob container and provide the blob-folder name in to continue. 
+    - In the storage container, that is created as part of the template in step 1, create a blob container. 
+    - Extract the data files in the .scenarios/data/data-files.zip folder and update this folder to the blob container using Azure Portal UI.   The data-files.zip contains the Azure ML sample pdf document chunked as individual files per page.  
+    - Import data in Azure Search as shown below. Choose the blob container and provide the blob-folder name in to continue. 
 
-            ![](../../documents/media/search1.png)
-        - In the Customize Target Index, use id as the Azure Document Key and mark text as the Searchable Field. 
-        - This should index the chunked sample
+        ![](../../documents/media/search1.png)
+    - In the Customize Target Index, use id as the Azure Document Key and mark text as the Searchable Field. 
+    - This should index the chunked sample
 
  
 
