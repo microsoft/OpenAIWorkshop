@@ -29,7 +29,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 
 
-- Step 1: Setup Azure Cognitive Search and prepare data
+## 2. Setup Azure Cognitive Search and prepare data
 
     As part of data preperation step, to work in Open AI, the documents are chunked into smaller units(20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with a python script below. 
     To make it easy for the labs, the sample document has already been chunked and provided in the repo. 
@@ -92,20 +92,20 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
  
 
-## Step 2. Test Azure Function App service deployment
+## 3. Test Azure Function App service deployment
 
 Launch Postman and test the Azure Function to make sure it is returning results. The num_search_result query parameter can be altered to limit the search results. Notice the query parameter num_search_result in the screen shot below. num_search_result is a mandatory query parameter.
 
 
 ![](../../documents/media/postman.png)
 
-## Step 3. Deploy client Power App
+## 4. Deploy client Power App
 
 Proceed with creating PowerApp. Use the pre-built Powerapp in powerapp/Semantic-Search-App-Template_20230303012916.zip and import the package.
 
 [Create PowerApp](PowerApp.md)
 
-## Step 5. Test
+## 5. Test
 
 Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp.
 Select an  FAQ from dropdown and click Search. This is should bring up the answers powered by Open AI GPT-3 Models. 
