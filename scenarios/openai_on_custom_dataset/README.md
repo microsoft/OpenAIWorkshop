@@ -18,6 +18,22 @@ In stage 1, full text search in Azure Cognitive Search is used to retrieve a num
 ### Deployment
 
 
+This scenario can be deployed in 2 different ways depending on your preference. 
+
+1. Fully automated script. 
+In this approach, a single script is run to create Azure Resources, configure the Azure Function App and create the search index. There is no manual configuration is required. This has the least number of prerequisites and can be run from Azure Cloud Shell. 
+Once the automated script is run, the power app can be configured as the next step. 
+
+To proceed with
+
+2. Semi automated script. 
+In this approach, the steps are broken into 3 key steps with a few manual steps.
+- In the first step, provision Azure Resourcs using Azure Portal UI.
+- In the second step, the search-index is configure and execute to create the search index.
+- The search index can be also be created using Azure Portal UI.
+
+
+
 ### Prerequisites
 
 * [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Functions.  
@@ -70,11 +86,6 @@ The Azure Function App also deploys the function code needed for powerapps autom
         Rename secrets.rename to secrets.env. (This is recommended to prevent secrets from leaking into external environments.)
         The secrets.env should be placed in the ingest folder along side the python script file search-indexer.py.
         The endpoints below needs to have the trailing '/' at end for the search-indexer to run correctly.
-
-            AZURE_OPENAI_API_KEY=""
-            AZURE_OPENAI_ENDPOINT="https://<>.openai.azure.com/"
-            AZURE_OPENAI_API_KEY_EASTUS=""
-            AZURE_OPENAI_ENDPOINT_EASTUS="https://<>.openai.azure.com/"
 
             AZSEARCH_EP="https://<>.search.windows.net/"
             AZSEARCH_KEY=""
