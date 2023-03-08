@@ -129,7 +129,10 @@ d. This will import the Power App canvas app and Semantic-Search Power Automate 
 
 a. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
 
-b.  Search the App which you deployed in step 4 and run it
+b.  Search the App which you deployed in step 4 and and click it 
+
+<img width="767" alt="image" src="https://user-images.githubusercontent.com/50298139/223872433-152f6b03-2a24-4871-a2b6-664ec11f406e.png">
+
 
 <img width="851" alt="image" src="https://user-images.githubusercontent.com/50298139/223872137-3882ba80-e9d6-4198-a5e4-2ebc0ed485b5.png">
 
