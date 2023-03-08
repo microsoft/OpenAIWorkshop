@@ -24,9 +24,11 @@ Step 6: Azure function returns the results to end user
 
 
 
-Create SQL server with Sample database,please provide the database name as **"oaisqldemo"**.Follow the links in below step to create the SQL database in the resourcegroup where you wil like to host your databbase and openai service  https://www.sqlshack.com/create-an-azure-sql-database-with-built-in-sample-data/
-<img width="905" alt="image" src="https://user-images.githubusercontent.com/50298139/222620998-e30223f8-b44a-4524-a80a-3aba68ce30ee.png">
-
+a. Login to Azure Portal and open the "Cloud Shell"
+b. Clone the respository "https://github.com/microsoft/OpenAIWorkshop.git"
+c. Go to scenarios/natural_language_query folder
+d. Open the "create-sql.ps1" script and provide the location, resourcegrGroup, server,database,login, password, subscription, tenantid information. Save the file
+e. Run the "create-sql.ps1" script and it will create the SQL server with sample database
 
 Please click "Set admin" and **provide your functionname** which you created as in step 2 
 <img width="674" alt="image" src="https://user-images.githubusercontent.com/50298139/222620873-0cb5201d-d587-41aa-b58d-d0b2bf73785e.png">
@@ -36,29 +38,30 @@ Please click "Set admin" and **provide your functionname** which you created as 
    
 ## Step 2: Deploy Azure Function App
 
-First create a function App 
+a. Login to Azure Portal and open the "Cloud Shell"
+b. Go to scenarios/natural_language_query/azurefunc/ folder
+d. Open the "create-func.ps1" script and provide the location, resourcegrGroup, storageaccountname, and functionname.Save the file
+e. Run the "create-func.ps1" script and it will create the function App with function
+f. Once function is created, go to function and cick "Configuration" under Settings
+g. Open the "config-func.txt" in the scenarios/natural_language_query/ folder and provide your GPT_ENGINE, OPEN_API_KEY, OPENAI_RESOURCE_ENDPOINT, SQL_DB_NAME, and SQL_SERVER_NAME values
+h. Under "Application Settings", click on "Advance edit" and copy the updated ""config-func.txt" values in the editor. DO not delete the existing contents in "Advance edit", just add the updated ""config-func.txt" values
+
+<img width="919" alt="image" src="https://user-images.githubusercontent.com/50298139/223740863-166c6bba-bc5e-44ab-969b-cf5d1e77c6c1.png">
 
 
-<img width="395" alt="image" src="https://user-images.githubusercontent.com/50298139/222745311-e0659d19-2c4f-4a06-b563-c6cbcb06e115.png">
+i. Save the changes
+j. Under Settings in function click on "Identity" , under "System assigned" set the "Status" to "On", Save the changes
+
+<img width="929" alt="image" src="https://user-images.githubusercontent.com/50298139/223740677-b00bcefb-8dbf-4a49-b67b-2254d43669be.png">
+
+h. Go to SQL server, under "settings", click "Azure Active Directory" and click "Set admin", on right side provide the name of function app which you have provided in point b. Add the name and click 
+i. Copy the updated values and click OK
+
+<img width="947" alt="image" src="https://user-images.githubusercontent.com/50298139/223740181-eaa03b0e-e654-49b9-86ce-b77e763a66ad.png">
 
 
+**Note : SQL_DB_NAME, and SQL_SERVER_NAME should be same names which you created in step 1**
 
-
-Clone the repository to VS Code and open the cloned folder in VS Code, right click the "natural_language_query" and click "Deploy to Function App". Please ensure VS Code is linked to your Azure subscription and Azure function where you have deployed the function app in previous step
-
-<img width="284" alt="image" src="https://user-images.githubusercontent.com/50298139/222796264-4d70c370-75bc-475b-b3ac-5a63338f790d.png">
-
-Update the function configuration in Azure Function App configuration blade, add below parameters from your Open AI API deployment parameters 
-
-
-           
-Configuration Blade
-
-<img width="876" alt="image" src="https://user-images.githubusercontent.com/50298139/222794270-8a16e80d-a108-4d7c-8039-7d85a71711af.png">
-
-Once function is deployed, please test the function from function console in azure portal
-
-<img width="920" alt="image" src="https://user-images.githubusercontent.com/50298139/222808013-01227e88-98a0-47ac-a42f-268b64654da2.png">
 
 
 
