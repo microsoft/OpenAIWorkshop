@@ -49,14 +49,13 @@ The deployed Azure Function App includes code to invoke a Power Automate Flow, w
 
 - Step 1: Set up Azure Cognitive Search and prepare data
 
-    As part of the data preperation step, to work best with OpenAI, the documents are chunked into smaller units (20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with the search-indexer python script provided and executed in this lab. If you do not prefer to use the Azure Command Line Interface (CLI) in the Azure Portal to execute the automated python script, proceed to the Optional Manual Approach.
-    To make it easy for the labs, the sample document has already been chunked and provided in the repo. 
+    As part of the data preperation step, to work best with OpenAI, the documents are chunked into smaller units (20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with the search-indexer python script provided in this lab. The sample document has also been chunked and provided in the repo directly, in case a manual import into a Storage account is desired (Option B).
 
     *   Enable Semantic Search on Azure Portal. Navigate to the Semantic Search blade and select the Free plan. 
     
         ![](../../documents/media/enable-semantic-search.png)
         
-      * __Note__: Before moving forward with the instructions, choose one of the following 2 options to configure and perform Search Indexing. Option A outlines a programmatic approach using Python within the Azure Command Line Interface (CLI) in Azure Cloud Shell. Option B outlines how to use the Azure Portal for a GUI-based experience. If a GUI-based Portal approach is preferred, skip to Option B (above the next screenshot titled "Import data").
+     * __Note__: Before moving forward with the instructions, choose one of the following 2 options to configure and perform Search Indexing. Option A outlines a programmatic approach using Python within the Azure Command Line Interface (CLI) in Azure Cloud Shell. Option B outlines how to use the Azure Portal for a semi-automated experience with UI configuration. If a Portal approach is preferred, skip to Option B (above the next screenshot titled "Import data"). Otherwise, the automated scripting steps in Option A can be executed in the Azure CLI.
 
     *   __Option A (Programmatic Approach)__: Create a Search Index, Semantic Configuration and Index a few documents using an automated script. The script can be run multiple times without any side effects.
         Run the below commands to configure the python environment. If running in the [Azure Command Line Interface (CLI)](https://portal.azure.com/#cloudshell/), the conda installation lines (3-4) below can be removed. <repo> should be substituted with the repo URL (e.g. https://github.com/microsoft/OpenAIWorkshop.git).
@@ -85,7 +84,7 @@ The deployed Azure Function App includes code to invoke a Power Automate Flow, w
             ```
    
    
-            __Note__:
+        *   __Note__:
             *   Ensure that the <> in __AZSEARCH_EP__ is substituted with the value for your Search Service resource available on the __Overview__ blade in the Portal.
             *   Substitute __AZSEARCH_KEY__ with the __Query key__ value available on the __Keys__ blade for the Search Service in the Portal.
             *   Replace the __AFR_API_KEY__ with the available on the __App keys__ blade for the Azure Function App resource in the Portal. Either _master or default key values can be used.
@@ -108,10 +107,10 @@ The deployed Azure Function App includes code to invoke a Power Automate Flow, w
 
         - Navigate to the resource group used by the lab deployment. Once selected, find the Storage account resource auto-provisioned by the template used in step 1. Click on the __Storage Acccount__ name, click on the __Blob service__ link, and create a blob container.  
         - Extract the data files in the .scenarios/data/data-files.zip folder and update this folder to the blob container. The data-files.zip contains the Azure ML sample PDF document chunked as individual files per page.  
-        - Import data to Azure Search as shown below. Choose the blob container and provide the blob-folder name to continue. 
+        - Import data to Azure Search as shown below. Choose the blob container and supply required values to Continue.
 
             ![](../../documents/media/search1.png)
-        - In the Customize Target Index window, use id as the Azure Document Key and text as the Searchable Field. 
+        - In the Customize Target index window, use id as the Azure Document Key and text as the Searchable Field. 
         - As a result, with this configuration, the chunked sample will be indexed
 
 ## Step 2: Configure Orchestration with Azure Function Apps
