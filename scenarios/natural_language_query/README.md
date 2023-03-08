@@ -31,7 +31,8 @@ b. Clone the respository "https://github.com/microsoft/OpenAIWorkshop.git"
 c. Go to scenarios/natural_language_query/azurefunc folder
 
 d. run "create-sql-func.ps1" script and provide the location, resourcegrGroup, sqlserver,sqldatabase,databaseuser, password, subscription, tenantid,storageaccountname and functionname 
-example commnad : .\create-sql-func.ps1  "East US" "resourcegorupname" "sqlservername" "sqldatabasename" "azureuser" "password" "subscription id" "tenantid" "storageaccountname" "functionappname"
+
+.\create-sql-func.ps1  "East US" "resourcegorupname" "sqlservername" "sqldatabasename" "azureuser" "password" "subscription id" "tenantid" "storageaccountname" "functionappname"
 
 Note: if this error is printed on the cloudshell "Failed to retrieve remote build status, please visit https://openaifuc121.scm.azurewebsites.net/api/deployments", execute the below command, update functionname with the your deployed function in step 1
 
