@@ -185,12 +185,8 @@
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
         "[resourceId('Microsoft.Insights/components', variables('applicationInsightsName'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-        "[resourceId('Microsoft.Search/searchServices', format('search-{0}', uniqueString(resourceGroup().id)))]"
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
       ]
-    },
-	   
-    
+    } 
   ]
-  
 }
