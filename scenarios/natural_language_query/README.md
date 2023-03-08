@@ -54,13 +54,11 @@ g. Once function is created, go to function and cick "Configuration" -> "Applica
 
 
 
-j. Under Settings in function click on "Identity" , under "System assigned" set the "Status" to "On", Save the changes
+h. Under Settings in function click on "Identity" , under "System assigned" set the "Status" to "On", Save the changes
 
 <img width="929" alt="image" src="https://user-images.githubusercontent.com/50298139/223740677-b00bcefb-8dbf-4a49-b67b-2254d43669be.png">
 
-h. Go to SQL server, under "settings", click "Azure Active Directory" and click "Set admin", on right side provide the name of function app which you have provided in point b. Add the name and click 
-
-i. Copy the updated values and click OK
+i. Go to SQL server, under "settings", click "Azure Active Directory" and click "Set admin", on right side provide the name of function app which you have provided in point b. Add the name and click  "Select" and "Save"
 
 <img width="947" alt="image" src="https://user-images.githubusercontent.com/50298139/223740181-eaa03b0e-e654-49b9-86ce-b77e763a66ad.png">
 
