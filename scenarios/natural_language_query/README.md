@@ -28,42 +28,33 @@ a. Login to Azure Portal and open the "Cloud Shell"
 
 b. Clone the respository "https://github.com/microsoft/OpenAIWorkshop.git"
 
-c. Go to scenarios/natural_language_query folder
+c. Go to scenarios/natural_language_query/azurefunc folder
 
-d. Open the "create-sql.ps1" script and provide the location, resourcegrGroup, server,database,login, password, subscription, tenantid information. Save the file
+d. run "create-sql-func.ps1" script and provide the location, resourcegrGroup, sqlserver,sqldatabase,databaseuser, password, subscription, tenantid,storageaccountname and functionname 
+example commnad : .\create-sql-func.ps1  "East US" "resourcegorupname" "sqlservername" "sqldatabasename" "azureuser" "password" "subscription id" "tenantid" "storageaccountname" "functionappname"
 
-e. Run the "create-sql.ps1" script and it will create the SQL server with sample database
+Note: if this error is printed on the cloudshell "Failed to retrieve remote build status, please visit https://openaifuc121.scm.azurewebsites.net/api/deployments", execute the below command, update functionname with the your deployed function in step 1
 
+func azure functionapp publish functionname --force --python 
 
    
-## Step 2: Deploy Azure Function App
+## Step 2: Configure Azure Function App
 
-a. Login to Azure Portal and open the "Cloud Shell"
 
-b. Go to scenarios/natural_language_query/azurefunc/ folder. The "create-func.ps1" script in step d update must run from this folder.
-
-c. Open the "create-func.ps1" script and provide the values for location, resourcegrGroup, storageaccountname, and functionname parameters.Save the file
-
-d. Run the "create-func.ps1" script and it will create the function App with function
-
-e. Open the "config-func.txt" in the scenarios/natural_language_query/ folder and provide your GPT_ENGINE, OPEN_API_KEY, OPENAI_RESOURCE_ENDPOINT, SQL_DB_NAME, and SQL_SERVER_NAME values
-
-f. Once function is created, go to function and cick "Configuration" -> "Application Settings" and click on "Advance edit" and copy the updated ""config-func.txt" values in the editor. DO not delete the existing contents in "Advance edit", just add the updated ""config-func.txt" values before the last line and ']' mark. After copying the values click "OK"
+a. Go to deployed function and cick "Configuration" -> "Application Settings" and click on "Advance edit" and copy the updated ""config-func.txt" values in the editor. DO not delete the existing contents in "Advance edit", just update ""config-func.txt" values before the last line and ']' mark. After copying the values click "OK"
 
 <img width="919" alt="image" src="https://user-images.githubusercontent.com/50298139/223740863-166c6bba-bc5e-44ab-969b-cf5d1e77c6c1.png">
 
 
-
-g. Under Settings in function click on "Identity" , under "System assigned" set the "Status" to "On", Save the changes
+b. Under Settings in function click on "Identity" , under "System assigned" set the "Status" to "On", Save the changes
 
 <img width="929" alt="image" src="https://user-images.githubusercontent.com/50298139/223740677-b00bcefb-8dbf-4a49-b67b-2254d43669be.png">
 
-h. Go to SQL server, under "settings", click "Azure Active Directory" and click "Set admin", on right side provide the name of function app which you have provided in point b. Add the name and click  "Select" and "Save"
+c. Go to SQL server, under "settings", click "Azure Active Directory" and click "Set admin", on right side provide the name of function app which you have provided in point b. Add the name and click  "Select" and "Save"
 
 <img width="947" alt="image" src="https://user-images.githubusercontent.com/50298139/223740181-eaa03b0e-e654-49b9-86ce-b77e763a66ad.png">
 
 
-**Note : SQL_DB_NAME, and SQL_SERVER_NAME should be same names which you created in step 1**
 
 
 
