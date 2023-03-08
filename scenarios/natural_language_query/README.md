@@ -34,10 +34,6 @@ d. run "create-sql-func.ps1" script and provide the location, resourcegrGroup, s
 
 .\create-sql-func.ps1  "East US" "resourcegorupname" "sqlservername" "sqldatabasename" "azureuser" "password" "subscription id" "tenantid" "storageaccountname" "functionappname"
 
-Note: if this error is printed on the cloudshell "Failed to retrieve remote build status, please visit https://openaifuc121.scm.azurewebsites.net/api/deployments", execute the below command, update functionname with the your deployed function in step 1
-
-func azure functionapp publish functionname --force --python 
-
    
 ## Step 2: Configure Azure Function App
 
@@ -78,7 +74,11 @@ c.  Click Test/Run -> select "GET" in "HTTP method" dropdown, click + next to "Q
 
 d. The "Output" tab will have the query results 
 
+
 Note : Please press the Run again if the output tab does not print the records
+
+<img width="469" alt="image" src="https://user-images.githubusercontent.com/50298139/223868339-17d32779-4dbd-4ae9-ac27-2b56e0e055a5.png">
+
 
 
 ## Step 4. Deploy client Power App
