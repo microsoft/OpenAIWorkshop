@@ -83,13 +83,13 @@ To make it easy for the labs, the sample document has already been chunked and p
 If you prefer to not use the python/automated approach above, the below steps can be followed without automation script. 
 To configure Azure Search, please follow the steps below.
 
-    - In the storage container, that is created as part of the template in step 1, create a blob container. 
-    - Extract the data files in the .scenarios/data/data-files.zip folder and update this folder to the blob container using Azure Portal UI.   The data-files.zip contains the Azure ML sample pdf document chunked as individual files per page.  
-    - Import data in Azure Search as shown below. Choose the blob container and provide the blob-folder name in to continue. 
+- In the storage container, that is created as part of the template in step 1, create a blob container. 
+- Extract the data files in the .scenarios/data/data-files.zip folder and update this folder to the blob container using Azure Portal UI.   The data-files.zip contains the Azure ML sample pdf document chunked as individual files per page.  
+- Import data in Azure Search as shown below. Choose the blob container and provide the blob-folder name in to continue. 
 
-        ![](../../documents/media/search1.png)
-    - In the Customize Target Index, use id as the Azure Document Key and mark text as the Searchable Field. 
-    - This should index the chunked sample
+    ![](../../documents/media/search1.png)
+- In the Customize Target Index, use id as the Azure Document Key and mark text as the Searchable Field. 
+- This should index the chunked sample
 
  
 
