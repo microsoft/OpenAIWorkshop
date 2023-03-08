@@ -57,6 +57,12 @@ The Azure Function App also deploys the function code needed for powerapps autom
         The secrets.env should be placed in the ingest folder along side the python script file search-indexer.py.
         The endpoints below needs to have the trailing '/' at end for the search-indexer to run correctly.
 
+            cd ingest
+            # open secrets.env using code editor such as nano or code
+            code secrets.env
+
+        Add the below entries with correct values to secrets.env.
+
             AZSEARCH_EP="https://<>.search.windows.net/"
             AZSEARCH_KEY=""
             AFR_ENDPOINT="https://westus2.api.cognitive.microsoft.com/"
