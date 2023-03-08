@@ -22,6 +22,7 @@ RESOURCE_GROUP_NAME=$1
 REGION=$2
 OPENAI_EP=$3
 OPENAI_KEY=$4
+FUNC_APP_NAME=$5
 
 while [ -z "${RESOURCE_GROUP_NAME}" ]
 do
@@ -49,9 +50,21 @@ do
     read OPENAI_KEY
 done
 
+while [ -z "${FUNC_APP_NAME}" ]
+do
+    echo "Please provide Azure Function App Name. max length 12 characters:"
+    read FUNC_APP_NAME
+
+    if [ ${#FUNC_APP_NAME} -gt 14 ]
+    then
+        echo "Function App Name should be less than 14 characters"
+        FUNC_APP_NAME=""
+    fi
+done
+
 RG_EXISTS=$(az group exists -g $RESOURCE_GROUP_NAME | jq -r '.') 
 
-
+func_prefix="func-search-"
 
 if [ $RG_EXISTS = "true" ]
 then
@@ -94,11 +107,14 @@ then
     exit 1
 fi
 
-func_prefix="func-search"
 
-function_name=$(az resource list -g $RESOURCE_GROUP_NAME | jq -r --arg func_prefix $func_prefix '.[] | select(.type == "Microsoft.Web/sites") | select(.name | startswith($func_prefix)) | .name')
+FUNC_NAME=$func_prefix$FUNC_APP_NAME
 
-if [[ $function_name =~ $func_prefix ]]
+#function_name=$(az resource list -g $RESOURCE_GROUP_NAME | jq -r --arg func_prefix $func_prefix '.[] | select(.type == "Microsoft.Web/sites") | select(.name | startswith($func_prefix)) | .name')
+
+function_name=$(az resource list -g $RESOURCE_GROUP_NAME | jq -r --arg FUNC_NAME $FUNC_NAME '.[] | select(.type == "Microsoft.Web/sites") | select(.name = $FUNC_NAME) | .name')
+
+if [[ $function_name = $FUNC_NAME ]]
 then
     printf "\nFunction App $function_name already exists.\n"
     printf "\nPlease delete resource group to deploy again. Re-run this script.\n"
@@ -107,9 +123,15 @@ else
     printf "\nDeploying Resources...\n"
     az deployment group create -g $RESOURCE_GROUP_NAME --template-file ./azure-deploy-resources.json --parameters \
         OPENAI_RESOURCE_ENDPOINT=$OPENAI_EP \
-        OPENAI_API_KEY=$OPENAI_KEY
+        OPENAI_API_KEY=$OPENAI_KEY \
+        functionAppName=$FUNC_NAME
 fi
 
+if [ $? -ne 0 ]
+then
+    printf "\nError deploying resources. Exiting...\n"
+    exit 1
+fi
 
 printf "\nAdding cors settings to Azure Function App...\n"
 az functionapp cors add -g $RESOURCE_GROUP_NAME -n $function_name --allowed-origins https://portal.azure.com https://ms.portal.azure.com

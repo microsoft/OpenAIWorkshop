@@ -26,11 +26,12 @@ In the Cloud Shell type
     cd OpenAIWorkshop/scenarios/openai_on_custom_dataset/deploy/
 
     chmod +x deploy.sh
-
-    ./deploy.sh <Resource Group Name> <Region> <Azure Open AI Endpoint> <Azure Open AI Key>
+    
+    # funcapp_name needs to be less than 14 characters
+    ./deploy.sh <Resource Group Name> <Region> <Azure Open AI Endpoint> <Azure Open AI Key> <funcapp_name>
 
     For e.g 
-    /deploy.sh openai-workshop-test2 westus  https://anildwaopenai2.openai.azure.com/ <Azure Open AI Key Redacted>
+    /deploy.sh openai-workshop-test2 westus  https://anildwaopenai2.openai.azure.com/ <Azure Open AI Key Redacted> instance114
 
 
 
