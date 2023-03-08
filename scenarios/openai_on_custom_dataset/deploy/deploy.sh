@@ -22,7 +22,8 @@ RESOURCE_GROUP_NAME=$1
 REGION=$2
 OPENAI_EP=$3
 OPENAI_KEY=$4
-FUNC_APP_NAME=$5
+OPENAI_DEPLOYMENT_NAME=$5
+FUNC_APP_NAME=$6
 
 while [ -z "${RESOURCE_GROUP_NAME}" ]
 do
@@ -49,6 +50,13 @@ do
     echo "Please provide Azure Open AI Key:"
     read OPENAI_KEY
 done
+
+while [ -z "${OPENAI_DEPLOYMENT_NAME}" ]
+do
+    echo "Please provide Azure Open AI Deployment Name:"
+    read OPENAI_DEPLOYMENT_NAME
+done
+
 
 while [ -z "${FUNC_APP_NAME}" ]
 do
@@ -124,6 +132,7 @@ else
     az deployment group create -g $RESOURCE_GROUP_NAME --template-file ./azure-deploy-resources.json --parameters \
         OPENAI_RESOURCE_ENDPOINT=$OPENAI_EP \
         OPENAI_API_KEY=$OPENAI_KEY \
+        OPENAI_Model_Deployment_Name=$OPENAI_DEPLOYMENT_NAME \
         functionAppName=$FUNC_NAME
 fi
 

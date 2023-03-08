@@ -28,10 +28,10 @@ In the Cloud Shell type
     chmod +x deploy.sh
     
     # funcapp_name needs to be less than 14 characters
-    ./deploy.sh <Resource Group Name> <Region> <Azure Open AI Endpoint> <Azure Open AI Key> <funcapp_name>
+    ./deploy.sh <Resource Group Name> <Region> <Azure Open AI Endpoint> <Azure Open AI Key> <Azure Open AI Model Deployment Name> <funcapp_name>
 
     For e.g 
-    /deploy.sh openai-workshop-test2 westus  https://anildwaopenai2.openai.azure.com/ <Azure Open AI Key Redacted> instance114
+    /deploy.sh openai-workshop-test2 westus  https://anildwaopenai2.openai.azure.com/ <Azure Open AI Key Redacted> text-davinci-003-deployment instance114
 
 
 
