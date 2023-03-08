@@ -15,7 +15,7 @@ Once the automated script is run, the power app can be configured as the next st
 ## Steps
 
 ### Step 1
-Launch [Azure Portal](https://portal.azure.com){:target="_blank"} and open Azure Cloud Shell from the top right area.
+Launch [Azure Portal](https://portal.azure.com)(control+click) and open Azure Cloud Shell from the top right area.
 
 ![Azure Cloud Shell](../../documents/media/AzureCloudShell.png)
 
