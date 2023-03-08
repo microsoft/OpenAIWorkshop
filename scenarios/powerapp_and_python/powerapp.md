@@ -43,6 +43,6 @@
   <img src="../../documents/media/flowchangeapikey.png" width=50% height=50%>
 
 
-### Step 2. Test
+### Step 3. Test
 
 - Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp.
