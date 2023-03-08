@@ -93,7 +93,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 ## Step 2. Test Azure Function App service deployment
 
-Launch Postman and test the Azure Function to make sure it is returning results. The num_search_result query parameter can be altered to retrieve more or less search results. Notice the query parameter num_search_result in the screen shot below. num_search_result is a mandatory query parameter.
+Launch Postman and test the Azure Function to make sure it is returning results. The num_search_result query parameter can be altered to limit the search results. Notice the query parameter num_search_result in the screen shot below. num_search_result is a mandatory query parameter.
 
 
 ![](../../documents/media/postman.png)
