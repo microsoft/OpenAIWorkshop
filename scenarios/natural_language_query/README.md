@@ -34,10 +34,6 @@ d. Open the "create-sql.ps1" script and provide the location, resourcegrGroup, s
 
 e. Run the "create-sql.ps1" script and it will create the SQL server with sample database
 
-Please click "Set admin" and **provide your functionname** which you created as in step 2 
-<img width="674" alt="image" src="https://user-images.githubusercontent.com/50298139/222620873-0cb5201d-d587-41aa-b58d-d0b2bf73785e.png">
-
-
 
    
 ## Step 2: Deploy Azure Function App
