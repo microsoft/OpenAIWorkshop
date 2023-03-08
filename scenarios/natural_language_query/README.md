@@ -50,12 +50,11 @@ f. Once function is created, go to function and cick "Configuration" under Setti
 
 g. Open the "config-func.txt" in the scenarios/natural_language_query/ folder and provide your GPT_ENGINE, OPEN_API_KEY, OPENAI_RESOURCE_ENDPOINT, SQL_DB_NAME, and SQL_SERVER_NAME values
 
-h. Under "Application Settings", click on "Advance edit" and copy the updated ""config-func.txt" values in the editor. DO not delete the existing contents in "Advance edit", just add the updated ""config-func.txt" values
+h. Under "Application Settings", click on "Advance edit" and copy the updated ""config-func.txt" values in the editor. DO not delete the existing contents in "Advance edit", just add the updated ""config-func.txt" values. After copying the values click "OK"
 
 <img width="919" alt="image" src="https://user-images.githubusercontent.com/50298139/223740863-166c6bba-bc5e-44ab-969b-cf5d1e77c6c1.png">
 
 
-i. Save the changes
 
 j. Under Settings in function click on "Identity" , under "System assigned" set the "Status" to "On", Save the changes
 
