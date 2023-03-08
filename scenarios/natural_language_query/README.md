@@ -40,7 +40,7 @@ e. Run the "create-sql.ps1" script and it will create the SQL server with sample
 
 a. Login to Azure Portal and open the "Cloud Shell"
 
-b. Go to scenarios/natural_language_query/azurefunc/ folder
+b. Go to scenarios/natural_language_query/azurefunc/ folder. The "create-func.ps1" script in step d update must run from this folder.
 
 d. Open the "create-func.ps1" script and provide the values for location, resourcegrGroup, storageaccountname, and functionname parameters.Save the file
 
