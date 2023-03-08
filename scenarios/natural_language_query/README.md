@@ -111,17 +111,14 @@ c. Click on Import to import the package into powerapps environment. This will i
 
 <img width="926" alt="image" src="https://user-images.githubusercontent.com/50298139/222618019-49eab211-1c77-474c-a3aa-8f377df26255.png">
 
-d. This will import the Power App canvas app and Power Automate Flow into the workspace.
 
 
-<img width="746" alt="image" src="https://user-images.githubusercontent.com/50298139/222619006-e9eaa507-836b-4ba7-bf1f-d78e0d84479d.png">
 
-
- e. Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**
+ d. Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**
 
 <img width="928" alt="image" src="https://user-images.githubusercontent.com/50298139/222619285-09a545a9-73c3-4dd9-a1b6-c9cc2ca7e440.png">
 
-f. Please click the HTTP and provide the function URL in the "URI" field, this function URL can be taken from the "Code + Test" screen -> get function URL tab
+e. Please click the HTTP and provide the function URL in the "URI" field, this function URL can be taken from the "Code + Test" screen -> get function URL tab
 
 
 <img width="635" alt="image" src="https://user-images.githubusercontent.com/50298139/223873817-38984955-94f1-4f70-8f02-c075ecf87469.png">
