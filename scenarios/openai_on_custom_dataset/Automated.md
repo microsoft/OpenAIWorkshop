@@ -8,14 +8,14 @@
 
 ## Deployment
 
-This approach runs a fully automated script is run to create Azure Resources, configure the Azure Function App and create the search index. There is no manual configuration required. This has the least number of prerequisites and can be run from Azure Cloud Shell. 
+This approach runs a fully automated script to create Azure Resources, configure the Azure Function App and create the search index. There is no manual configuration required. This has the least number of prerequisites and can be run from Azure Cloud Shell. 
 Once the automated script is run, the power app can be configured as the next step. 
 
 
 ## Steps
 
 ### Step 1
-Launch Azure Portal and open Azure Cloud Shell from the top right area.
+Launch [Azure Portal](https://portal.azure.com) and open Azure Cloud Shell from the top right area.
 
 ![Azure Cloud Shell](../../documents/media/AzureCloudShell.png)
 
