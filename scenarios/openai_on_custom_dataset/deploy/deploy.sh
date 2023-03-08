@@ -1,7 +1,14 @@
 #! /bin/bash
 
 # This can be run from Azure Cloud Shell
-
+# This script provisions Azure Resources such as 
+# Azure Function App,
+# Azure Cognitive Search,
+# Azure Form Recognizer,
+# Azure Storage.
+# It also deploys Azure Function App Code and confiures the App Settings to use the provided Open AI Endpoint and Open AI Key.
+# It also enables Semantic Search on Azure Cognitive Search.
+#
 
 
 printf "This utility provisions Azure Resources such as \nAzure Function App, \nAzure Cognitive Search,  \
@@ -109,7 +116,7 @@ az functionapp cors add -g $RESOURCE_GROUP_NAME -n $function_name --allowed-orig
 
 printf "\nDeploying Azure Function App Code...\n"
 cd ../orchestrator
-#func azure functionapp publish $function_name --force --python
+func azure functionapp publish $function_name --force --python
 
 
 printf "\nRetrieving additional details like subscriptionId, accessToken etc...\n"
