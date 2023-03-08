@@ -1,9 +1,9 @@
-# Using Azure OpenAI on custom dataset
+# Using the Azure OpenAI Service on knowledge corpus
 ### Scenario summary:
-This scenario supports use cases to invoke OpenAI as an intelligent agent for the purpose of answering questions from end users or to assist them in applying knowledge from a custom knowledge corpus and domain.
+This scenario supports use cases to invoke the Azure OpenAI Service as an intelligent agent for the purpose of answering questions from end users or to assist them in applying knowledge from a custom knowledge corpus and domain.
 Applications include: 
-- Giving direct answers to questions about a specific product, service or process based on a knowledge corpus that can be updated frequently. This is an alternative to classic search where the result includes documents with only relevant information to the question. This can be thought of as using Bing Chat on top of custom data.
-- Giving recommendations and assistance based on information that can be implicitly gathered about the user and then formulate useful content for the user's purpose. For example, a travel website may utilize users' personal information, past posts and transaction history to personalize recommendations when users request a sample trip itinerary tailored to a list of requirements.
+- Providing direct answers to questions about a specific product, service or process based on a knowledge corpus that can be updated frequently. This is an alternative to classic search where the result includes documents with only relevant information to the question. This can be thought of as using Bing Chat on top of custom data.
+- Generating recommendations and assistance based on information that can be implicitly gathered about the user and then formulate useful content for the user's purpose. For example, a travel website may utilize users' personal information, past posts and transaction history to personalize recommendations when users request a sample trip itinerary tailored to a list of requirements.
 
 For both applications mentioned, the solution process flow includes the following:
 - **Step 1. Gather Context**: contextual information can be retrieved from knowledge corpuses and other systems based on the user's query and user's information. The retrieval mechanism can be a semantic search engine to retrieve relevant content from an unstructured dataset or a SQL query sourcing from a relational database.
@@ -14,16 +14,17 @@ This implementation scenario focuses on building a knowledge retrieval chatbot a
 ### Architecture Diagram
 ![OpenAI on custom dataset](../../documents/media/AzureCognitiveSearchOpenAIArchitecture.png)
 The solution uses a two-stage information retrieval process to retrieve the content that best matches the user query. 
-In stage 1, full text search in Azure Cognitive Search is used to retrieve a number of relevant documents. In stage 2, the search result is applied with a pretrained NLP model and embedded search is done to further narrow down the the most relevant content. The content is used by orchestrator service to form a prompt and submit  to an Azure OpenAI service deployment supporting Large Language Models (LLM). The Azure OpenAI service returns a result which is then displayed to the user via a Power Apps client application.
+In stage 1, full text search in Azure Cognitive Search is used to retrieve a number of relevant documents. In stage 2, the search result is applied with a pretrained NLP model and embedded search is done to further narrow down the the most relevant content. The content is used by the orchestrator service (e.g. an Azure Function App) to form a prompt and submit to an Azure OpenAI service deployment. The Azure OpenAI service returns a result which is then displayed to the user via a Power Apps client application; an end-to-end example showcasing Large Language Model (LLM) capabilities.
 ### Deployment
 
 
 ### Prerequisites
 
-* Azure Open AI already provisioned and a __text-davinci-003__ model is deployed. If another deployment model must be used, then manual adjustments will need to be made in following lab instructions.
-* [PostMan Client Installed](https://www.postman.com/downloads/) for testing HTTP requests to Azure Functions. The Azure Portal can also be used to interact with and test Azure Functions REST API connectivity.
+* Azure Open AI already provisioned and a __text-davinci-003__ model is deployed. If another deployment model must be used, then manual adjustments will need to be made in lab activities.
+* [PostMan Client Installed](https://www.postman.com/downloads/) for testing HTTP requests to Azure Functions. The Azure Portal can also be used to interact with and test Azure Functions connectivity.
 * Azure Cloud Shell is recommended if Option A is chosen for programmatic configuration via Python, as it includes preinstalled dependencies. 
     * Conda is recommended if local laptops must be used as a pip install could interfere with an existing python deployment.
+* Access to a Power Apps environment. If necesssary, a free 30 day trial is available via powerapps.microsoft.com. Instructions available [here](https://learn.microsoft.com/en-us/power-apps/maker/signup-for-powerapps). Power Apps eligibility by license is also documented [here](https://learn.microsoft.com/en-us/power-platform/admin/create-environment)
 
 
 
@@ -55,10 +56,10 @@ The deployed Azure Function App includes code to invoke a Power Automate Flow, w
     
         ![](../../documents/media/enable-semantic-search.png)
         
-        * __Note__: Before moving forward with the instructions, choose one of the following 2 options to configure and perform Search Indexing. Option A outlines a programmatic approach using Python within the Azure Command Line Interface (CLI) in Azure Cloud Shell. Option B outlines how to use the Azure Portal for a GUI-based experience. If a GUI-based Portal approach is preferred, skip to Option B (above the next screenshot titled "Import data").
+      * __Note__: Before moving forward with the instructions, choose one of the following 2 options to configure and perform Search Indexing. Option A outlines a programmatic approach using Python within the Azure Command Line Interface (CLI) in Azure Cloud Shell. Option B outlines how to use the Azure Portal for a GUI-based experience. If a GUI-based Portal approach is preferred, skip to Option B (above the next screenshot titled "Import data").
 
     *   __Option A (Programmatic Approach)__: Create a Search Index, Semantic Configuration and Index a few documents using an automated script. The script can be run multiple times without any side effects.
-        Run the below commands to configure the python environment. If running in the [Azure Command Line Interface (CLI)](https://portal.azure.com/#cloudshell/), the conda installation lines (3-4) below can be removed, and the backslashes can be updated to be forwardslashes. <repo> should be substituted with the repo URL (e.g. https://github.com/microsoft/OpenAIWorkshop.git).
+        Run the below commands to configure the python environment. If running in the [Azure Command Line Interface (CLI)](https://portal.azure.com/#cloudshell/), the conda installation lines (3-4) below can be removed. <repo> should be substituted with the repo URL (e.g. https://github.com/microsoft/OpenAIWorkshop.git).
 
                         
             git clone <repo>
@@ -71,9 +72,8 @@ The deployed Azure Function App includes code to invoke a Power Automate Flow, w
         *   Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
             Rename secrets.rename to secrets.env. (This is recommended to prevent secrets from leaking into external environments.)
             The secrets.env should be placed in the ingest folder with the existing python script file search-indexer.py.
-            The endpoints below needs to have the trailing '/' at end for the search-indexer to run correctly.
         
-            After moving and renaming the secrets.rename file to secrets.env in the openai_on_custom_dataset/ingest directory, use the "code filename" command to alter the contents of the file below with a text editor. See the Notes section below if necessary to retrieve the associated values.
+            After moving and renaming the secrets.rename file to secrets.env in the openai_on_custom_dataset/ingest directory, use a command like "code <filename>" to alter the contents of the file shown below with a text editor. See the Notes section below if necessary to retrieve the associated values. The endpoints below needs to have the trailing '/' at end for the search-indexer to run correctly.
             
    
             ```
