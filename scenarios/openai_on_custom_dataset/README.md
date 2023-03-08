@@ -1,110 +1,116 @@
 # Using Azure OpenAI on custom dataset
 ### Scenario summary:
-This scenario allows use cases to use Open AI as an intelligent agent to answer questions from end users or assist them using knowledge of a proprietary corpus and domain.
-Applications can be: 
-- Giving direct answer to questions about specific product, service and process based on a knowledge corpus that can be updated frequently. This is an alternative to classic search where the result are just documents with relevant information to the question. Think of this as Bing Chat on proprietary data.
-- Giving recommendation & assistance: based on information that can be implicitly gathered about the user, formulate useful content for the user's purpose. For example, a travel website may utilize users' personal information, past posts and transaction history to personalize recommendations when users need to be helped with creating next trip idea/itinerary
+This scenario supports use cases to invoke OpenAI as an intelligent agent for the purpose of answering questions from end users or to assist them in applying knowledge from a custom knowledge corpus and domain.
+Applications include: 
+- Giving direct answers to questions about a specific product, service or process based on a knowledge corpus that can be updated frequently. This is an alternative to classic search where the result includes documents with only relevant information to the question. This can be thought of as using Bing Chat on top of custom data.
+- Giving recommendations and assistance based on information that can be implicitly gathered about the user and then formulate useful content for the user's purpose. For example, a travel website may utilize users' personal information, past posts and transaction history to personalize recommendations when users request a sample trip itinerary tailored to a list of requirements.
 
-Regardless of the application scenario, the solution flow is:
-- Step 1 prepare the context information: context information can be retrieved from proprietary knowledge corpus and other systems based on the user's query and user's information. The retrieval mechanism can be a semantic search engine to retrieve right content for unstructured data corpus or SQL query in case of structured dataset.
-- Step 2 fomulate prompt to Open AI: from the context and depending on the goal of user, formulate GPT prompt to get the final response to end user. For example, if it's knowlege retrieval vs. recommendation
+For both applications mentioned, the solution process flow includes the following:
+- **Step 1. Gather Context**: contextual information can be retrieved from knowledge corpuses and other systems based on the user's query and user's information. The retrieval mechanism can be a semantic search engine to retrieve relevant content from an unstructured dataset or a SQL query sourcing from a relational database.
+- **Step 2. Formulate Prompt and retrieve response**: for a goal and context supplied by the user, formulate a GPT prompt, invoke the OpenAI service, and display personalized recommendations or knowledge retrieval to the user.
 
-This implementation scenario focuses on building a knowledge retrieval chatbot application on top of unstructured data corpus but the same design can be used for recommendation & generative scenarios.
+This implementation scenario focuses on building a knowledge retrieval chatbot application on top of an unstructured knowledge corpus but the same design can be used for recommendation & generative scenarios.
 
 ### Architecture Diagram
 ![OpenAI on custom dataset](../../documents/media/AzureCognitiveSearchOpenAIArchitecture.png)
-From the user's query, the solution uses two-stage information retrieval to retrieve the content that best matches the user query. 
-In stage 1, full text search in Azure Cognitive Search is used to retrieve a number of relevant documents. In stage 2, the search result is applied with pretrained NLP model and embedding search to further narrow down the the most relavant content. The content is used by orchestrator service to form a prompt to OpenAI deployment of LLM. The OpenAI service returns result which is then sent to Power App client application.
+The solution uses a two-stage information retrieval process to retrieve the content that best matches the user query. 
+In stage 1, full text search in Azure Cognitive Search is used to retrieve a number of relevant documents. In stage 2, the search result is applied with a pretrained NLP model and embedded search is done to further narrow down the the most relevant content. The content is used by orchestrator service to form a prompt and submit  to an Azure OpenAI service deployment supporting Large Language Models (LLM). The Azure OpenAI service returns a result which is then displayed to the user via a Power Apps client application.
 ### Deployment
 
 
 ### Prerequisites
 
-* [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Functions.  
-* Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 
-* Azure Open AI already provisioned and text-davinci-003 model is deployed. Other deployments can also be used, the configs below needs to be updated accordingly.  
-* Conda is recommended if local laptops are used as pip install might interfere with existing python deployment.
+* Azure Open AI already provisioned and a __text-davinci-003__ model is deployed. If another deployment model must be used, then manual adjustments will need to be made in following lab instructions.
+* [PostMan Client Installed](https://www.postman.com/downloads/) for testing HTTP requests to Azure Functions. The Azure Portal can also be used to interact with and test Azure Functions REST API connectivity.
+* Azure Cloud Shell is recommended if Option A is chosen for programmatic configuration via Python, as it includes preinstalled dependencies. 
+    * Conda is recommended if local laptops must be used as a pip install could interfere with an existing python deployment.
 
 
 
 ## 1. Azure services deployment
 
-Deploy Azure Resources namely - Azure Function App to host facade for OpenAI and Search APIs, Azure Search Service and a Azure Form Recognizer resource.
+Deploy Azure Resources, namely an Azure Function App for abstracting access to OpenAI and Search APIs, Azure Search Service, and an Azure Form Recognizer resource.
 
-Here are the SKUs that are needed for the Azure Resources:
+Here are the SKUs used by the provisioned Azure Resources:
 
 - Azure Function App - Consumption Plan
-- Azure Cognitive Search - Standard (To support semantic search)
-- Azure Forms Recognizer - Standard (To support analyzing 500 page document)
-- Azure Storage - general purpose V1 (Needed for Azure Function App and uploading sample documents)
+- Azure Cognitive Search - Standard (supports semantic search)
+- Azure Form Recognizer - Standard (supports analysis of a 500 page document)
+- Azure Storage - General Purpose v1 (supports Azure Function App and sample document upload)
 
 
-The Azure Function App also deploys the function code needed for powerapps automate flow. 
+The deployed Azure Function App includes code to invoke a Power Automate Flow, which uses a REST API request to a specified OpenAI service provisioned within an Azure subscription.
 
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FOpenAIWorkshop%2Fanildwa-dev%2Fscenarios%2Fopenai_on_custom_dataset%2Fdeploy%2Fazure-deploy.json)
 
 
 
-- Step 1: Setup Azure Cognitive Search and prepare data
+- Step 1: Set up Azure Cognitive Search and prepare data
 
-    As part of data preperation step, to work in Open AI, the documents are chunked into smaller units(20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with a python script below. 
+    As part of the data preperation step, to work best with OpenAI, the documents are chunked into smaller units (20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with the search-indexer python script provided and executed in this lab. If you do not prefer to use the Azure Command Line Interface (CLI) in the Azure Portal to execute the automated python script, proceed to the Optional Manual Approach.
     To make it easy for the labs, the sample document has already been chunked and provided in the repo. 
 
-    * Enable Semantic Search on Azure Portal. Navigate to Semantic Search blade and select Free plan. 
+    *   Enable Semantic Search on Azure Portal. Navigate to the Semantic Search blade and select the Free plan. 
     
         ![](../../documents/media/enable-semantic-search.png)
+        
+        * __Note__: Before moving forward with the instructions, choose one of the following 2 options to configure and perform Search Indexing. Option A outlines a programmatic approach using Python within the Azure Command Line Interface (CLI) in Azure Cloud Shell. Option B outlines how to use the Azure Portal for a GUI-based experience. If a GUI-based Portal approach is preferred, skip to Option B (above the next screenshot titled "Import data").
 
-    *   Create Search Index, Sematic Configuration and Index a few documents using automated script. The script can be run multiple times without any side effects.
-        Run the below commands from cmd prompt to conifgure python environment. Conda is optional if running in Azure Cloud Shell or if an isolated python environment is needed. 
+    *   __Option A (Programmatic Approach)__: Create a Search Index, Semantic Configuration and Index a few documents using an automated script. The script can be run multiple times without any side effects.
+        Run the below commands to configure the python environment. If running in the [Azure Command Line Interface (CLI)](https://portal.azure.com/#cloudshell/), the conda installation lines (3-4) below can be removed, and the backslashes can be updated to be forwardslashes. <repo> should be substituted with the repo URL (e.g. https://github.com/microsoft/OpenAIWorkshop.git).
 
-            
+                        
             git clone <repo>
-            cd OpenAIWorkshop\scenarios\openai_on_custom_dataset
+            cd OpenAIWorkshop/scenarios/openai_on_custom_dataset
             conda create env -n openaiworkshop python=3.9
             conda activate openaiworkshop
-            pip install -r .\orchestrator\requirements.txt
+            pip install -r ./orchestrator/requirements.txt
 
 
-    *   Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
-        Rename secrets.rename to secrets.env. (This is recommended to prevent secrets from leaking into external environments.)
-        The secrets.env should be placed in the ingest folder along side the python script file search-indexer.py.
-        The endpoints below needs to have the trailing '/' at end for the search-indexer to run correctly.
-
-            AZURE_OPENAI_API_KEY=""
-            AZURE_OPENAI_ENDPOINT="https://<>.openai.azure.com/"
-            AZURE_OPENAI_API_KEY_EASTUS=""
-            AZURE_OPENAI_ENDPOINT_EASTUS="https://<>.openai.azure.com/"
-
+        *   Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
+            Rename secrets.rename to secrets.env. (This is recommended to prevent secrets from leaking into external environments.)
+            The secrets.env should be placed in the ingest folder with the existing python script file search-indexer.py.
+            The endpoints below needs to have the trailing '/' at end for the search-indexer to run correctly.
+        
+            After moving and renaming the secrets.rename file to secrets.env in the openai_on_custom_dataset/ingest directory, use the "code filename" command to alter the contents of the file below with a text editor. See the Notes section below if necessary to retrieve the associated values.
+     
             AZSEARCH_EP="https://<>.search.windows.net/"
             AZSEARCH_KEY=""
             AFR_ENDPOINT="https://westus2.api.cognitive.microsoft.com/"
             AFR_API_KEY=""
             INDEX_NAME="azure-ml-docs"
+        
+            __Note__:
+        *   Ensure that the <> in __AZSEARCH_EP__ is substituted with the value for your Search Service resource available on the __Overview__ blade in the Portal.
+        *   Substitute __AZSEARCH_KEY__ with the __Query key__ value available on the __Keys__ blade for the Search Service in the Portal.
+        *   Replace the __AFR_API_KEY__ with the available on the __App keys__ blade for the Azure Function App resource in the Portal. Either _master or default key values can be used.
+        *   Replace the region prefix in the __AFR_ENDPOINT__ value (e.g. westus2 to eastus) if the Azure Function was deployed in a region other than West US 2.
 
-    *   The document processing, chunking, indexing can all be scripted using any preferred language. 
-        This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
-        The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service. 
+
+        *   The document processing, chunking, indexing can all be scripted using any preferred language, with Python demonstrated here. Run the below script to create a search index, add semantic configuration and populate sample documents from the Azure Docs extracts used by this lab. 
+        The search indexer chunks a sample PDF document (500 pages) which is downloaded from Azure Docs and chunks each page into 20 lines. Each chunk is created as a new search document in the index. The PDF document processing is achieved using the Azure Form Recognizer service. 
      
 
             cd .\scenarios\openai_on_custom_dataset\ingest\
             python .\search-indexer.py
             
 
-    *   Optional Manual Approach. If you prefer to not use the python/automated approach above, the below steps can be followed without automation script. 
-        To configure Azure Search, please follow the steps below
+    *   __Option B (Azure Portal approach)__:  If you prefer to not use the programmatic approach outlined above in Option A, visit the [Azure Portal](https://portal.azure.com) and complete the storage account and Azure Search configuration as described below.
+        
+        Import data
 
-        - In the storage container, that is created as part of the template in step 1, create a blob container. 
-        - Extract the data files in the .scenarios/data/data-files.zip folder and update this folder to the blob container using Azure Portal UI.   The data-files.zip contains the Azure ML sample pdf document chunked as individual files per page.  
-        - Import data in Azure Search as shown below. Choose the blob container and provide the blob-folder name in to continue. 
+        - Navigate to the resource group used by the lab deployment. Once selected, find the Storage account resource auto-provisioned by the template used in step 1. Click on the __Storage Acccount__ name, click on the __Blob service__ link, and create a blob container.  
+        - Extract the data files in the .scenarios/data/data-files.zip folder and update this folder to the blob container using the [Azure Portal UI](https://portal.azure.com/#cloudshell/). The data-files.zip contains the Azure ML sample PDF document chunked as individual files per page.  
+        - Import data to Azure Search as shown below. Choose the blob container and provide the blob-folder name to continue. 
 
             ![](../../documents/media/search1.png)
-        - In the Customize Target Index, use id as the Azure Document Key and mark text as the Searchable Field. 
-        - This should index the chunked sample
+        - In the Customize Target Index window, use id as the Azure Document Key and text as the Searchable Field. 
+        - As a result, with this configuration, the chunked sample will be indexed
 
 ## Step 2: Automated orchestrator service with Azure Function App
 
-    Update the below configuration in Azure Function App configuration blade. 
+    Review the Azure Function App's __Configuration__ blade within the Settings section for the resource in the Portal. Double check that the Application Settings mentioned below are available by name, and briefly review the Hidden value to ensure that they match expected values. The OPENAI_API_KEY and OPENAI_RESOURCE_ENDPOINT values should be auto-populated with the values you looked up in the Portal and provided earlier in the lab.
 
             {
                 "name": "GPT_ENGINE",
@@ -134,20 +140,20 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 ## Step 3. Test Azure service deployment
 
-Launch Postman and test the Azure Function to make sure it is returning results. The num_search_result query parameter can be altered to retrieve more or less search results. Notice the query parameter num_search_result in the screen shot below. num_search_result is a mandatory query parameter.
+Launch Postman and test the Azure Function to make sure it returns results. The num_search_result query parameter can be altered to retrieve more or less search results. Notice the query parameter num_search_result in the screenshot below. A parameter named "code" also needs to be supplied to match the one of your Function's __App key__ values (either the _master or default values in the __App key__ blade of the resource in the Portal.
 
 
 ![](../../documents/media/postman.png)
 
 ## Step 4. Deploy client Power App
 
-From the powerapp folder, download Semantic-Search-App-Template_20230303012916.zip powerapp package. This has a powerapp and powerautomate template app pre-built.
+From the powerapp folder of the openai_on_custom_dataset folder of this repo, download the Semantic-Search-App-Template_20230303012916.zip powerapp package. This has a prebuilt Canvas app including Power App and Power Automate components.
 Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
 
 ![](../../documents/media/powerapps1.png)
 
 
-From the top nav bar, click Import Canvas App and upload the Semantic-Search-App-Template_20230303012916.zip file from this git repo path. 
+From the top nav bar, click Import Canvas App and upload the downloaded Semantic-Search-App-Template_20230303012916.zip file. 
 
 
 ![](../../documents/media/powerapps2.png)
@@ -156,7 +162,7 @@ From the top nav bar, click Import Canvas App and upload the Semantic-Search-App
 ![](../../documents/media/powerapps3.png)
 
 
-Click on Import to import the package into powerapps environment. 
+Click on Import to import the package into Power Apps environment. 
 
 
 ![](../../documents/media/powerapps4.png)
@@ -169,11 +175,11 @@ This will import the Power App canvas app and Semantic-Search Power Automate Flo
 ![](../../documents/media/powerapps7.png)
 
 
-In the Flows Pane, PowerAutomate Flow needs to be enabled. At this point, the powerapp can be run as is. It connects to a pre-built Azure Function App. 
+The Power Automate Flow needs to be enabled. Locate the Flows pane, find the imported Flow by name, and Turn on the Flow by click on the __More commands (...)__ icon.
 
 ![](../../documents/media/powerapps8.png)
 
-Edit the Power Automate Flow and update Azure Function Url. Optionaly num_search_result query parameter can be altered.
+Edit the Power Automate Flow and update Azure Function URL in the HTTP activity. Optionally, the num_search_result query parameter can be altered.
 
 
 
@@ -181,8 +187,8 @@ Edit the Power Automate Flow and update Azure Function Url. Optionaly num_search
 
 ## Step 5. Test
 
-Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp.
-Select an  FAQ from dropdown and click Search. This is should bring up the answers powered by Open AI GPT-3 Models. 
-Feel free to make changes to the PowerApps UI to add your own functionality and UI layout. You can explore expanding PowerAutomate flow to connect to other APIs to provide useful reference links to augment the response returned from OpenAI.
+Click on the play button on the top right corner in the Power Apps Portal to launch the Power App.
+Select an FAQ from dropdown and click Search. This returns answers powered by Open AI GPT-3 Models. 
+Feel free to make changes to the PowerApps UI to add your own functionality and UI layout. You can explore expanding Power Automate flow to connect to other APIs to provide useful reference links to augment the response returned from OpenAI.
 
 
