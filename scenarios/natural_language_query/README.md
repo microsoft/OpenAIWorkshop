@@ -46,9 +46,7 @@ d. Open the "create-func.ps1" script and provide the values for location, resour
 
 e. Run the "create-func.ps1" script and it will create the function App with function
 
-f. Once function is created, go to function and cick "Configuration" under Settings
-
-g. Open the "config-func.txt" in the scenarios/natural_language_query/ folder and provide your GPT_ENGINE, OPEN_API_KEY, OPENAI_RESOURCE_ENDPOINT, SQL_DB_NAME, and SQL_SERVER_NAME values
+f. Open the "config-func.txt" in the scenarios/natural_language_query/ folder and provide your GPT_ENGINE, OPEN_API_KEY, OPENAI_RESOURCE_ENDPOINT, SQL_DB_NAME, and SQL_SERVER_NAME values
 
 h. Under "Application Settings", click on "Advance edit" and copy the updated ""config-func.txt" values in the editor. DO not delete the existing contents in "Advance edit", just add the updated ""config-func.txt" values. After copying the values click "OK"
 
