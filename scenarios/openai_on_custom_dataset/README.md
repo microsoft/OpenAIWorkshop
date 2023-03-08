@@ -27,7 +27,7 @@ In stage 1, full text search in Azure Cognitive Search is used to retrieve a num
 
 
 
-## 1. Deploy Azure Services
+## Step 1. Deploy Azure Services
 
 Deploy Azure Resources, namely an Azure Function App for abstracting access to OpenAI and Search APIs, Azure Search Service, and an Azure Form Recognizer resource.
 
@@ -97,8 +97,8 @@ The deployed Azure Function App includes code to invoke a Power Automate Flow, w
      
    
             ```
-            cd .\scenarios\openai_on_custom_dataset\ingest\
-            python .\search-indexer.py
+            cd ./scenarios/openai_on_custom_dataset/ingest/
+            python ./search-indexer.py
             ```
 
    
@@ -193,7 +193,7 @@ Edit the Power Automate Flow and update Azure Function URL in the HTTP activity.
 
 ## Step 5. Launch and Test End-to-End via Power Apps
 
-Click on the play button on the top right corner in the Power Apps Portal to launch the Power App.
+With the Power App open, click on the play button on the top right section of the Power Apps Portal to launch the Power App.
 Select an FAQ from dropdown and click Search. Also experiment with custom search terms. This returns answers powered by Open AI GPT-3 Models. 
 Feel free to make changes to the PowerApps UI to add your own functionality and UI layout. You can explore expanding Power Automate flow to connect to other APIs to provide useful reference links to augment the response returned from OpenAI.
 
