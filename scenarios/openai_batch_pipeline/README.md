@@ -29,7 +29,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 - Set up Synapse Workspace
     - Create a Synapse workspace, provide the details and click 'Review + Create'
-    
+
     ![](../../documents/media/synapse_create.png)
 
     - Under SQL pools –> click New and create new dedicated SQL pool. This will take few minutes.
@@ -68,4 +68,6 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 
 ### Test
+
+Now that the data is in the target table it is available for usage by running SQL queries against it, or connecting PowerBI and creating visualizations.
 
