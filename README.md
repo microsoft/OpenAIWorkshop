@@ -22,7 +22,7 @@ Welcome to the Azure OpenAI workshop! In this workshop, you will learn how to us
 - [Your first AOAI application with PowerApp](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/powerapp_and_python).
 - Advanced: [A natural language query application on SQL data](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query).
 - Advanced: [An AOAI data pipeline to extract insights from unstructured data](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/openai_batch_pipeline).
-- Advanced: [Integrate ChatGPT with a custom dataset](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/openai_on_custom_dataset).
+- Advanced: [Integrate OpenAI with a custom dataset](https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/openai_on_custom_dataset).
 
 ## Format
 
