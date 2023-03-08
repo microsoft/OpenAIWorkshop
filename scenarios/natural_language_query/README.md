@@ -83,13 +83,13 @@ Note : Please press the Run again if the output tab does not print the records
 
 ## Step 4. Deploy client Power App
 
-From the powerapp folder, download "NLQuery PowerApp Export.zip" powerapp package. This has a powerapp and powerautomate template app pre-built.
+a. From scenarios/natural_language_query folder, download "NLQuery PowerApp Export.zip" powerapp package. This has a pre-built powerapp and powerautomate template app.
 Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
 
 ![](../../documents/media/powerapps1.png)
 
 
-From the top nav bar, click Import Canvas App and upload the Semantic-Search-App-Template_20230303012916.zip file from this git repo path. 
+b. From the top navigation bar, click Import Canvas App and upload the "NLQuery PowerApp Export.zip" file . 
 
 
 ![](../../documents/media/powerapps2.png)
@@ -98,7 +98,7 @@ From the top nav bar, click Import Canvas App and upload the Semantic-Search-App
 
 
 
-Click on Import to import the package into powerapps environment. This will import the Power App canvas app and Power Automate Flow into the workspace. 
+c. Click on Import to import the package into powerapps environment. This will import the Power App canvas app and Power Automate Flow into the workspace. 
 
 
 
