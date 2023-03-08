@@ -8,7 +8,6 @@ $tag="create-and-configure-database"
 $startIp="0.0.0.0"
 $endIp="255.255.255.255"
 
-#az login --tenant $tenantid
 az account set -s $subscription
 echo "Using resource group $resourceGroup with login: $login, password: $password..."
 echo "Creating $resourceGroup in $location..."
