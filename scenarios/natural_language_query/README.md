@@ -111,7 +111,7 @@ c. Click on Import to import the package into powerapps environment. This will i
 
 <img width="926" alt="image" src="https://user-images.githubusercontent.com/50298139/222618019-49eab211-1c77-474c-a3aa-8f377df26255.png">
 
-d. This will import the Power App canvas app and Semantic-Search Power Automate Flow into the workspace.
+d. This will import the Power App canvas app and Power Automate Flow into the workspace.
 
 
 <img width="746" alt="image" src="https://user-images.githubusercontent.com/50298139/222619006-e9eaa507-836b-4ba7-bf1f-d78e0d84479d.png">
