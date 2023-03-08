@@ -22,7 +22,8 @@ RESOURCE_GROUP_NAME=$1
 REGION=$2
 OPENAI_EP=$3
 OPENAI_KEY=$4
-FUNC_APP_NAME=$5
+OPENAI_DEPLOYMENT_NAME=$5
+FUNC_APP_NAME=$6
 
 while [ -z "${RESOURCE_GROUP_NAME}" ]
 do
@@ -49,6 +50,13 @@ do
     echo "Please provide Azure Open AI Key:"
     read OPENAI_KEY
 done
+
+while [ -z "${OPENAI_DEPLOYMENT_NAME}" ]
+do
+    echo "Please provide Azure Open AI Deployment Name:"
+    read OPENAI_DEPLOYMENT_NAME
+done
+
 
 while [ -z "${FUNC_APP_NAME}" ]
 do
@@ -124,6 +132,7 @@ else
     az deployment group create -g $RESOURCE_GROUP_NAME --template-file ./azure-deploy-resources.json --parameters \
         OPENAI_RESOURCE_ENDPOINT=$OPENAI_EP \
         OPENAI_API_KEY=$OPENAI_KEY \
+        OPENAI_Model_Deployment_Name=$OPENAI_DEPLOYMENT_NAME \
         functionAppName=$FUNC_NAME
 fi
 
@@ -134,11 +143,11 @@ then
 fi
 
 printf "\nAdding cors settings to Azure Function App...\n"
-az functionapp cors add -g $RESOURCE_GROUP_NAME -n $function_name --allowed-origins https://portal.azure.com https://ms.portal.azure.com
+az functionapp cors add -g $RESOURCE_GROUP_NAME -n $FUNC_NAME --allowed-origins https://portal.azure.com https://ms.portal.azure.com
 
 printf "\nDeploying Azure Function App Code...\n"
 cd ../orchestrator
-func azure functionapp publish $function_name --force --python
+func azure functionapp publish $FUNC_NAME --force --python
 
 
 printf "\nRetrieving additional details like subscriptionId, accessToken etc...\n"
@@ -190,8 +199,8 @@ python search-indexer.py
 
 printf "\nYou can test the function url by running the following command:\n"
 
-func_code=$(az functionapp keys list -g $RESOURCE_GROUP_NAME --name $function_name | jq -r .functionKeys.default)
-func_url="$(az functionapp function show --function-name orchestrator-func-app  --name $function_name --resource-group $RESOURCE_GROUP_NAME | jq -r .invokeUrlTemplate)"$"?code=$func_code&num_search_result=5"
+func_code=$(az functionapp keys list -g $RESOURCE_GROUP_NAME --name $FUNC_NAME | jq -r .functionKeys.default)
+func_url="$(az functionapp function show --function-name orchestrator-func-app  --name $FUNC_NAME --resource-group $RESOURCE_GROUP_NAME | jq -r .invokeUrlTemplate)"$"?code=$func_code&num_search_result=5"
 
 printf "\nCopy and paste the following command to test the function url:\n"
 

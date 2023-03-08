@@ -77,6 +77,12 @@
       "metadata": {
         "description": "OpenAI API key."
       }
+    },
+    "OPENAI_Model_Deployment_Name" : {
+      "type": "string",
+      "metadata": {
+        "description": "Deployment name of the OpenAI model."
+      }
     }
   },
   "variables": {
@@ -192,7 +198,7 @@
             },
             {
               "name": "GPT_ENGINE",
-              "value": "text-davinci-003"
+              "value": "[parameters('OPENAI_Model_Deployment_Name')]"
             }
            
 
