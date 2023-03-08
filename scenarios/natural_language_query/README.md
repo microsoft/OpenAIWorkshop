@@ -123,9 +123,9 @@ d. This will import the Power App canvas app and Semantic-Search Power Automate 
 
 
 
-
 <img width="492" alt="image" src="https://user-images.githubusercontent.com/50298139/222619362-c786a8f7-a070-4846-837b-6b083b82f6c6.png">
-## Step 5. Test
+
+## Step 5. Test the Power App
 
 a. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
 
