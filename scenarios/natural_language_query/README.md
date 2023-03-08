@@ -121,6 +121,10 @@ d. This will import the Power App canvas app and Power Automate Flow into the wo
 
 <img width="928" alt="image" src="https://user-images.githubusercontent.com/50298139/222619285-09a545a9-73c3-4dd9-a1b6-c9cc2ca7e440.png">
 
+f. Please click the HTTP and provide the function URL in the "URI" field, this function URL can be taken from the "Code + Test" screen -> get function URL tab
+
+
+<img width="635" alt="image" src="https://user-images.githubusercontent.com/50298139/223873817-38984955-94f1-4f70-8f02-c075ecf87469.png">
 
 
 <img width="492" alt="image" src="https://user-images.githubusercontent.com/50298139/222619362-c786a8f7-a070-4846-837b-6b083b82f6c6.png">
