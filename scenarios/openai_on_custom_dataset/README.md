@@ -22,7 +22,7 @@ This scenario can be deployed in 2 different ways depending on your preference.
 
 ### 1. Fully automated script. 
 
-In this approach, a single script is run to create Azure Resources, configure the Azure Function App and create the search index. There is no manual configuration is required. This has the least number of prerequisites and can be run from Azure Cloud Shell. 
+In this approach, a single script is run to create Azure Resources, configure the Azure Function App and create the search index. No manual configuration is required. This has the least number of prerequisites and can be run from Azure Cloud Shell. 
 Once the automated script is run, the power app can be configured as the next step. 
 
 To proceed with this approach, please click here. [Automated Script](Automated.md)
@@ -32,8 +32,9 @@ To proceed with this approach, please click here. [Automated Script](Automated.m
 
 In this approach, the steps are broken into 3 key steps with a few manual steps.
 - In the first step, provision Azure Resourcs using Azure Portal UI.
-- In the second step, the search-index is configure and execute to create the search index.
+- In the second step, the search-index is configured and executed to create the search index.
 - The search index can be also be created using Azure Portal UI.
+- powerapp can be configured as the next step. 
 
 To proceed with this approach, please click here. [Semi-Automated Script](SemiAutomated.md)
 
