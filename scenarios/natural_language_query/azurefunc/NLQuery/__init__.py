@@ -29,8 +29,10 @@ def run_openai(prompt, engine=GPT_ENGINE):
 
 def execute_sql_query(query):
     #logging.info('Python HTTP trigger function processed a request.')
-    server="oaisqldemo.database.windows.net"
-    database="oaisqldemo"
+    server=os.getenv("SQL_SERVER_NAME")
+    database=os.getenv("SQL_DB_NAME")
+    
+   
     driver="{ODBC Driver 17 for SQL Server}"
     db_token = ''
     connection_string = 'DRIVER='+driver+';SERVER='+server+';DATABASE='+database
@@ -50,11 +52,9 @@ def execute_sql_query(query):
             exptoken += bytes(1)
 
         tokenstruct = struct.pack("=i", len(exptoken)) + exptoken
-        #logging.info('getting access token :' + connection_string)
-        #logging.info(tokenstruct)
         conn = pyodbc.connect(connection_string, attrs_before = { SQL_COPT_SS_ACCESS_TOKEN:tokenstruct })
     
-    #logging.info(conn)
+    
     cursor = conn.cursor()
     cursor.execute(query) 
     data =cursor.fetchall()
@@ -138,30 +138,7 @@ def get_query(nlquery):
     The table's name is anomaly_output with columns: location, car_type, count and timestamp
     """
 
-def query_data(query = "anomaly_output | take(10)"):
 
-
-    cluster = ""
-
-    # In case you want to authenticate with AAD application.
-    client_id = ""
-    client_secret = ""
-
-    # read more at https://docs.microsoft.com/en-us/onedrive/find-your-office-365-tenant-id
-    authority_id = ""
-
-    kcsb = KustoConnectionStringBuilder.with_aad_application_key_authentication(cluster, client_id, client_secret, authority_id)
-    client = KustoClient(kcsb)
-    db = ""
-    
-
-    response = client.execute(db, query)
-
-
-    # we also support dataframes:
-    dataframe = dataframe_from_result_table(response.primary_results[0])
-
-    return dataframe.to_html()
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -182,8 +159,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         try:
             #logging.info(count)
             openai_query = get_sales_sql_query(prompt)
+            logging.info(openai_query)
             sql_query = run_openai(openai_query)
-            #logging.info(sql_query)
+            logging.info(sql_query)
             result= execute_sql_query(sql_query)
             #logging.info(result)
             break

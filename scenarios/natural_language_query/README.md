@@ -24,54 +24,46 @@ Step 6: Azure function returns the results to end user
 
 
 
-Create SQL server with Sample database,please provide the database name as **"oaisqldemo"** and server name as **"oaisqldemo"**.Follow the links in below step to create the SQL database in the resourcegroup where you wil like to host your databbase and openai service  https://www.sqlshack.com/create-an-azure-sql-database-with-built-in-sample-data/
-<img width="905" alt="image" src="https://user-images.githubusercontent.com/50298139/222620998-e30223f8-b44a-4524-a80a-3aba68ce30ee.png">
+a. Login to Azure Portal and open the "Cloud Shell"
 
+b. Clone the respository "https://github.com/microsoft/OpenAIWorkshop.git"
 
-Please click "Set admin" and **provide your functionname** example function name in below diagram is "azureopenaidemo" as the Admin Name
-<img width="674" alt="image" src="https://user-images.githubusercontent.com/50298139/222620873-0cb5201d-d587-41aa-b58d-d0b2bf73785e.png">
+c. Go to scenarios/natural_language_query folder
 
+d. Open the "create-sql.ps1" script and provide the location, resourcegrGroup, server,database,login, password, subscription, tenantid information. Save the file
+
+e. Run the "create-sql.ps1" script and it will create the SQL server with sample database
 
 
    
 ## Step 2: Deploy Azure Function App
 
-First create a function App 
+a. Login to Azure Portal and open the "Cloud Shell"
+
+b. Go to scenarios/natural_language_query/azurefunc/ folder. The "create-func.ps1" script in step d update must run from this folder.
+
+c. Open the "create-func.ps1" script and provide the values for location, resourcegrGroup, storageaccountname, and functionname parameters.Save the file
+
+d. Run the "create-func.ps1" script and it will create the function App with function
+
+e. Open the "config-func.txt" in the scenarios/natural_language_query/ folder and provide your GPT_ENGINE, OPEN_API_KEY, OPENAI_RESOURCE_ENDPOINT, SQL_DB_NAME, and SQL_SERVER_NAME values
+
+f. Once function is created, go to function and cick "Configuration" -> "Application Settings" and click on "Advance edit" and copy the updated ""config-func.txt" values in the editor. DO not delete the existing contents in "Advance edit", just add the updated ""config-func.txt" values before the last line and ']' mark. After copying the values click "OK"
+
+<img width="919" alt="image" src="https://user-images.githubusercontent.com/50298139/223740863-166c6bba-bc5e-44ab-969b-cf5d1e77c6c1.png">
 
 
-<img width="395" alt="image" src="https://user-images.githubusercontent.com/50298139/222745311-e0659d19-2c4f-4a06-b563-c6cbcb06e115.png">
+
+g. Under Settings in function click on "Identity" , under "System assigned" set the "Status" to "On", Save the changes
+
+<img width="929" alt="image" src="https://user-images.githubusercontent.com/50298139/223740677-b00bcefb-8dbf-4a49-b67b-2254d43669be.png">
+
+h. Go to SQL server, under "settings", click "Azure Active Directory" and click "Set admin", on right side provide the name of function app which you have provided in point b. Add the name and click  "Select" and "Save"
+
+<img width="947" alt="image" src="https://user-images.githubusercontent.com/50298139/223740181-eaa03b0e-e654-49b9-86ce-b77e763a66ad.png">
 
 
-The function zip file "azurefunc.zip" can be downloaded from below link
-<img width="1003" alt="image" src="https://user-images.githubusercontent.com/50298139/222626030-ea7faa93-cdfd-4aaf-af0b-fe0ade76d5ed.png">
-
-Run the below command and provide the function Zip file "azurefunc.zip" to install the function file. Please provdie the resourcce group name ,function app name (created in earlier step) and the zip file which you dowmloaded in earlier step
-
-
-az functionapp deployment source config-zip -g <resource_group> -n <app_name> --src <zip_file_path>
-
-
-
-Update the function configuration in Azure Function App configuration blade, add below parameters from your Open AI API deployment parameters 
-
-            {
-                "name": "GPT_ENGINE",
-                "value": "<Name of your Davinci model deployment>,
-                "slotSetting": false
-            },
-            {
-                "name": "OPENAI_API_KEY",
-                "value": "<>",
-                "slotSetting": false
-            },
-            {
-                "name": "OPENAI_RESOURCE_ENDPOINT",
-                "value": "https://<>.openai.azure.com/",
-                "slotSetting": false
-            }
-Configuration Blade
-
-<img width="922" alt="image" src="https://user-images.githubusercontent.com/50298139/222626792-9c786927-7965-41df-88be-3c9609032678.png">
+**Note : SQL_DB_NAME, and SQL_SERVER_NAME should be same names which you created in step 1**
 
 
 
@@ -113,7 +105,7 @@ This will import the Power App canvas app and Semantic-Search Power Automate Flo
 <img width="746" alt="image" src="https://user-images.githubusercontent.com/50298139/222619006-e9eaa507-836b-4ba7-bf1f-d78e0d84479d.png">
 
 
- Click on the flows and edit the Power Automate Flow and update Azure Function Url. 
+ Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**
 
 <img width="928" alt="image" src="https://user-images.githubusercontent.com/50298139/222619285-09a545a9-73c3-4dd9-a1b6-c9cc2ca7e440.png">
 
