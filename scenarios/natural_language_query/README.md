@@ -22,62 +22,89 @@ Step 6: Azure function returns the results to end user
 ### Azure services deployment
 ## Step 1: SQL Server Deployment
 
+a. Launch [Azure Portal](https://portal.azure.com) and open Azure Cloud Shell
+<img width="870" alt="image" src="https://user-images.githubusercontent.com/123749010/224067489-e2c44741-f154-4a98-82bd-544299cbfbbf.png">
+
+b. In the cloud shell,clone the respository by using the below command
+```
+git clone https://github.com/microsoft/OpenAIWorkshop.git
+```
+c. In the cloud shell, navigate to "scenarios/natural_language_query/azurefunc" folder by using the below command
+  ```
+  cd OpenAIWorkshop/scenarios/natural_language_query/azurefunc
+  ```
+
+d. In the cloud shell, run "**create-sql-func.ps1**" script with providing the following parameters **location, resourcegrGroup, sqlserver,sqldatabase,databaseuser, password, subscription, tenantid,storageaccountname and functionname** . Please use the required names for each of the mentioned resources below
+```
+.\create-sql-func.ps1  "eastus" "resourcegorupname" "sqlservername" "sqldatabasename" "databaseuser" "password" "subscription id" "tenantid" "storageaccountname" "functionappname"
+```
+
+**For example**-  .\create-sql-func.ps1 "eastus" "natural_language_sql_handson9874" "sample9874" "sample_db9874" "sample_user" "Test@123" "----" "-----" "samplestorage9874" "samplefuncApp9874"
+
+**Please note-** 
+Subscription Id could be found by navigating to subscriptions in azure portal
+<img width="649" alt="image" src="https://user-images.githubusercontent.com/123749010/224065953-e1a73503-2dbb-49b1-a0ac-c741f17d3f3c.png">
 
 
-a. Login to Azure Portal and open the "Cloud Shell"
-
-b. Clone the respository "https://github.com/microsoft/OpenAIWorkshop.git"
-
-c. Go to scenarios/natural_language_query folder
-
-d. Open the "create-sql.ps1" script and provide the location, resourcegrGroup, server,database,login, password, subscription, tenantid information. Save the file
-
-e. Run the "create-sql.ps1" script and it will create the SQL server with sample database
-
+Tenant Id could be found by navigating to Azure Active Directory in azure portal
+<img width="563" alt="image" src="https://user-images.githubusercontent.com/123749010/224066885-780a3b61-ef23-46a9-a0a9-212be80040e6.png">
 
    
-## Step 2: Deploy Azure Function App
+## Step 2: Configure Azure Function App
 
-a. Login to Azure Portal and open the "Cloud Shell"
 
-b. Go to scenarios/natural_language_query/azurefunc/ folder. The "create-func.ps1" script in step d update must run from this folder.
+a. Open func-config.txt in scenarios/natural_language_query/azurefunc folder and provide the Open AI engine, Open AI rest end point, SQL server and SQL database name
 
-c. Open the "create-func.ps1" script and provide the values for location, resourcegrGroup, storageaccountname, and functionname parameters.Save the file
-
-d. Run the "create-func.ps1" script and it will create the function App with function
-
-e. Open the "config-func.txt" in the scenarios/natural_language_query/ folder and provide your GPT_ENGINE, OPEN_API_KEY, OPENAI_RESOURCE_ENDPOINT, SQL_DB_NAME, and SQL_SERVER_NAME values
-
-f. Once function is created, go to function and cick "Configuration" -> "Application Settings" and click on "Advance edit" and copy the updated ""config-func.txt" values in the editor. DO not delete the existing contents in "Advance edit", just add the updated ""config-func.txt" values before the last line and ']' mark. After copying the values click "OK"
+b. Go to deployed function and cick "Configuration" -> "Application Settings" and click on "Advance edit" and copy the "func-config.txt" values in the editor. DO not delete the existing contents in "Advance edit", just update ""config-func.txt" values before the last line and ']' mark. After copying the values click "OK" and "Save"
 
 <img width="919" alt="image" src="https://user-images.githubusercontent.com/50298139/223740863-166c6bba-bc5e-44ab-969b-cf5d1e77c6c1.png">
 
 
-
-g. Under Settings in function click on "Identity" , under "System assigned" set the "Status" to "On", Save the changes
+b. Under Settings in function click on "Identity" , under "System assigned" set the "Status" to "On", Save the changes
 
 <img width="929" alt="image" src="https://user-images.githubusercontent.com/50298139/223740677-b00bcefb-8dbf-4a49-b67b-2254d43669be.png">
 
-h. Go to SQL server, under "settings", click "Azure Active Directory" and click "Set admin", on right side provide the name of function app which you have provided in point b. Add the name and click  "Select" and "Save"
+c. Go to SQL server, under "settings", click "Azure Active Directory" and click "Set admin", on right side provide the name of function app which you have provided in point b. Add the name and click  "Select" and "Save"
 
 <img width="947" alt="image" src="https://user-images.githubusercontent.com/50298139/223740181-eaa03b0e-e654-49b9-86ce-b77e763a66ad.png">
 
 
-**Note : SQL_DB_NAME, and SQL_SERVER_NAME should be same names which you created in step 1**
+
+## Step 3. Test the function App
+
+a. Go to Function App and click "Functions" and click deployed function "NLQuery"
+
+
+<img width="1159" alt="image" src="https://user-images.githubusercontent.com/50298139/223866900-d86c34c3-1934-4c6c-987b-f80e87591f6a.png">
+
+b. Click "Code + Test" 
+
+<img width="1139" alt="image" src="https://user-images.githubusercontent.com/50298139/223867081-f7eae62e-2a1f-4c10-817a-d12ddc392d8e.png">
+
+c.  Click Test/Run -> select "GET" in "HTTP method" dropdown, click + next to "Query" and enter "prompt" in Name field and "show top 10 products" in value field. Click "Run"
+
+
+<img width="1166" alt="image" src="https://user-images.githubusercontent.com/50298139/223867936-97ad6fe2-0d39-4f5b-b305-0ae933cd53b7.png">
+
+
+d. The "Output" tab will have the query results 
+
+
+Note : Please press the Run again if the output tab does not print the records
+
+<img width="469" alt="image" src="https://user-images.githubusercontent.com/50298139/223868339-17d32779-4dbd-4ae9-ac27-2b56e0e055a5.png">
 
 
 
+## Step 4. Deploy client Power App
 
-
-## Step 3. Deploy client Power App
-
-From the powerapp folder, download "NLQuery PowerApp Export.zip" powerapp package. This has a powerapp and powerautomate template app pre-built.
+a. From scenarios/natural_language_query folder, download "NLQuery PowerApp Export.zip" powerapp package. This has a pre-built powerapp and powerautomate template app.
 Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
 
 ![](../../documents/media/powerapps1.png)
 
 
-From the top nav bar, click Import Canvas App and upload the Semantic-Search-App-Template_20230303012916.zip file from this git repo path. 
+b. From the top navigation bar, click Import Canvas App and upload the "NLQuery PowerApp Export.zip" file . 
 
 
 ![](../../documents/media/powerapps2.png)
@@ -86,7 +113,7 @@ From the top nav bar, click Import Canvas App and upload the Semantic-Search-App
 
 
 
-Click on Import to import the package into powerapps environment. This will import the Power App canvas app and Power Automate Flow into the workspace. 
+c. Click on Import to import the package into powerapps environment. This will import the Power App canvas app and Power Automate Flow into the workspace. 
 
 
 
@@ -99,24 +126,32 @@ Click on Import to import the package into powerapps environment. This will impo
 
 <img width="926" alt="image" src="https://user-images.githubusercontent.com/50298139/222618019-49eab211-1c77-474c-a3aa-8f377df26255.png">
 
-This will import the Power App canvas app and Semantic-Search Power Automate Flow into the workspace.
 
 
-<img width="746" alt="image" src="https://user-images.githubusercontent.com/50298139/222619006-e9eaa507-836b-4ba7-bf1f-d78e0d84479d.png">
 
-
- Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**
+ d. Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**
 
 <img width="928" alt="image" src="https://user-images.githubusercontent.com/50298139/222619285-09a545a9-73c3-4dd9-a1b6-c9cc2ca7e440.png">
 
+e. Please click the HTTP and provide the function URL in the "URI" field, this function URL can be taken from the "Code + Test" screen -> get function URL tab
 
+
+<img width="635" alt="image" src="https://user-images.githubusercontent.com/50298139/223873817-38984955-94f1-4f70-8f02-c075ecf87469.png">
 
 
 <img width="492" alt="image" src="https://user-images.githubusercontent.com/50298139/222619362-c786a8f7-a070-4846-837b-6b083b82f6c6.png">
-## Step 5. Test
 
-Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp and click submit
-. 
-Feel free to make changes to the PowerApps UI to add your own functionality and UI layout. You can explore expanding PowerAutomate flow to connect to other APIs to provide useful reference links to augment the response returned from OpenAI.
+## Step 5. Test the Power App
+
+a. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
+
+b.  Search the App which you deployed in step 4 and and click it 
+
+<img width="767" alt="image" src="https://user-images.githubusercontent.com/50298139/223872433-152f6b03-2a24-4871-a2b6-664ec11f406e.png">
+
+
+<img width="851" alt="image" src="https://user-images.githubusercontent.com/50298139/223872137-3882ba80-e9d6-4198-a5e4-2ebc0ed485b5.png">
+
+
 
 

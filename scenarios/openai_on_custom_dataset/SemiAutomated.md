@@ -4,7 +4,7 @@
 
 * [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Functions.  
 * Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 
-* Azure Open AI already provisioned and text-davinci-003 model is deployed. Other deployments can also be used, the configs below needs to be updated accordingly.  
+* Azure Open AI already provisioned and text-davinci-003 model is deployed. The model deployment name is required in the Azure Deployment step below. South Central US is recommended region for deploying Azure Open AI. 
 * Conda is recommended if local laptops are used as pip install might interfere with existing python deployment.
 
 
@@ -43,14 +43,14 @@ To make it easy for the labs, the sample document has already been chunked and p
 
         
         git clone https://github.com/microsoft/OpenAIWorkshop.git
-        cd OpenAIWorkshop\scenarios\openai_on_custom_dataset
+        
+        cd OpenAIWorkshop/scenarios/openai_on_custom_dataset
         
         # conda steps are optional
         conda create env -n openaiworkshop python=3.9 
         conda activate openaiworkshop
         
-        
-        pip install -r .\orchestrator\requirements.txt
+        pip install -r ./orchestrator/requirements.txt
 
 
 *   Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
@@ -60,7 +60,13 @@ To make it easy for the labs, the sample document has already been chunked and p
 
         cd ingest
         # open secrets.env using code editor such as nano or code
+        # When using code, you can type control+s to save the file and control+q to quit the editor
         code secrets.env
+
+        # when using nano, type control+x+y to save the file and close editor
+        nano secrets.env
+
+        
 
     Add the below entries with correct values to secrets.env.
 
@@ -74,9 +80,8 @@ To make it easy for the labs, the sample document has already been chunked and p
     This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
     The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service. 
     
-
-        cd .\scenarios\openai_on_custom_dataset\ingest\
-        python .\search-indexer.py
+        cd ./scenarios/openai_on_custom_dataset/ingest
+        python search-indexer.py
         
 
 ###   Optional Manual Approach. 

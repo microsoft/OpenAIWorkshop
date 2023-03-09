@@ -1,5 +1,3 @@
-
-  
   {
     "name": "GPT_ENGINE",
     "value": "<MODEL DEPLOYMENT NAME>",
@@ -12,7 +10,7 @@
   },
   {
     "name": "OPENAI_RESOURCE_ENDPOINT",
-    "value": <END POINT NAME>",
+    "value": "<END POINT NAME>",
     "slotSetting": false
   },
   {
