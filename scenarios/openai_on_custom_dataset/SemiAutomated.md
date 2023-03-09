@@ -43,14 +43,22 @@ To make it easy for the labs, the sample document has already been chunked and p
 
         
         git clone https://github.com/microsoft/OpenAIWorkshop.git
+        
+        # Powershell
         cd OpenAIWorkshop\scenarios\openai_on_custom_dataset
+
+        # Bash
+        cd OpenAIWorkshop/scenarios/openai_on_custom_dataset
         
         # conda steps are optional
         conda create env -n openaiworkshop python=3.9 
         conda activate openaiworkshop
         
-        
+        # Powershell
         pip install -r .\orchestrator\requirements.txt
+
+        # Bash
+        pip install -r ./orchestrator/requirements.txt
 
 
 *   Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
@@ -74,9 +82,14 @@ To make it easy for the labs, the sample document has already been chunked and p
     This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
     The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service. 
     
-
+        # Powershell
         cd .\scenarios\openai_on_custom_dataset\ingest\
         python .\search-indexer.py
+
+
+        # Bash
+        cd ./scenarios/openai_on_custom_dataset/ingest
+        python search-indexer.py
         
 
 ###   Optional Manual Approach. 
