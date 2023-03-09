@@ -24,7 +24,7 @@ az sql db create --resource-group $resourceGroup --server $server --name $databa
 
 az storage account create --name $storageaccountname --location $location --resource-group $resourceGroup --sku "Standard_LRS"  
 echo "Creating function : $functionname"
-az functionapp create --name $functionname --storage-account $storageaccountname --consumption-plan-location "$location" --resource-group $resourceGroup --os-type Linux --runtime python --runtime-version 3.9 --functions-version 4
+az functionapp create --name $functionname --storage-account $storageaccountname --consumption-plan-location $location --resource-group $resourceGroup --os-type Linux --runtime python --runtime-version 3.9 --functions-version 4
 
 az webapp cors add --resource-group $resourceGroup --name $functionname --allowed-origins 'https://ms.portal.azure.com'
 
