@@ -35,13 +35,15 @@ c. In the cloud shell, navigate to "scenarios/natural_language_query/azurefunc" 
   cd OpenAIWorkshop/scenarios/natural_language_query/azurefunc
   ```
 
-d. In the cloud shell, run "**create-sql-func.ps1**" script with providing the following parameters **location, resourcegrGroup, sqlserver,sqldatabase,databaseuser, password, subscription, tenantid,storageaccountname and functionname** 
+d. In the cloud shell, run "**create-sql-func.ps1**" script with providing the following parameters **location, resourcegrGroup, sqlserver,sqldatabase,databaseuser, password, subscription, tenantid,storageaccountname and functionname** . Please populate the desired names for each of the mentioned resources below
 ```
 .\create-sql-func.ps1  "eastus" "resourcegorupname" "sqlservername" "sqldatabasename" "databaseuser" "password" "subscription id" "tenantid" "storageaccountname" "functionappname"
 ```
-**For example**-  .\create-sql-func.ps1 "eastus" "natural_language_sql_handson" "sample9871" "sample_db9871" "sample_user" "Test@123" "Use your own subscription id" "Use your own tenant id" "samplestorage9871" "samplefuncApp9871"
 
-**Please note-** Subscription Id could be found by navigating to subscriptions in azure portal
+**For example**-  .\create-sql-func.ps1 "eastus" "natural_language_sql_handson9874" "sample9874" "sample_db9874" "sample_user" "Test@123" "Please use your own subscription id" "" "samplestorage9871" "samplefuncApp9871"
+
+**Please note-** 
+Subscription Id could be found by navigating to subscriptions in azure portal
 <img width="649" alt="image" src="https://user-images.githubusercontent.com/123749010/224065953-e1a73503-2dbb-49b1-a0ac-c741f17d3f3c.png">
 
 
