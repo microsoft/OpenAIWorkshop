@@ -30,7 +30,7 @@ az webapp cors add --resource-group $resourceGroup --name $functionname --allowe
 
 echo "Deploying function : $functionname"
 
-Start-Sleep -Seconds 30  
+Start-Sleep -Seconds 60  
 func azure functionapp publish $functionname --force --python
 echo "retrying to deploy the function..."
 Start-Sleep -Seconds 10
