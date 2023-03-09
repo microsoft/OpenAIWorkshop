@@ -22,27 +22,31 @@ Step 6: Azure function returns the results to end user
 ### Azure services deployment
 ## Step 1: SQL Server Deployment
 
-a. Login to Azure Portal and open the "Cloud Shell"
+a. Launch [Azure Portal](https://portal.azure.com)(control+click) and open Azure Cloud Shell
+<img width="870" alt="image" src="https://user-images.githubusercontent.com/123749010/224067489-e2c44741-f154-4a98-82bd-544299cbfbbf.png">
 
-<img width="877" alt="image" src="https://user-images.githubusercontent.com/123749010/224037536-ae02e1f9-e136-4e8a-8b59-3cb720933f26.png">
 
-b. Clone the respository by using the command "**git clone https://github.com/microsoft/OpenAIWorkshop.git**" 
+b. In the cloud shell,clone the respository by using the below command
+```
+git clone https://github.com/microsoft/OpenAIWorkshop.git**" 
+```
+c. In the cloud shell, navigate to "scenarios/natural_language_query/azurefunc" folder by using the below command
+  ```
+  cd OpenAIWorkshop/scenarios/natural_language_query/azurefunc
+  ```
 
-c. Navigate to "scenarios/natural_language_query/azurefunc" folder in the cloud shell by using the command "**cd OpenAIWorkshop/scenarios/natural_language_query/azurefunc**"
-
-d. Run "**create-sql-func.ps1**" script with providing the following parameters **location, resourcegrGroup, sqlserver,sqldatabase,databaseuser, password, subscription, tenantid,storageaccountname and functionname** 
-
+d. In the cloud shell, run "**create-sql-func.ps1**" script with providing the following parameters **location, resourcegrGroup, sqlserver,sqldatabase,databaseuser, password, subscription, tenantid,storageaccountname and functionname** 
+```
 .\create-sql-func.ps1  "East US" "resourcegorupname" "sqlservername" "sqldatabasename" "databaseuser" "password" "subscription id" "tenantid" "storageaccountname" "functionappname"
-
+```
 **For example**-  .\create-sql-func.ps1 "East US" "natural_langauge_sql_handson" "sample789" "sample_db789" "sample_user" "Test@123" "Use your own subscription id" "Use your own tenant id" "samplestorage7891" "sample_funcApp7891"
 
 **Please note-** Subscription Id could be found by navigating to subscriptions in azure portal
-<img width="648" alt="image" src="https://user-images.githubusercontent.com/123749010/224054981-1c1b6b0c-d148-4655-b340-18ebf230510d.png">
+<img width="649" alt="image" src="https://user-images.githubusercontent.com/123749010/224065953-e1a73503-2dbb-49b1-a0ac-c741f17d3f3c.png">
 
 
 Tenant Id could be found by navigating to subscriptions in azure portal
-<img width="571" alt="image" src="https://user-images.githubusercontent.com/123749010/224046631-41f56349-6831-48e0-a25a-39b9cb459b1d.png">
-
+<img width="563" alt="image" src="https://user-images.githubusercontent.com/123749010/224066885-780a3b61-ef23-46a9-a0a9-212be80040e6.png">
    
 ## Step 2: Configure Azure Function App
 
