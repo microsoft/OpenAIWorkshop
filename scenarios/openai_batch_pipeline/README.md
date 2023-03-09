@@ -16,11 +16,11 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 **Please Note:** Azure Open AI must be provisioned with one of the models being deployed. 
 
-**OPENAI_API_KEY** and **OPENAI_RESOURCE_ENDPOINT** could be found by naviagting to Azure OpenAI service in the Azure portal 
+**OPENAI_API_KEY** and **OPENAI_RESOURCE_ENDPOINT** can be found by naviagting to Azure OpenAI service in the Azure portal 
 
 <img width="821" alt="image" src="https://user-images.githubusercontent.com/123749010/224167487-4f9e5365-b8d7-4678-bcfd-2948ac570df3.png">
 
-**OPENAI_MODEL_NAME** could be found in the Azure OpenAI studio under the deplyment section
+**OPENAI_MODEL_NAME** can be found in the Azure OpenAI studio under the deplyment section
 
 <img width="707" alt="image" src="https://user-images.githubusercontent.com/123749010/224169094-7ae29ad6-713c-4c53-a58f-b8f8a07556ff.png">
 
@@ -38,8 +38,12 @@ b. In the Cloud Shell run below commands
 ```
 
 ```bash 
-    python upload_docs.py --conn_string <CONNECTION_STRING>
+    python upload_docs.py --conn_string "<CONNECTION_STRING>"
 ```
+**Please Note:** CONNECTION_STRING can be found by navigating to storage account  created in Step 1 in the Azure portal. 
+
+<img width="839" alt="image" src="https://user-images.githubusercontent.com/123749010/224180217-274f74cd-1a95-4b42-8b4e-96ae9d9a5a99.png">
+
 
 ## Step 3. Set up Synapse Workspace
 - Create a Synapse workspace, provide the details and click 'Review + Create'
