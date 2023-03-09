@@ -22,17 +22,26 @@ Step 6: Azure function returns the results to end user
 ### Azure services deployment
 ## Step 1: SQL Server Deployment
 
-
-
 a. Login to Azure Portal and open the "Cloud Shell"
 
-b. Clone the respository "https://github.com/microsoft/OpenAIWorkshop.git"
+<img width="877" alt="image" src="https://user-images.githubusercontent.com/123749010/224037536-ae02e1f9-e136-4e8a-8b59-3cb720933f26.png">
 
-c. Go to scenarios/natural_language_query/azurefunc folder
+b. Clone the respository by using the command "**git clone https://github.com/microsoft/OpenAIWorkshop.git**" 
 
-d. run "create-sql-func.ps1" script and provide the location, resourcegrGroup, sqlserver,sqldatabase,databaseuser, password, subscription, tenantid,storageaccountname and functionname 
+c. Navigate to "scenarios/natural_language_query/azurefunc" folder in the cloud shell by using the command "**cd OpenAIWorkshop/scenarios/natural_language_query/azurefunc**"
 
-.\create-sql-func.ps1  "East US" "resourcegorupname" "sqlservername" "sqldatabasename" "azureuser" "password" "subscription id" "tenantid" "storageaccountname" "functionappname"
+d. Run "**create-sql-func.ps1**" script with providing the following parameters **location, resourcegrGroup, sqlserver,sqldatabase,databaseuser, password, subscription, tenantid,storageaccountname and functionname** 
+
+.\create-sql-func.ps1  "East US" "resourcegorupname" "sqlservername" "sqldatabasename" "databaseuser" "password" "subscription id" "tenantid" "storageaccountname" "functionappname"
+
+**For example**-  .\create-sql-func.ps1 "East US" "natural_langauge_sql_handson" "sample789" "sample_db789" "sample_user" "Test@123" "Use your own subscription id" "Use your own tenant id" "samplestorage7891" "sample_funcApp7891"
+
+**Please note-** Subscription Id could be found by navigating to subscriptions in azure portal
+<img width="648" alt="image" src="https://user-images.githubusercontent.com/123749010/224054981-1c1b6b0c-d148-4655-b340-18ebf230510d.png">
+
+
+Tenant Id could be found by navigating to subscriptions in azure portal
+<img width="571" alt="image" src="https://user-images.githubusercontent.com/123749010/224046631-41f56349-6831-48e0-a25a-39b9cb459b1d.png">
 
    
 ## Step 2: Configure Azure Function App
