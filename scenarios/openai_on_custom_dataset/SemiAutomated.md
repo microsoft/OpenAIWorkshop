@@ -4,7 +4,7 @@
 
 * [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Functions.  
 * Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 
-* Azure Open AI already provisioned and text-davinci-003 model is deployed. Other deployments can also be used, the configs below needs to be updated accordingly.  
+* Azure Open AI already provisioned and text-davinci-003 model is deployed. Other deployments can also be used, the configs below needs to be updated accordingly. The model deployment name is required in the Azure Deployment step below. 
 * Conda is recommended if local laptops are used as pip install might interfere with existing python deployment.
 
 
