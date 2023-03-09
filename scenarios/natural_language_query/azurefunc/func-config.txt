@@ -10,7 +10,7 @@
   },
   {
     "name": "OPENAI_RESOURCE_ENDPOINT",
-    "value": <END POINT NAME>",
+    "value": "<END POINT NAME>",
     "slotSetting": false
   },
   {
