@@ -22,7 +22,7 @@ Step 6: Azure function returns the results to end user
 ### Azure services deployment
 ## Step 1: SQL Server Deployment
 
-a. Launch [Azure Portal](https://portal.azure.com)(control+click) and open Azure Cloud Shell
+a. Launch [Azure Portal](https://portal.azure.com) and open Azure Cloud Shell
 <img width="870" alt="image" src="https://user-images.githubusercontent.com/123749010/224067489-e2c44741-f154-4a98-82bd-544299cbfbbf.png">
 
 b. In the cloud shell,clone the respository by using the below command
