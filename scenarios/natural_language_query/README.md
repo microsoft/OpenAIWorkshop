@@ -28,7 +28,7 @@ a. Launch [Azure Portal](https://portal.azure.com)(control+click) and open Azure
 
 b. In the cloud shell,clone the respository by using the below command
 ```
-git clone https://github.com/microsoft/OpenAIWorkshop.git**" 
+git clone https://github.com/microsoft/OpenAIWorkshop.git
 ```
 c. In the cloud shell, navigate to "scenarios/natural_language_query/azurefunc" folder by using the below command
   ```
