@@ -195,8 +195,8 @@ d.  In the Custom connecor app browser tab , (step b), click on “Swagger Edito
 
   f. We will update the power automate flow second step after PowerApps(V2), click on + and select “Add an action”
   
+![image](https://user-images.githubusercontent.com/50298139/224351924-62f3d1b5-abf3-4694-89c6-a6c9cc1a340e.png)
 
-![image](https://user-images.githubusercontent.com/50298139/224202830-ce075c06-96b5-4712-805a-417e7f44c26b.png)
   
   g. Select Custom and type and search for custom connector which we created in step d.
   
@@ -205,10 +205,13 @@ d.  In the Custom connecor app browser tab , (step b), click on “Swagger Edito
   
   h. The flow will look like below
   
-  ![image](https://user-images.githubusercontent.com/50298139/224203240-37a2d577-b10a-4f3b-a58e-d1919f9a790f.png)
+  ![image](https://user-images.githubusercontent.com/50298139/224352209-6a95bef2-fb93-4ce9-b906-4e67b0e21fd3.png)
 
   
   i.You need to delete the third step which in your case will be “HTTTP” flow, after deleting the third step , the flow will look like below, click Save
+
+![image](https://user-images.githubusercontent.com/50298139/224352282-adef508e-7df1-415b-8509-a6665dd8399b.png)
+
   
   
   ![image](https://user-images.githubusercontent.com/50298139/224203286-fdac9328-2078-4ae5-a8b0-b17dbd170e6a.png)
