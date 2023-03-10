@@ -29,7 +29,23 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 a. Launch Azure Cloud Shell
 <img width="870" alt="image" src="https://user-images.githubusercontent.com/123749010/224067489-e2c44741-f154-4a98-82bd-544299cbfbbf.png">
 
-b. In the Cloud Shell run below commands
+b. In the Cloud Shell run below commands:
+
+```bash 
+    wget https://repo.anaconda.com/miniconda/Miniconda3-py39_23.1.0-1-Linux-x86_64.sh 
+```
+
+```bash 
+    sh Miniconda3-py39_23.1.0-1-Linux-x86_64.sh 
+```
+
+Accept the agreement and install on the default path:
+![](../../documents/media/cloudshell-accept.png)
+
+```bash 
+    export PATH=~/miniconda3/bin:$PATH
+```
+
 ```bash 
     git clone https://github.com/microsoft/OpenAIWorkshop.git
     cd OpenAIWorkshop/scenarios/openai_batch_pipeline/document_generation
