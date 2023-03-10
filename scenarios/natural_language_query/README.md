@@ -181,7 +181,7 @@ operationId: Get-Prompt
 
 
 
-d.  In the Custom connecor app browser tab , (step b), click on “Swagger Editor” and copy the updated contents in the swagger editor. Click Close to save the Connector
+d.  In the Custom connecor app browser tab , (step b), click on “Swagger Editor” and copy the updated file contents (step c.) in the swagger editor. Click Close to save the Connector
 
 
   ![image](https://user-images.githubusercontent.com/50298139/224202410-5c18a0c5-c63c-471e-adcb-0d48392509b4.png)
