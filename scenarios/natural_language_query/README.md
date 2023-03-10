@@ -216,7 +216,7 @@ d.  In the Custom connecor app browser tab , (step b), click on “Swagger Edito
   
   <img width="923" alt="image" src="https://user-images.githubusercontent.com/50298139/224354481-d4e2c3d2-d6a0-4b1d-a1e2-1d98a3301cf4.png">
   
-  j. Click Parse JSON step , click the sign on tight side and select “body in content”. The Control should like the below
+  j. Click Parse JSON step , click inisde "Content" field, click on right side and select “body" . The Control should like the below
   
   <img width="932" alt="image" src="https://user-images.githubusercontent.com/50298139/224354658-033eaee3-6579-44c2-a522-aa6b01aefaa9.png">
   
