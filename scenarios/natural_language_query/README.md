@@ -149,7 +149,7 @@ f. Save the flow and run the App by clicking on the App
 
 
 
-## Step 5. Build the Connector App
+## Step 5. Build the Connector App (Optional)
 
 a. Navigate to https://make.powerapps.com/ and click on .. sign on the top left side, this will open the below , click "Power Auto..."
 
