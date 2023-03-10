@@ -2,7 +2,7 @@ name: document-generation
 channels:
   - conda-forge
 dependencies:
-  - python=3.10.4
+  - python=3.9
   - pip=21.3.1
   - pip:
     - azure-core==1.26.3

@@ -42,6 +42,8 @@ b. In the Cloud Shell run below commands:
 Accept the agreement and install on the default path:
 ![](../../documents/media/cloudshell-accept.png)
 
+**Please Note:** If it asks to run conda init, type yes to confirm. 
+
 ```bash 
     export PATH=~/miniconda3/bin:$PATH
 ```
