@@ -220,7 +220,7 @@ d.  In the Custom connector app browser tab , (step b), click on “Swagger Edit
   
   <img width="932" alt="image" src="https://user-images.githubusercontent.com/50298139/224354658-033eaee3-6579-44c2-a522-aa6b01aefaa9.png">
   
-  k. click on Test, select Manually and provide the value "show top 10 products" in txtPrompt, click Run. It will show "Your flow run successfully started. To monitor it, go to the Flow Runs Page." Save the flow
+  k. click on Test, select Manually and make sure "txtPrompt" in selected in *prompt field, click Run. It will show "Your flow run successfully started. To monitor it, go to the Flow Runs Page." Save the flow
 
 ![image](https://user-images.githubusercontent.com/50298139/224383821-25b8ad3f-668e-4454-a413-aa529606efc5.png)
 
