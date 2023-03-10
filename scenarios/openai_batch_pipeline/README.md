@@ -107,3 +107,12 @@ Accept the agreement and install on the default path:
 
 Now that the data is in the target table it is available for usage by running SQL queries against it, or connecting PowerBI and creating visualizations. The Azure Function is running as well, so try uploading some of the transcript files to the generated_documents folder in your container and see how the function processes it and creates a new file in the cleansed_documents file.
 
+Here is a query to get started:
+
+    ```bash 
+    SELECT sentiment, count(*)
+    FROM [dbo].[cs_detail]
+    GROUP BY sentiment
+    ORDER BY count(*) desc      
+    ```
+
