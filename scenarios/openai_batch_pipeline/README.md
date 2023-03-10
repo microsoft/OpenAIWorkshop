@@ -77,12 +77,11 @@ Accept the agreement and install on the default path:
     ```bash 
         CREATE TABLE [dbo].[cs_detail]
     (
-        interaction_summary varchar(2000),
-        sentiment varchar(50),
-        topic varchar(50),
-        product varchar(50),
-        filename varchar(100),
-        load_date date
+    interaction_summary varchar(2000),
+    sentiment varchar(50),
+    topic varchar(50),
+    product varchar(50),
+    filename varchar(100)
     )
     ```
     ![](../../documents/media/target.png)
