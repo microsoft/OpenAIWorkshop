@@ -157,24 +157,29 @@ a. Navigate to https://make.powerapps.com/ and click on .. sign on the top left 
 ![image](https://user-images.githubusercontent.com/50298139/224201114-587353f5-e0a3-4b8e-9647-89d6918c6360.png)
 
 
-b.  Click on Data -> “Custom Connectors”, click on “New custom connector” -> ”Create from blank”
+b.  Click on Data -> “Custom Connectors”, click on “New custom connector” -> ”Create from blank”. Just keep the screen as is and move to point c.
 
 
 ![image](https://user-images.githubusercontent.com/50298139/224201199-b14ab884-ed97-4abb-ae9f-c0d464e4658d.png)
 
 
-c.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update  values in file , host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https"
+c.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update below values in file 
 
 
-please note operationid needs to be unique per powerapps account
+
 
 host : <funcname>.azurewebsites.net
   
 paths :  /api/NLQuery
   
 operationId: Get-Prompt 
-  
 
+  ![image](https://user-images.githubusercontent.com/50298139/224388746-ed91b8cb-36ce-4607-a012-e9e801424147.png)
+
+  
+Note: **host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account**
+
+  
 ![image](https://user-images.githubusercontent.com/50298139/224201909-0b54b804-c5aa-45e3-8be2-67b68dec9f78.png)
 
 
