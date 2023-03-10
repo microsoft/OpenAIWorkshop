@@ -141,6 +141,13 @@ e. Please click the HTTP and provide the function URL in the "URI" field, this f
 
 <img width="492" alt="image" src="https://user-images.githubusercontent.com/50298139/222619362-c786a8f7-a070-4846-837b-6b083b82f6c6.png">
 
+f. Save the flow and run the App by clicking on the App
+
+<img width="833" alt="image" src="https://user-images.githubusercontent.com/50298139/224205810-07d82a4d-516f-4a63-9575-117e0cc18d90.png">
+
+<img width="824" alt="image" src="https://user-images.githubusercontent.com/50298139/224205881-f322e481-5233-4b36-b52f-24694776ec7a.png">
+
+
 
 ## Step 5. Build the Connector App
 
