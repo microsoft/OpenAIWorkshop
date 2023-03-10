@@ -218,7 +218,7 @@ d.  In the Custom connecor app browser tab , (step b), click on “Swagger Edito
   
   j. Click Parse JSON step , click the sign on tight side and select “body in content”. The Control should like the below
   
-  ![image](https://user-images.githubusercontent.com/50298139/224203586-7af34581-9afe-4f34-b1a4-b08d918d1b7f.png)
+  <img width="932" alt="image" src="https://user-images.githubusercontent.com/50298139/224354658-033eaee3-6579-44c2-a522-aa6b01aefaa9.png">
   
   k. click on Test, select Manually and provide the value "show top 10 products" in txtPrompt, click Run. It will show "Your flow run successfully started. To monitor it, go to the Flow Runs Page." Save the flow
 
