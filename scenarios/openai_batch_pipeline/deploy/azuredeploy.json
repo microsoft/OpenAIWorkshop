@@ -56,7 +56,7 @@
     },
     "packageUri": {
       "type": "string",
-      "defaultValue": "",
+      "defaultValue": "https://github.com/microsoft/OpenAIWorkshop/blob/07c4fda014b24594be1405a42d8f91f49cb7df17/scenarios/openai_batch_pipeline/Parser/Parser.zip",
       "metadata": {
         "description": "The zip content url."
       }
