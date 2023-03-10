@@ -129,7 +129,7 @@ c. Click on Import to import the package into powerapps environment. This will i
 
 
 
- d. Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**
+ d. Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**. If you do not have the permissions to "turn on" the flow, please go to **step 5**. In case you are able to tuen on the flow, please skip **step 5** and go to **step 6**
 
 <img width="928" alt="image" src="https://user-images.githubusercontent.com/50298139/222619285-09a545a9-73c3-4dd9-a1b6-c9cc2ca7e440.png">
 
