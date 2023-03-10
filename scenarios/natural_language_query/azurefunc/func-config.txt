@@ -1,0 +1,25 @@
+  {
+    "name": "GPT_ENGINE",
+    "value": "<MODEL DEPLOYMENT NAME>",
+    "slotSetting": false
+  },
+  {
+    "name": "OPENAI_API_KEY",
+    "value": "<OPEN API KEY>",
+    "slotSetting": false
+  },
+  {
+    "name": "OPENAI_RESOURCE_ENDPOINT",
+    "value": "<END POINT NAME>",
+    "slotSetting": false
+  },
+  {
+    "name": "SQL_DB_NAME",
+    "value": "<DATABASE NAME>",
+    "slotSetting": false
+  },
+  {
+    "name": "SQL_SERVER_NAME",
+    "value": "<SERVERNAME>.database.windows.net",
+    "slotSetting": false
+  }

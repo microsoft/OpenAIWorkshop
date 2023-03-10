@@ -1,9 +1,10 @@
 """
-This code sample shows Prebuilt Layout operations with the Azure Form Recognizer client library. 
-The async versions of the samples require Python 3.6 or later.
+This script creates an Azure Search Index and adds documents to it.
+The documents are extracted from a PDF using Azure Form Recognizer.
+The documents are then indexed using Azure Search.
+The index is then used to create a search experience using Azure Cognitive Search.
 
-To learn more, please visit the documentation - Quickstart: Form Recognizer Python client library SDKs
-https://docs.microsoft.com/en-us/azure/applied-ai-services/form-recognizer/quickstarts/try-v3-python-sdk
+This is part of Azure OpenAI Workshop
 """
 
 from azure.core.credentials import AzureKeyCredential
