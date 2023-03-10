@@ -1,0 +1,42 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: my-nlquery-connector-title
+  description: nlq-description
+host: funcapp4ai.azurewebsites.net
+basePath: /
+schemes:
+  - https
+consumes: []
+produces:
+  - application/json
+paths:
+  /api/NLQuery:
+    get:
+      summary: Get-Prompt
+      description: my description for get-prompt
+      operationId: Get-Prompt
+      parameters:
+        - name: prompt
+          default: top 5 products
+          in: query
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 200 resp
+          schema:
+            type: string
+            properties:
+              data:
+                type: string
+                description: data
+              query:
+                type: string
+                description: query
+definitions: {}
+parameters: {}
+responses: {}
+securityDefinitions: {}
+security: []
+tags: []
