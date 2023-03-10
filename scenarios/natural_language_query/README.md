@@ -169,8 +169,11 @@ c.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natura
 please note operationid needs to be unque per powerapps account
 
 host : <funcname>.azurewebsites.net/
+  
 paths :  /api/NLQuery
+  
 operationId: Get-Prompt 
+  
 
 ![image](https://user-images.githubusercontent.com/50298139/224201909-0b54b804-c5aa-45e3-8be2-67b68dec9f78.png)
 
