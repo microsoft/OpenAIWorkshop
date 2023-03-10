@@ -163,11 +163,7 @@ b.  Click on Data -> “Custom Connectors”, click on “New custom connector�
 ![image](https://user-images.githubusercontent.com/50298139/224201199-b14ab884-ed97-4abb-ae9f-c0d464e4658d.png)
 
 
-c.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update below values in file , host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https"
-
-
-![image](https://user-images.githubusercontent.com/50298139/224201909-0b54b804-c5aa-45e3-8be2-67b68dec9f78.png)
-
+c.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update  values in file , host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https"
 
 
 please note operationid needs to be unque per powerapps account
@@ -175,6 +171,12 @@ please note operationid needs to be unque per powerapps account
 host : <funcname>.azurewebsites.net/
 paths :  /api/NLQuery
 operationId: Get-Prompt 
+
+![image](https://user-images.githubusercontent.com/50298139/224201909-0b54b804-c5aa-45e3-8be2-67b68dec9f78.png)
+
+
+
+
 
 d.  In the Custom connecor app browser tab , (step b), click on “Swagger Editor” and copy the updated contents in the swagger editor. Click Close to save the Connector
 
