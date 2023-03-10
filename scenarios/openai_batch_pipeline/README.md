@@ -52,7 +52,7 @@ Accept the agreement and install on the default path:
     git clone https://github.com/microsoft/OpenAIWorkshop.git
     cd OpenAIWorkshop/scenarios/openai_batch_pipeline/document_generation
     conda create -n document-creation
-    conda activate document-generation
+    conda activate document-creation
     pip install -r reqs.txt
 ```
 
