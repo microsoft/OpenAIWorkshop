@@ -208,7 +208,7 @@ d.  In the Custom connecor app browser tab , (step b), click on “Swagger Edito
   ![image](https://user-images.githubusercontent.com/50298139/224352209-6a95bef2-fb93-4ce9-b906-4e67b0e21fd3.png)
 
   
-  i.You need to delete the third step which in your case will be “HTTTP” flow, after deleting the third step , the flow will look like below, click Save
+  i.You need to delete the third step which in your case will be “HTTTP” flow, after deleting the third step, click Save
 
 ![image](https://user-images.githubusercontent.com/50298139/224352282-adef508e-7df1-415b-8509-a6665dd8399b.png)
 
