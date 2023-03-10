@@ -225,7 +225,7 @@ d.  In the Custom connecor app browser tab , (step b), click on “Swagger Edito
  <img width="927" alt="image" src="https://user-images.githubusercontent.com/50298139/224353416-09bebd15-80dd-4053-99a8-4db8f11ba41c.png">
  
 
-  l. go to app which you impoerted in step 4 and click Edit
+  l. go to app which we imported in step 4 and click Edit
   
   <img width="780" alt="image" src="https://user-images.githubusercontent.com/50298139/224204881-ae4bace2-f16a-448e-84f9-5b818de6aa67.png">
 
