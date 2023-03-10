@@ -168,7 +168,7 @@ c.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natura
 
 please note operationid needs to be unique per powerapps account
 
-host : <funcname>.azurewebsites.net/
+host : <funcname>.azurewebsites.net
   
 paths :  /api/NLQuery
   
