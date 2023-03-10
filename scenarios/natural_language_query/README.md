@@ -1,7 +1,7 @@
 # Build Open AI Application on Power App to allow users to use natural language question on top of SQL data
 ### Summary.
 
-This scenario allows users to use Open AI as an intelligent agent to get business questions prompts from end users and generating SQL queries from the prompts.This implementation scenario focuses on building a Nautual Language to query from business questions and genarte the queries for database retrieval 
+This scenario allows users to use Open AI as an intelligent agent to get business questions prompts from end users and generating SQL queries from the prompts.This implementation scenario focuses on building a Natural Language to query from business questions and generate the queries for database retrieval 
 ### Architecture Diagram
 <img width="693" alt="image" src="https://user-images.githubusercontent.com/50298139/222239136-9149247e-b6e9-4b8b-8519-be7c8f3723b4.png">
 
@@ -14,7 +14,7 @@ Step 2: Azure Open AI engine converts the user context prompt to SQL query and p
 
 Step 3: Azure function passes the context information to Open AI Engine to convert the user context information prompt to SQL Query
 
-Step 4: The Azure function passes the genrated SQL query text and executes the query on Azure SQL databse 
+Step 4: The Azure function passes the generated SQL query text and executes the query on Azure SQL database 
 
 Step 5: The query is executed on SQL database and results are returned to Azure function
 
@@ -55,7 +55,7 @@ Tenant Id could be found by navigating to Azure Active Directory in azure portal
 
 a. Open func-config.txt in scenarios/natural_language_query/azurefunc folder and provide the Open AI engine, Open AI rest end point, SQL server and SQL database name
 
-b. Go to deployed function and cick "Configuration" -> "Application Settings" and click on "Advance edit" and copy the "func-config.txt" values in the editor. DO not delete the existing contents in "Advance edit", just update ""config-func.txt" values before the last line and ']' mark. After copying the values click "OK" and "Save"
+b. Go to deployed function and click "Configuration" -> "Application Settings" and click on "Advance edit" and copy the "func-config.txt" values in the editor. DO not delete the existing contents in "Advance edit", just update ""config-func.txt" values before the last line and ']' mark. After copying the values click "OK" and "Save"
 
 <img width="919" alt="image" src="https://user-images.githubusercontent.com/50298139/223740863-166c6bba-bc5e-44ab-969b-cf5d1e77c6c1.png">
 
@@ -129,7 +129,7 @@ c. Click on Import to import the package into powerapps environment. This will i
 
 
 
- d. Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**. If you do not have the permissions to "turn on" the flow, please go to **step 5**. In case you are able to tuen on the flow, please skip **step 5** and go to **step 6**
+ d. Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**. If you do not have the permissions to "turn on" the flow, please go to **step 5**. In case you are able to turn on the flow, please skip **step 5** and go to **step 6**
 
 <img width="928" alt="image" src="https://user-images.githubusercontent.com/50298139/222619285-09a545a9-73c3-4dd9-a1b6-c9cc2ca7e440.png">
 
