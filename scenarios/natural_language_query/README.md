@@ -141,7 +141,92 @@ e. Please click the HTTP and provide the function URL in the "URI" field, this f
 
 <img width="492" alt="image" src="https://user-images.githubusercontent.com/50298139/222619362-c786a8f7-a070-4846-837b-6b083b82f6c6.png">
 
-## Step 5. Test the Power App
+
+## Step 5. Build the Connector App
+
+a. Navigate to https://make.powerapps.com/ and click on .. sign on the top left side, this will open the below , click "Power Auto..."
+
+
+![image](https://user-images.githubusercontent.com/50298139/224201114-587353f5-e0a3-4b8e-9647-89d6918c6360.png)
+
+
+b.  Click on Data -> “Custom Connectors”, click on “New custom connector” -> ”Create from blank”
+
+
+![image](https://user-images.githubusercontent.com/50298139/224201199-b14ab884-ed97-4abb-ae9f-c0d464e4658d.png)
+
+
+c.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update below values in file , host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https"
+
+
+![image](https://user-images.githubusercontent.com/50298139/224201909-0b54b804-c5aa-45e3-8be2-67b68dec9f78.png)
+
+
+
+please note operationid needs to be unque per powerapps account
+
+host : <funcname>.azurewebsites.net/
+paths :  /api/NLQuery
+operationId: Get-Prompt 
+
+d.  In the Custom connecor app browser tab , (step b), click on “Swagger Editor” and copy the updated contents in the swagger editor. Click Close to save the Connector
+
+
+  ![image](https://user-images.githubusercontent.com/50298139/224202410-5c18a0c5-c63c-471e-adcb-0d48392509b4.png)
+
+
+ e.  Navigate to https://make.powerapps.com and click Click on “My Flows” and select the flow which you imported in previous step 4 (d) and click “Edit”
+
+  
+  ![image](https://user-images.githubusercontent.com/50298139/224202751-229c8cd7-1d4c-4aa5-b726-05d7adddf2d0.png)
+  
+
+  f. We will update the power automate flow second step after PowerApps(V2), click on + and select “Add an action”
+  
+
+![image](https://user-images.githubusercontent.com/50298139/224202830-ce075c06-96b5-4712-805a-417e7f44c26b.png)
+  
+  g. Select Custom and type and search for custom connector which we created in step d.
+  
+  ![image](https://user-images.githubusercontent.com/50298139/224203067-1972f95e-79ef-4fd2-bf56-d7d516508cd4.png)
+
+  
+  h. The flow will look like below
+  
+  ![image](https://user-images.githubusercontent.com/50298139/224203240-37a2d577-b10a-4f3b-a58e-d1919f9a790f.png)
+
+  
+  i.You need to delete the third step which in your case will be “HTTTP” flow, after deleting the third step , the flow will look like below, click Save
+  
+  
+  ![image](https://user-images.githubusercontent.com/50298139/224203286-fdac9328-2078-4ae5-a8b0-b17dbd170e6a.png)
+
+  
+  j. Click Parse JSON step , click the sign on tight side and select “body in content”. The Control should like the below
+  
+  ![image](https://user-images.githubusercontent.com/50298139/224203586-7af34581-9afe-4f34-b1a4-b08d918d1b7f.png)
+  
+  k. click on Test, select Manually and provide the value "show top 10 products" in txtPrompt, click Run. It will show "Your flow run successfully started. To monitor it, go to the Flow Runs Page." Save the flow
+
+<img width="664" alt="image" src="https://user-images.githubusercontent.com/50298139/224203916-f81e7e89-f9b5-417c-b9a4-817ad3b5ef21.png">
+  
+  <img width="929" alt="image" src="https://user-images.githubusercontent.com/50298139/224204249-2ce15609-875a-45ab-82e1-e1823b757b4d.png">
+
+  l. go to app which you impoerted in step 4 and click Edit
+  
+  <img width="780" alt="image" src="https://user-images.githubusercontent.com/50298139/224204881-ae4bace2-f16a-448e-84f9-5b818de6aa67.png">
+
+  m. Click on Power Automate,  once Power Automate opens click refresh and click save on right top side. 
+
+  <img width="697" alt="image" src="https://user-images.githubusercontent.com/50298139/224205091-cecb5d2b-4096-4837-a04b-514bd7b54471.png">
+  
+  <img width="784" alt="image" src="https://user-images.githubusercontent.com/50298139/224205237-9d7e81cf-526a-4669-a8a1-ec2d61974917.png">
+
+
+
+  n. please run the App
+  
+## Step 6. Test the Power App
 
 a. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
 
