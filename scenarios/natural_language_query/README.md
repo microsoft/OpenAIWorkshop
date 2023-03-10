@@ -190,7 +190,7 @@ d.  In the Custom connecor app browser tab , (step b), click on “Swagger Edito
  e.  Navigate to https://make.powerapps.com and click Click on “My Flows” and select the flow which you imported in previous step 4 (d) and click “Edit”
 
   
-  ![image](https://user-images.githubusercontent.com/50298139/224202751-229c8cd7-1d4c-4aa5-b726-05d7adddf2d0.png)
+ <img width="930" alt="image" src="https://user-images.githubusercontent.com/50298139/224354069-d7dc65a6-c318-4547-83c9-1851136822d2.png">
   
 
   f. We will update the power automate flow second step after PowerApps(V2), click on + and select “Add an action”
