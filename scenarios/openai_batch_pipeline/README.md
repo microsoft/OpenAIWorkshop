@@ -109,10 +109,10 @@ Now that the data is in the target table it is available for usage by running SQ
 
 Here is a query to get started:
 
-    ```bash 
+ ```bash 
     SELECT sentiment, count(*)
     FROM [dbo].[cs_detail]
     GROUP BY sentiment
     ORDER BY count(*) desc      
-    ```
+ ```
 
