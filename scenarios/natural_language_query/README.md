@@ -223,9 +223,8 @@ d.  In the Custom connecor app browser tab , (step b), click on “Swagger Edito
   
   k. click on Test, select Manually and provide the value "show top 10 products" in txtPrompt, click Run. It will show "Your flow run successfully started. To monitor it, go to the Flow Runs Page." Save the flow
 
-<img width="664" alt="image" src="https://user-images.githubusercontent.com/50298139/224203916-f81e7e89-f9b5-417c-b9a4-817ad3b5ef21.png">
-  
-  <img width="929" alt="image" src="https://user-images.githubusercontent.com/50298139/224204249-2ce15609-875a-45ab-82e1-e1823b757b4d.png">
+ <img width="927" alt="image" src="https://user-images.githubusercontent.com/50298139/224353416-09bebd15-80dd-4053-99a8-4db8f11ba41c.png">
+ 
 
   l. go to app which you impoerted in step 4 and click Edit
   
