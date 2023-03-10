@@ -9,6 +9,7 @@
 
 - You can sign in to power apps with your existing licence or you can sign up for free - https://powerapps.microsoft.com/
 
+
 ### Step 2. Deploy client Power App
 
 - click on Apps on the left navigation. 
@@ -37,12 +38,22 @@
   <img src="../../documents/media/openaisummarizationflow.png" width=50% height=50%>
 
 
-- Edit the Power Automate Flow with your own Azure OpenAI API [key and endpoint](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?pivots=rest-api#retrieve-key-and-endpoint)
+- Click on the flows and edit the Power Automate Flow
+
+  <img src="../../documents/media/editflow.png" width=50% height=50%>
+
+
+- Edit the Power Automate Flow HTTP step with your own Azure OpenAI API [key and endpoint](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?pivots=rest-api#retrieve-key-and-endpoint)
 
 
   <img src="../../documents/media/flowchangeapikey.png" width=50% height=50%>
 
 
-### Step 3. Test
+- Save the flow and make sure that flow is turned on
 
-- Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp.
+
+### Step 2. Test
+
+- run the App by clicking on the App
+
+  <img src="../../documents/media/runpowerapp.png" width=50% height=50%>
