@@ -51,8 +51,9 @@ Accept the agreement and install on the default path:
 ```bash 
     git clone https://github.com/microsoft/OpenAIWorkshop.git
     cd OpenAIWorkshop/scenarios/openai_batch_pipeline/document_generation
-    conda env create -f conda.yaml
+    conda create -n document-creation
     conda activate document-generation
+    pip install -r reqs.txt
 ```
 
 ```bash 
