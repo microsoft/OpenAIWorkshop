@@ -1,7 +1,7 @@
 # Build Open AI Application on Power App to allow users to use natural language question on top of SQL data
 ### Summary.
 
-This scenario allows users to use Open AI as an intelligent agent to get business questions prompts from end users and generating SQL queries from the prompts.This implementation scenario focuses on building a Nautual Language to query from business questions and genarte the queries for database retrieval 
+This scenario allows users to use Open AI as an intelligent agent to get business questions prompts from end users and generating SQL queries from the prompts.This implementation scenario focuses on building a Natural Language to query from business questions and generate the queries for database retrieval 
 ### Architecture Diagram
 <img width="693" alt="image" src="https://user-images.githubusercontent.com/50298139/222239136-9149247e-b6e9-4b8b-8519-be7c8f3723b4.png">
 
@@ -14,7 +14,7 @@ Step 2: Azure Open AI engine converts the user context prompt to SQL query and p
 
 Step 3: Azure function passes the context information to Open AI Engine to convert the user context information prompt to SQL Query
 
-Step 4: The Azure function passes the genrated SQL query text and executes the query on Azure SQL databse 
+Step 4: The Azure function passes the generated SQL query text and executes the query on Azure SQL database 
 
 Step 5: The query is executed on SQL database and results are returned to Azure function
 
@@ -55,7 +55,7 @@ Tenant Id could be found by navigating to Azure Active Directory in azure portal
 
 a. Open func-config.txt in scenarios/natural_language_query/azurefunc folder and provide the Open AI engine, Open AI rest end point, SQL server and SQL database name
 
-b. Go to deployed function and cick "Configuration" -> "Application Settings" and click on "Advance edit" and copy the "func-config.txt" values in the editor. DO not delete the existing contents in "Advance edit", just update ""config-func.txt" values before the last line and ']' mark. After copying the values click "OK" and "Save"
+b. Go to deployed function and click "Configuration" -> "Application Settings" and click on "Advance edit" and copy the "func-config.txt" values in the editor. DO not delete the existing contents in "Advance edit", just update ""config-func.txt" values before the last line and ']' mark. After copying the values click "OK" and "Save"
 
 <img width="919" alt="image" src="https://user-images.githubusercontent.com/50298139/223740863-166c6bba-bc5e-44ab-969b-cf5d1e77c6c1.png">
 
@@ -129,7 +129,7 @@ c. Click on Import to import the package into powerapps environment. This will i
 
 
 
- d. Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**
+ d. Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**. If you do not have the permissions to "turn on" the flow, please go to **step 5**. In case you are able to turn on the flow, please skip **step 5** and go to **step 6**
 
 <img width="928" alt="image" src="https://user-images.githubusercontent.com/50298139/222619285-09a545a9-73c3-4dd9-a1b6-c9cc2ca7e440.png">
 
@@ -141,7 +141,105 @@ e. Please click the HTTP and provide the function URL in the "URI" field, this f
 
 <img width="492" alt="image" src="https://user-images.githubusercontent.com/50298139/222619362-c786a8f7-a070-4846-837b-6b083b82f6c6.png">
 
-## Step 5. Test the Power App
+f. Save the flow and run the App by clicking on the App
+
+<img width="833" alt="image" src="https://user-images.githubusercontent.com/50298139/224205810-07d82a4d-516f-4a63-9575-117e0cc18d90.png">
+
+<img width="824" alt="image" src="https://user-images.githubusercontent.com/50298139/224205881-f322e481-5233-4b36-b52f-24694776ec7a.png">
+
+
+
+## Step 5. Build the Connector App (Optional)
+
+a. Navigate to https://make.powerapps.com/ and click on .. sign on the top left side, this will open the below , click "Power Auto..."
+
+
+![image](https://user-images.githubusercontent.com/50298139/224201114-587353f5-e0a3-4b8e-9647-89d6918c6360.png)
+
+
+b.  Click on Data -> “Custom Connectors”, click on “New custom connector” -> ”Create from blank”
+
+
+![image](https://user-images.githubusercontent.com/50298139/224201199-b14ab884-ed97-4abb-ae9f-c0d464e4658d.png)
+
+
+c.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update  values in file , host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https"
+
+
+please note operationid needs to be unique per powerapps account
+
+host : <funcname>.azurewebsites.net/
+  
+paths :  /api/NLQuery
+  
+operationId: Get-Prompt 
+  
+
+![image](https://user-images.githubusercontent.com/50298139/224201909-0b54b804-c5aa-45e3-8be2-67b68dec9f78.png)
+
+
+
+
+
+d.  In the Custom connector app browser tab , (step b), click on “Swagger Editor” and copy the updated file contents (step c.) in the swagger editor. Click Close to save the Connector
+
+
+  ![image](https://user-images.githubusercontent.com/50298139/224202410-5c18a0c5-c63c-471e-adcb-0d48392509b4.png)
+
+
+ e.  Navigate to https://make.powerapps.com and click Click on “My Flows” and select the flow which you imported in previous step 4 (d) and click “Edit”
+
+  
+ <img width="930" alt="image" src="https://user-images.githubusercontent.com/50298139/224354069-d7dc65a6-c318-4547-83c9-1851136822d2.png">
+  
+
+  f. We will update the power automate flow second step after PowerApps(V2), click on + and select “Add an action”
+  
+![image](https://user-images.githubusercontent.com/50298139/224351924-62f3d1b5-abf3-4694-89c6-a6c9cc1a340e.png)
+
+  
+  g. Select Custom and type and search for custom connector which we created in step d.
+  
+  ![image](https://user-images.githubusercontent.com/50298139/224203067-1972f95e-79ef-4fd2-bf56-d7d516508cd4.png)
+
+  
+  h. The flow will look like below
+  
+  ![image](https://user-images.githubusercontent.com/50298139/224352209-6a95bef2-fb93-4ce9-b906-4e67b0e21fd3.png)
+
+  
+  i.You need to delete the third step which in your case will be “HTTTP” flow, after deleting the third step, click Save
+
+![image](https://user-images.githubusercontent.com/50298139/224352282-adef508e-7df1-415b-8509-a6665dd8399b.png)
+
+  
+  
+  <img width="923" alt="image" src="https://user-images.githubusercontent.com/50298139/224354481-d4e2c3d2-d6a0-4b1d-a1e2-1d98a3301cf4.png">
+  
+  j. Click Parse JSON step , click inside "Content" field, click on right side and select “body" . The Control should like the below
+  
+  <img width="932" alt="image" src="https://user-images.githubusercontent.com/50298139/224354658-033eaee3-6579-44c2-a522-aa6b01aefaa9.png">
+  
+  k. click on Test, select Manually and provide the value "show top 10 products" in txtPrompt, click Run. It will show "Your flow run successfully started. To monitor it, go to the Flow Runs Page." Save the flow
+
+ <img width="927" alt="image" src="https://user-images.githubusercontent.com/50298139/224353416-09bebd15-80dd-4053-99a8-4db8f11ba41c.png">
+ 
+
+  l. go to app which we imported in step 4 and click Edit
+  
+  <img width="780" alt="image" src="https://user-images.githubusercontent.com/50298139/224204881-ae4bace2-f16a-448e-84f9-5b818de6aa67.png">
+
+  m. Click on Power Automate,  once Power Automate opens click refresh and click save on right top side. 
+
+  <img width="697" alt="image" src="https://user-images.githubusercontent.com/50298139/224205091-cecb5d2b-4096-4837-a04b-514bd7b54471.png">
+  
+  <img width="784" alt="image" src="https://user-images.githubusercontent.com/50298139/224205237-9d7e81cf-526a-4669-a8a1-ec2d61974917.png">
+
+
+
+  n. please run the App
+  
+## Step 6. Test the Power App
 
 a. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
 
