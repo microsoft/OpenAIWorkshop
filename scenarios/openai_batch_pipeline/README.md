@@ -42,6 +42,8 @@ b. In the Cloud Shell run below commands:
 Accept the agreement and install on the default path:
 ![](../../documents/media/cloudshell-accept.png)
 
+**Please Note:** If it asks to run conda init, type yes to confirm. 
+
 ```bash 
     export PATH=~/miniconda3/bin:$PATH
 ```
@@ -49,8 +51,9 @@ Accept the agreement and install on the default path:
 ```bash 
     git clone https://github.com/microsoft/OpenAIWorkshop.git
     cd OpenAIWorkshop/scenarios/openai_batch_pipeline/document_generation
-    conda env create -f conda.yaml
-    conda activate document-generation
+    conda create -n document-creation
+    conda activate document-creation
+    pip install -r reqs.txt
 ```
 
 ```bash 
@@ -74,12 +77,11 @@ Accept the agreement and install on the default path:
     ```bash 
         CREATE TABLE [dbo].[cs_detail]
     (
-        interaction_summary varchar(2000),
-        sentiment varchar(50),
-        topic varchar(50),
-        product varchar(50),
-        filename varchar(100),
-        load_date date
+    interaction_summary varchar(8000),
+    sentiment varchar(500),
+    topic varchar(500),
+    product varchar(500),
+    filename varchar(500)
     )
     ```
     ![](../../documents/media/target.png)
@@ -103,5 +105,14 @@ Accept the agreement and install on the default path:
 
 ## Step 4. Test
 
-Now that the data is in the target table it is available for usage by running SQL queries against it, or connecting PowerBI and creating visualizations.
+Now that the data is in the target table it is available for usage by running SQL queries against it, or connecting PowerBI and creating visualizations. The Azure Function is running as well, so try uploading some of the transcript files to the generated_documents folder in your container and see how the function processes it and creates a new file in the cleansed_documents file.
+
+Here is a query to get started:
+
+ ```bash 
+    SELECT sentiment, count(*)
+    FROM [dbo].[cs_detail]
+    GROUP BY sentiment
+    ORDER BY count(*) desc      
+ ```
 

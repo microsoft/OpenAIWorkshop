@@ -157,24 +157,29 @@ a. Navigate to https://make.powerapps.com/ and click on .. sign on the top left 
 ![image](https://user-images.githubusercontent.com/50298139/224201114-587353f5-e0a3-4b8e-9647-89d6918c6360.png)
 
 
-b.  Click on Data -> “Custom Connectors”, click on “New custom connector” -> ”Create from blank”
+b.  Click on Data -> “Custom Connectors”, click on “New custom connector” -> ”Create from blank”. Just keep the screen as is and move to point c.
 
 
 ![image](https://user-images.githubusercontent.com/50298139/224201199-b14ab884-ed97-4abb-ae9f-c0d464e4658d.png)
 
 
-c.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update  values in file , host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https"
+c.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update below values in file 
 
 
-please note operationid needs to be unique per powerapps account
 
-host : <funcname>.azurewebsites.net/
+
+host : <funcname>.azurewebsites.net
   
 paths :  /api/NLQuery
   
 operationId: Get-Prompt 
-  
 
+  ![image](https://user-images.githubusercontent.com/50298139/224388746-ed91b8cb-36ce-4607-a012-e9e801424147.png)
+
+  
+Note: **host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account**
+
+  
 ![image](https://user-images.githubusercontent.com/50298139/224201909-0b54b804-c5aa-45e3-8be2-67b68dec9f78.png)
 
 
@@ -220,10 +225,10 @@ d.  In the Custom connector app browser tab , (step b), click on “Swagger Edit
   
   <img width="932" alt="image" src="https://user-images.githubusercontent.com/50298139/224354658-033eaee3-6579-44c2-a522-aa6b01aefaa9.png">
   
-  k. click on Test, select Manually and provide the value "show top 10 products" in txtPrompt, click Run. It will show "Your flow run successfully started. To monitor it, go to the Flow Runs Page." Save the flow
+  k. click on Test, select Manually and make sure "txtPrompt" in selected in *prompt field, click Run. It will show "Your flow run successfully started. To monitor it, go to the Flow Runs Page." Save the flow
 
- <img width="927" alt="image" src="https://user-images.githubusercontent.com/50298139/224353416-09bebd15-80dd-4053-99a8-4db8f11ba41c.png">
- 
+![image](https://user-images.githubusercontent.com/50298139/224383821-25b8ad3f-668e-4454-a413-aa529606efc5.png)
+
 
   l. go to app which we imported in step 4 and click Edit
   
