@@ -21,7 +21,7 @@ This scenario allows uses OpenAI to summarize and analyze customer service call 
         - [e. Create Synapse Data Flow](#e-create-synapse-data-flow)
         - [f. Create Synapse Pipeline](#f-create-synapse-pipeline)
         - [g. Trigger Synapse Pipeline](#g-trigger-synapse-pipeline)
-    - [Step 4. Test - Query Results in Our SQL Table](#step-4-query-results-in=our-sql-table)
+    - [Step 4. Query Results in Our SQL Table](#step-4-query-results-in-our-sql-table)
 
 
 
