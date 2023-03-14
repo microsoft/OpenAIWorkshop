@@ -101,7 +101,7 @@ Once you have successfully uploaded the json files to the storage account, you c
 
 ## Step 3. Set up Synapse Workspace
 
-### a. Create the Synapse Resource in your Resource Group
+### **a. Create the Synapse Resource in your Resource Group**
 Navitate to the Resource Group created in Step 1 and click **Create**, located in the top-left. This will bring you to the Marketplace. Search for **Synapse** and select **Azure Synapse Analytics**. Click **Create** in the lower-lefthand.
 
 ![](../../documents/media/batch_createbutton.png)
@@ -110,44 +110,135 @@ Fill out the template (sample filled out version below) - you will need to provi
 
 ![](../../documents/media/batch_create_synapsews.png)
 
-### b. Create the Synapse SQL Pool
+### **b. Create the Synapse SQL Pool**
 Once the Synapse Workspace has been created, navigate to the Synapse Workspace in the Azure portal, and click to **Open** the **Azure Synapse Studio** in the **Getting started** section. This will open a new browswer window with the Synapse Studio.
 
 Once in the Synapse Studio, on the left-hand side, click the tool-box icon (with the wrench sign) to open the **Manage** Options. At the top of the newly opened menu bar, under the **Analytics pools** section, click **SQL pools**. Then click **New** in the top-left.
 
 ![](../../documents/media/batch_synapse_pool.png)
+
 > **Please note:** You will need to supply a name for the Synapse SQL Pool. Accept all other defaults.
 
-Accept the defaults and press **Review + Create** in the bottom left, then **Create** once it passes validation. Once the SQL Pool has been created, click **Go to resource** in the top-left.
+Accept the defaults and press **Review + Create** in the bottom left, then **Create** once it passes validation. It may take a moment for your SQL Pool to initialize. Once it is completed you will see this:
 
- - After the SQL Pool is created, create the target table by running the following query:
-    ```bash 
-        CREATE TABLE [dbo].[cs_detail]
-    (
-    interaction_summary varchar(8000),
-    sentiment varchar(500),
-    topic varchar(500),
-    product varchar(500),
-    filename varchar(500)
-    )
-    ```
-    ![](../../documents/media/target.png)
+![](../../documents/media/batch_sqlpoolsuccess.png)
 
-    - Create linked services for source and target. For this case you need to create one for the json files in data lake and other for Synapse SQL DB.
+### **c. Create Target SQL Table**
 
-    ![](../../documents/media/linkedservices.png)
+Once the SQL Pool has been created, click into the **Develop** section of the Synapse Studio, click the "**+**" sign in the top-left, and select **SQL script**. This will open a new window with a SQL script editor. 
 
- - Create a dataflow to ingest the data from datalake into Synapse SQL. Provide the connection details (linked services created in the above step) for source and sink. 
+![](../../documents/media/batch_sqlscript1.png)
 
-    ![](../../documents/media/dataflow.png)
+> **Please Note:** You will need to change the **Connect to** and **Use database** portions in the SQL editor to point towards the SQL Pool you created in the previous step.
 
-    - Create a pipeline to trigger the ingestion.
+![](../../documents/media/batch_sqlscript2.png)
 
-    ![](../../documents/media/pipeline.png)
+Copy and paste the following script into the editor and click the **Run** button in the top-left, as shown in the picture above.
 
-    - Trigger the run and query the target table after successful completion of the pipeline.
+```SQL 
+CREATE TABLE [dbo].[cs_detail]
+(
+interaction_summary varchar(8000),
+sentiment varchar(500),
+topic varchar(500),
+product varchar(500),
+filename varchar(500)
+)
+ ```
 
-    ![](../../documents/media/pipelinerun.png)
+Finish this step by pressing **Publish all** just above the **Run** button to publish our work thus far.
+
+### **d. Create Source and Target Linked Services**
+
+We'll next need to create two linked services: One for our Source (the JSON files in the Data Lake) and another for the Synapse SQL Database that houses the table we created in the previous step.
+
+Click back into the **Manage** section of the Synapse Studio, and click the **Linked services** option under the **External connections** section. Then click **New** in the top-left.
+
+![](../../documents/media/batch_linkedservices1.png)
+
+Start by creating the Linked Services for the source of our data, the JSON files housed in the ADLS Gen2 storage we created with our initial template. In the search bar that opens after you click **New**, search for **blob** and click on Azure Blob Storage as depicted below:
+
+![](../../documents/media/batch_linkedservices2.png)
+
+You will need to provide a **Name** for your Linked Service. Change the **Authentication type** to *System Assigned Managed Identity*. Then select the subcription you have been working in, finally selecting the **Storage account name** which you created in the initial template and loaded the JSON files into:
+
+![](../../documents/media/batch_linkedservices3.png)
+
+Click the **Create** button in blue on the bottom left of the New linked service window.
+
+Next, we'll create the Linked Service to our Target table in our Synapse SQL Pool. Begin by clicking the **New** button in the *Linked services** section as we did in the step just previously for the Source. This time, however, search for "Synapse" and select **Azure Synapse Analytics**.
+
+![](../../documents/media/batch_linkedservices4.png)
+
+In the *New linked service* window that opens, fill in a **Name** for your target linked service. Select the **Azure subcription** in which you have been working and where you created your Synapse SQL Pool. Select the **Server name** and **Database name** which you created earlier and in which created the target table above. Be certain to change the **Authentication type** to *System Assigned Managed Identity*.
+
+![](../../documents/media/batch_linkedservices5.png)
+
+Once you have created the two Linked Services, be certain to press the **Publish all** button at the top to publish our work and finalize the creation of the linked services. After it is finished, you will see a screen similar to this:
+
+![](../../documents/media/batch_linkedservices6.png)
+
+### **e. Create Synapse Data Flow**
+
+While still within the Synapse Studio, we will now need to create a **Data flow** to ingest our JSON data and write it to our SQL Database. For the purposes of this workshop, this will be a very simple data flow that ingests the data, renames some columns, and writes it back out to the target table. 
+
+First, we'll want to go back to the **Develop** tab, select **"+"**, and then *Data flow**
+
+![](../../documents/media/batch_dataflow1.png)
+
+Once the data flow editor opens, click **Add Source**. A new window will open at the bottom of the screen, select "New" on the **Dataset** row while leaving the other options as default:
+
+![](../../documents/media/batch_dataflow2.png)
+
+A new window should open on the right side of your screen. Next, select **Azure Blob Storage** (it is likely in the top, middle of the window), and then press **Continue**. On the following screen select the **JSON** option as our incoming data is in JSON format. Select the **Linked Service** we just set up in the steps above.
+
+You will need to select the proper **File path** to select the Directory where our JSON files are stored. It should be something to the effect of "workshop-data / cleansed_documents". Click the **OK** button to close the window
+
+![](../../documents/media/batch_dataflow3.png)
+
+![](../../documents/media/batch_dataflow4.png)
+
+Next, we'll need to move to the **Source options** panel and drop-down the **JSON settings** options. We need to change the **Document form** option to the *Array of documents* setting. This allows our flow to read each .json file as a separate entry into our database:
+
+![](../../documents/media/batch_dataflow5.png)
+
+If you have turned on a *data flow debug* session, you can head to the **Data preview** tab and run a preview to check your work thus far:
+
+![](../../documents/media/batch_dataflow6.png)
+
+Next we can add in our **Select** tile and do our minor alteration before writing the data out to the Synapse SQL table. To begin, click the small **+** sign next to our ingestion tile, and choose the Select option:
+
+![](../../documents/media/batch_dataflow7.png)
+
+We can leave all the settings as default.
+
+Next we'll add in our **Sink** tile. This is the step that will write our data out to our Synapse SQL database. Click on the small **+** sign next to our **Select** tile. Scroll all the way to the bottom of the options menu and select the Sink option:
+
+![](../../documents/media/batch_dataflow8.png)
+
+Once the **Sink** tile opens, choose **Inline** for the *Sink type*. Then select **Azure Synapse Analytics** for the *Inline dataset type* and the proper **Linked service** based on the name we assigned in our earlier step.
+
+![](../../documents/media/batch_dataflow9.png)
+
+We will then need to head over to the **Settings** tab and adjust the **Scehma name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo** and the Table name is **cs_detail**.
+
+![](../../documents/media/batch_dataflow10.png)
+
+Before we finish our work in the data flow, we should preview our data:
+
+![](../../documents/media/batch_dataflow11.png)
+
+Previewing our data reveals we only have 3 columns when we are expecting a total of 5. We have lost our Summary and Sentiment columns. We have two options to recover these columns - we can either change the name in our Select tile to match the expected output, or we can go to the **Mapping** tab in our Sink and turn auto-mapping off or 
+
+![](../../documents/media/dataflow.png)
+
+Create a pipeline to trigger the ingestion.
+
+![](../../documents/media/pipeline.png)
+
+Trigger the run and query the target table after successful completion of the pipeline.
+
+![](../../documents/media/pipelinerun.png)
 
 
 ## Step 4. Test
@@ -156,10 +247,10 @@ Now that the data is in the target table it is available for usage by running SQ
 
 Here is a query to get started:
 
- ```bash 
-    SELECT sentiment, count(*)
-    FROM [dbo].[cs_detail]
-    GROUP BY sentiment
-    ORDER BY count(*) desc      
+ ```sql 
+SELECT sentiment, count(*)
+FROM [dbo].[cs_detail]
+GROUP BY sentiment
+ORDER BY count(*) desc      
  ```
 
