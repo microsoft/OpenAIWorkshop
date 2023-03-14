@@ -4,6 +4,7 @@
 This scenario allows uses OpenAI to summarize and analyze customer service call logs for the ficticious company, Contoso. The data is ingested into a blob storage account, and then processed by an Azure Function. The Azure Function will return the customer sentiment, product offering the conversation was about, the topic of the call, as well as a summary of the call. These results are written into a separate desginated location in the Blob Storage. From there, Synapse Analytics is utilized to pull in the newly cleansed data to create a table that can be queried in order to derive further insights. 
 ---
 
+---
 # Table of Contents
 - [Build an Open AI Pipeline to Ingest Batch Data, Perform Intelligent Operations, and Analyze in Synapse](#build-an-open-ai-pipeline-to-ingest-batch-data-perform-intelligent-operations-and-analyze-in-synapse)
 - [Summary](#summary)
@@ -12,8 +13,19 @@ This scenario allows uses OpenAI to summarize and analyze customer service call 
 - [Deployment](#deployment)
     - [Step 1. Blob storage and Azure Function app deployment](#step-1-blob-storage-and-azure-function-app-deployment)
     - [Step 2. Ingest Data to Storage created in step 1](#step-2-ingest-data-to-storage-created-in-step-1)
+    - [Step 3. Set up Synapse Workspace](#step-3-set-up-synapse-workspace)
         - [a. Launch Azure Cloud Shell](#a-launch-azure-cloud-shell)
         - [b. In the Cloud Shell run below commands:](#b-in-the-cloud-shell-run-below-commands)
+        - [c. Create Target SQL Table](#c-create-target-sql-table)
+        - [d. Create Source and Target Linked Services](#d-create-source-and-target-linked-services)
+        - [e. Create Synapse Data Flow](#e-create-synapse-data-flow)
+        - [f. Create Synapse Pipeline](#f-create-synapse-pipeline)
+        - [g. Trigger Synapse Pipeline](#g-trigger-synapse-pipeline)
+    - [Step 4. Test - Query Results in Our SQL Table](#step-4-query-results-in=our-sql-table)
+
+
+
+
 # Architecture Diagram
 
 ![](../../documents/media/batcharch.png)
@@ -247,29 +259,49 @@ Once we have created our **Data flow** we will need to set up a **Pipeline** to 
 
 ![](../../documents/media/batch_pipeline1.png)
 
-Next, we need to add a **Data flow**
+Next, we need to add a **Data flow** to our Pipeline. With your new Pipeline tab open, go to the **Activities** section and search for "data" - selec the **Data flow** acvtivity and drag-and-drop it into your Pipeline:
 
-![](../../documents/media/dataflow.png)
+![](../../documents/media/batch_pipeline2.png)
 
-Create a pipeline to trigger the ingestion.
+Under the **Settings** tab of the **Data flow**, select the **Data flow** drop-down menu and select the name of the data flow you created in the previous step. 
+Then expand the **Staging** section at the bottom of the settings and utilize the drop-down menu for the **Staging linked service**. Choose the linked service you created earlier (feel free to test the connection). Next, set a**Staging storage folder** at the very bottom. You can copy the names in the picture below or choose your own.
 
-![](../../documents/media/pipeline.png)
+Then click **Publish all** to publish your changes and save your progress.
 
-Trigger the run and query the target table after successful completion of the pipeline.
+![](../../documents/media/batch_pipeline3.png)
 
-![](../../documents/media/pipelinerun.png)
+### **g. Trigger Synapse Pipeline**
 
+Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the Studio, there is a *lightning bolt* icon that says **Add trigger**. Click to add trigger and select **Trigger now** to begin a pipeline run.
 
-## Step 4. Test
+![](../../documents/media/batch_pipeline4.png)
+
+To look at the pipeline run, navigate to the left-hand side of the screen and choose the **Monitor**  option (looks like a radar screen). Then select the **Pipeline runs** option in the **Integration** section. You will then see this and any other pipeline runs that you have triggered (as shown below). This particular pipeline should take approximately 4 minutes (if you are using the uploaded data for the workshop).
+
+![](../../documents/media/batch_pipeline5.png)
+
+---
+
+## Step 4. Query Results in Our SQL Table
+
+Once you see that your pipeline run above was successful:
+
+![](../../documents/media/batch_pipeline6.png)
 
 Now that the data is in the target table it is available for usage by running SQL queries against it, or connecting PowerBI and creating visualizations. The Azure Function is running as well, so try uploading some of the transcript files to the generated_documents folder in your container and see how the function processes it and creates a new file in the cleansed_documents file.
+
+To query the new data, navigate to the menu on the left-hand side, choose **Develop**. You then either add a new SQL Script or open a previous one and copy the SQL Code below. Then select **Run**. Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar results to below.
 
 Here is a query to get started:
 
  ```sql 
-SELECT sentiment, count(*)
+SELECT sentiment, count(*) as "Sum of Sentiment"
 FROM [dbo].[cs_detail]
 GROUP BY sentiment
-ORDER BY count(*) desc      
+ORDER BY count(*) desc     
  ```
 
+![](../../documents/media/batch_synapsesuccessquery.png)
+
+[Back to the Top](#Summary)
+---
