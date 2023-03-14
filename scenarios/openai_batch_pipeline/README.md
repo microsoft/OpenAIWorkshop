@@ -228,7 +228,26 @@ Before we finish our work in the data flow, we should preview our data:
 
 ![](../../documents/media/batch_dataflow11.png)
 
-Previewing our data reveals we only have 3 columns when we are expecting a total of 5. We have lost our Summary and Sentiment columns. We have two options to recover these columns - we can either change the name in our Select tile to match the expected output, or we can go to the **Mapping** tab in our Sink and turn auto-mapping off or 
+Previewing our data reveals we only have 3 columns when we are expecting a total of 5. We have lost our Summary and Sentiment columns. To correct this, let's use our **Select** tile to change the names of our columns to the expected output values:
+
+![](../../documents/media/batch_dataflow12.png)
+
+If we return to our **Sink** tile and **Refresh** our **Data preview** we will now see our expected 5 columns of output:
+
+![](../../documents/media/batch_dataflow13.png)
+
+Once you have reviewed the data and are satisfied that all columns are mapped successfully (you should have 5 columns total, all showing data in a string format), we can press **Publish all** at the top to save our current configuration. A window will open at the right side of the screen - press the blue **Publish** button at the bottom left of it to save your changes.
+
+Your completed and saved Data flow will look something like this:
+![](../../documents/media/batch_dataflow14.png)
+
+### **f. Create Synapse Pipeline**
+
+Once we have created our **Data flow** we will need to set up a **Pipeline** to house it. To create a **Pipeline**, navigate to the left-hand menu bar and choose the **In tegration** option (it looks like a pipe). Then click the **+** at the top of the Integrate menu to **Add a new resource** and choose **Pipeline**:
+
+![](../../documents/media/batch_pipeline1.png)
+
+Next, we need to add a **Data flow**
 
 ![](../../documents/media/dataflow.png)
 
