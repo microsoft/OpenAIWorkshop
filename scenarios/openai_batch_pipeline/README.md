@@ -53,12 +53,6 @@ You will need to supply entries for 4 fields within the template:
 
 <img width="707" alt="image" src="https://user-images.githubusercontent.com/123749010/224169094-7ae29ad6-713c-4c53-a58f-b8f8a07556ff.png">
 
----
-
-## Step 2. Ingest Data to Storage created in step 1
-
-### a. Launch Azure Cloud Shell
-<img width="870" alt="image" src="https://user-images.githubusercontent.com/123749010/224067489-e2c44741-f154-4a98-82bd-544299cbfbbf.png">
 
 ### A filled out template would look like this:
 ![](../../documents/media/batch_template_filled_out.png)
@@ -66,6 +60,13 @@ You will need to supply entries for 4 fields within the template:
 After clicking the blue **Review** **+** **create** button, wait to make certain the deployment passes the validation check and there are no errors or missing fields. Click **Create** to deploy the template; it will take approximately 2 or 3 minutes to fully deploy. Successful deployment will look like this:
 
 ![](../../documents/media/batch_template_success.png)
+---
+
+## Step 2. Ingest Data to Storage created in step 1
+
+### a. Launch Azure Cloud Shell
+<img width="870" alt="image" src="https://user-images.githubusercontent.com/123749010/224067489-e2c44741-f154-4a98-82bd-544299cbfbbf.png">
+
 ### b. In the Cloud Shell run below commands:
 > **Please Note:** The following commands are issued in Bash; please ensure you are using **Bash** in the Cloud Shell.
 ```bash 
