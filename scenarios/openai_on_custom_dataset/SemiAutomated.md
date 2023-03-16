@@ -2,7 +2,9 @@
 
 ### Prerequisites
 
-* [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Functions.  
+* Contributor permission is reuired in the Azure subscription
+* Microsoft.Search Resource provider needs to be registered in the Azure Subscription. 
+* [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Function App.  
 * Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 
 * Azure Open AI already provisioned and text-davinci-003 model is deployed. The model deployment name is required in the Azure Deployment step below. South Central US is recommended region for deploying Azure Open AI. 
 * Conda is recommended if local laptops are used as pip install might interfere with existing python deployment.

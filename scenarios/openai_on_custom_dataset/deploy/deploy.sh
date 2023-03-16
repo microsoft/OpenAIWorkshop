@@ -58,9 +58,9 @@ do
 done
 
 
-while [ -z "${FUNC_APP_NAME}" ]
+while [ -z "${FUNC_APP_NAME}" ] || [ ${#FUNC_APP_NAME} -gt 14 ]
 do
-    echo "Please provide Azure Function App Name. max length 12 characters:"
+    echo "Please provide Azure Function App Name. max length 14 characters:"
     read FUNC_APP_NAME
 
     if [ ${#FUNC_APP_NAME} -gt 14 ]
