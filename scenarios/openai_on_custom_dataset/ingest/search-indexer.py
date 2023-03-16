@@ -26,16 +26,11 @@ api_version = '?api-version=2021-04-30-Preview'
 headers = {'Content-Type': 'application/json',
         'api-key': SEARCH_API_KEY }
 
-"""
-Remember to remove the key from your code when you're done, and never post it publicly. For production, use
-secure methods to store and access your credentials. For more information, see 
-https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-security?tabs=command-line%2Ccsharp#environment-variables-and-application-configuration
-"""
 endpoint = os.environ["AFR_ENDPOINT"]
 key = os.environ["AFR_API_KEY"]
 
 # sample document
-formUrl = "https://anildwablobstorage.blob.core.windows.net/public/azure-machine-learning-2-500.pdf?sv=2021-08-06&st=2023-02-28T03%3A06%3A48Z&se=2024-02-29T03%3A06%3A00Z&sr=b&sp=r&sig=G2mLVs20vil5g1YFoI4ceCEjn8RxzkrCGH8I5AfIxt8%3D"
+formUrl = "https://github.com/microsoft/OpenAIWorkshop/raw/main/scenarios/data/azure-machine-learning-2-500.pdf"
 
 document_analysis_client = DocumentAnalysisClient(
     endpoint=endpoint, credential=AzureKeyCredential(key)
@@ -184,19 +179,21 @@ def add_document_to_index(page_idx, documents):
 
 
 def process_afr_result(result):
+    print(f"Processing sample document with {len(result.pages)} pages into Azure Search....this might take a few minutes...")
     for page_idx in range(len(result.pages)):
         docs = []
         content_chunk = ""
         for line_idx, line in enumerate(result.pages[page_idx].lines):
             #print("...Line # {} has text content '{}'".format(line_idx,line.content.encode("utf-8")))
             content_chunk += str(line.content.encode("utf-8")).replace('b','') + "\n"
+
             if line_idx != 0 and line_idx % 20 == 0:
-                search_doc = {
+              search_doc = {
                     "id":  f"page-number-{page_idx}-line-number-{line_idx}",
                     "text": content_chunk
-                }
-                docs.append(search_doc)
-                content_chunk = ""
+              }
+              docs.append(search_doc)
+              content_chunk = ""
         search_doc = {
                     "id":  f"page-number-{page_idx}-line-number-{line_idx}",
                     "text": content_chunk
@@ -224,9 +221,7 @@ try:
     result = poller.result()
 
     delete_search_index()
-    create_search_index()
-
-    print(f"Indexing sample document with 500 pages into Azure Search....this might take a few minutes...")
+    create_search_index()    
     process_afr_result(result)
     print(f"done")
 except Exception as e:
