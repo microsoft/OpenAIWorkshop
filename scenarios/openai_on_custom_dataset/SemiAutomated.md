@@ -25,7 +25,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 (control+click) to launch in new tab.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FOpenAIWorkshop%2Fanildwa-dev%2Fscenarios%2Fopenai_on_custom_dataset%2Fdeploy%2Fazure-deploy.json) 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FOpenAIWorkshop%2Fmain%2Fscenarios%2Fopenai_on_custom_dataset%2Fdeploy%2Fazure-deploy.json) 
 
 
 
