@@ -224,7 +224,8 @@
       "properties": {
         "apiProperties": {
           "statisticsEnabled": false
-        }
+        },
+        "restore": true
       }
     }
    
