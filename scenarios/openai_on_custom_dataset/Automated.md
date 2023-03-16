@@ -1,6 +1,6 @@
 # Automated Script
 
-* Contributor permission is required in the Azure subscription
+* Contributor permission is required in the Azure subscription.
 * Microsoft.Search Resource provider needs to be registered in the Azure Subscription. 
 * Run "az account set -s <subscription id>" to make sure the resource group name provided is in the intended subscription with contributor permission.
 * Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 

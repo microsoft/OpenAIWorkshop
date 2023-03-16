@@ -2,7 +2,7 @@
 
 ### Prerequisites
 
-* Contributor permission is reuired in the Azure subscription
+* Contributor permission is required in the Azure subscription.
 * Microsoft.Search Resource provider needs to be registered in the Azure Subscription. 
 * [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Function App.  
 * Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 
