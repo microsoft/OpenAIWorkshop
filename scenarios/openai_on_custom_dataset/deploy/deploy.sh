@@ -103,6 +103,8 @@ then
     fi    
 fi
 
+RG_EXISTS=$(az group exists -g $RESOURCE_GROUP_NAME | jq -r '.') 
+
 if [ $RG_EXISTS = "false" ]
 then
     printf "\nCreating Resource Group...\n" 
