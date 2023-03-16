@@ -2,7 +2,7 @@
 
 * Contributor permission is required in the Azure subscription.
 * Microsoft.Search Resource provider needs to be registered in the Azure Subscription. 
-* Run "az account set -s <subscription id>" to make sure the resource group name provided is in the intended subscription with contributor permission.
+* Run "az account set -s <subscription-id>" to make sure the resource group name provided is in the intended subscription with contributor permission.
 * Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 
 * Azure Open AI already provisioned and text-davinci-003 model is deployed. Other deployments can also be used, the configs below needs to be updated accordingly.  
 * If local laptop is used, additional prerequisites such as Python 3.9, pip, conda(optional), Azure Func Tools, Bash shell, Az CLI needs to be installed or required. 
