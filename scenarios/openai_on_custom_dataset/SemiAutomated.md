@@ -49,7 +49,7 @@ To make it easy for the labs, the sample document has already been chunked and p
         cd OpenAIWorkshop/scenarios/openai_on_custom_dataset
         
         # conda steps are optional
-        conda create env -n openaiworkshop python=3.9 
+        conda create -n openaiworkshop python=3.9 
         conda activate openaiworkshop
         
         pip install -r ./orchestrator/requirements.txt
