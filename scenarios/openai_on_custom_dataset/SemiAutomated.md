@@ -70,12 +70,12 @@ To make it easy for the labs, the sample document has already been chunked and p
 
         
 
-    Add the below entries with correct values to secrets.env.
+    Add the below entries with correct values to secrets.env. Please refer to [this doc](ShowKeysandSecrets.md) to retrieve API Keys and Urls.
 
-        AZSEARCH_EP="https://<>.search.windows.net/"
-        AZSEARCH_KEY=""
-        AFR_ENDPOINT="https://westus2.api.cognitive.microsoft.com/"
-        AFR_API_KEY=""
+        AZSEARCH_EP="https://<YOUR Search Service Name>.search.windows.net/"
+        AZSEARCH_KEY="<YOUR Search Service API Key>"
+        AFR_ENDPOINT="<YOUR Azure Form Recognizer Service API EndPoint>"
+        AFR_API_KEY="<YOUR Azure Form Recognizer API Key>"
         INDEX_NAME="azure-ml-docs"
 
 *   The document processing, chunking, indexing can all be scripted using any preferred language. 
@@ -102,10 +102,26 @@ To configure Azure Search, please follow the steps below.
 
 ## 3. Test Azure Function App service deployment
 
-Launch Postman and test the Azure Function to make sure it is returning results. The num_search_result query parameter can be altered to limit the search results. Notice the query parameter num_search_result in the screen shot below. num_search_result is a mandatory query parameter.
+Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url and code.
 
 
-![](../../documents/media/postman.png)
+* Launch Postman and test the Azure Function to make sure it is returning results. The num_search_result query parameter can be altered to limit the search results. Notice the query parameter num_search_result in the screen shot below. num_search_result is a mandatory query parameter.
+
+
+    ![](../../documents/media/postman.png)
+
+
+* Test the Function App using CLI
+
+
+        #Bash
+        cd OpenAIWorkshop/scenarios/openai_on_custom_dataset/deploy
+        curl -X POST 'https://<Your Function App Name>.azurewebsites.net/api/orchestrator-func-app?code=<Your Function App Code>&num_search_result=5' -d '@test_prompt.json'
+
+        #Powershell
+        cd OpenAIWorkshop/scenarios/openai_on_custom_dataset/deploy
+        (curl -Method POST 'https://<Your Function App Name>.azurewebsites.net/api/orchestrator-func-app?code=<Your Function App Code>&num_search_result=5' -Body '@test_prompt.json').Content
+
 
 ## 4. Deploy client Power App
 
