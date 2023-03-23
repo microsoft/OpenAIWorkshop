@@ -1,9 +1,11 @@
 # Automated Script
 
+* Contributor permission is required in the Azure subscription.
+* Microsoft.Search Resource provider needs to be registered in the Azure Subscription. 
+* Run "az account set -s {subscription-id}" to make sure the resource group name provided is in the intended subscription with contributor permission.
 * Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 
 * Azure Open AI already provisioned and text-davinci-003 model is deployed. Other deployments can also be used, the configs below needs to be updated accordingly.  
-* If local laptops are used, additional prerequisites such as Python 3.9, pip, conda(optional), Azure Func Tools, Bash shell, Az CLI needs to be installed or required. 
-
+* If local laptop is used, additional prerequisites such as Python 3.9, pip, conda(optional), Azure Func Tools, Bash shell, Az CLI needs to be installed or required. 
 
 
 ## Deployment
@@ -15,11 +17,11 @@ Once the automated script is run, the power app can be configured as the next st
 ## Steps
 
 ### Step 1
-Launch [Azure Portal](https://portal.azure.com)(control+click) and open Azure Cloud Shell from the top right area.
+Launch [Azure Portal](https://portal.azure.com)(control+click) and open Azure Cloud Shell from the top right area. Switch to Bash.
 
 ![Azure Cloud Shell](../../documents/media/AzureCloudShell.png)
 
-In the Cloud Shell type
+In the Cloud Shell, in Bash mode type:
 
     git clone https://github.com/microsoft/OpenAIWorkshop.git
 
@@ -31,7 +33,7 @@ In the Cloud Shell type
     ./deploy.sh <Resource Group Name> <Region> <Azure Open AI Endpoint> <Azure Open AI Key> <Azure Open AI Model Deployment Name> <funcapp_name>
 
     For e.g 
-    /deploy.sh openai-workshop-test2 westus  https://anildwaopenai2.openai.azure.com/ <Azure Open AI Key Redacted> text-davinci-003-deployment instance114
+    ./deploy.sh openai-workshop-test2 westus  https://anildwaopenai2.openai.azure.com/ <Azure Open AI Key Redacted> text-davinci-003-deployment instance114
 
 
 

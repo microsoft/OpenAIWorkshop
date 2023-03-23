@@ -61,7 +61,7 @@
     },
     "packageUri": {
       "type": "string",
-      "defaultValue": "https://anildwablobstorage.blob.core.windows.net/public/orchestrator.zip?sv=2021-08-06&st=2023-03-01T04%3A56%3A06Z&se=2024-03-02T04%3A56%3A00Z&sr=b&sp=r&sig=uU8xLFiWmm6%2BRGOMo01OKlzYEcLOiJk%2FM2H6hedRcPM%3D",
+      "defaultValue": "https://github.com/microsoft/OpenAIWorkshop/raw/main/scenarios/data/orchestrator.zip",
       "metadata": {
         "description": "The zip content url."
       }
