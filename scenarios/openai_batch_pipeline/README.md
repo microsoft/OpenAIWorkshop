@@ -115,7 +115,6 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 ### **a. Create the Synapse SQL Pool**
 
-
 1.  Go to <https://portal.azure.com> and sign in with your organizational account. In the search box at the top of the portal, search for **asaworkspace**
     and click on the Synapse workspace (not the SQL Server) which appears under the Resources section.
 
@@ -139,13 +138,13 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 ### **c. Create Target SQL Table**
 
-Once the SQL Pool has been created, click into the **Develop** section of the Synapse Studio, click the "**+**" sign in the top-left, and select **SQL script**. This will open a new window with a SQL script editor. 
+1. Once the SQL Pool has been created, click into the **Develop** section of the Synapse Studio, click the "**+**" sign in the top-left, and select **SQL script**. This will open a new window with a SQL script editor. 
 
-![](../../documents/media/batch_sqlscript1.png)
+   ![](../../documents/media/batch_sqlscript1.png)
 
-> **Please Note:** You will need to change the **Connect to** and **Use database** portions in the SQL editor to point towards the SQL Pool you created in the previous step.
+   > **Note:** You will need to change the **Connect to** and **Use database** portions in the SQL editor to point towards the SQL Pool you created in the previous step.
 
-![](../../documents/media/batch_sqlscript2.png)
+   ![](../../documents/media/batch_sqlscript2.png)
 
 Copy and paste the following script into the editor and click the **Run** button in the top-left, as shown in the picture above.
 
