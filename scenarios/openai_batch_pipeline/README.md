@@ -115,17 +115,27 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 ### **a. Create the Synapse SQL Pool**
 
-Once the Synapse Workspace has been created, navigate to the Synapse Workspace in the Azure portal, and click to **Open** the **Azure Synapse Studio** in the **Getting started** section. This will open a new browswer window with the Synapse Studio.
 
-Once in the Synapse Studio, on the left-hand side, click the tool-box icon (with the wrench sign) to open the **Manage** Options. At the top of the newly opened menu bar, under the **Analytics pools** section, click **SQL pools**. Then click **New** in the top-left.
+1.  Go to <https://portal.azure.com> and sign in with your organizational account. In the search box at the top of the portal, search for **asaworkspace**
+    and click on the Synapse workspace (not the SQL Server) which appears under the Resources section.
 
-![](../../documents/media/batch_synapse_pool.png)
+     ![](images/image12.png)
 
-> **Please note:** You will need to supply a name for the Synapse SQL Pool. Accept all other defaults.
+1.  On the **Overview** blade and the Essentials section, click the **Workspace web URL** link to open Synapse Studio.
+     
+    ![](images/asaworkspace.png)
+    
+1. Once in the Synapse Studio is launched, on the left-hand side, click on the **Manage (1)** Option. At the top of the newly opened menu bar, under the **Analytics pools** section, click **SQL pools (2)**. Then click **New (3)** in the top-left.
 
-Accept the defaults and press **Review + Create** in the bottom left, then **Create** once it passes validation. It may take a moment for your SQL Pool to initialize. Once it is completed you will see this:
+   ![](images/synapse1.png)
 
-![](../../documents/media/batch_sqlpoolsuccess.png)
+1. Provide a name for the Synapse SQL Pool as **openaipool** **(1)**. Accept all the defaults and click on **Review + Create (2)**.
+
+   ![](images/synapse2.png)
+
+1. It may take a moment for your SQL Pool to initialize. Once it is completed you will see this:
+
+   ![](images/synapse2.png)
 
 ### **c. Create Target SQL Table**
 
