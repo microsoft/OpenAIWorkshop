@@ -138,59 +138,55 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 ### **c. Create Target SQL Table**
 
-1. Once the SQL Pool has been created, click into the **Develop** section of the Synapse Studio, click the "**+**" sign in the top-left, and select **SQL script**. This will open a new window with a SQL script editor. 
+1. Once the SQL Pool has been created, click into the **Develop (1)** section of the Synapse Studio, click the "**+ (2)**" sign in the top-left, and select **SQL script (3)**. This will open a new window with a SQL script editor. 
 
-   ![](../../documents/media/batch_sqlscript1.png)
+   ![](images/synapse3.png)
 
-   > **Note:** You will need to change the **Connect to** and **Use database** portions in the SQL editor to point towards the SQL Pool you created in the previous step.
+1. Copy and paste the following script into the editor and click the **Run (2)** button in the top-left, as shown in the picture below. Finish this step by pressing **Publish all (3)** just above the **Run** button to publish our work thus far.
 
-   ![](../../documents/media/batch_sqlscript2.png)
-
-Copy and paste the following script into the editor and click the **Run** button in the top-left, as shown in the picture above.
-
-```SQL 
-CREATE TABLE [dbo].[cs_detail]
-(
-interaction_summary varchar(8000),
-sentiment varchar(500),
-topic varchar(500),
-product varchar(500),
-filename varchar(500)
-)
- ```
-
-Finish this step by pressing **Publish all** just above the **Run** button to publish our work thus far.
+    ```SQL 
+    CREATE TABLE [dbo].[cs_detail]
+    (
+    interaction_summary varchar(8000),
+    sentiment varchar(500),
+    topic varchar(500),
+    product varchar(500),
+    filename varchar(500)
+    )
+    ```
+    
+    ![](images/synapse4.png)
+    
+    > **Note:** You will need to change the **Connect to** and **Use database** portions in the SQL editor to point towards the SQL Pool you created in the previous step
 
 ### **d. Create Source and Target Linked Services**
 
 We'll next need to create two linked services: One for our Source (the JSON files in the Data Lake) and another for the Synapse SQL Database that houses the table we created in the previous step.
 
-Click back into the **Manage** section of the Synapse Studio, and click the **Linked services** option under the **External connections** section. Then click **New** in the top-left.
+1. Click back into the **Manage (1)** section of the Synapse Studio, and click the **Linked services (2)** option under the **External connections** section. Then click **New (3)** in the top-left.
 
-![](../../documents/media/batch_linkedservices1.png)
+   ![](images/synapse5.png)
+   
+1. Start by creating the Linked Services for the source of our data, the JSON files housed in the ADLS Gen2 storage we created with our initial template. In the search bar that opens after you click **New**, search for **blob (1)** and select **Azure Blob Storage (2)** as depicted below and click on **Continue (3)**
 
-Start by creating the Linked Services for the source of our data, the JSON files housed in the ADLS Gen2 storage we created with our initial template. In the search bar that opens after you click **New**, search for **blob** and click on Azure Blob Storage as depicted below:
+   ![](images/synapse6.png)
 
-![](../../documents/media/batch_linkedservices2.png)
+1. Provide the name for your Linked Service as **openailinkedservice (1)**. Change the **Authentication type** to *System Assigned Managed Identity (2)*. Then select the **subcription (3)** you have been working in, finally selecting the Storage account with the suffix **functions (4)** which you created in the initial template and loaded the JSON files into. Click the **Create (5)** button in blue on the bottom left of the New linked service window.
 
-You will need to provide a **Name** for your Linked Service. Change the **Authentication type** to *System Assigned Managed Identity*. Then select the subcription you have been working in, finally selecting the **Storage account name** which you created in the initial template and loaded the JSON files into:
+   ![](images/synapse7.png)
 
-![](../../documents/media/batch_linkedservices3.png)
+1. Next, we'll create the Linked Service to our Target table in our Synapse SQL Pool. Begin by clicking the **New** button in the *Linked services** section as we did in the step just previously for the Source. This time, however, search for "Synapse (1)", select **Azure Synapse Analytics (2)** and click on **Continue (3)**.
 
-Click the **Create** button in blue on the bottom left of the New linked service window.
+   ![](images/synapse8.png)
 
-Next, we'll create the Linked Service to our Target table in our Synapse SQL Pool. Begin by clicking the **New** button in the *Linked services** section as we did in the step just previously for the Source. This time, however, search for "Synapse" and select **Azure Synapse Analytics**.
+1. In the *New linked service* window that opens, fill in a name for your target linked service as **synapselinkedservice** **(1)**. Select the **Azure subcription (2)** in which you have been working and where you created your Synapse SQL Pool. Select the **Server name ((3)** and **Database name (4)** and in which created the target table above. Be certain to change the **Authentication type** to *System Assigned Managed Identity (5)* and click on **create (6)**.
 
-![](../../documents/media/batch_linkedservices4.png)
+   ![](images/synapse9.png)
 
-In the *New linked service* window that opens, fill in a **Name** for your target linked service. Select the **Azure subcription** in which you have been working and where you created your Synapse SQL Pool. Select the **Server name** and **Database name** which you created earlier and in which created the target table above. Be certain to change the **Authentication type** to *System Assigned Managed Identity*.
+1. Once you have created the two Linked Services, be certain to press the **Publish all** button at the top to publish our work and finalize the creation of the linked services. After it is finished, you will see a screen similar to this:
 
-![](../../documents/media/batch_linkedservices5.png)
-
-Once you have created the two Linked Services, be certain to press the **Publish all** button at the top to publish our work and finalize the creation of the linked services. After it is finished, you will see a screen similar to this:
-
-![](../../documents/media/batch_linkedservices6.png)
-
+   ![](images/synapse10.png)
+   
 ### **e. Create Synapse Data Flow**
 
 While still within the Synapse Studio, we will now need to create a **Data flow** to ingest our JSON data and write it to our SQL Database. For the purposes of this workshop, this will be a very simple data flow that ingests the data, renames some columns, and writes it back out to the target table. 
