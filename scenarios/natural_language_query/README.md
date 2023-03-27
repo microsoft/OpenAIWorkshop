@@ -104,109 +104,92 @@ Navigate to https://make.powerapps.com/ and click on Apps on the left navigation
 
 ## Step 4. Build the Connector App (Optional)
 
-a. Navigate to https://make.powerapps.com/ and click on .. sign on the top left side, this will open the below , click "Power Auto..."
+1. Navigate to https://make.powerapps.com/ and click on .. sign on the top left side, this will open the below , click "Power Auto..."
 
 
-![image](https://user-images.githubusercontent.com/50298139/224201114-587353f5-e0a3-4b8e-9647-89d6918c6360.png)
+   ![](images/powerapps10.png)
 
 
-b.  Click on Data -> “Custom Connectors”, click on “New custom connector” -> ”Create from blank”. Just keep the screen as is and move to point c.
+1.  Click on Data -> “Custom Connectors”, click on “New custom connector” -> ”Create from blank”. Just keep the screen as is and move to point c.
 
 
-![image](https://user-images.githubusercontent.com/50298139/224201199-b14ab884-ed97-4abb-ae9f-c0d464e4658d.png)
+    ![](images/powerapps11.png)
+
+1.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update below values in file 
 
 
-c.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update below values in file 
-
-
-
-
-host : <funcname>.azurewebsites.net
+    host : <funcname>.azurewebsites.net
   
-paths :  /api/NLQuery
+    paths :  /api/NLQuery
   
-operationId: Get-Prompt 
+    operationId: Get-Prompt 
 
-  ![image](https://user-images.githubusercontent.com/50298139/224388746-ed91b8cb-36ce-4607-a012-e9e801424147.png)
+    ![](images/powerapps12.png)
 
   
-Note: **host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account**
+    >**Note:** host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account
 
+    ![](images/powerapps13.png)
+
+
+1. In the Custom connector app browser tab , (step b), click on “Swagger Editor” and copy the updated file contents (step c.) in the swagger editor. Click Close to save the Connector
+
+
+   ![](images/powerapps14.png)
+   
+1. Navigate to https://make.powerapps.com and click Click on “My Flows” and select the flow which you imported in previous step 4 (d) and click “Edit”
+
+   ![](images/powerapps15.png)
+
+1. We will update the power automate flow second step after PowerApps(V2), click on + and select “Add an action”
   
-![image](https://user-images.githubusercontent.com/50298139/224201909-0b54b804-c5aa-45e3-8be2-67b68dec9f78.png)
-
-
-
-
-
-d.  In the Custom connector app browser tab , (step b), click on “Swagger Editor” and copy the updated file contents (step c.) in the swagger editor. Click Close to save the Connector
-
-
-  ![image](https://user-images.githubusercontent.com/50298139/224202410-5c18a0c5-c63c-471e-adcb-0d48392509b4.png)
-
-
- e.  Navigate to https://make.powerapps.com and click Click on “My Flows” and select the flow which you imported in previous step 4 (d) and click “Edit”
-
+   ![](images/powerapps16.png)
   
- <img width="930" alt="image" src="https://user-images.githubusercontent.com/50298139/224354069-d7dc65a6-c318-4547-83c9-1851136822d2.png">
+1. Select Custom and type and search for custom connector which we created in step d.
   
+   ![](images/powerapps17.png)
 
-  f. We will update the power automate flow second step after PowerApps(V2), click on + and select “Add an action”
+1. The flow will look like below
   
-![image](https://user-images.githubusercontent.com/50298139/224351924-62f3d1b5-abf3-4694-89c6-a6c9cc1a340e.png)
-
+   ![](images/powerapps18.png)
   
-  g. Select Custom and type and search for custom connector which we created in step d.
+1. You need to delete the third step which in your case will be “HTTTP” flow, after deleting the third step, click Save
+
+   ![](images/powerapps19.png)
+
+   ![](images/powerapps20.png)
   
-  ![image](https://user-images.githubusercontent.com/50298139/224203067-1972f95e-79ef-4fd2-bf56-d7d516508cd4.png)
-
+1. Click Parse JSON step , click inside "Content" field, click on right side and select “body" . The Control should like the below
   
-  h. The flow will look like below
+   ![](images/powerapps21.png)
   
-  ![image](https://user-images.githubusercontent.com/50298139/224352209-6a95bef2-fb93-4ce9-b906-4e67b0e21fd3.png)
+1. click on Test, select Manually and make sure "txtPrompt" in selected in *prompt field, click Run. It will show "Your flow run successfully started. To monitor it, go to the Flow Runs Page." Save the flow
 
+   ![](images/poweraps22.png)
+
+
+1. go to app which we imported in step 4 and click Edit
   
-  i.You need to delete the third step which in your case will be “HTTTP” flow, after deleting the third step, click Save
+   ![](images/powerapps23.png)
 
-![image](https://user-images.githubusercontent.com/50298139/224352282-adef508e-7df1-415b-8509-a6665dd8399b.png)
+1. Click on Power Automate,  once Power Automate opens click refresh and click save on right top side. 
 
+   ![](images/powerapps24.png)
   
+   ![](images/powerapps25.png)
+
+1. please run the App
   
-  <img width="923" alt="image" src="https://user-images.githubusercontent.com/50298139/224354481-d4e2c3d2-d6a0-4b1d-a1e2-1d98a3301cf4.png">
-  
-  j. Click Parse JSON step , click inside "Content" field, click on right side and select “body" . The Control should like the below
-  
-  <img width="932" alt="image" src="https://user-images.githubusercontent.com/50298139/224354658-033eaee3-6579-44c2-a522-aa6b01aefaa9.png">
-  
-  k. click on Test, select Manually and make sure "txtPrompt" in selected in *prompt field, click Run. It will show "Your flow run successfully started. To monitor it, go to the Flow Runs Page." Save the flow
+## Step 5. Test the Power App
 
-![image](https://user-images.githubusercontent.com/50298139/224383821-25b8ad3f-668e-4454-a413-aa529606efc5.png)
+1. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
+
+1.  Search the App which you deployed in step 4 and and click it 
+
+    ![](images/powerapps26.png)
 
 
-  l. go to app which we imported in step 4 and click Edit
-  
-  <img width="780" alt="image" src="https://user-images.githubusercontent.com/50298139/224204881-ae4bace2-f16a-448e-84f9-5b818de6aa67.png">
-
-  m. Click on Power Automate,  once Power Automate opens click refresh and click save on right top side. 
-
-  <img width="697" alt="image" src="https://user-images.githubusercontent.com/50298139/224205091-cecb5d2b-4096-4837-a04b-514bd7b54471.png">
-  
-  <img width="784" alt="image" src="https://user-images.githubusercontent.com/50298139/224205237-9d7e81cf-526a-4669-a8a1-ec2d61974917.png">
-
-
-
-  n. please run the App
-  
-## Step 6. Test the Power App
-
-a. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
-
-b.  Search the App which you deployed in step 4 and and click it 
-
-<img width="767" alt="image" src="https://user-images.githubusercontent.com/50298139/223872433-152f6b03-2a24-4871-a2b6-664ec11f406e.png">
-
-
-<img width="851" alt="image" src="https://user-images.githubusercontent.com/50298139/223872137-3882ba80-e9d6-4198-a5e4-2ebc0ed485b5.png">
+    ![](images/powerapps27.png)
 
 
 
