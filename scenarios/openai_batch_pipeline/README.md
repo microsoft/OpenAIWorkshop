@@ -191,76 +191,75 @@ We'll next need to create two linked services: One for our Source (the JSON file
 
 While still within the Synapse Studio, we will now need to create a **Data flow** to ingest our JSON data and write it to our SQL Database. For the purposes of this workshop, this will be a very simple data flow that ingests the data, renames some columns, and writes it back out to the target table. 
 
-First, we'll want to go back to the **Develop** tab, select **"+"**, and then *Data flow**
+1. First, we'll want to go back to the **Develop (1)** tab, select **"+ (2)"**, and then *Data flow (3)**
 
-![](../../documents/media/batch_dataflow1.png)
-
-Once the data flow editor opens, click **Add Source**. A new window will open at the bottom of the screen, select "New" on the **Dataset** row while leaving the other options as default:
+   ![](images/synapse11.png)
+   
+2. Once the data flow editor opens, click **Add Source**. A new window will open at the bottom of the screen, select "New" on the **Dataset** row while leaving the other options as default:
 
 ![](../../documents/media/batch_dataflow2.png)
 
-A new window should open on the right side of your screen. Next, select **Azure Blob Storage** (it is likely in the top, middle of the window), and then press **Continue**. On the following screen select the **JSON** option as our incoming data is in JSON format. Select the **Linked Service** we just set up in the steps above.
+3. A new window should open on the right side of your screen. Next, select **Azure Blob Storage** (it is likely in the top, middle of the window), and then press **Continue**. On the following screen select the **JSON** option as our incoming data is in JSON format. Select the **Linked Service** we just set up in the steps above.
 
-You will need to select the proper **File path** to select the Directory where our JSON files are stored. It should be something to the effect of "workshop-data / cleansed_documents". Click the **OK** button to close the window
+4. You will need to select the proper **File path** to select the Directory where our JSON files are stored. It should be something to the effect of "workshop-data / cleansed_documents". Click the **OK** button to close the window
 
 ![](../../documents/media/batch_dataflow3.png)
 
 ![](../../documents/media/batch_dataflow4.png)
 
-Next, we'll need to move to the **Source options** panel and drop-down the **JSON settings** options. We need to change the **Document form** option to the *Array of documents* setting. This allows our flow to read each .json file as a separate entry into our database:
+5. Next, we'll need to move to the **Source options** panel and drop-down the **JSON settings** options. We need to change the **Document form** option to the *Array of documents* setting. This allows our flow to read each .json file as a separate entry into our database:
 
 ![](../../documents/media/batch_dataflow5.png)
 
-If you have turned on a *data flow debug* session, you can head to the **Data preview** tab and run a preview to check your work thus far:
+6. If you have turned on a *data flow debug* session, you can head to the **Data preview** tab and run a preview to check your work thus far:
 
 ![](../../documents/media/batch_dataflow6.png)
 
-Next we can add in our **Select** tile and do our minor alteration before writing the data out to the Synapse SQL table. To begin, click the small **+** sign next to our ingestion tile, and choose the Select option:
+7. Next we can add in our **Select** tile and do our minor alteration before writing the data out to the Synapse SQL table. To begin, click the small **+** sign next to our ingestion tile, and choose the Select option:
 
 ![](../../documents/media/batch_dataflow7.png)
 
-We can leave all the settings as default.
-
-Next we'll add in our **Sink** tile. This is the step that will write our data out to our Synapse SQL database. Click on the small **+** sign next to our **Select** tile. Scroll all the way to the bottom of the options menu and select the Sink option:
+8. We can leave all the settings as default. Next we'll add in our **Sink** tile. This is the step that will write our data out to our Synapse SQL database. Click on the small **+** sign next to our **Select** tile. Scroll all the way to the bottom of the options menu and select the Sink option:
 
 ![](../../documents/media/batch_dataflow8.png)
 
-Once the **Sink** tile opens, choose **Inline** for the *Sink type*. Then select **Azure Synapse Analytics** for the *Inline dataset type* and the proper **Linked service** based on the name we assigned in our earlier step.
+9. Once the **Sink** tile opens, choose **Inline** for the *Sink type*. Then select **Azure Synapse Analytics** for the *Inline dataset type* and the proper **Linked service** based on the name we assigned in our earlier step.
 
 ![](../../documents/media/batch_dataflow9.png)
 
-We will then need to head over to the **Settings** tab and adjust the **Scehma name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo** and the Table name is **cs_detail**.
+10. We will then need to head over to the **Settings** tab and adjust the **Scehma name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo** and the Table name is **cs_detail**.
 
 ![](../../documents/media/batch_dataflow10.png)
 
-Before we finish our work in the data flow, we should preview our data:
+11. Before we finish our work in the data flow, we should preview our data:
 
 ![](../../documents/media/batch_dataflow11.png)
 
-Previewing our data reveals we only have 3 columns when we are expecting a total of 5. We have lost our Summary and Sentiment columns. To correct this, let's use our **Select** tile to change the names of our columns to the expected output values:
+12. Previewing our data reveals we only have 3 columns when we are expecting a total of 5. We have lost our Summary and Sentiment columns. To correct this, let's use our **Select** tile to change the names of our columns to the expected output values:
 
 ![](../../documents/media/batch_dataflow12.png)
 
-If we return to our **Sink** tile and **Refresh** our **Data preview** we will now see our expected 5 columns of output:
+13. If we return to our **Sink** tile and **Refresh** our **Data preview** we will now see our expected 5 columns of output:
 
 ![](../../documents/media/batch_dataflow13.png)
 
-Once you have reviewed the data and are satisfied that all columns are mapped successfully (you should have 5 columns total, all showing data in a string format), we can press **Publish all** at the top to save our current configuration. A window will open at the right side of the screen - press the blue **Publish** button at the bottom left of it to save your changes.
+14. Once you have reviewed the data and are satisfied that all columns are mapped successfully (you should have 5 columns total, all showing data in a string format), we can press **Publish all** at the top to save our current configuration. A window will open at the right side of the screen - press the blue **Publish** button at the bottom left of it to save your changes.
 
-Your completed and saved Data flow will look something like this:
+15. Your completed and saved Data flow will look something like this:
+
 ![](../../documents/media/batch_dataflow14.png)
 
 ### **f. Create Synapse Pipeline**
 
-Once we have created our **Data flow** we will need to set up a **Pipeline** to house it. To create a **Pipeline**, navigate to the left-hand menu bar and choose the **In tegration** option (it looks like a pipe). Then click the **+** at the top of the Integrate menu to **Add a new resource** and choose **Pipeline**:
+1. Once we have created our **Data flow** we will need to set up a **Pipeline** to house it. To create a **Pipeline**, navigate to the left-hand menu bar and choose the **In tegration** option (it looks like a pipe). Then click the **+** at the top of the Integrate menu to **Add a new resource** and choose **Pipeline**:
 
 ![](../../documents/media/batch_pipeline1.png)
 
-Next, we need to add a **Data flow** to our Pipeline. With your new Pipeline tab open, go to the **Activities** section and search for "data" - selec the **Data flow** acvtivity and drag-and-drop it into your Pipeline:
+2. Next, we need to add a **Data flow** to our Pipeline. With your new Pipeline tab open, go to the **Activities** section and search for "data" - selec the **Data flow** acvtivity and drag-and-drop it into your Pipeline:
 
 ![](../../documents/media/batch_pipeline2.png)
 
-Under the **Settings** tab of the **Data flow**, select the **Data flow** drop-down menu and select the name of the data flow you created in the previous step. 
+3. Under the **Settings** tab of the **Data flow**, select the **Data flow** drop-down menu and select the name of the data flow you created in the previous step. 
 Then expand the **Staging** section at the bottom of the settings and utilize the drop-down menu for the **Staging linked service**. Choose the linked service you created earlier (feel free to test the connection). Next, set a**Staging storage folder** at the very bottom. You can copy the names in the picture below or choose your own.
 
 Then click **Publish all** to publish your changes and save your progress.
@@ -269,11 +268,11 @@ Then click **Publish all** to publish your changes and save your progress.
 
 ### **g. Trigger Synapse Pipeline**
 
-Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the Studio, there is a *lightning bolt* icon that says **Add trigger**. Click to add trigger and select **Trigger now** to begin a pipeline run.
+1. Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the Studio, there is a *lightning bolt* icon that says **Add trigger**. Click to add trigger and select **Trigger now** to begin a pipeline run.
 
 ![](../../documents/media/batch_pipeline4.png)
 
-To look at the pipeline run, navigate to the left-hand side of the screen and choose the **Monitor**  option (looks like a radar screen). Then select the **Pipeline runs** option in the **Integration** section. You will then see this and any other pipeline runs that you have triggered (as shown below). This particular pipeline should take approximately 4 minutes (if you are using the uploaded data for the workshop).
+2. To look at the pipeline run, navigate to the left-hand side of the screen and choose the **Monitor**  option (looks like a radar screen). Then select the **Pipeline runs** option in the **Integration** section. You will then see this and any other pipeline runs that you have triggered (as shown below). This particular pipeline should take approximately 4 minutes (if you are using the uploaded data for the workshop).
 
 ![](../../documents/media/batch_pipeline5.png)
 
@@ -281,13 +280,13 @@ To look at the pipeline run, navigate to the left-hand side of the screen and ch
 
 ## Step 4. Query Results in Our SQL Table
 
-Once you see that your pipeline run above was successful:
+1. Once you see that your pipeline run above was successful:
 
 ![](../../documents/media/batch_pipeline6.png)
 
-Now that the data is in the target table it is available for usage by running SQL queries against it, or connecting PowerBI and creating visualizations. The Azure Function is running as well, so try uploading some of the transcript files to the generated_documents folder in your container and see how the function processes it and creates a new file in the cleansed_documents file.
+2. Now that the data is in the target table it is available for usage by running SQL queries against it, or connecting PowerBI and creating visualizations. The Azure Function is running as well, so try uploading some of the transcript files to the generated_documents folder in your container and see how the function processes it and creates a new file in the cleansed_documents file.
 
-To query the new data, navigate to the menu on the left-hand side, choose **Develop**. You then either add a new SQL Script or open a previous one and copy the SQL Code below. Then select **Run**. Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar results to below.
+3. To query the new data, navigate to the menu on the left-hand side, choose **Develop**. You then either add a new SQL Script or open a previous one and copy the SQL Code below. Then select **Run**. Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar results to below.
 
 Here is a query to get started:
 
