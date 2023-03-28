@@ -1,0 +1,26 @@
+[ {
+  "Name": "OpenAIWorkshop",
+  "Language": "English",
+  "Files": [
+        {
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/GettingStarted.md",
+      "Order": 1
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/natural_language_query/README.md",
+      "Order": 2
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/openai_batch_pipeline/README.md",
+      "Order": 3
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/openai_on_custom_dataset/PowerApp.md",
+      "Order": 4
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/powerapp_and_python/powerapp.md",
+      "Order": 5
+    }
+  ]
+} ]
