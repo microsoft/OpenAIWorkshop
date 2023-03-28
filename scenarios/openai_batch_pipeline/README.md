@@ -11,7 +11,7 @@ This scenario allows uses OpenAI to summarize and analyze customer service call 
 - [Table of Contents](#table-of-contents)
 - [Architecture Diagram](#architecture-diagram)
 - [Deployment](#deployment)
-    - [Step 1. Ingest Data to Storage created in step 1](## Step 1: Ingest Data to Storage account)
+    - [Step 1. Ingest Data to Storage created in step 1](#Step-1:Ingest-Data-to-Storage-account)
     - [Step 2. Set up Synapse Workspace](#step-3-set-up-synapse-workspace)
         - [a. Launch Azure Cloud Shell](#a-launch-azure-cloud-shell)
         - [b. In the Cloud Shell run below commands:](#b-in-the-cloud-shell-run-below-commands)
