@@ -11,7 +11,7 @@ This scenario allows uses OpenAI to summarize and analyze customer service call 
 - [Table of Contents](#table-of-contents)
 - [Architecture Diagram](#architecture-diagram)
 - [Deployment](#deployment)
-    - [Step 1. Ingest Data to Storage created in step 1](#Step-1:Ingest-Data-to-Storage-account)
+    - [Step 1. Ingest Data to Storage created in step 1](## Step 1: Ingest Data to Storage account)
     - [Step 2. Set up Synapse Workspace](#step-3-set-up-synapse-workspace)
         - [a. Launch Azure Cloud Shell](#a-launch-azure-cloud-shell)
         - [b. In the Cloud Shell run below commands:](#b-in-the-cloud-shell-run-below-commands)
@@ -197,57 +197,59 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
    
 2. Once the data flow editor opens, click **Add Source**. A new window will open at the bottom of the screen, select "New" on the **Dataset** row while leaving the other options as default:
 
-![](../../documents/media/batch_dataflow2.png)
+   ![](images/synapse12.png)
 
-3. A new window should open on the right side of your screen. Next, select **Azure Blob Storage** (it is likely in the top, middle of the window), and then press **Continue**. On the following screen select the **JSON** option as our incoming data is in JSON format. Select the **Linked Service** we just set up in the steps above.
+3. A new window should open on the right side of your screen. Next, select **Azure Blob Storage** (it is likely in the top, middle of the window), and then press **Continue**. On the following screen select the **JSON** option as our incoming data is in JSON format.
 
-4. You will need to select the proper **File path** to select the Directory where our JSON files are stored. It should be something to the effect of "workshop-data / cleansed_documents". Click the **OK** button to close the window
+   ![](images/synapse13.png)
+   
+   ![](images/synapse14.png)
 
-![](../../documents/media/batch_dataflow3.png)
+4. Select the Linked Service with the name **openailinkedservice (1)** we just set up in the steps above. You will need to select the proper **File path** to select the Directory where our JSON files are stored. It should be something to the effect of "workshop-data / cleansed_documents (2)". Click the **OK** button to close the window
 
-![](../../documents/media/batch_dataflow4.png)
+   ![](images/synapse15.png)
+   
+5. Next, we'll need to move to the **Source options (1)** panel and drop-down the **JSON settings (2)** options. We need to change the **Document form** option to the *Array of documents (3)* setting. This allows our flow to read each .json file as a separate entry into our database:
 
-5. Next, we'll need to move to the **Source options** panel and drop-down the **JSON settings** options. We need to change the **Document form** option to the *Array of documents* setting. This allows our flow to read each .json file as a separate entry into our database:
-
-![](../../documents/media/batch_dataflow5.png)
+   ![](images/synapse16.png)
 
 6. If you have turned on a *data flow debug* session, you can head to the **Data preview** tab and run a preview to check your work thus far:
 
-![](../../documents/media/batch_dataflow6.png)
+   ![](images/)
+   
+7. Next we can add in our **Select** tile and do our minor alteration before writing the data out to the Synapse SQL table. To begin, click the small **+ (1)** sign next to our ingestion tile, and choose the **Select (2)** option:
 
-7. Next we can add in our **Select** tile and do our minor alteration before writing the data out to the Synapse SQL table. To begin, click the small **+** sign next to our ingestion tile, and choose the Select option:
+   ![](images/synapse17.png)
 
-![](../../documents/media/batch_dataflow7.png)
+8. We can leave all the settings as default. Next we'll add in our **Sink** tile. This is the step that will write our data out to our Synapse SQL database. Click on the small **+ (1)** sign next to our **Select (2)** tile. Scroll all the way to the bottom of the options menu and select the Sink option:
 
-8. We can leave all the settings as default. Next we'll add in our **Sink** tile. This is the step that will write our data out to our Synapse SQL database. Click on the small **+** sign next to our **Select** tile. Scroll all the way to the bottom of the options menu and select the Sink option:
+   ![](images/synapse18.png)
 
-![](../../documents/media/batch_dataflow8.png)
+9. Once the **Sink (1)** tile opens, choose **Inline (2)** for the *Sink type*. Then select **Azure Synapse Analytics (3)** for the *Inline dataset type* and the proper **Linked service (4)** based on the name we assigned in our earlier step.
 
-9. Once the **Sink** tile opens, choose **Inline** for the *Sink type*. Then select **Azure Synapse Analytics** for the *Inline dataset type* and the proper **Linked service** based on the name we assigned in our earlier step.
-
-![](../../documents/media/batch_dataflow9.png)
+   ![](images/synapse19.png)
 
 10. We will then need to head over to the **Settings** tab and adjust the **Scehma name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo** and the Table name is **cs_detail**.
 
-![](../../documents/media/batch_dataflow10.png)
+    ![](images/synapse20.png)
 
 11. Before we finish our work in the data flow, we should preview our data:
 
-![](../../documents/media/batch_dataflow11.png)
+    ![](images/synapse11.png)
 
 12. Previewing our data reveals we only have 3 columns when we are expecting a total of 5. We have lost our Summary and Sentiment columns. To correct this, let's use our **Select** tile to change the names of our columns to the expected output values:
 
-![](../../documents/media/batch_dataflow12.png)
-
+    ![](images/synapse11.png)
+    
 13. If we return to our **Sink** tile and **Refresh** our **Data preview** we will now see our expected 5 columns of output:
 
-![](../../documents/media/batch_dataflow13.png)
+    ![](images/synapse11.png)
 
 14. Once you have reviewed the data and are satisfied that all columns are mapped successfully (you should have 5 columns total, all showing data in a string format), we can press **Publish all** at the top to save our current configuration. A window will open at the right side of the screen - press the blue **Publish** button at the bottom left of it to save your changes.
 
 15. Your completed and saved Data flow will look something like this:
 
-![](../../documents/media/batch_dataflow14.png)
+    ![](images/synapse11.png)
 
 ### **f. Create Synapse Pipeline**
 
