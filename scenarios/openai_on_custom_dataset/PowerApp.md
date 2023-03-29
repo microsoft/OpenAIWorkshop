@@ -25,10 +25,7 @@ In stage 1, full text search in Azure Cognitive Search is used to retrieve a num
    ![](./images/senamtic-search.png)
 
 
-2. Navigate to https://make.powerapps.com/ and login using your user credentials. On **Welcome to Power Apps** select your **Country/Region** click **Get Started**. on Apps on the left navigation. 
-
-   * Email/Username: <inject key="AzureAdUserEmail"></inject>
-   * Password: <inject key="AzureAdUserPassword"></inject>
+2. Navigate to https://make.powerapps.com/ and login using your user credentials. On **Welcome to Power Apps** select your **Country/Region** click **Get Started**. 
 
    ![](./images/welcome.png)
     
