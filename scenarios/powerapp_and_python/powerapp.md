@@ -5,9 +5,18 @@
 
 [Azure OpenAI resource](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal#prerequisites)
 
-### Step 1. Sign in to Power Apps
 
-- You can sign in to power apps with your existing licence or you can sign up for free - https://powerapps.microsoft.com/
+1. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region** click **Get Started**. 
+
+   ![](./images/welcome.png)
+    
+2. Select **Apps** on the left navigation and click **Import Canvas App**. 
+
+    ![](./images/import-canvas.png)
+
+3. On **Import package** page click on **Upload**.
+
+    ![](./images/upload-importpackage.png)
 
 
 ### Step 2. Deploy client Power App
