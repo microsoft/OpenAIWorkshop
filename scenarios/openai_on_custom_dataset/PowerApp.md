@@ -66,7 +66,7 @@ In stage 1, full text search in Azure Cognitive Search is used to retrieve a num
 
     ![](./images/back.png)
 
-12. Next select the **Flows** Pane, click on **Edit**. PowerAutomate Flow needs to be enabled. At this point, the powerapp can be run as is. It connects to a pre-built Azure Function App. 
+12. Next select the **Flows** Pane, click on **Edit** for **Semantic-Search-Flow**. PowerAutomate Flow needs to be enabled. At this point, the powerapp can be run as is. It connects to a pre-built Azure Function App. 
 
     ![](./images/flows-1.png)
 
