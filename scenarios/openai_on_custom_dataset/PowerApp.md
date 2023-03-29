@@ -33,7 +33,7 @@ In stage 1, full text search in Azure Cognitive Search is used to retrieve a num
 
     ![](./images/get-func-url.png)
 
-4. Navigate to https://make.powerapps.com/ and login using your user credentials. On **Welcome to Power Apps** select your **Country/Region** click **Get Started**. 
+4. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region** click **Get Started**. 
 
    ![](./images/welcome.png)
     
