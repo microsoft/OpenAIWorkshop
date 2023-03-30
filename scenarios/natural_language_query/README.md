@@ -60,42 +60,61 @@ Step 6: Azure function returns the results to end user
   
    >**Note:** Please press the Run again if the output tab does not print the records
 
- 
-
 
 ## Step 3. Deploy client Power App
 
-1. From scenarios/natural_language_query folder, download "NLQuery PowerApp Export.zip" powerapp package. This has a pre-built powerapp and powerautomate template app.
-Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
+1. Enter the following link in your browser to download **NLQuery PowerApp Export.zip** folder. This has a pre-built powerapp and powerautomate template app.
 
-   ![](images/powerapps1.png)
+```
+https://github.com/microsoft/OpenAIWorkshop/raw/main/scenarios/natural_language_query/NLQuery%20PowerApp%20Export.zip
+```
+
+2. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region** click **Get Started**. 
+
+   ![](./images/welcome.png)
+    
+3. Select **Apps** on the left navigation and click **Import Canvas App**. 
+
+    ![](./images/import-canvas.png)
+
+4. On **Import package** page click on **Upload**.
+
+    ![](./images/upload-importpackage.png)
+
+5. From the **Downloads (1)** select the **NLQuery PowerApp Export (2)** folder you downloaded earlier and click on **Open (3)**.
+
+     ![](./images/nl-query-powerapp-zip.png)
+
+6. Click on **Import** to import the package into powerapps environment. This will import the Power App canvas app and Power Automate Flow into the workspace. 
+
+    ![](./images/import-nlpquery.png)
+
+7. Navigate back **functionapp<inject key="Deployment ID"></inject>** function app on the azure portal from **openai-<inject key="Deployment ID"></inject>** resource group.
+
+   ![](images/open-func.png)
+
+8. Then click **Functions** and click deployed function **NLQuery**.
+
+   ![](images/nlquery.png)
+
+9. On the **NLQuery** function click on **Get Function Url (1)**, from the drop-down menu select **default (function key) (2)** then **Copy (3)** the URL. Click **OK (4)**. Paste the URL in a text editor such as _Notepad_ for later use.
+
+    ![](./images/get-nlquery-url.png)
+
+10. Back on the PowerApps, select the **Flows** Pane, click on **Edit** for **PromptlnputFlow**.
+
+    ![](./images/promptin-flow.png)
+ 
+11. Edit the Power Automate Flow and update **Azure Function Url** with the URL you copied earlier and append `prompt=` at the end. Your URL should look similar to the following. Click **Save**.
+
+    ```
+    https://functionappXXXXXX.azurewebsites.net/api/NLQuery?prompt=
+    ```
+  
+   ![](images/nqlquery-url-save.png)
 
 
-1. From the top navigation bar, click Import Canvas App and upload the "NLQuery PowerApp Export.zip" file . 
-
-   ![](images/powerapps2.png)
-
-
-1. Click on Import to import the package into powerapps environment. This will import the Power App canvas app and Power Automate Flow into the workspace. 
-
-   ![](images/powerapps3.png)
-   
-   ![](images/powerapps4.png)
-   
-   ![](images/powerapps5.png)
-
-
-1. Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**. If you do not have the permissions to "turn on" the flow, please go to **step 5**. In case you are able to turn on the flow, please skip **step 5** and go to **step 6**
-
-   ![](images/powerapps6.png)
-
-1. Please click the HTTP and provide the function URL in the "URI" field, this function URL can be taken from the "Code + Test" screen -> get function URL tab
-
-   ![](images/powerap9.png)
-
-   ![](images/powerapps7.png)
-
-1. Save the flow and run the App by clicking on the App
+12. Run the App by clicking on the App
 
    ![](images/powerapps8.png)
 
