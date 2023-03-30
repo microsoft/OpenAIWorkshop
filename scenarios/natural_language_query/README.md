@@ -75,7 +75,7 @@ Step 6: Azure function returns the results to end user
 
     ![](./images/upload-importpackage.png)
 
-4. From the flie explorer navigate to **DC:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query** select the **NLQuery PowerApp Export** folder **Open**.
+4. From the flie explorer navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query` select the **NLQuery PowerApp Export** folder **Open**.
 
      ![](./images/nql-update.png)
 
@@ -128,7 +128,7 @@ Step 6: Azure function returns the results to end user
 
     ![](images/power-automate.png)
 
-3.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update below values in file 
+3.  Go to `C:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query` and open "get-prompt.txt". We need to update below values in file 
 
     host : <funcname>.azurewebsites.net
   
@@ -137,7 +137,7 @@ Step 6: Azure function returns the results to end user
     operationId: Get-Prompt 
 
     
-   ![](images/powerapps12.png)
+   ![](images/get-prompt.png)
 
   
   >**Note:** host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account
