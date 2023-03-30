@@ -1,59 +1,61 @@
 
 ## POWER APP
+1. Enter the following link in your browser to download **OpenAI-Playground_20230302010547.zip** folder.
 
-### Prerequiste
+```
+https://github.com/rcy0228/OpenAIWorkshop/raw/main/scenarios/powerapp_and_python/powerapp/OpenAI-Playground_20230302010547.zip
+```
 
-[Azure OpenAI resource](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal#prerequisites)
+2. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region** click **Get Started**. 
 
-### Step 1. Sign in to Power Apps
+   ![](./images/welcome.png)
+    
+3. Select **Apps** on the left navigation and click **Import Canvas App**. 
 
-- You can sign in to power apps with your existing licence or you can sign up for free - https://powerapps.microsoft.com/
+    ![](./images/import-canvas.png)
 
+4. On **Import package** page click on **Upload**.
 
-### Step 2. Deploy client Power App
+    ![](./images/upload-importpackage.png)
 
-- click on Apps on the left navigation. 
+5. From the **Downloads (1)** select the **OpenAI-Playground_20230302010547.zip (2)** folder you downloaded earlier and click on **Open (3)**.
 
-  <img src="../../documents/media/powerapp.png" width=50% height=50%>
+     ![](./images/upload-openai-playground.png)
 
+6. Once the zip file is uploaded, in the **Review Package Content** for **OpenAI Playground** click on setup icon under **Actions**. 
 
-- From the top nav bar, click Import Canvas App and upload the power app zip file from this git repo path. 
+     ![](./images/review-package-content.png)
 
+7. In the **Import setup** pane select **Create as new** from the drop-down for **Setup**, and click on **Save**.
 
-  <img src="../../documents/media/importpowerapp.png" width=50% height=50%>
+      ![](./images/import-setup.png)
 
+8.  Repeat Steps 6 and 7 for **Openaisummarization**.
 
-  <img src="../../documents/media/importpowerappzip.png" width=50% height=50%>
+9. Next click on **Import** to import the package into powerapps environment.  
 
+     ![](./images/import-openai-package.png)
 
-- Click on Import to import the package into powerapps environment. 
+10. Once the import is completed, click on **Apps**, then click on `...` next to **OpenAI Playground** and click on **Edit**.
 
+      ![](./images/open-ai-apps.png)
 
-  <img src="../../documents/media/importpowerappandflow.png" width=50% height=50%>
+11. You will observe that it has import the Power App canvas app and the Power Automate Flow into the workspace.
 
+      ![](./images/gpt-3.png)
 
-- This will import the Power App canvas app and the Power Automate Flow into the workspace. 
+12. To navigate back click on **Back** then click **Leave**.
 
+      ![](./images/exit-openai-powerapp.png)
 
-  <img src="../../documents/media/openaisummarizationflow.png" width=50% height=50%>
+13. Next select the **Flows** Pane, click on **Edit** for **Openaisummarization**.
 
+      ![](./images/open-ai-flows.png)
 
-- Click on the flows and edit the Power Automate Flow
+14. Edit the Power Automate Flow HTTP step by entering your own Azure OpenAI API **Key** and **Endpoint** and click on **Save**.
 
-  <img src="../../documents/media/editflow.png" width=50% height=50%>
+      ![](./images/endpoint-key.png)
 
+15. From the Apps page click on the app to run the app.
 
-- Edit the Power Automate Flow HTTP step with your own Azure OpenAI API [key and endpoint](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?pivots=rest-api#retrieve-key-and-endpoint)
-
-
-  <img src="../../documents/media/flowchangeapikey.png" width=50% height=50%>
-
-
-- Save the flow and make sure that flow is turned on
-
-
-### Step 2. Test
-
-- run the App by clicking on the App
-
-  <img src="../../documents/media/runpowerapp.png" width=50% height=50%>
+     ![](./images/runpowerapp.png)

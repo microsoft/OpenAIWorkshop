@@ -20,51 +20,60 @@ In stage 1, full text search in Azure Cognitive Search is used to retrieve a num
 
 # PowerApp
 
-1. From the LabVM open the **File explorer** and navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\openai_on_custom_dataset\powerapp` observe that the `Semantic-Search-App-Template_20230303012916.zip` powerapp package is already downloded for you. This has a powerapp and powerautomate template app pre-built.
 
-   ![](./images/senamtic-search.png)
+1. In the [Azure portal](https://portal.azure.com), navigate to **func-search-func-<inject key="Deployment ID"></inject>** function app from **openaicustom-<inject key="Deployment ID"></inject>** resource group.
 
+   ![](./images/azure-func-app.png)
 
-2. Navigate to https://make.powerapps.com/ and login using your user credentials. On **Welcome to Power Apps** select your **Country/Region** click **Get Started**. on Apps on the left navigation. 
+2. From the **Function app** go to **Functions** on the left menu and select **orchestrator-func-app**.
 
-   * Email/Username: <inject key="AzureAdUserEmail"></inject>
-   * Password: <inject key="AzureAdUserPassword"></inject>
+   ![](./images/function-orchestrator.png)
+   
+3. On the **orchestrator-func-app** function click on **Get Function Url (1)**, from the drop-down menu select **default (function key) (2)** then **Copy (3)** the URL. Click **OK (4)**. Paste the URL in a text editor such as _Notepad_ for later use.
+
+    ![](./images/get-func-url.png)
+
+4. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region** click **Get Started**. 
 
    ![](./images/welcome.png)
     
-3. Select **Apps** on the left navigation and click **Import Canvas App**. 
+5. Select **Apps** on the left navigation and click **Import Canvas App**. 
 
     ![](./images/import-canvas.png)
 
-4. On **Import package** page click on **Upload**.
+6. On **Import package** page click on **Upload**.
 
     ![](./images/upload-importpackage.png)
     
-5. Navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\openai_on_custom_dataset\powerapp` and select `Semantic-Search-App-Template_20230303012916.zip` folder then click **Open**.
+7. Navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\openai_on_custom_dataset\powerapp` and select `Semantic-Search-App-Template_20230303012916.zip` folder then click **Open**.
 
    ![](./images/upload-semantic-search.png)
    
-7. Click on **Import** to import the package into powerapps environment.
+8. Click on **Import** to import the package into powerapps environment.
 
     ![](./images/package-import.png)
 
-8. Once the import is completed, click on **...** next to **Semantic-Search-Template** and click on **Edit**.
+9. Once the import is completed, Click on Apps then click on **...** next to **Semantic-Search-Template** and click on **Edit**.
 
-    ![](./images/semantic-search-temp-edit.png)
+    ![](./images/semantic-search-temp-edit-1.png)
      
 
-9. Click on **Power Automate** This will import the Power App canvas app and Semantic-Search Power Automate Flow into the workspace. 
+10. Click on **Power Automate** This will import the Power App canvas app and Semantic-Search Power Automate Flow into the workspace. 
 
     ![](./images/semanti-search-flow.png)
 
-10. To navigate back click on **Back** then click **Leave** .
+11. To navigate back click on **Back** then click **Don’t save** .
 
-    ![](./images/exit-powerapp.png)
+    ![](./images/back.png)
 
-11. In the **Flows** Pane, click on **Edit**. PowerAutomate Flow needs to be enabled. At this point, the powerapp can be run as is. It connects to a pre-built Azure Function App. 
+12. Next select the **Flows** Pane, click on **Edit** for **Semantic-Search-Flow**. PowerAutomate Flow needs to be enabled. At this point, the powerapp can be run as is. It connects to a pre-built Azure Function App. 
 
-    ![](./images/flows.png)
+    ![](./images/flows-1.png)
 
-6. Edit the Power Automate Flow and update Azure Function Url. Optionaly num_search_result query parameter can be altered.
+13. Edit the Power Automate Flow and update **Azure Function Url** with the URL you copied earlier and append `&num_search_result=5` at the end. Your URL should look similar to the following. Click **Save**.
 
-    ![](./images/flow-img.png)
+    ```
+    https://func-search-func-XXXXX.azurewebsites.net/api/orchestrator-func-app?code=aNXGfSoGqnCarlBquGQE4pNgO1n9ZmqheCd0SZPzAFCOAzFugFsV8g==&num_search_result=5
+    ```
+    
+    ![](./images/flow-img-1.png)
