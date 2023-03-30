@@ -42,24 +42,25 @@ Step 6: Azure function returns the results to end user
 
 ## Step 2. Test the function App
 
-1. Go to Function App and click "Functions" and click deployed function "NLQuery
+1. Go to **functionapp<inject key="Deployment ID"></inject>** function app from **openai-<inject key="Deployment ID"></inject>** resource group.
 
-   ![](images/scenario1.05.png)
+   ![](images/open-func.png)
 
-1. Click "Code + Test" 
+2. Then click **Functions** and click deployed function **NLQuery**.
 
-   ![](images/scenario1.06.png)
+   ![](images/nlquery.png)
 
-1. Click Test/Run -> select "GET" in "HTTP method" dropdown, click + next to "Query" and enter "prompt" in Name field and "show top 10 products" in value field. Click "Run"
+3. From **NLQuery** go to **Code + Test (1)**, then click **Test/Run (2)** select "GET (3)" in **HTTP method** dropdown, click **+** under to **Query** and enter **prompt (4)** in Name field and **show top 10 products (5)** in value field. Click **Run (6)**.
 
-   ![](images/scenario1.07.png)
+   ![](images/code+test.png)
 
-1. The "Output" tab will have the query results 
+4. The **Output** tab will have the query results. 
 
+   ![](images/output.png)
+  
+   >**Note:** Please press the Run again if the output tab does not print the records
 
-  > **Note:** Please press the Run again if the output tab does not print the records
-
-  ![](images/scenario1.08.png)
+ 
 
 
 ## Step 3. Deploy client Power App
