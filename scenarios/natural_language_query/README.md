@@ -63,49 +63,43 @@ Step 6: Azure function returns the results to end user
 
 ## Step 3. Deploy client Power App
 
-1. Enter the following link in your browser to download **NLQuery PowerApp Export.zip** folder. This has a pre-built powerapp and powerautomate template app.
-
-```
-https://github.com/microsoft/OpenAIWorkshop/raw/main/scenarios/natural_language_query/NLQuery%20PowerApp%20Export.zip
-```
-
-2. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region** click **Get Started**. 
+1. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region** click **Get Started**. 
 
    ![](./images/welcome.png)
     
-3. Select **Apps** on the left navigation and click **Import Canvas App**. 
+2. Select **Apps** on the left navigation and click **Import Canvas App**. 
 
     ![](./images/import-canvas.png)
 
-4. On **Import package** page click on **Upload**.
+3. On **Import package** page click on **Upload**.
 
     ![](./images/upload-importpackage.png)
 
-5. From the **Downloads (1)** select the **NLQuery PowerApp Export (2)** folder you downloaded earlier and click on **Open (3)**.
+4. From the flie explorer navigate to **DC:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query** select the **NLQuery PowerApp Export** folder **Open**.
 
-     ![](./images/nl-query-powerapp-zip.png)
+     ![](./images/nql-update.png)
 
-6. Click on **Import** to import the package into powerapps environment. This will import the Power App canvas app and Power Automate Flow into the workspace. 
+5. Click on **Import** to import the package into powerapps environment. This will import the Power App canvas app and Power Automate Flow into the workspace. 
 
     ![](./images/import-nlpquery.png)
 
-7. Navigate back **functionapp<inject key="Deployment ID"></inject>** function app on the azure portal from **openai-<inject key="Deployment ID"></inject>** resource group.
+6. Navigate back **functionapp<inject key="Deployment ID"></inject>** function app on the azure portal from **openai-<inject key="Deployment ID"></inject>** resource group.
 
    ![](images/open-func.png)
 
-8. Then click **Functions** and click deployed function **NLQuery**.
+7. Then click **Functions** and click deployed function **NLQuery**.
 
    ![](images/nlquery.png)
 
-9. On the **NLQuery** function click on **Get Function Url (1)**, from the drop-down menu select **default (function key) (2)** then **Copy (3)** the URL. Click **OK (4)**. Paste the URL in a text editor such as _Notepad_ for later use.
+8. On the **NLQuery** function click on **Get Function Url (1)**, from the drop-down menu select **default (function key) (2)** then **Copy (3)** the URL. Click **OK (4)**. Paste the URL in a text editor such as _Notepad_ for later use.
 
     ![](./images/get-nlquery-url.png)
 
-10. Back on the PowerApps, select the **Flows** Pane, click on **Edit** for **PromptlnputFlow**.
+9. Back on the PowerApps, select the **Flows** Pane, click on **Edit** for **PromptlnputFlow**.
 
     ![](./images/promptin-flow.png)
  
-11. Edit the Power Automate Flow and update **Azure Function Url** with the URL you copied earlier and append `prompt=` at the end. Your URL should look similar to the following. Click **Save**.
+10. Edit the Power Automate Flow and update **Azure Function Url** with the URL you copied earlier and append `prompt=` at the end. Your URL should look similar to the following. Click **Save**.
 
     ```
     https://functionappXXXXXX.azurewebsites.net/api/NLQuery?prompt=
@@ -114,7 +108,7 @@ https://github.com/microsoft/OpenAIWorkshop/raw/main/scenarios/natural_language_
    ![](images/nqlquery-url-save.png)
 
 
-12. Run the App by clicking on the App
+11. Run the App by clicking on the App
 
    ![](images/powerapps8.png)
 
@@ -124,19 +118,17 @@ https://github.com/microsoft/OpenAIWorkshop/raw/main/scenarios/natural_language_
 
 ## Step 4. Build the Connector App (Optional)
 
-1. Navigate to https://make.powerapps.com/ and click on .. sign on the top left side, this will open the below , click "Power Auto..."
+1. Navigate to https://make.powerapps.com/ and click on **App launcher** on the top left corner and select **Power Automate**.
 
 
-   ![](images/powerapps10.png)
+   ![](images/app-launcher.png)
 
 
-1.  Click on Data -> “Custom Connectors”, click on “New custom connector” -> ”Create from blank”. Just keep the screen as is and move to point c.
+2.  Click on **Data (1)** and select **Custom Connectors (2)**, click on **+ New custom connector (3)** then click on **Create from blank (4)**. Just keep the screen as is and move to the next step.
 
+    ![](images/power-automate.png)
 
-    ![](images/powerapps11.png)
-
-1.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update below values in file 
-
+3.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update below values in file 
 
     host : <funcname>.azurewebsites.net
   
@@ -144,12 +136,14 @@ https://github.com/microsoft/OpenAIWorkshop/raw/main/scenarios/natural_language_
   
     operationId: Get-Prompt 
 
-    ![](images/powerapps12.png)
+    
+   ![](images/powerapps12.png)
 
   
-    >**Note:** host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account
+  >**Note:** host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account
 
-    ![](images/powerapps13.png)
+    
+   ![](images/powerapps13.png)
 
 
 1. In the Custom connector app browser tab , (step b), click on “Swagger Editor” and copy the updated file contents (step c.) in the swagger editor. Click Close to save the Connector
