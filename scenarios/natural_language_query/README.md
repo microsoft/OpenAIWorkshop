@@ -127,29 +127,37 @@ Step 6: Azure function returns the results to end user
 2.  Click on **Data (1)** and select **Custom Connectors (2)**, click on **+ New custom connector (3)** then click on **Create from blank (4)**. Just keep the screen as is and move to the next step.
 
     ![](images/power-automate.png)
+   
+   - Enter the **Connector name** as `Openai-custom-connector`. Just keep the screen as is and move to the next step.
 
-3.  Go to `C:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query` and open "get-prompt.txt". We need to update below values in file 
+     ![](images/openai-custom-connector.png)
 
-    host : <funcname>.azurewebsites.net
+3.  From the file explorer navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query` and open **get-prompt.txt**.
+
+    ![](images/get-prompt.png)
+
+     - We need to update below values in file 
+
+        host : <funcname>.azurewebsites.net
   
-    paths :  /api/NLQuery
+        paths :  /api/NLQuery
   
-    operationId: Get-Prompt 
+        operationId: Get-Prompt 
 
-    
-   ![](images/get-prompt.png)
-
+    ![](images/get-prompt-edit.png)
   
   >**Note:** host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account
 
-    
-   ![](images/powerapps13.png)
+   ![](images/code+test-getfuncurl.png)
 
 
-1. In the Custom connector app browser tab , (step b), click on “Swagger Editor” and copy the updated file contents (step c.) in the swagger editor. Click Close to save the Connector
+4. In the Custom connector app browser tab , click on **Start trail**. 
+   
+   ![](images/start-trail-90days.png)
+   
+5. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** **(2)** in the swagger editor. Click **Create connector**.
 
-
-   ![](images/powerapps14.png)
+   ![](images/swagger-editor.png)
    
 1. Navigate to https://make.powerapps.com and click Click on “My Flows” and select the flow which you imported in previous step 4 (d) and click “Edit”
 
