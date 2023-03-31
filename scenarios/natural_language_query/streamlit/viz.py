@@ -1,3 +1,4 @@
+#ro run the solution: streamlit run viz.py
 import streamlit as st
 import random
 import pandas as pd
