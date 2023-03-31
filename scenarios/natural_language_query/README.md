@@ -177,25 +177,46 @@ Step 6: Azure function returns the results to end user
   
 10. You need to delete the third step which in your case will be **HTTTP** flow.
 
-   ![](images/delete-http.png)
+      ![](images/delete-http.png)
 
 11. Click **Parse JSON** step , click inside **Content** field, click on right side and select **body** . 
   
-   ![](images/content-body.png)
+    ![](images/content-body.png)
   
 12. The Control should like the below. Click **Save**.
 
      ![](images/save.png)
 
-1. click on Test, select Manually and make sure "txtPrompt" in selected in *prompt field, click Run. It will show "Your flow run successfully started. To monitor it, go to the Flow Runs Page." Save the flow
+13. On the **Flows** tab ensure to **Turn on** your flow.
+   
+    ![](images/turn-on.png)
+   
+14. Navigate to your flow and click on **Test**.
+    
+    ![](images/test-flow.png)
+    
+15. Select **Manually** and **Save & Test**. 
 
-   ![](images/poweraps22.png)
+    ![](images/manually-test.png)
+
+16. Click on **Continue** for **Run flow**.
+
+    ![](images/run-flow.png)
+ 
+17.  Under **txtPrompt** enter **Run connector App** and click **Run flow**.
+
+     ![](images/txtprompt.png)
+
+18. Once you recieve **Your flow run successfully started**, click on **Done**. 
+   
+    ![](images/successfully-run.png)
 
 
+   
+   
+To monitor it, go to the Flow Runs Page." Save the flow
 1. go to app which we imported in step 4 and click Edit
-  
-   ![](images/powerapps23.png)
-
+     
 1. Click on Power Automate,  once Power Automate opens click refresh and click save on right top side. 
 
    ![](images/powerapps24.png)
