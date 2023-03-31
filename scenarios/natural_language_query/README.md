@@ -42,59 +42,73 @@ Step 6: Azure function returns the results to end user
 
 ## Step 2. Test the function App
 
-1. Go to Function App and click "Functions" and click deployed function "NLQuery
+1. Go to **functionapp<inject key="Deployment ID"></inject>** function app from **openai-<inject key="Deployment ID"></inject>** resource group.
 
-   ![](images/scenario1.05.png)
+   ![](images/open-func.png)
 
-1. Click "Code + Test" 
+2. Then click **Functions** and click deployed function **NLQuery**.
 
-   ![](images/scenario1.06.png)
+   ![](images/nlquery.png)
 
-1. Click Test/Run -> select "GET" in "HTTP method" dropdown, click + next to "Query" and enter "prompt" in Name field and "show top 10 products" in value field. Click "Run"
+3. From **NLQuery** go to **Code + Test (1)**, then click **Test/Run (2)** select "GET (3)" in **HTTP method** dropdown, click **+** under to **Query** and enter **prompt (4)** in Name field and **show top 10 products (5)** in value field. Click **Run (6)**.
 
-   ![](images/scenario1.07.png)
+   ![](images/code+test.png)
 
-1. The "Output" tab will have the query results 
+4. The **Output** tab will have the query results. 
 
-
-  > **Note:** Please press the Run again if the output tab does not print the records
-
-  ![](images/scenario1.08.png)
+   ![](images/output.png)
+  
+   >**Note:** Please press the Run again if the output tab does not print the records
 
 
 ## Step 3. Deploy client Power App
 
-1. From scenarios/natural_language_query folder, download "NLQuery PowerApp Export.zip" powerapp package. This has a pre-built powerapp and powerautomate template app.
-Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. 
+1. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region** click **Get Started**. 
 
-   ![](images/powerapps1.png)
+   ![](./images/welcome.png)
+    
+2. Select **Apps** on the left navigation and click **Import Canvas App**. 
+
+    ![](./images/import-canvas.png)
+
+3. On **Import package** page click on **Upload**.
+
+    ![](./images/upload-importpackage.png)
+
+4. From the flie explorer navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query` select the **NLQuery PowerApp Export** folder **Open**.
+
+     ![](./images/nql-update.png)
+
+5. Click on **Import** to import the package into powerapps environment. This will import the Power App canvas app and Power Automate Flow into the workspace. 
+
+    ![](./images/import-nlpquery.png)
+
+6. Navigate back **functionapp<inject key="Deployment ID"></inject>** function app on the azure portal from **openai-<inject key="Deployment ID"></inject>** resource group.
+
+   ![](images/open-func.png)
+
+7. Then click **Functions** and click deployed function **NLQuery**.
+
+   ![](images/nlquery.png)
+
+8. On the **NLQuery** function click on **Get Function Url (1)**, from the drop-down menu select **default (function key) (2)** then **Copy (3)** the URL. Click **OK (4)**. Paste the URL in a text editor such as _Notepad_ for later use.
+
+    ![](./images/get-nlquery-url.png)
+
+9. Back on the PowerApps, select the **Flows** Pane, click on **Edit** for **PromptlnputFlow**.
+
+    ![](./images/promptin-flow.png)
+ 
+10. Edit the Power Automate Flow and update **Azure Function Url** with the URL you copied earlier and append `prompt=` at the end. Your URL should look similar to the following. Click **Save**.
+
+    ```
+    https://functionappXXXXXX.azurewebsites.net/api/NLQuery?prompt=
+    ```
+  
+   ![](images/nqlquery-url-save.png)
 
 
-1. From the top navigation bar, click Import Canvas App and upload the "NLQuery PowerApp Export.zip" file . 
-
-   ![](images/powerapps2.png)
-
-
-1. Click on Import to import the package into powerapps environment. This will import the Power App canvas app and Power Automate Flow into the workspace. 
-
-   ![](images/powerapps3.png)
-   
-   ![](images/powerapps4.png)
-   
-   ![](images/powerapps5.png)
-
-
-1. Click on the flows and edit the Power Automate Flow and update Azure Function Url. Make sure that flow is **turned on**. If you do not have the permissions to "turn on" the flow, please go to **step 5**. In case you are able to turn on the flow, please skip **step 5** and go to **step 6**
-
-   ![](images/powerapps6.png)
-
-1. Please click the HTTP and provide the function URL in the "URI" field, this function URL can be taken from the "Code + Test" screen -> get function URL tab
-
-   ![](images/powerap9.png)
-
-   ![](images/powerapps7.png)
-
-1. Save the flow and run the App by clicking on the App
+11. Run the App by clicking on the App
 
    ![](images/powerapps8.png)
 
@@ -104,75 +118,108 @@ Navigate to https://make.powerapps.com/ and click on Apps on the left navigation
 
 ## Step 4. Build the Connector App (Optional)
 
-1. Navigate to https://make.powerapps.com/ and click on .. sign on the top left side, this will open the below , click "Power Auto..."
+1. Navigate to https://make.powerapps.com/ and click on **App launcher** on the top left corner and select **Power Automate**.
 
 
-   ![](images/powerapps10.png)
+   ![](images/app-launcher.png)
 
 
-1.  Click on Data -> “Custom Connectors”, click on “New custom connector” -> ”Create from blank”. Just keep the screen as is and move to point c.
+2.  Click on **Data (1)** and select **Custom Connectors (2)**, click on **+ New custom connector (3)** then click on **Create from blank (4)**. Just keep the screen as is and move to the next step.
 
-
-    ![](images/powerapps11.png)
-
-1.  Go to https://github.com/microsoft/OpenAIWorkshop/tree/main/scenarios/natural_language_query and open "get-prompt.txt". We need to update below values in file 
-
-
-    host : <funcname>.azurewebsites.net
-  
-    paths :  /api/NLQuery
-  
-    operationId: Get-Prompt 
-
-    ![](images/powerapps12.png)
-
-  
-    >**Note:** host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account
-
-    ![](images/powerapps13.png)
-
-
-1. In the Custom connector app browser tab , (step b), click on “Swagger Editor” and copy the updated file contents (step c.) in the swagger editor. Click Close to save the Connector
-
-
-   ![](images/powerapps14.png)
+    ![](images/power-automate.png)
    
-1. Navigate to https://make.powerapps.com and click Click on “My Flows” and select the flow which you imported in previous step 4 (d) and click “Edit”
+   - Enter the **Connector name** as `Openai-custom-connector`. Just keep the screen as is and move to the next step.
 
-   ![](images/powerapps15.png)
+     ![](images/openai-custom-connector.png)
 
-1. We will update the power automate flow second step after PowerApps(V2), click on + and select “Add an action”
-  
-   ![](images/powerapps16.png)
-  
-1. Select Custom and type and search for custom connector which we created in step d.
-  
-   ![](images/powerapps17.png)
+3.  From the file explorer navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query` and open **get-prompt.txt**.
 
-1. The flow will look like below
-  
-   ![](images/powerapps18.png)
-  
-1. You need to delete the third step which in your case will be “HTTTP” flow, after deleting the third step, click Save
+    ![](images/get-prompt.png)
 
-   ![](images/powerapps19.png)
+     - We need to update below values in file 
 
-   ![](images/powerapps20.png)
+        host : <funcname>.azurewebsites.net
   
-1. Click Parse JSON step , click inside "Content" field, click on right side and select “body" . The Control should like the below
+        paths :  /api/NLQuery
   
-   ![](images/powerapps21.png)
-  
-1. click on Test, select Manually and make sure "txtPrompt" in selected in *prompt field, click Run. It will show "Your flow run successfully started. To monitor it, go to the Flow Runs Page." Save the flow
+        operationId: Get-Prompt 
 
-   ![](images/poweraps22.png)
+    ![](images/get-prompt-edit.png)
+  
+  >**Note:** host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account
+
+   ![](images/code+test-getfuncurl.png)
 
 
-1. go to app which we imported in step 4 and click Edit
-  
-   ![](images/powerapps23.png)
+4. In the Custom connector app browser tab , click on **Start trail**. 
+   
+   ![](images/start-trail-90days.png)
+   
+5. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** **(2)** in the swagger editor. Click **Create connector (**.
 
-1. Click on Power Automate,  once Power Automate opens click refresh and click save on right top side. 
+   ![](images/swagger-editor.png)
+   
+6. Navigate to https://make.powerapps.com and click Click on **Flows** and select the flow which you imported in previous task and click **Edit**
+
+   ![](./images/promptin-flow.png)
+
+7. We will update the power automate flow second step after **PowerApps(V2)**, click on **+** and select **Add an action**
+  
+   ![](images/add-action.png)
+  
+8. Select **Custom** and type and search for custom connector which you created previously.
+  
+   ![](images/choose-operation.png)
+
+9. The flow will look similar to the image provide below.
+  
+   ![](images/top-5.png)
+  
+10. You need to delete the third step which in your case will be **HTTTP** flow.
+
+      ![](images/delete-http.png)
+
+11. Click **Parse JSON** step , click inside **Content** field, click on right side and select **body** . 
+  
+    ![](images/content-body.png)
+  
+12. The Control should like the below. Click **Save**.
+
+     ![](images/save.png)
+
+13. On the **Flows** tab ensure to **Turn on** your flow.
+   
+    ![](images/turn-on.png)
+   
+14. Navigate to your flow and click on **Test**.
+    
+    ![](images/test-flow.png)
+    
+15. Select **Manually** and **Save & Test**. 
+
+    ![](images/manually-test.png)
+
+16. Click on **Continue** for **Run flow**.
+
+    ![](images/run-flow.png)
+ 
+17.  Under **txtPrompt** enter **Run connector App** and click **Run flow**.
+
+     ![](images/txtprompt.png)
+
+18. Once you recieve **Your flow run successfully started**, click on **Done**. 
+   
+    ![](images/successfully-run.png)
+
+19. To monitor the run, go to the **Flows** Page and view the recent run history.
+   
+    ![](images/monitor.png)
+   
+20. From the **Apps** tab, click **Edit** on **NLP Query**.
+   
+     ![](images/apps-nlq.png)
+     
+21. Click on Power Automate,  once Power Automate opens click refresh and click save on right top side. 
 
    ![](images/powerapps24.png)
   
