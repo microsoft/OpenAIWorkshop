@@ -155,36 +155,38 @@ Step 6: Azure function returns the results to end user
    
    ![](images/start-trail-90days.png)
    
-5. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** **(2)** in the swagger editor. Click **Create connector**.
+5. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** **(2)** in the swagger editor. Click **Create connector (**.
 
    ![](images/swagger-editor.png)
    
-1. Navigate to https://make.powerapps.com and click Click on “My Flows” and select the flow which you imported in previous step 4 (d) and click “Edit”
+6. Navigate to https://make.powerapps.com and click Click on **Flows** and select the flow which you imported in previous task and click **Edit**
 
-   ![](images/powerapps15.png)
+   ![](./images/promptin-flow.png)
 
-1. We will update the power automate flow second step after PowerApps(V2), click on + and select “Add an action”
+7. We will update the power automate flow second step after **PowerApps(V2)**, click on **+** and select **Add an action**
   
-   ![](images/powerapps16.png)
+   ![](images/add-action.png)
   
-1. Select Custom and type and search for custom connector which we created in step d.
+8. Select **Custom** and type and search for custom connector which you created previously.
   
-   ![](images/powerapps17.png)
+   ![](images/choose-operation.png)
 
-1. The flow will look like below
+9. The flow will look similar to the image provide below.
   
-   ![](images/powerapps18.png)
+   ![](images/top-5.png)
   
-1. You need to delete the third step which in your case will be “HTTTP” flow, after deleting the third step, click Save
+10. You need to delete the third step which in your case will be **HTTTP** flow.
 
-   ![](images/powerapps19.png)
+   ![](images/delete-http.png)
 
-   ![](images/powerapps20.png)
+11. Click **Parse JSON** step , click inside **Content** field, click on right side and select **body** . 
   
-1. Click Parse JSON step , click inside "Content" field, click on right side and select “body" . The Control should like the below
+   ![](images/content-body.png)
   
-   ![](images/powerapps21.png)
-  
+12. The Control should like the below. Click **Save**.
+
+     ![](images/save.png)
+
 1. click on Test, select Manually and make sure "txtPrompt" in selected in *prompt field, click Run. It will show "Your flow run successfully started. To monitor it, go to the Flow Runs Page." Save the flow
 
    ![](images/poweraps22.png)
