@@ -211,13 +211,15 @@ Step 6: Azure function returns the results to end user
    
     ![](images/successfully-run.png)
 
-
+19. To monitor the run, go to the **Flows** Page and view the recent run history.
    
+    ![](images/monitor.png)
    
-To monitor it, go to the Flow Runs Page." Save the flow
-1. go to app which we imported in step 4 and click Edit
+20. From the **Apps** tab, click **Edit** on **NLP Query**.
+   
+     ![](images/apps-nlq.png)
      
-1. Click on Power Automate,  once Power Automate opens click refresh and click save on right top side. 
+21. Click on Power Automate,  once Power Automate opens click refresh and click save on right top side. 
 
    ![](images/powerapps24.png)
   
