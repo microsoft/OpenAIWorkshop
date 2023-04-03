@@ -50,7 +50,7 @@ Step 6: Azure function returns the results to end user
 
    ![](images/nlquery.png)
 
-3. From **NLQuery** go to **Code + Test (1)**, then click **Test/Run (2)** select "GET (3)" in **HTTP method** dropdown, click **+** under to **Query** and enter **prompt (4)** in Name field and **show top 10 products (5)** in value field. Click **Run (6)**.
+3. From **NLQuery** go to **Code + Test (1)**, then click **Test/Run (2)** select **GET (3)** in **HTTP method** dropdown, click **+ Add parameter** under to **Query** and enter **prompt (4)** in Name field and **show top 10 products (5)** in value field. Click **Run (6)**.
 
    ![](images/code+test.png)
 
@@ -105,7 +105,7 @@ Step 6: Azure function returns the results to end user
     https://functionappXXXXXX.azurewebsites.net/api/NLQuery?prompt=
     ```
   
-   ![](images/nqlquery-url-save.png)
+      ![](images/nqlquery-url-save.png)
 
 
 11. Run the App by clicking on the App
@@ -154,7 +154,7 @@ Step 6: Azure function returns the results to end user
    
    ![](images/start-trail-90days.png)
    
-5. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** **(2)** in the swagger editor. Click **Create connector (**.
+5. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** **(2)** in the swagger editor. Click **Create connector**.
 
    ![](images/swagger-editor.png)
    
