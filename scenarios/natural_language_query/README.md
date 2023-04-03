@@ -234,7 +234,6 @@ Step 6: Azure function returns the results to end user
 
     ![](images/powerapps26.png)
 
-
     ![](images/powerapps27.png)
 
 
