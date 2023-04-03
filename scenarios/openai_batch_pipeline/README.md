@@ -218,6 +218,7 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 6. Enable the *data flow debug* session, then head to the **Data preview** tab and run a preview to check your work thus far:
 
     >**Note:** It will take a minute or two for the **data flow debug** session to get enabled.
+    
     ![](images/dataflow-datapreview.png)
    
 7. Next we can add in our **Select** tile and do our minor alteration before writing the data out to the Synapse SQL table. To begin, click the small **+ (1)** sign next to our ingestion tile, and choose the **Select (2)** option:
