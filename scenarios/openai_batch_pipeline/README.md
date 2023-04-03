@@ -115,12 +115,12 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 ### **a. Create the Synapse SQL Pool**
 
-1.  Go to <https://portal.azure.com> and sign in with your organizational account. In the search box at the top of the portal, search for **asaworkspace**
+1.  Go to <https://portal.azure.com> and sign in with your organizational account. In the search box at the top of the portal, search for your workspace
     and click on the Synapse workspace (not the SQL Server) which appears under the Resources section.
 
-     ![](images/image12.png)
+     ![](images/search-select.png)
 
-1.  On the **Overview** blade and the Essentials section, click the **Workspace web URL** link to open Synapse Studio.
+1.  On the **Overview** blade under **Getting started** section, click **Open** to open Synapse Studio.
      
     ![](images/asaworkspace.png)
     
@@ -132,9 +132,9 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
    ![](images/synapse2.png)
 
-1. It may take a moment for your SQL Pool to initialize. Once it is completed you will see this:
+1. It may take a moment for your SQL Pool to initialize. Once it is completed you will see that the status of the pool is **Online**.
 
-   ![](images/synapse2.png)
+   ![](images/openaipool-online.png)
 
 ### **c. Create Target SQL Table**
 
@@ -142,7 +142,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
    ![](images/synapse3.png)
 
-1. Copy and paste the following script into the editor and click the **Run (2)** button in the top-left, as shown in the picture below. Finish this step by pressing **Publish all (3)** just above the **Run** button to publish our work thus far.
+1. Copy and paste the following script into the editor **(1)** then change the **Connect to** value by selecting **openaipool (2)** from the drop-down and for **Use database** ensure that **openaipool (3)** is selected  and click the **Run (4)** button in the top-left, as shown in the picture below. Finish this step by pressing **Publish all (5)** just above the **Run** button to publish our work thus far.
 
     ```SQL 
     CREATE TABLE [dbo].[cs_detail]
@@ -155,9 +155,11 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     )
     ```
     
-    ![](images/synapse4.png)
+    ![](images/create-dob.png)
     
-    > **Note:** You will need to change the **Connect to** and **Use database** portions in the SQL editor to point towards the SQL Pool you created in the previous step
+1. Next click on Publish to publish the **SQL Script**.
+
+    ![](images/publish-sqlscript.png)
 
 ### **d. Create Source and Target Linked Services**
 
@@ -179,13 +181,13 @@ We'll next need to create two linked services: One for our Source (the JSON file
 
    ![](images/synapse8.png)
 
-1. In the *New linked service* window that opens, fill in a name for your target linked service as **synapselinkedservice** **(1)**. Select the **Azure subcription (2)** in which you have been working and where you created your Synapse SQL Pool. Select the **Server name ((3)** and **Database name (4)** and in which created the target table above. Be certain to change the **Authentication type** to *System Assigned Managed Identity (5)* and click on **create (6)**.
+1. In the *New linked service* window that opens, fill in a name for your target linked service as **synapselinkedservice** **(1)**. Select the **Azure subcription (2)** in which you have been working and where you created your Synapse SQL Pool. Select the **Server name ((3)** and **Database name (4)** and in which created the target table above. Be certain to change the **Authentication type** to **System Assigned Managed Identity (5)** and click on **create (6)**.
 
    ![](images/synapse9.png)
 
-1. Once you have created the two Linked Services, be certain to press the **Publish all** button at the top to publish our work and finalize the creation of the linked services. After it is finished, you will see a screen similar to this:
+1. Once you have created the two Linked Services, be certain to press the **Publish all** button at the top to publish our work and finalize the creation of the linked services and click **Publish**.
 
-   ![](images/synapse10.png)
+   ![](images/publish-linked.png)
    
 ### **e. Create Synapse Data Flow**
 
@@ -195,7 +197,7 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
    ![](images/synapse11.png)
    
-2. Once the data flow editor opens, click **Add Source**. A new window will open at the bottom of the screen, select "New" on the **Dataset** row while leaving the other options as default:
+2. Once the data flow editor opens, click **Add Source**. A new window will open at the bottom of the screen, select **New** on the **Dataset** row while leaving the other options as default:
 
    ![](images/synapse12.png)
 
@@ -205,17 +207,18 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
    
    ![](images/synapse14.png)
 
-4. Select the Linked Service with the name **openailinkedservice (1)** we just set up in the steps above. You will need to select the proper **File path** to select the Directory where our JSON files are stored. It should be something to the effect of "workshop-data / cleansed_documents (2)". Click the **OK** button to close the window
+4. Select the Linked Service with the name **openailinkedservice (1)** we just set up in the steps above. You will need to select the proper **File path** to select the Directory where our JSON files are stored. It should be something to the effect of **workshop-data / cleansed_documents (2)**. Click the **OK** button to close the window
 
    ![](images/synapse15.png)
    
-5. Next, we'll need to move to the **Source options (1)** panel and drop-down the **JSON settings (2)** options. We need to change the **Document form** option to the *Array of documents (3)* setting. This allows our flow to read each .json file as a separate entry into our database:
+5. Next, we'll need to move to the **Source options (1)** panel and drop-down the **JSON settings (2)** options. We need to change the **Document form** option to the **Array of documents (3)** setting. This allows our flow to read each .json file as a separate entry into our database:
 
    ![](images/synapse16.png)
 
-6. If you have turned on a *data flow debug* session, you can head to the **Data preview** tab and run a preview to check your work thus far:
+6. Enable the *data flow debug* session, then head to the **Data preview** tab and run a preview to check your work thus far:
 
-   ![](images/)
+    >**Note:** It will take a minute or two for the **data flow debug** session to get enabled.
+    ![](images/dataflow-datapreview.png)
    
 7. Next we can add in our **Select** tile and do our minor alteration before writing the data out to the Synapse SQL table. To begin, click the small **+ (1)** sign next to our ingestion tile, and choose the **Select (2)** option:
 
@@ -225,9 +228,9 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
    ![](images/synapse18.png)
 
-9. Once the **Sink (1)** tile opens, choose **Inline (2)** for the *Sink type*. Then select **Azure Synapse Analytics (3)** for the *Inline dataset type* and the proper **Linked service (4)** based on the name we assigned in our earlier step.
+9. Once the **Sink (1)** tile opens, choose **Inline (2)** for the *Sink type*. Then select **Azure Synapse Analytics (3)** for the *Inline dataset type* and for the  **Linked service** select **synapselinkedservice (4)** that was created in the previous step. Ensure to run **Test connection (5)** for the linked service.
 
-   ![](images/synapse19.png)
+   ![](images/sink-1.png)
 
 10. We will then need to head over to the **Settings** tab and adjust the **Scehma name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo** and the Table name is **cs_detail**.
 
