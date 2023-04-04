@@ -1,4 +1,4 @@
-# Using Azure OpenAI on custom dataset
+# Exercise 3: Using Azure OpenAI on custom dataset
 ### Scenario summary:
 This scenario allows use cases to use Open AI as an intelligent agent to answer questions from end users or assist them using knowledge of a proprietary corpus and domain.
 Applications can be: 
@@ -18,7 +18,7 @@ This implementation scenario focuses on building a knowledge retrieval chatbot a
 From the user's query, the solution uses two-stage information retrieval to retrieve the content that best matches the user query. 
 In stage 1, full text search in Azure Cognitive Search is used to retrieve a number of relevant documents. In stage 2, the search result is applied with pretrained NLP model and embedding search to further narrow down the the most relavant content. The content is used by orchestrator service to form a prompt to OpenAI deployment of LLM. The OpenAI service returns result which is then sent to Power App client application.
 
-# PowerApp
+# Task 1: PowerApp
 
 
 1. In the [Azure portal](https://portal.azure.com), navigate to **func-search-func-<inject key="Deployment ID"></inject>** function app from **openaicustom-<inject key="Deployment ID"></inject>** resource group.
