@@ -122,7 +122,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 1.  On the **Overview** blade under **Getting started** section, click **Open** to open Synapse Studio.
      
-    ![](images/asaworkspace.png)
+    ![](images/open-workspace.png)
     
 1. Once in the Synapse Studio is launched, on the left-hand side, click on the **Manage (1)** Option. At the top of the newly opened menu bar, under the **Analytics pools** section, click **SQL pools (2)**. Then click **New (3)** in the top-left.
 
