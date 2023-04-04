@@ -147,7 +147,7 @@ Step 6: Azure function returns the results to end user
   
   >**Note:** host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account
 
-   ![](images/code+test-getfuncurl.png)
+    ![](images/code+test-getfuncurl.png)
 
 
 4. In the Custom connector app browser tab , click on **Start trail**. 
@@ -224,7 +224,7 @@ Step 6: Azure function returns the results to end user
   
    ![](images/powerapps25.png)
 
-1. please run the App
+13. Please run the App
   
 ## Step 5. Test the Power App
 
