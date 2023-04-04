@@ -33,7 +33,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 ## Task 1: Ingest Data to Storage account
 
-### a. Launch Azure Cloud Shell
+### A. Launch Azure Cloud Shell
 
 1. In the **Azure portal**, open the Azure Cloud Shell by clicking on the cloud shell icon in the top menu bar.
 
@@ -59,7 +59,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     ![](images/cloudshell.png)
         
 
-### b. Upload files to storage account:
+### B. Upload files to storage account:
 
  1. Run the following commands in the cloudshell to download and install the miniconda.
 
