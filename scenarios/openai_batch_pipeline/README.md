@@ -201,11 +201,13 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
    ![](images/synapse12.png)
 
-3. A new window should open on the right side of your screen. Next, select **Azure Blob Storage** (it is likely in the top, middle of the window), and then press **Continue**. On the following screen select the **JSON** option as our incoming data is in JSON format.
-
-   ![](images/synapse13.png)
+3. A new window should open on the right side of your screen. Next, search  for **Azure Blob Storage (1)** select **Azure Blob Storage (2)** , and then press **Continue (3)**. 
    
-   ![](images/synapse14.png)
+   ![](images/synapse13-1.png)
+
+4. Next, select the **JSON (1)** option as our incoming data is in JSON format and click **Continue (2)**.
+
+   ![](images/synapse14-1.png)
 
 4. Select the Linked Service with the name **openailinkedservice (1)** we just set up in the steps above. You will need to select the proper **File path** to select the Directory where our JSON files are stored. It should be something to the effect of **workshop-data / cleansed_documents (2)**. Click the **OK** button to close the window
 
@@ -241,16 +243,16 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
     ![](images/data-preview.png)
 
-12.  To correct this, let's use our **Select** tile to change the names as following to get the expected output values:
+12.  To correct this, let's use our **Select (1)** tile to change the names as following to get the expected output values:
 
-        - **Summary**: `Interaction_summary`
-        - **CustomerSentiment**: `Sentiment`
+        - **Summary**: `Interaction_summary` **(2)**
+        - **CustomerSentiment**: `Sentiment` **(3)**
 
-     ![](images/select.png)
+     ![](images/select-1.png)
     
-13. If we return to our **Sink** tile and **Refresh** our **Data preview** we will now see our expected 5 columns of output.
+13. If we return to our **Sink (1)** tile and under **Data preview (2)** click **Refresh (3)**, we will now see our expected 5 columns of output.
 
-    ![](images/refresh-sink.png)
+    ![](images/refresh-sink-1.png)
 
 14. Once you have reviewed the data and are satisfied that all columns are mapped successfully (you should have 5 columns total, all showing data in a string format), we can press **Publish all** at the top to save our current configuration. A window will open at the right side of the screen - press the blue **Publish** button at the bottom left of it to save your changes.
 
@@ -262,30 +264,30 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
 ### **f. Create Synapse Pipeline**
 
-1. Once we have created our **Data flow** we will need to set up a **Pipeline** to house it. To create a **Pipeline**, navigate to the left-hand menu bar and choose the **Integrate** option (it looks like a pipe). Then click the **+** at the top of the Integrate menu to **Add a new resource** and choose **Pipeline**.
+1. Once we have created our **Data flow** we will need to set up a **Pipeline** to house it. To create a **Pipeline**, navigate to the left-hand menu bar and choose the **Integrate (1)** option. Then click the **+ (2)** at the top of the Integrate menu to **Add a new resource** and choose **Pipeline (3)**.
 
-   ![](images/new-pipeline.png)
+   ![](images/new-pipeline-1.png)
 
-2. Next, we need to add a **Data flow** to our Pipeline. With your new Pipeline tab open, go to the **Activities** section and search for `data` and select **Data flow** activity and drag-and-drop it into your Pipeline.
+2. Next, we need to add a **Data flow** to our Pipeline. With your new **Pipeline tab (1)** open, go to the **Activities** section and search for `data` **(2)** and select **Data flow (3)** activity and **drag-and-drop (4)** it into your Pipeline.
 
-   ![](images/data-drag.png)
+   ![](images/data-drag-1.png)
 
-3. Under the **Settings** tab of the **Data flow**, select the **Data flow** drop-down menu and select the name of the data flow you created in the previous step. 
-Then expand the **Staging** section at the bottom of the settings and utilize the drop-down menu for the **Staging linked service**. Choose the linked service you created **openailinkedservice** ensure to test the connection. Next, set a **Staging storage folder** at the very bottom enter `workshop-data/Staging`.
+3. Under the **Settings (1)** tab of the **Data flow**, select the **Data flow (2)** drop-down menu and select the name of the data flow you created in the previous step. 
+Then expand the **Staging (3)** section at the bottom of the settings and utilize the drop-down menu for the **Staging linked service**. Choose the linked service you created **openailinkedservice (4)** ensure to **Test connection (5)**. Next, set a **Staging storage folder** at the very bottom enter `workshop-data/Staging` **(6)**.
 
-   ![](images/staging.png)
+   ![](images/staging-1.png)
 
 4. Then click **Publish all** to publish your changes and save your progress.
 
 ### **g. Trigger Synapse Pipeline**
 
-1. Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the Studio, there is a *lightning bolt* icon that says **Add trigger**. Click to add trigger and select **Trigger now** to begin a pipeline run.
+1. Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the Studio, there is a *lightning bolt* icon that says **Add trigger (1)**. Click to add trigger and select **Trigger now (2)** to begin a pipeline run.
 
-    ![](images/trigger.png)
+    ![](images/trigger-1.png)
     
-2. To look at the pipeline run, navigate to the left-hand side of the screen and choose the **Monitor**  option. Then select the **Pipeline runs** option in the **Integration** section. You will then see the pipeline run that you have triggered. This particular pipeline should take approximately 4 minutes (if you are using the uploaded data for the workshop).
+2. To look at the pipeline run, navigate to the left-hand side of the screen and choose the **Monitor (1)**  option. Then select the **Pipeline runs (2)** option in the **Integration** section. You will then see the pipeline run that you have triggered under **Triggered (3)** section as **pipeline-1 (4)**. This particular pipeline should take approximately 4 minutes (if you are using the uploaded data for the workshop).
 
-   ![](images/pipeline-run.png)
+   ![](images/pipeline-run-1.png)
 
 ---
 
@@ -297,7 +299,7 @@ Then expand the **Staging** section at the bottom of the settings and utilize th
 
 2. Now that the data is in the target table it is available for usage by running SQL queries against it, or connecting PowerBI and creating visualizations. The Azure Function is running as well, so try uploading some of the transcript files to the generated_documents folder in your container and see how the function processes it and creates a new file in the cleansed_documents file.
 
-3. To query the new data, navigate to the menu on the left-hand side, choose **Develop**. Add a new **SQL Script** and copy the **SQL Code** below. Then select **Run**. 
+3. To query the new data, navigate to the menu on the left-hand side, choose **Develop (1)**. Click on the exisiting **SQL Script (2)** and replace the content with the **SQL Code (3)** below. Then select **Run (4)**. 
 
      ```sql 
     SELECT sentiment, count(*) as "Sum of Sentiment"
@@ -306,10 +308,10 @@ Then expand the **Staging** section at the bottom of the settings and utilize th
     ORDER BY count(*) desc     
      ```
 
-   - Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar results to below.
+   - Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar **Results (5)** to below.
 
   
-   ![](images/query-results.png)
+   ![](images/query-results-1.png)
 
 [Back to the Top](#Summary)
 ---
