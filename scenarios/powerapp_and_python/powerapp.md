@@ -1,5 +1,6 @@
 
-## POWER APP
+## Exercise 4: POWER APP
+
 1. Enter the following link in your browser to download **OpenAI-Playground_20230302010547.zip** folder.
 
 ```
