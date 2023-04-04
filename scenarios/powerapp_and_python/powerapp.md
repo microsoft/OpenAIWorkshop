@@ -56,6 +56,6 @@ https://github.com/rcy0228/OpenAIWorkshop/raw/main/scenarios/powerapp_and_python
 
       ![](./images/endpoint-key.png)
 
-15. From the Apps page click on the app to run the app.
+15. From the **Apps (1)** page click on the **OpenAI Playground (2)** app to run the app.
 
-     ![](./images/runpowerapp.png)
+     ![](./images/runpowerapp-1.png)
