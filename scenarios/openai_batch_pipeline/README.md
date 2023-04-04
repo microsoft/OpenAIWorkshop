@@ -1,4 +1,4 @@
-# Build an Open AI Pipeline to Ingest Batch Data, Perform Intelligent Operations, and Analyze in Synapse
+# Exercise 2: Build an Open AI Pipeline to Ingest Batch Data, Perform Intelligent Operations, and Analyze in Synapse
 # Summary
 
 This scenario allows uses OpenAI to summarize and analyze customer service call logs for the ficticious company, Contoso. The data is ingested into a blob storage account, and then processed by an Azure Function. The Azure Function will return the customer sentiment, product offering the conversation was about, the topic of the call, as well as a summary of the call. These results are written into a separate desginated location in the Blob Storage. From there, Synapse Analytics is utilized to pull in the newly cleansed data to create a table that can be queried in order to derive further insights. 
@@ -31,7 +31,7 @@ This scenario allows uses OpenAI to summarize and analyze customer service call 
 
 Call logs are uploaded to a designated location in Blob Storage. This upload will trigger the Azure Function which utilzies the [Azure OpenAI Service](https://azure.microsoft.com/en-us/products/cognitive-services/openai-service/) for summarization, sentiment analysis, product offering the conversation was about, the topic of the call, as well as a summary of the call. These results are written into a separate desginated location in the Blob Storage. From there, Synapse Analytics is utilized to pull in the newly cleansed data to create a table that can be queried in order to derive further insights. 
 
-## Step 1: Ingest Data to Storage account
+## Task 1: Ingest Data to Storage account
 
 ### a. Launch Azure Cloud Shell
 
@@ -111,9 +111,9 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
    ![](images/batch_file_upload2.png)
 ---
 
-## Step 2: Set up Synapse Workspace
+## Task 2: Set up Synapse Workspace
 
-### **a. Create the Synapse SQL Pool**
+### **A. Create the Synapse SQL Pool**
 
 1.  Go to <https://portal.azure.com> and sign in with your organizational account. In the search box at the top of the portal, search for your workspace
     and click on the Synapse workspace (not the SQL Server) which appears under the Resources section.
@@ -136,7 +136,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
    ![](images/openaipool-online.png)
 
-### **c. Create Target SQL Table**
+### **B. Create Target SQL Table**
 
 1. Once the SQL Pool has been created, click into the **Develop (1)** section of the Synapse Studio, click the "**+ (2)**" sign in the top-left, and select **SQL script (3)**. This will open a new window with a SQL script editor. 
 
@@ -161,7 +161,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
     ![](images/publish-sqlscript.png)
 
-### **d. Create Source and Target Linked Services**
+### **C. Create Source and Target Linked Services**
 
 We'll next need to create two linked services: One for our Source (the JSON files in the Data Lake) and another for the Synapse SQL Database that houses the table we created in the previous step.
 
@@ -189,7 +189,7 @@ We'll next need to create two linked services: One for our Source (the JSON file
 
    ![](images/publish-linked.png)
    
-### **e. Create Synapse Data Flow**
+### **D. Create Synapse Data Flow**
 
 While still within the Synapse Studio, we will now need to create a **Data flow** to ingest our JSON data and write it to our SQL Database. For the purposes of this workshop, this will be a very simple data flow that ingests the data, renames some columns, and writes it back out to the target table. 
 
@@ -262,7 +262,7 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
     ![](images/completed-dataflow.png)
 
-### **f. Create Synapse Pipeline**
+### **E. Create Synapse Pipeline**
 
 1. Once we have created our **Data flow** we will need to set up a **Pipeline** to house it. To create a **Pipeline**, navigate to the left-hand menu bar and choose the **Integrate (1)** option. Then click the **+ (2)** at the top of the Integrate menu to **Add a new resource** and choose **Pipeline (3)**.
 
@@ -279,7 +279,7 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
 
 4. Then click **Publish all** to publish your changes and save your progress.
 
-### **g. Trigger Synapse Pipeline**
+### **F. Trigger Synapse Pipeline**
 
 1. Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the Studio, there is a *lightning bolt* icon that says **Add trigger (1)**. Click to add trigger and select **Trigger now (2)** to begin a pipeline run.
 
@@ -291,7 +291,7 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
 
 ---
 
-## Step 4. Query Results in Our SQL Table
+## Task 3. Query Results in Our SQL Table
 
 1. Ensure that your pipeline run status has **Succeded**.
 
