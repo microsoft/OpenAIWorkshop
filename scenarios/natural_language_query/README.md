@@ -50,7 +50,7 @@ Step 6: Azure function returns the results to end user
 
    ![](images/nlquery.png)
 
-3. From **NLQuery** go to **Code + Test (1)**, then click **Test/Run (2)** select "GET (3)" in **HTTP method** dropdown, click **+** under to **Query** and enter **prompt (4)** in Name field and **show top 10 products (5)** in value field. Click **Run (6)**.
+3. From **NLQuery** go to **Code + Test (1)**, then click **Test/Run (2)** select **GET (3)** in **HTTP method** dropdown, click **+ Add parameter** under to **Query** and enter **prompt (4)** in Name field and **show top 10 products (5)** in value field. Click **Run (6)**.
 
    ![](images/code+test.png)
 
@@ -105,7 +105,7 @@ Step 6: Azure function returns the results to end user
     https://functionappXXXXXX.azurewebsites.net/api/NLQuery?prompt=
     ```
   
-   ![](images/nqlquery-url-save.png)
+      ![](images/nqlquery-url-save.png)
 
 
 11. Run the App by clicking on the App
@@ -120,17 +120,16 @@ Step 6: Azure function returns the results to end user
 
 1. Navigate to https://make.powerapps.com/ and click on **App launcher** on the top left corner and select **Power Automate**.
 
-
-   ![](images/app-launcher.png)
+     ![](images/app-launcher.png)
 
 
 2.  Click on **Data (1)** and select **Custom Connectors (2)**, click on **+ New custom connector (3)** then click on **Create from blank (4)**. Just keep the screen as is and move to the next step.
 
     ![](images/power-automate.png)
    
-   - Enter the **Connector name** as `Openai-custom-connector`. Just keep the screen as is and move to the next step.
+      - Enter the **Connector name** as `Openai-custom-connector`. Just keep the screen as is and move to the next step.
 
-     ![](images/openai-custom-connector.png)
+      ![](images/openai-custom-connector.png)
 
 3.  From the file explorer navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query` and open **get-prompt.txt**.
 
@@ -155,7 +154,7 @@ Step 6: Azure function returns the results to end user
    
    ![](images/start-trail-90days.png)
    
-5. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** **(2)** in the swagger editor. Click **Create connector (**.
+5. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** **(2)** in the swagger editor. Click **Create connector**.
 
    ![](images/swagger-editor.png)
    
@@ -177,7 +176,7 @@ Step 6: Azure function returns the results to end user
   
 10. You need to delete the third step which in your case will be **HTTTP** flow.
 
-      ![](images/delete-http.png)
+    ![](images/delete-http.png)
 
 11. Click **Parse JSON** step , click inside **Content** field, click on right side and select **body** . 
   
@@ -234,7 +233,6 @@ Step 6: Azure function returns the results to end user
 1.  Search the App which you deployed in step 4 and and click it 
 
     ![](images/powerapps26.png)
-
 
     ![](images/powerapps27.png)
 

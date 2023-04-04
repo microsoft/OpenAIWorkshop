@@ -115,12 +115,12 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 ### **a. Create the Synapse SQL Pool**
 
-1.  Go to <https://portal.azure.com> and sign in with your organizational account. In the search box at the top of the portal, search for **asaworkspace**
+1.  Go to <https://portal.azure.com> and sign in with your organizational account. In the search box at the top of the portal, search for your workspace
     and click on the Synapse workspace (not the SQL Server) which appears under the Resources section.
 
-     ![](images/image12.png)
+     ![](images/search-select.png)
 
-1.  On the **Overview** blade and the Essentials section, click the **Workspace web URL** link to open Synapse Studio.
+1.  On the **Overview** blade under **Getting started** section, click **Open** to open Synapse Studio.
      
     ![](images/asaworkspace.png)
     
@@ -132,9 +132,9 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
    ![](images/synapse2.png)
 
-1. It may take a moment for your SQL Pool to initialize. Once it is completed you will see this:
+1. It may take a moment for your SQL Pool to initialize. Once it is completed you will see that the status of the pool is **Online**.
 
-   ![](images/synapse2.png)
+   ![](images/openaipool-online.png)
 
 ### **c. Create Target SQL Table**
 
@@ -142,7 +142,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
    ![](images/synapse3.png)
 
-1. Copy and paste the following script into the editor and click the **Run (2)** button in the top-left, as shown in the picture below. Finish this step by pressing **Publish all (3)** just above the **Run** button to publish our work thus far.
+1. Copy and paste the following script into the editor **(1)** then change the **Connect to** value by selecting **openaipool (2)** from the drop-down and for **Use database** ensure that **openaipool (3)** is selected  and click the **Run (4)** button in the top-left, as shown in the picture below. Finish this step by pressing **Publish all (5)** just above the **Run** button to publish our work thus far.
 
     ```SQL 
     CREATE TABLE [dbo].[cs_detail]
@@ -155,9 +155,11 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     )
     ```
     
-    ![](images/synapse4.png)
+    ![](images/create-dob.png)
     
-    > **Note:** You will need to change the **Connect to** and **Use database** portions in the SQL editor to point towards the SQL Pool you created in the previous step
+1. Next click on Publish to publish the **SQL Script**.
+
+    ![](images/publish-sqlscript.png)
 
 ### **d. Create Source and Target Linked Services**
 
@@ -171,31 +173,31 @@ We'll next need to create two linked services: One for our Source (the JSON file
 
    ![](images/synapse6.png)
 
-1. Provide the name for your Linked Service as **openailinkedservice (1)**. Change the **Authentication type** to *System Assigned Managed Identity (2)*. Then select the **subcription (3)** you have been working in, finally selecting the Storage account with the suffix **functions (4)** which you created in the initial template and loaded the JSON files into. Click the **Create (5)** button in blue on the bottom left of the New linked service window.
+1. Provide the name for your Linked Service as **openailinkedservice (1)**. Change the **Authentication type** to **System Assigned Managed Identity (2)**. Then select the **subcription (3)** you have been working in, finally selecting the Storage account with the suffix **functions (4)** which you created in the initial template and loaded the JSON files into. Click the **Create (5)** button in blue on the bottom left of the New linked service window.
 
    ![](images/synapse7.png)
 
-1. Next, we'll create the Linked Service to our Target table in our Synapse SQL Pool. Begin by clicking the **New** button in the *Linked services** section as we did in the step just previously for the Source. This time, however, search for "Synapse (1)", select **Azure Synapse Analytics (2)** and click on **Continue (3)**.
+1. Search for **Synapse (1)**, select **Azure Synapse Analytics (2)** and click on **Continue (3)**.
 
    ![](images/synapse8.png)
 
-1. In the *New linked service* window that opens, fill in a name for your target linked service as **synapselinkedservice** **(1)**. Select the **Azure subcription (2)** in which you have been working and where you created your Synapse SQL Pool. Select the **Server name ((3)** and **Database name (4)** and in which created the target table above. Be certain to change the **Authentication type** to *System Assigned Managed Identity (5)* and click on **create (6)**.
+1. In the *New linked service* window that opens, fill in a name for your target linked service as **synapselinkedservice** **(1)**. Select the **Azure subcription (2)** in which you have been working and where you created your Synapse SQL Pool. Select the **Server name ((3)** and **Database name (4)** and in which created the target table above. Be certain to change the **Authentication type** to **System Assigned Managed Identity (5)** and click on **Create (6)**.
 
    ![](images/synapse9.png)
 
-1. Once you have created the two Linked Services, be certain to press the **Publish all** button at the top to publish our work and finalize the creation of the linked services. After it is finished, you will see a screen similar to this:
+1. Once you have created the two Linked Services, be certain to press the **Publish all** button at the top to publish our work and finalize the creation of the linked services and click **Publish**.
 
-   ![](images/synapse10.png)
+   ![](images/publish-linked.png)
    
 ### **e. Create Synapse Data Flow**
 
 While still within the Synapse Studio, we will now need to create a **Data flow** to ingest our JSON data and write it to our SQL Database. For the purposes of this workshop, this will be a very simple data flow that ingests the data, renames some columns, and writes it back out to the target table. 
 
-1. First, we'll want to go back to the **Develop (1)** tab, select **"+ (2)"**, and then *Data flow (3)**
+1. First, we'll want to go back to the **Develop (1)** tab, select **+ (2)**, and then **Data flow (3)**
 
    ![](images/synapse11.png)
    
-2. Once the data flow editor opens, click **Add Source**. A new window will open at the bottom of the screen, select "New" on the **Dataset** row while leaving the other options as default:
+2. Once the data flow editor opens, click **Add Source**. A new window will open at the bottom of the screen, select **New** on the **Dataset** row while leaving the other options as default:
 
    ![](images/synapse12.png)
 
@@ -205,17 +207,19 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
    
    ![](images/synapse14.png)
 
-4. Select the Linked Service with the name **openailinkedservice (1)** we just set up in the steps above. You will need to select the proper **File path** to select the Directory where our JSON files are stored. It should be something to the effect of "workshop-data / cleansed_documents (2)". Click the **OK** button to close the window
+4. Select the Linked Service with the name **openailinkedservice (1)** we just set up in the steps above. You will need to select the proper **File path** to select the Directory where our JSON files are stored. It should be something to the effect of **workshop-data / cleansed_documents (2)**. Click the **OK** button to close the window
 
    ![](images/synapse15.png)
    
-5. Next, we'll need to move to the **Source options (1)** panel and drop-down the **JSON settings (2)** options. We need to change the **Document form** option to the *Array of documents (3)* setting. This allows our flow to read each .json file as a separate entry into our database:
+5. Next, we'll need to move to the **Source options (1)** panel and drop-down the **JSON settings (2)** options. We need to change the **Document form** option to the **Array of documents (3)** setting. This allows our flow to read each .json file as a separate entry into our database:
 
    ![](images/synapse16.png)
 
-6. If you have turned on a *data flow debug* session, you can head to the **Data preview** tab and run a preview to check your work thus far:
+6. Enable the *data flow debug* session, then head to the **Data preview** tab and run a preview to check your work thus far:
 
-   ![](images/)
+    >**Note:** It will take a minute or two for the **data flow debug** session to get enabled.
+    
+    ![](images/dataflow-datapreview.png)
    
 7. Next we can add in our **Select** tile and do our minor alteration before writing the data out to the Synapse SQL table. To begin, click the small **+ (1)** sign next to our ingestion tile, and choose the **Select (2)** option:
 
@@ -225,81 +229,87 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
    ![](images/synapse18.png)
 
-9. Once the **Sink (1)** tile opens, choose **Inline (2)** for the *Sink type*. Then select **Azure Synapse Analytics (3)** for the *Inline dataset type* and the proper **Linked service (4)** based on the name we assigned in our earlier step.
+9. Once the **Sink (1)** tile opens, choose **Inline (2)** for the *Sink type*. Then select **Azure Synapse Analytics (3)** for the *Inline dataset type* and for the  **Linked service** select **synapselinkedservice (4)** that was created in the previous step. Ensure to run **Test connection (5)** for the linked service.
 
-   ![](images/synapse19.png)
+   ![](images/sink-1.png)
 
 10. We will then need to head over to the **Settings** tab and adjust the **Scehma name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo** and the Table name is **cs_detail**.
 
     ![](images/synapse20.png)
 
-11. Before we finish our work in the data flow, we should preview our data:
+11. Before we finish our work in the data flow, we should preview our data, previewing our data reveals we only have 3 columns when we are expecting a total of 5. We have lost our Summary and Sentiment columns.
 
-    ![](images/synapse11.png)
+    ![](images/data-preview.png)
 
-12. Previewing our data reveals we only have 3 columns when we are expecting a total of 5. We have lost our Summary and Sentiment columns. To correct this, let's use our **Select** tile to change the names of our columns to the expected output values:
+12.  To correct this, let's use our **Select** tile to change the names as following to get the expected output values:
 
-    ![](images/synapse11.png)
+        - **Summary**: `Interaction_summary`
+        - **CustomerSentiment**: `Sentiment`
+
+     ![](images/select.png)
     
-13. If we return to our **Sink** tile and **Refresh** our **Data preview** we will now see our expected 5 columns of output:
+13. If we return to our **Sink** tile and **Refresh** our **Data preview** we will now see our expected 5 columns of output.
 
-    ![](images/synapse11.png)
+    ![](images/refresh-sink.png)
 
 14. Once you have reviewed the data and are satisfied that all columns are mapped successfully (you should have 5 columns total, all showing data in a string format), we can press **Publish all** at the top to save our current configuration. A window will open at the right side of the screen - press the blue **Publish** button at the bottom left of it to save your changes.
 
-15. Your completed and saved Data flow will look something like this:
+    ![](images/publish-dataflow.png)
 
-    ![](images/synapse11.png)
+15. Your completed and saved Data flow will look similar to the following:
+
+    ![](images/completed-dataflow.png)
 
 ### **f. Create Synapse Pipeline**
 
-1. Once we have created our **Data flow** we will need to set up a **Pipeline** to house it. To create a **Pipeline**, navigate to the left-hand menu bar and choose the **In tegration** option (it looks like a pipe). Then click the **+** at the top of the Integrate menu to **Add a new resource** and choose **Pipeline**:
+1. Once we have created our **Data flow** we will need to set up a **Pipeline** to house it. To create a **Pipeline**, navigate to the left-hand menu bar and choose the **Integrate** option (it looks like a pipe). Then click the **+** at the top of the Integrate menu to **Add a new resource** and choose **Pipeline**.
 
-![](../../documents/media/batch_pipeline1.png)
+   ![](images/new-pipeline.png)
 
-2. Next, we need to add a **Data flow** to our Pipeline. With your new Pipeline tab open, go to the **Activities** section and search for "data" - selec the **Data flow** acvtivity and drag-and-drop it into your Pipeline:
+2. Next, we need to add a **Data flow** to our Pipeline. With your new Pipeline tab open, go to the **Activities** section and search for `data` and select **Data flow** activity and drag-and-drop it into your Pipeline.
 
-![](../../documents/media/batch_pipeline2.png)
+   ![](images/data-drag.png)
 
 3. Under the **Settings** tab of the **Data flow**, select the **Data flow** drop-down menu and select the name of the data flow you created in the previous step. 
-Then expand the **Staging** section at the bottom of the settings and utilize the drop-down menu for the **Staging linked service**. Choose the linked service you created earlier (feel free to test the connection). Next, set a**Staging storage folder** at the very bottom. You can copy the names in the picture below or choose your own.
+Then expand the **Staging** section at the bottom of the settings and utilize the drop-down menu for the **Staging linked service**. Choose the linked service you created **openailinkedservice** ensure to test the connection. Next, set a **Staging storage folder** at the very bottom enter `workshop-data/Staging`.
 
-Then click **Publish all** to publish your changes and save your progress.
+   ![](images/staging.png)
 
-![](../../documents/media/batch_pipeline3.png)
+4. Then click **Publish all** to publish your changes and save your progress.
 
 ### **g. Trigger Synapse Pipeline**
 
 1. Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the Studio, there is a *lightning bolt* icon that says **Add trigger**. Click to add trigger and select **Trigger now** to begin a pipeline run.
 
-![](../../documents/media/batch_pipeline4.png)
+    ![](images/trigger.png)
+    
+2. To look at the pipeline run, navigate to the left-hand side of the screen and choose the **Monitor**  option. Then select the **Pipeline runs** option in the **Integration** section. You will then see the pipeline run that you have triggered. This particular pipeline should take approximately 4 minutes (if you are using the uploaded data for the workshop).
 
-2. To look at the pipeline run, navigate to the left-hand side of the screen and choose the **Monitor**  option (looks like a radar screen). Then select the **Pipeline runs** option in the **Integration** section. You will then see this and any other pipeline runs that you have triggered (as shown below). This particular pipeline should take approximately 4 minutes (if you are using the uploaded data for the workshop).
-
-![](../../documents/media/batch_pipeline5.png)
+   ![](images/pipeline-run.png)
 
 ---
 
 ## Step 4. Query Results in Our SQL Table
 
-1. Once you see that your pipeline run above was successful:
+1. Ensure that your pipeline run status has **Succeded**.
 
-![](../../documents/media/batch_pipeline6.png)
+    ![](images/pipline-succeeded.png)
 
 2. Now that the data is in the target table it is available for usage by running SQL queries against it, or connecting PowerBI and creating visualizations. The Azure Function is running as well, so try uploading some of the transcript files to the generated_documents folder in your container and see how the function processes it and creates a new file in the cleansed_documents file.
 
-3. To query the new data, navigate to the menu on the left-hand side, choose **Develop**. You then either add a new SQL Script or open a previous one and copy the SQL Code below. Then select **Run**. Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar results to below.
+3. To query the new data, navigate to the menu on the left-hand side, choose **Develop**. Add a new **SQL Script** and copy the **SQL Code** below. Then select **Run**. 
 
-Here is a query to get started:
+     ```sql 
+    SELECT sentiment, count(*) as "Sum of Sentiment"
+    FROM [dbo].[cs_detail]
+    GROUP BY sentiment
+    ORDER BY count(*) desc     
+     ```
 
- ```sql 
-SELECT sentiment, count(*) as "Sum of Sentiment"
-FROM [dbo].[cs_detail]
-GROUP BY sentiment
-ORDER BY count(*) desc     
- ```
+   - Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar results to below.
 
-![](../../documents/media/batch_synapsesuccessquery.png)
+  
+   ![](images/query-results.png)
 
 [Back to the Top](#Summary)
 ---
