@@ -1,4 +1,4 @@
-# Build Open AI Application on Power App to allow users to use natural language question on top of SQL data
+# Exercise 1: Build Open AI Application on Power App to allow users to use natural language question on top of SQL data
 ### Summary.
 
 This scenario allows users to use Open AI as an intelligent agent to get business questions prompts from end users and generating SQL queries from the prompts.This implementation scenario focuses on building a Natural Language to query from business questions and generate the queries for database retrieval 
@@ -21,7 +21,7 @@ Step 5: The query is executed on SQL database and results are returned to Azure 
 Step 6: Azure function returns the results to end user 
 ### Azure services deployment
    
-## Step1: Configure Azure Function App
+## Task 1: Configure Azure Function App
 
 1. Open func-config.txt in scenarios/natural_language_query/azurefunc folder and provide the Open AI engine, Open AI rest end point, SQL server and SQL database name
 
@@ -40,7 +40,7 @@ Step 6: Azure function returns the results to end user
 
 
 
-## Step 2. Test the function App
+## Task 2. Test the function App
 
 1. Go to **openai-<inject key="Deployment ID"></inject> (1)** resource group and open **functionapp<inject key="Deployment ID"></inject> (2)** function app.
 
@@ -61,7 +61,7 @@ Step 6: Azure function returns the results to end user
    >**Note:** Please press the Run again if the output tab does not print the records
 
 
-## Step 3. Deploy client Power App
+## Task 3. Deploy client Power App
 
 1. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region (1)** click **Get Started (2)**. 
 
@@ -116,7 +116,7 @@ Step 6: Azure function returns the results to end user
 
 
 
-## Step 4. Build the Connector App (Optional)
+## Task 4. Build the Connector App (Optional)
 
 1. Navigate to https://make.powerapps.com/ and click on **App launcher** on the top left corner and select **Power Automate**.
 
@@ -226,7 +226,7 @@ Step 6: Azure function returns the results to end user
 
 13. Please run the App
   
-## Step 5. Test the Power App
+## Task 5. Test the Power App
 
 1. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
 
