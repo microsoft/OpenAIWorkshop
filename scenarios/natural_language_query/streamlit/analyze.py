@@ -23,7 +23,7 @@ class AnalyzeGPT:
         self.db_user = db_user
         self.db_password = db_password
         system_message = f"""
-    <<Database tables>>:
+    <<Database structure>>
     {tables_structure}
     {system_message}
     {few_shot_examples}
@@ -93,7 +93,10 @@ class AnalyzeGPT:
             stop=f"Observation {i}"
             )
             i+=1
-            llm_output = (response['choices'][0]['message']['content'])
+            try:
+                llm_output = response['choices'][0]['message']['content']
+            except:
+                print("error in output ", response)
             output = llm_output.split("\n")
             final_answer_given= False
             for out in output:
@@ -103,8 +106,7 @@ class AnalyzeGPT:
                         st.write(out)
                         final_answer_given= True
 
-            if ("Answer" in llm_output) or ("Query[" not in llm_output):
-                # print(llm_output)
+            if ("Answer" in llm_output) or (("Query[" not in llm_output) and ("Python[" not in llm_output)):
                 if not final_answer_given:
                     st.write(output[-1])
                 print("Final answer is given or no actionable action is provided, stop")
@@ -143,9 +145,6 @@ class AnalyzeGPT:
                 new_content =  llm_output + f"Observation {i-1}: {observation_out}"
                 new_content= history["content"] +"\n"+new_content
                 history["content"] = new_content
-                if "ODBC Driver" in observation: #query syntax is not correct, need to retry
-                    continue
-                
                 
 
 
