@@ -73,8 +73,8 @@ class AnalyzeGPT:
             file.write(python_code)
         graph = imp.load_source("graph", f".tmp/{file_name}.py")
         fig = graph.visualize_data(observation_df)
-        os.remove(f".tmp/{file_name}.py")
         st.plotly_chart(fig)
+        os.remove(f".tmp/{file_name}.py")
 
         
 
@@ -112,8 +112,7 @@ class AnalyzeGPT:
             sql_query, python_code ="",""
             try:
                 sql_query = re.findall(r"Query\[(.*?)\]", llm_output, re.DOTALL)[0].strip()
-
-                python_code = re.findall(r"Python\[(.*?)\]", llm_output, re.DOTALL)[0].strip()
+                python_code = re.findall(r"Python\[```([\s\S]*?)```]", llm_output)[0]
             except:
 
                 pass
