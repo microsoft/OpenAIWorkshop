@@ -1,13 +1,7 @@
 
 ## Exercise 4: POWER APP
 
-1. Enter the following link in your browser to download **OpenAI-Playground_20230302010547.zip** folder.
-
-```
-https://github.com/rcy0228/OpenAIWorkshop/raw/main/scenarios/powerapp_and_python/powerapp/OpenAI-Playground_20230302010547.zip
-```
-
-2. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region (1)** click **Get Started (2)**. 
+1. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region (1)** click **Get Started (2)**. 
 
    ![](./images/welcome-1.png)
     
@@ -19,9 +13,9 @@ https://github.com/rcy0228/OpenAIWorkshop/raw/main/scenarios/powerapp_and_python
 
     ![](./images/upload-importpackage.png)
 
-5. From the **Downloads (1)** select the **OpenAI-Playground_20230302010547.zip (2)** folder you downloaded earlier and click on **Open (3)**.
+5. Navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\powerapp_and_python\powerapp` select the **OpenAI-Playground_20230302010547.zip (1)** folder  and click on **Open (2)**.
 
-     ![](./images/upload-openai-playground.png)
+     ![](./images/openai-play.png)
 
 6. Once the zip file is uploaded, in the **Review Package Content** for **OpenAI Playground** click on setup icon under **Actions**. 
 
@@ -47,7 +41,7 @@ https://github.com/rcy0228/OpenAIWorkshop/raw/main/scenarios/powerapp_and_python
 
 12. To navigate back click on **Back (1)** then click **Leave (2)**.
 
-      ![](./images/exit-openai-powerapp-1.png
+      ![](./images/exit-openai-powerapp-1.png)
 
 13. Next select the **Flows (1)** Pane, click on **Edit (2)** for **Openaisummarization**.
 
