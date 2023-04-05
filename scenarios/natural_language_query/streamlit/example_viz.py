@@ -48,16 +48,16 @@ Thought 5: Result came back and it is less than 80% so top 20% customers do not 
 Action 5: Answer[No, top 20% customers do not account for 80% of sales]
 """
 openai.api_type = "azure"
-openai.api_key = ""  # SET YOUR OWN API KEY HERE
-openai.api_base = "https://.openai.azure.com/" # SET YOUR RESOURCE ENDPOINT
+openai.api_key = "d668777259a541a6beba2bdf43e1b519"  # SET YOUR OWN API KEY HERE
+openai.api_base = "https://anildwaopenai2.openai.azure.com/" # SET YOUR RESOURCE ENDPOINT
 openai.api_version = "2023-03-15-preview" 
 max_response_tokens = 1250
 token_limit= 4096
-gpt_deployment="gpt-35-turbo"
+gpt_deployment="chatgpt"
 database="WideWorldImportersDW"
-dbserver=".database.windows.net"
-db_user=""
-db_password= ""
+dbserver="oaisqldemo.database.windows.net"
+db_user="oaireaderuser"
+db_password= "Oaiworkshop@password123"
 analyzer = AnalyzeGPT(tables_structure, system_message,few_shot_examples, gpt_deployment,max_response_tokens,token_limit,database,dbserver,db_user, db_password)
 st.title('Data Analysis Assistant')
 question = st.text_area("Ask me a  question in sales")
