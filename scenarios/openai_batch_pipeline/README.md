@@ -245,8 +245,8 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
 12.  To correct this, let's use our **Select (1)** tile to change the names as following to get the expected output values:
 
-        - **Summary**: `Interaction_summary` **(2)**
-        - **CustomerSentiment**: `Sentiment` **(3)**
+     - **Summary**: `Interaction_summary` **(2)**
+     - **CustomerSentiment**: `Sentiment` **(3)**
 
      ![](images/select-1.png)
     

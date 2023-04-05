@@ -1,4 +1,4 @@
-# Glossary
+# Exercise 5E: Glossary (Read-Only)
 
 *language model (LM)*
 ```

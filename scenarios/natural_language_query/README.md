@@ -42,7 +42,7 @@ Step 6: Azure function returns the results to end user
 
 ## Task 2. Test the function App
 
-1. Go to **openai-<inject key="Deployment ID"></inject> (1)** resource group and open **functionapp<inject key="Deployment ID"></inject> (2)** function app.
+1. Go to **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group and open **functionapp<inject key="DeploymentID" enableCopy="false" /></inject> (2)** function app.
 
    ![](images/open-func-1.png)
 
@@ -143,11 +143,12 @@ Step 6: Azure function returns the results to end user
   
         operationId: Get-Prompt **(3)**
 
-    ![](images/get-prompt-edit-1.png)
+      ![](images/get-prompt-edit-1.png)
   
   >**Note:** host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account
 
-    ![](images/code+test-getfuncurl.png)
+    
+   ![](images/code-test-getfuncurl.png)
 
 
 4. In the Custom connector app browser tab , click on **Start trail**. 
