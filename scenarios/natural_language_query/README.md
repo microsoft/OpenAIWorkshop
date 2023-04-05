@@ -83,7 +83,7 @@ Step 6: Azure function returns the results to end user
 
     ![](./images/import-nlpquery.png)
 
-6. Navigate back **openai-<inject key="Deployment ID"></inject> (1)** resource group and open **functionapp<inject key="Deployment ID"></inject> (2)** function app.
+6. Navigate back **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group and open **functionapp<inject key="DeploymentID" enableCopy="false" /></inject> (2)** function app.
 
    ![](images/open-func-1.png)
 
@@ -110,9 +110,9 @@ Step 6: Azure function returns the results to end user
 
 11. Run the App by clicking on the App
 
-   ![](images/powerapps8.png)
+   ![](images/powerapps8-1.png)
 
-   ![](images/powerapps9.png)
+   ![](images/powerapps9-1.png)
 
 
 
@@ -219,19 +219,16 @@ Step 6: Azure function returns the results to end user
    
      ![](images/apps-nlq-1.png)
      
-21. Click on Power Automate,  once Power Automate opens click refresh and click save on right top side. 
+21. Click on Power Automate,  once Power Automate opens click **Save** on right top side. 
 
-   ![](images/powerapps24.png)
-  
-   ![](images/powerapps25.png)
 
-13. Please run the App
+22. Please run the App.
   
 ## Task 5. Test the Power App
 
 1. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
 
-1.  Search the App which you deployed in step 4 and and click it 
+1.  Search the App which you deployed in step 4 and and click it .
 
     ![](images/powerapps26.png)
 
