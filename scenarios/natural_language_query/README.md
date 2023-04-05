@@ -83,7 +83,7 @@ Step 6: Azure function returns the results to end user
 
     ![](./images/import-nlpquery.png)
 
-6. Navigate back **openai-<inject key="Deployment ID"></inject> (1)** resource group and open **functionapp<inject key="Deployment ID"></inject> (2)** function app.
+6. Navigate back **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group and open **functionapp<inject key="DeploymentID" enableCopy="false" /></inject> (2)** function app.
 
    ![](images/open-func-1.png)
 
