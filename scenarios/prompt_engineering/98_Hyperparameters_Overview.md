@@ -1,4 +1,4 @@
-# Basic Overview of Azure OpenAI Service Hyperparameters
+# Exercise 5D: Basic Overview of Azure OpenAI Service Hyperparameters (Read-Only)
 ## Quick Note on adjusting Hyperparameters
 
 When working with prompts, you will be interacting with the LLM via an API or directly. You can configure a few parameters to get different results for your prompts.
