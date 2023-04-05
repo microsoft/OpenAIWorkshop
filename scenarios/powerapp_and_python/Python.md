@@ -38,3 +38,11 @@
 1. In **logprobs**, replace **engine** value from **text-curie-001** to **demomodel**.
 
      ![](images/logprobs.png)
+
+1. After running the notebook successfully, click on **Publish all**.
+
+     ![](images/publish.png)
+
+1. Then click **Publish**. 
+
+    ![](images/publish-1.png)
