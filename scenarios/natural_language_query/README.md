@@ -110,9 +110,9 @@ Step 6: Azure function returns the results to end user
 
 11. Run the App by clicking on the App
 
-   ![](images/powerapps8.png)
+   ![](images/powerapps8-1.png)
 
-   ![](images/powerapps9.png)
+   ![](images/powerapps9-1.png)
 
 
 
