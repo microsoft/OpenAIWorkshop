@@ -65,7 +65,6 @@ class AnalyzeGPT:
             # Extract the content between the first and second delimiter  
             python_code = python_code[1]
             python_code= python_code.strip('python')
-        st.code(python_code)  
         N=5
         file_name = ''.join(random.choices(string.ascii_letters, k=N))
         os.makedirs(".tmp", exist_ok=True)
@@ -93,59 +92,66 @@ class AnalyzeGPT:
             stop=f"Observation {i}"
             )
             i+=1
-            try:
-                llm_output = response['choices'][0]['message']['content']
-                print(llm_output)
-            except:
-                print("error in output ", response)
-            output = llm_output.split("\n")
-            final_answer_given= False
-            for out in output:
-                if len(out)>0 and ("Thought" in out or "Observation" in out):
-                    st.write(out)
-                    if "Answer" in out:
-                        st.write(out)
-                        final_answer_given= True
-
-            if ("Answer" in llm_output) or (("Query[" not in llm_output) and ("Python[" not in llm_output)):
-                if not final_answer_given:
-                    st.write(output[-1])
-                print("Final answer is given or no actionable action is provided, stop")
-                break
+            llm_output = response['choices'][0]['message']['content']
+            print("llm_output ",llm_output )
+            # pattern = r"```[\s\S]*?```"
+            # comment_text = re.sub(pattern, "", llm_output)
             sql_query, python_code ="",""
-            try:
-                sql_query = re.findall(r"Query\[(.*?)\]", llm_output, re.DOTALL)[0].strip()
-                python_code = re.findall(r"Python\[```([\s\S]*?)```]", llm_output)[0]
-            except:
+            # Extract SQL query  
+            sql_pattern = r"```SQL\n(.*?)```"  
+            sql_query_result = re.findall(sql_pattern, llm_output, re.DOTALL)
+            if len(sql_query_result)>0:
+                sql_query= sql_query_result[0]
+            # Extract Python code  
+            python_pattern = r"```Python\n(.*?)```"  
+            python_code_result = re.findall(python_pattern, llm_output, re.DOTALL)
+            if len(python_code_result)>0:
+                python_code= python_code_result[0]
+            
 
-                pass
+            print("SQL Query:\n", sql_query)  
+            print("\nPython Code:\n", python_code)  
+            comment_text=llm_output.replace(python_code,"")
+            comment_text =comment_text.replace(sql_query,"")
+            comment_text= comment_text.replace("```Python","")
+            comment_text= comment_text.replace("```SQL","")
+            comment_text= comment_text.replace("```","")
+            comment_text= comment_text.strip()
+
+            # pattern = r".*?(?=(```))"  
+            # comment_text = re.findall(pattern, llm_output, re.DOTALL)
+            if len(comment_text)>0:
+                st.write(f"Thought {i-1}:")
+                st.write(comment_text)
+
+
             if len(sql_query)>0 or len(python_code)>0:
                 st.write(f"Action {i-1}:")
-            if len(sql_query)>0:
-                st.code(sql_query)
-                
-                if ('```' in sql_query):
-                    sql_query = sql_query.split('```')  
-                    # Extract the content between the first and second delimiter  
-                    sql_query = sql_query[1]
+                if len(sql_query)>0:
+                    st.code(sql_query)
+                if len(python_code)>0:
+                    st.code(python_code)        
 
                 observation = self.execute_sql_query(sql_query)
                 st.write(f"Observation {i-1}:")
-                display_text =True
+                display_text=True
                 try:
-                    observation_out = observation.to_json() #Query execute successfully
+                    converted_observation = observation.to_json() #Query execute successfully
                     if len(python_code)>0:
                         self.visualize(python_code,observation,st)
                         display_text=False
-
                 except Exception as e:
                     print(e)
-                    observation_out= str(observation)
+                    converted_observation= str(observation)
                 if display_text:
                     st.write(observation)
-                new_content =  llm_output + f"Observation {i-1}: {observation_out}"
+                new_content =  llm_output + f"Result comeback, comment or explain or plan next step\n: {converted_observation}"
                 new_content= history["content"] +"\n"+new_content
                 history["content"] = new_content
+            else:
+                print("Final answer is given or no actionable action is provided, stop")
+                break
+                
                 
 
 

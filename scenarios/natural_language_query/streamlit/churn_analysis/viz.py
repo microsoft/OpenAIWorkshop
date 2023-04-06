@@ -2,8 +2,10 @@ import streamlit as st
 import random
 import pandas as pd
 import sys
-from analyze import AnalyzeGPT
+sys.path.append('../')
+from analyze_v2 import AnalyzeGPT
 import openai
+visualization_on = st.checkbox('Enable Visualization', value=False)  
 
 tables_structure="""
 The table account_usage has following structure
@@ -58,32 +60,22 @@ TARGET_RENEWAL_OUTCOME	CATEGORICAL	The outcome of account based on delta normali
 
 """
 few_shot_examples="""
-<<Examples to follow:>>
-Question: What's the region with largest percentage in number of accounts?
-Thought 1: I need to build query to caculate the percentage of accounts count per each region and retrieve the top one.  
-Action 1: Query[SELECT TOP 1  \nREGION,  \nCOUNT(DISTINCT ACCOUNTID_M) AS ACCOUNT_COUNT,  \n(CAST(COUNT(DISTINCT ACCOUNTID_M) AS FLOAT) / (SELECT COUNT(DISTINCT ACCOUNTID_M) FROM account_usage) * 100.0) AS PERCENTAGE_OF_TOTAL  \nFROM   \naccount_usage  GROUP BY   \nREGION  \nORDER BY   \nPERCENTAGE_OF_TOTAL DESC  \n]
-Observation 1: REGION	ACCOUNT_COUNT	PERCENTAGE_OF_TOTAL
-NULL	2406	66.2809917355372
-Thought 2: Based on the query results, the top region in terms of the count of accounts is "NULL" 
-Action 2: Answer[The region with most accounts is NULL representing 66.28% of total accounts count]
-Question: List top 3 accounts in terms of MONTHLY_ACTUALS_SENT
-Thought 1: I need to build query to retrieve information for the question. Finally, I need to visualize data using bar chart to show the comparision among accounts.
-Action 1: Query[SELECT TOP 3   \nACCOUNTID_M,   \nSUM(MONTHLY_ACTUALS_SENT) AS TOTAL_ENVELOPES_SENT  \nFROM   \naccount_usage  \nGROUP BY   \nACCOUNTID_M  \nORDER BY   \nTOTAL_ENVELOPES_SENT DESC ], Python[```\nimport plotly.express as px\n\ndef visualize_data(sql_result_df):\n    fig=px.line(sql_result_df, x='TOTAL_ENVELOPES_SENT', y='nACCOUNTID_M', title='Top 3 Accounts')\n    return fig\n```]
-Observation 1: ACCOUNTID_M	TOTAL_ENVELOPES_SENT
-634c13f0f4a1b7d83b10e6f915e98da9813a7ec82aa83cac7ceb5d53e1f06f31	171128
-749604e079f245a05774ec95a144afeb907f4a88cca1f3dc7c6c750ed9631300	133419
-6c1d4fdde6d9ab32e2f451a5702de0ffb3fe5311ee462a82e543f65fa6c5903d	85292
-Thought 2: The result answers the question
-Action 2: Answer[The result is provided]
 
 """
 
 system_message="""
-You are a smart AI assistant to help answer accounts analysis questions by querying data from Microsoft SQL Server Database and provide code to visualize data with plotly. 
+You are a smart AI assistant to help answer accounts analysis questions by querying data from Microsoft SQL Server Database. 
 Only use the table and columns in provided in the <<Database structure>> to write queries. Use Microsoft SQL Server compliant query syntax.
-Some useful background for you.
-- Use coefficient variation to evaluate seasonality
+Given the question, generate the SQL query that provides information to answer the question. Place the SQL query code inside triple quotes like ```SQL\nSELECT c.Customer, d.Calendar_Month_Label, SUM(s.Total_Including_Tax) AS Revenue FROM Fact.Sale s JOIN Dimension.Customer c ON s.Customer_Key = c.Customer_Key JOIN Dimension.Date d ON s.Invoice_Date_Key = d.Date WHERE d.Calendar_Year = 2013 GROUP BY c.Customer, d.Calendar_Month_Label,d.Calendar_Month_Number HAVING c.Customer IN (SELECT TOP 3 c.Customer FROM Fact.Sale s JOIN Dimension.Customer c ON s.Customer_Key = c.Customer_Key JOIN Dimension.Date d ON s.Invoice_Date_Key = d.Date WHERE d.Calendar_Year = 2013 GROUP BY c.Customer ORDER BY SUM(s.Total_Including_Tax) DESC) ORDER BY c.Customer ASC, d.Calendar_Month_Number ASC```
 """
+visualization_message = """
+From the query you generated, generate code for a python function that uses plotly library to best visualize the data from the SQL query.
+  - The function name is visualize_data and it accepts df_sql_result as input. df_sql_result is the pandas dataframe that contains the result of the SQL query.
+  - The function visualize_data decide on the best form of plotly visualization for the business question.
+  - For example: ```Python\nimport plotly.express as px\n\ndef visualize_data(sql_result_df):\n    fig=px.line(sql_result_df, x='Calendar_Month_Label', y='Revenue', color='Customer', title='Monthly Revenue Trends in 2013 for Top 3 Customers')\n    return fig\n```]
+"""
+if visualization_on:
+    system_message+= visualization_message
 
 openai.api_type = "azure"
 openai.api_key = "6b134b679f0e4a5b90925cdca6eaf391"  # SET YOUR OWN API KEY HERE
