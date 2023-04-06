@@ -23,7 +23,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
 1. In the [Azure portal](https://portal.azure.com), navigate to the **func-search-<inject key="DeploymentID" enableCopy="false"/>** function app from the **openaicustom-<inject key="DeploymentID" enableCopy="false"/>** resource group.
 
-   ![](./images/azure-func-app.png)
+   ![](./images/synapse1.3.png)
 
 2. From the **Function app** go to **Functions (1)** on the left menu and select **orchestrator-func-app (2)**.
 
