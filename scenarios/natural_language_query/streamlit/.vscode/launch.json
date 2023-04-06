@@ -11,7 +11,8 @@
             "program": "C://Users//anildwa//Miniconda3//envs//openai//Scripts//streamlit.exe",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args":["run","churn_viz.py"]
+            "cwd": "./churn_analysis",
+            "args":["run","viz.py"]
         }
     ]
 }

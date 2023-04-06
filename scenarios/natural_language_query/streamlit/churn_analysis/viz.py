@@ -91,7 +91,18 @@ db_user="oaireaderuser"
 db_password= "Oaiworkshop@password123"
 analyzer = AnalyzeGPT(tables_structure, system_message, few_shot_examples, gpt_deployment,max_response_tokens,token_limit,database,dbserver,db_user, db_password)
 st.title('Data Analysis Assistant')
-question = st.text_area("Ask me a  question on churn")
+
+
+option = st.selectbox(
+    'FAQs',
+    ('Which Industry exhibits most seasonality for Monthly Actuals Sent', 'List seasonal months by Industry and Region based on Monthly Actuals Sent', 
+     'List top 10 accounts with highest churn risk for MRR Band X by Region',
+     'What % of my accounts show growth in terms of Integrator usage',
+     'Which Sales Industry is growing the fastest by Region'))
+
+
+
+question = st.text_area("Ask me a  question on churn", option)
 if st.button("Submit"):  
     # Call the execute_query function with the user's question  
     

@@ -66,14 +66,10 @@ class AnalyzeGPT:
             python_code = python_code[1]
             python_code= python_code.strip('python')
         N=5
-        file_name = ''.join(random.choices(string.ascii_letters, k=N))
-        os.makedirs(".tmp", exist_ok=True)
-        with open(f".tmp/{file_name}.py", "w") as file:
-            file.write(python_code)
-        graph = imp.load_source("graph", f".tmp/{file_name}.py")
-        fig = graph.visualize_data(observation_df)
+        exec(python_code, globals())
+        fig = visualize_data(observation_df)        
         st.plotly_chart(fig)
-        os.remove(f".tmp/{file_name}.py")
+
 
         
 
