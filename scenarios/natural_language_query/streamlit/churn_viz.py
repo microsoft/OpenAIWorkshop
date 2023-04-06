@@ -61,15 +61,12 @@ few_shot_examples="""
 <<Examples to follow:>>
 Question: What's the region with largest percentage in number of accounts?
 Thought 1: I need to build query to caculate the percentage of accounts count per each region and retrieve the top one.  
-Action 1: Query[SELECT   \nREGION,  \nCOUNT(DISTINCT ACCOUNTID_M) AS ACCOUNT_COUNT,  \n(CAST(COUNT(DISTINCT ACCOUNTID_M) AS FLOAT) / (SELECT COUNT(DISTINCT ACCOUNTID_M) FROM account_usage) * 100.0) AS PERCENTAGE_OF_TOTAL  \nFROM   \naccount_usage  GROUP BY   \nREGION  \nORDER BY   \nPERCENTAGE_OF_TOTAL DESC  \nLIMIT   \n1]
-Observation 1: ('42000', '[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (4108) (SQLExecDirectW)')
-Thought 2: SQL query returned error, I need to correct the syntax for my query based on the error message
-Action 2: Query[SELECT TOP 1  \nREGION,  \nCOUNT(DISTINCT ACCOUNTID_M) AS ACCOUNT_COUNT,  \n(CAST(COUNT(DISTINCT ACCOUNTID_M) AS FLOAT) / (SELECT COUNT(DISTINCT ACCOUNTID_M) FROM account_usage) * 100.0) AS PERCENTAGE_OF_TOTAL  \nFROM   \naccount_usage  GROUP BY   \nREGION  \nORDER BY   \nPERCENTAGE_OF_TOTAL DESC  \n]
+Action 1: Query[SELECT TOP 1  \nREGION,  \nCOUNT(DISTINCT ACCOUNTID_M) AS ACCOUNT_COUNT,  \n(CAST(COUNT(DISTINCT ACCOUNTID_M) AS FLOAT) / (SELECT COUNT(DISTINCT ACCOUNTID_M) FROM account_usage) * 100.0) AS PERCENTAGE_OF_TOTAL  \nFROM   \naccount_usage  GROUP BY   \nREGION  \nORDER BY   \nPERCENTAGE_OF_TOTAL DESC  \n]
 Observation 1: REGION	ACCOUNT_COUNT	PERCENTAGE_OF_TOTAL
 NULL	2406	66.2809917355372
 Thought 2: Based on the query results, the top region in terms of the count of accounts is "NULL" 
-Action 3: Answer[The region with most accounts is NULL representing 66.28% of total accounts count]
-Question: Show me top 3 accounts
+Action 2: Answer[The region with most accounts is NULL representing 66.28% of total accounts count]
+Question: List top 3 accounts in terms of MONTHLY_ACTUALS_SENT
 Thought 1: I need to build query to retrieve information for the question. Finally, I need to visualize data using bar chart to show the comparision among accounts.
 Action 1: Query[SELECT TOP 3   \nACCOUNTID_M,   \nSUM(MONTHLY_ACTUALS_SENT) AS TOTAL_ENVELOPES_SENT  \nFROM   \naccount_usage  \nGROUP BY   \nACCOUNTID_M  \nORDER BY   \nTOTAL_ENVELOPES_SENT DESC ], Python[```\nimport plotly.express as px\n\ndef visualize_data(sql_result_df):\n    fig=px.line(sql_result_df, x='TOTAL_ENVELOPES_SENT', y='nACCOUNTID_M', title='Top 3 Accounts')\n    return fig\n```]
 Observation 1: ACCOUNTID_M	TOTAL_ENVELOPES_SENT
@@ -78,11 +75,14 @@ Observation 1: ACCOUNTID_M	TOTAL_ENVELOPES_SENT
 6c1d4fdde6d9ab32e2f451a5702de0ffb3fe5311ee462a82e543f65fa6c5903d	85292
 Thought 2: The result answers the question
 Action 2: Answer[The result is provided]
+
 """
 
 system_message="""
 You are a smart AI assistant to help answer accounts analysis questions by querying data from Microsoft SQL Server Database and provide code to visualize data with plotly. 
-Only use the table and columns in provided in the <<Database structure>> to write queries. Use Microsoft SQL query syntax.
+Only use the table and columns in provided in the <<Database structure>> to write queries. Use Microsoft SQL Server compliant query syntax.
+Some useful background for you.
+- Use coefficient variation to evaluate seasonality
 """
 
 openai.api_type = "azure"

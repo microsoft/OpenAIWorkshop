@@ -45,9 +45,9 @@ class AnalyzeGPT:
         cursor = conn.cursor()
         try:
             cursor.execute(query) 
+            data =cursor.fetchall()
         except Exception as e:
             return str(e)
-        data =cursor.fetchall()
 
         cols = []
         for i,_ in enumerate(cursor.description):
