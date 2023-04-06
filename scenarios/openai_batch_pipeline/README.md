@@ -113,12 +113,15 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 ### **A. Create the Synapse SQL Pool**
 
-1.  Go to <https://portal.azure.com> and sign in with your organizational account. In the search box at the top of the portal, search for your workspace
-    and click on the Synapse workspace (not the SQL Server) which appears under the Resources section.
+1. In the Azure portal, search and select **Azure Synapse Analytics** in the search bar.
 
-     ![](images/search-select.png)
+     ![](images/synapse1.1.png)
+     
+1. Select your Azure Synapse Analytics workspace named as **asasynapseanalytics<inject key="DeploymentID" enableCopy="false"/>**.
 
-1.  On the **Overview** blade under the **Getting Started** section, click **Open** to open Synapse Studio.
+     ![](images/synapse1.2.png)
+
+1. On the **Overview** blade under the **Getting Started** section, click **Open** to open Synapse Studio.
      
     ![](images/open-workspace.png)
     
