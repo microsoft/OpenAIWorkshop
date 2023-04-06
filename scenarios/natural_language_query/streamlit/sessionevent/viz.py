@@ -8,20 +8,37 @@ import openai
 
 tables_structure="""
 Table	Column	Description
-step1_cta_events	EVENT_DATE	when an event happened
-step1_cta_events	CTA_EVENT	click-through actions
-step1_cta_events	MIXPANEL_ACCOUNT_ID	account id
-step1_cta_events	DISTINCT_ID	user id
-step2_pnp_events	TIME::DATE	when an event happened
-step2_pnp_events	NAME	event name
-step2_pnp_events	EVENT_ID	event id
-step2_pnp_events	DISTINCT_ID	user id
-step2_pnp_events	ACCOUNT_ID	account id
+GA_SESSION  SESSION_ID	Unique ID of a user session
+GA_SESSION  VISIT_NUMBER	Number of times the user has visited the docusign website 
+GA_SESSION  DEVICE_DEVICE_CATEGORY	mobile or desktop
+GA_SESSION  DEVICE_OPERATING_SYSTEM	OS of the user's device
+GA_SESSION  DEVICE_BROWSER	browser used by the user
+GA_SESSION  CHANNEL_GROUPING	last touched channel that the user came to the site from
+GA_SESSION  TOTAL_PAGEVIEWS	Total pageviews during each session
+GA_SESSION  GEO_NETWORK_CONTINENT	user's continent
+GA_SESSION  F_ALLTRIAL_START	user landed on the trial page 
+GA_SESSION  F_ALLTRIAL_COMPLETE	user completed trial sign up 
+GA_SESSION  F_PURCHASE_INTENT	view plan and pricing page
+GA_SESSION  F_PURCHASE_START	start cart 
+GA_SESSION  F_PURCHASE_COMPLETE	complete purchase 
+GA_EVENTS   SESSION_ID	Unique ID of a user session
+GA_EVENTS   HIT_NUMBER	Sequence of events performed by the user during the session
+GA_EVENTS   IS_ENTRANCE	the first page user landed in during the session
+GA_EVENTS   IS_EXIT	the last page user visited during the session
+GA_EVENTS   PAGE_PATH_CLEAN	page url
+GA_EVENTS   SITE_SECTION	Classifying the webpages into various sections based on the page visited by user
+GA_EVENTS   SITE_CATEGORY	Grouping sections into categories
+GA_EVENTS   TYPE	has values page and event. Shows if the user navigated to a page or performed an event on the page 
 
-step1_cta_events contains event logs of top-of-the-funnel actions by user id and account id. After engaging with these events, users will land on the same Pricing and Plan page and go through the checkout process, which are recorded in step2_pnp_events file. 
-The order of step2_pnp_events  starts with View Upgrade Pricing or View Signup Pricing, then Buy Now Button Click, then Checkout: Step - Payment or Checkout 2 (Payment) or Checkout 3 (Payment), then Purchase Click, then Account Purchase.
-You can outer join two data sets using user id (step1_cta_events.DISTINCT_ID = step2_pnp_events.DISTINCT_ID). 
+GA_SESSION contains sessions of users who have completed a purchase. SESSION_ID is the primary key and all events are stored in GA_EVENTS table.
+The GA_EVENTS contains all actions performed by the user. SESSION_ID+HIT_NUMBER is the primary key. The HIT_NUMBER in the GA_EVENTS table will give the sequence of events a customer performed when completing the purchase 
+You can outer join two data sets using user id (GA_SESSION.SESSION_ID = GA_EVENTS.SESSION_ID). 
 
+The path to purchase can be traced using fields in the GA_EVENTS table.
+PAGE_PATH_CLEAN : URL of the page
+SITE_SECTION: Classifying the webpages into various sections based on the page visited by user
+SITE_CATEGORY: Grouping sections into categories
+A completed purchase is identified by F_PURCHASE_COMPLETE = 1 in GA_SESSION table.
 """
 
 system_message="""
@@ -70,7 +87,7 @@ db_user="oaireaderuser"
 db_password= "Oaiworkshop@password123"
 analyzer = AnalyzeGPT(tables_structure, system_message,few_shot_examples, gpt_deployment,max_response_tokens,token_limit,database,dbserver,db_user, db_password)
 st.title('Data Analysis Assistant')
-question = st.text_area("Ask me a  question in sales")
+question = st.text_area("Ask me a question sessions and events")
 if st.button("Submit"):  
     # Call the execute_query function with the user's question  
     
