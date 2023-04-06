@@ -102,11 +102,11 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     python upload_docs.py --conn_string "<CONNECTION_STRING>"
     ```
 
-   ![](images/batch_file_upload.png)
+   ![](images/batch_file_upload2.png)
    
 1. Once you have successfully uploaded the JSON files to the storage account, you can navigate to the storage account in the Azure portal and verify that the files have been uploaded.
 
-   ![](images/batch_file_upload2.png)
+   ![](images/batch_file_upload.png)
 ---
 
 ## Task 2: Set up Synapse Workspace
