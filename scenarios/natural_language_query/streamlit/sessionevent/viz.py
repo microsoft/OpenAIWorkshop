@@ -5,6 +5,8 @@ import sys
 sys.path.append('../')
 from analyze import AnalyzeGPT
 import openai
+import os
+from dotenv import load_dotenv
 
 tables_structure="""
 Table	Column	Description
@@ -42,12 +44,9 @@ A completed purchase is identified by F_PURCHASE_COMPLETE = 1 in GA_SESSION tabl
 """
 
 system_message="""
-You are a smart AI assistant to help answer marketing analysis questions by querying data from Microsoft SQL Server Database and visualizing data with plotly. 
-In the examples below, questions are broken down into one or several  parts to be analyzed and eventually to answer the main question.
-The action after each thought can be a data query and data visualization code or it can be final answer. 
-To help you understand the domain, here are some additional background useful knowledge:
-- Conversion  is defined as the ratio of the count of unique userids who have gone through BOTH step1_cta_events AND made the final purchase at step2_pnp_events (NAME = 'Account Purchase' ) to the count of unique users at CTA step1_cta_events who may or may not have gone to step2_pnp_events 
-- Conversion might need to be broken down by step, which mean by a starting event in step1_cta_events.
+You are a smart AI assistant to help answer session and event questions by querying data from Microsoft SQL Server Database. 
+Only use the table and columns in provided in the <<Database structure>> to write queries. Use Microsoft SQL Server compliant query syntax.
+Given the Question, generate the SQL query that provides information to answer the question.
 """
 few_shot_examples="""
 <<Examples to follow:>>
@@ -74,17 +73,21 @@ Observation 2: Region                                      Stock_Item Total_Sale
 Thought 3: The result answers the question
 Action 3: Answer[The result is provided]
 """
+load_dotenv()
 openai.api_type = "azure"
-openai.api_key = "6b134b679f0e4a5b90925cdca6eaf391"  # SET YOUR OWN API KEY HERE
-openai.api_base = "https://azopenaidemo.openai.azure.com/" # SET YOUR RESOURCE ENDPOINT
-openai.api_version = "2023-03-15-preview" 
+openai.api_key = os.environ.get("AOAI_KEY","Enter your key here")
+openai.api_base = os.environ.get("AOAI_ENDPOINT","https://azopenaidemo.openai.azure.com/")  # SET YOUR RESOURCE ENDPOINT
+openai.api_version = os.environ.get("AOAI_VERSION","2023-03-15-preview")  
 max_response_tokens = 1250
 token_limit= 4096
 gpt_deployment="gpt-35-turbo"
-database="DocuSignOpenAI"
-dbserver="oaisqldemo.database.windows.net"
-db_user="oaireaderuser"
-db_password= "Oaiworkshop@password123"
+database=os.environ.get("DB_NAME","Database")
+dbserver=os.environ.get("SQL_SERVER_NAME","Servername with database.windows.net")
+db_user=os.environ.get("DB_USER","Enter user name")
+db_password=os.environ.get("DB_PWD","Enter user name")
+driver=os.environ.get("SQL_DRIVER","ODBC Driver 18 for SQL Server")
+print(f'driver={driver}')
+
 analyzer = AnalyzeGPT(tables_structure, system_message,few_shot_examples, gpt_deployment,max_response_tokens,token_limit,database,dbserver,db_user, db_password)
 st.title('Data Analysis Assistant')
 question = st.text_area("Ask me a question sessions and events")
