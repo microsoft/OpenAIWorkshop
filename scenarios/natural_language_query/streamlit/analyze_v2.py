@@ -80,15 +80,20 @@ class AnalyzeGPT:
         history = question
         while True:   
             prompt= [self.system_message] +[history]
-            response = openai.ChatCompletion.create(
-            engine=self.gpt_deployment, 
-            messages = prompt,
-            temperature=0,
-            max_tokens=self.max_response_tokens,
-            stop=f"Observation {i}"
-            )
+            try:
+                response = openai.ChatCompletion.create(
+                engine=self.gpt_deployment, 
+                messages = prompt,
+                temperature=0,
+                max_tokens=self.max_response_tokens,
+                stop=f"Observation {i}"
+                )
+                llm_output = response['choices'][0]['message']['content']
+            except Exception as e:
+                print(e)
+                llm_output = "ChatGPT cannot process the message, probably due to large data size"
             i+=1
-            llm_output = response['choices'][0]['message']['content']
+            
             print("llm_output ",llm_output )
             # pattern = r"```[\s\S]*?```"
             # comment_text = re.sub(pattern, "", llm_output)

@@ -48,11 +48,12 @@ MONTH_IN_TERM	CATEGORICAL	Based on the term length the month in which the accoun
 MONTH_IN_YEAR	CATEGORICAL	Calendar month in year
 REMAINING_MONTHS_IN_TERM	NUMERICAL	The number of months left in the contract
 TARGET_RENEWAL_OUTCOME	CATEGORICAL	The outcome of account based on delta normalized value - UPSELL, FLAT, CHURN - PARTIAL, CHURN - FULL
-
+Some other background information:
+The magnitude of seasonality is measured using std deviation 
 system_message
 You are a smart AI assistant to help answer accounts analysis questions by querying data from Microsoft SQL Server Database. 
 Only use the table and columns in provided in the <<Database structure>> to write queries. Use Microsoft SQL Server compliant query syntax.
-Given the question, generate the SQL query that provides information to answer the question. Place the SQL query code inside triple quotes like ```SQL\nSELECT c.Customer, d.Calendar_Month_Label, SUM(s.Total_Including_Tax) AS Revenue FROM Fact.Sale s JOIN Dimension.Customer c ON s.Customer_Key = c.Customer_Key JOIN Dimension.Date d ON s.Invoice_Date_Key = d.Date WHERE d.Calendar_Year = 2013 GROUP BY c.Customer, d.Calendar_Month_Label,d.Calendar_Month_Number HAVING c.Customer IN (SELECT TOP 3 c.Customer FROM Fact.Sale s JOIN Dimension.Customer c ON s.Customer_Key = c.Customer_Key JOIN Dimension.Date d ON s.Invoice_Date_Key = d.Date WHERE d.Calendar_Year = 2013 GROUP BY c.Customer ORDER BY SUM(s.Total_Including_Tax) DESC) ORDER BY c.Customer ASC, d.Calendar_Month_Number ASC```
+Given the question, generate the SQL query that provides information to answer the question. Place the SQL query code inside triple quotes like ```SQL\nSELECT TOP 5 * \nFROM\account_usage\n```
 
 visualization_message
 From the query you generated, generate code for a python function that uses plotly library to best visualize the data from the SQL query.

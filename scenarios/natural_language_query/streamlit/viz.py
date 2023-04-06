@@ -109,15 +109,15 @@ if visualization_on:
 
 openai.api_type = "azure"
 openai.api_key = ""  # SET YOUR OWN API KEY HERE
-openai.api_base = "" # SET YOUR RESOURCE ENDPOINT
+openai.api_base = "https://azopenaidemo.openai.azure.com/" # SET YOUR RESOURCE ENDPOINT
 openai.api_version = "2023-03-15-preview" 
 max_response_tokens = 1250
 token_limit= 4096
 gpt_deployment="chatgpt"
 gpt_deployment="gpt-35-turbo"
-database=""
-dbserver=""
-db_user=""
+database="DocuSignOpenAI"
+dbserver="oaisqldemo.database.windows.net"
+db_user="oaireaderuser"
 db_password= ""
 analyzer = AnalyzeGPT(tables_structure, system_message, few_shot_examples, gpt_deployment,max_response_tokens,token_limit,database,dbserver,db_user, db_password)
 
