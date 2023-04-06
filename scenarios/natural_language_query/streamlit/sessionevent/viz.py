@@ -75,16 +75,16 @@ Thought 3: The result answers the question
 Action 3: Answer[The result is provided]
 """
 openai.api_type = "azure"
-openai.api_key = "6b134b679f0e4a5b90925cdca6eaf391"  # SET YOUR OWN API KEY HERE
-openai.api_base = "https://azopenaidemo.openai.azure.com/" # SET YOUR RESOURCE ENDPOINT
+openai.api_key = ""  # SET YOUR OWN API KEY HERE
+openai.api_base = "" # SET YOUR RESOURCE ENDPOINT
 openai.api_version = "2023-03-15-preview" 
 max_response_tokens = 1250
 token_limit= 4096
 gpt_deployment="gpt-35-turbo"
-database="DocuSignOpenAI"
-dbserver="oaisqldemo.database.windows.net"
-db_user="oaireaderuser"
-db_password= "Oaiworkshop@password123"
+database=""
+dbserver=""
+db_user=""
+db_password= ""
 analyzer = AnalyzeGPT(tables_structure, system_message,few_shot_examples, gpt_deployment,max_response_tokens,token_limit,database,dbserver,db_user, db_password)
 st.title('Data Analysis Assistant')
 question = st.text_area("Ask me a question sessions and events")

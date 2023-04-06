@@ -1,0 +1,54 @@
+tables_structure
+GA_SESSION contains sessions of users who have completed a purchase. SESSION_ID is the primary key	
+Column	Description
+SESSION_ID	Unique ID of a user session
+VISIT_NUMBER	Number of times the user has visited the docusign website 
+DEVICE_DEVICE_CATEGORY	mobile or desktop
+DEVICE_OPERATING_SYSTEM	OS of the user's device
+DEVICE_BROWSER	browser used by the user
+CHANNEL_GROUPING	last touched channel that the user came to the site from
+TOTAL_PAGEVIEWS	Total pageviews during each session
+GEO_NETWORK_CONTINENT	user's continent
+F_ALLTRIAL_START	user landed on the trial page 
+F_ALLTRIAL_COMPLETE	user completed trial sign up 
+,F_PURCHASE_INTENT	view plan and pricing page
+,F_PURCHASE_START	start cart 
+F_PURCHASE_COMPLETE	complete purchase 
+
+
+GA_EVENTS contains all actions performed by the user. SESSION_ID+HIT_NUMBER is the primary key	
+Column	Description
+SESSION_ID	Unique ID of a user session
+HIT_NUMBER	Sequence of events performed by the user during the session
+IS_ENTRANCE	the first page user landed in during the session
+IS_EXIT	the last page user visited during the session
+PAGE_PATH_CLEAN	page url
+SITE_SECTION	Classifying the webpages into various sections based on the page visited by user
+SITE_CATEGORY	Grouping sections into categories
+TYPE	has values page and event. Shows if the user navigated to a page or performed an event on the page 
+
+The two tables can be joined on SESSION_ID
+A SESSION_ID in the GA_SESSION table will have associated events in the GA_EVENTS table. 
+The HIT_NUMBER in the GA_EVENTS table will give the sequence of events a customer performed when completing the purchase 
+"The path to purchase can be traced using fields in the GA_EVENTS table.
+PAGE_PATH_CLEAN : URL of the page
+SITE_SECTION: Classifying the webpages into various sections based on the page visited by user
+SITE_CATEGORY: Grouping sections into categories"
+A completed purchase is identified by F_PURCHASE_COMPLETE = 1  in GA_SESSION table.
+A path is defined as navigation steps from page to page until purchase within a session.
+The path should only include TYPE = 'page' 
+system_message
+You are a smart AI assistant to help answer accounts analysis questions by querying data from Microsoft SQL Server Database. 
+Only use the table and columns in provided in the <<Database structure>> to write queries. Use Microsoft SQL Server compliant query syntax.
+Given the question, generate the SQL query that provides information to answer the question. Place the SQL query code inside triple quotes like ```SQL\nSELECT c.Customer, d.Calendar_Month_Label, SUM(s.Total_Including_Tax) AS Revenue FROM Fact.Sale s JOIN Dimension.Customer c ON s.Customer_Key = c.Customer_Key JOIN Dimension.Date d ON s.Invoice_Date_Key = d.Date WHERE d.Calendar_Year = 2013 GROUP BY c.Customer, d.Calendar_Month_Label,d.Calendar_Month_Number HAVING c.Customer IN (SELECT TOP 3 c.Customer FROM Fact.Sale s JOIN Dimension.Customer c ON s.Customer_Key = c.Customer_Key JOIN Dimension.Date d ON s.Invoice_Date_Key = d.Date WHERE d.Calendar_Year = 2013 GROUP BY c.Customer ORDER BY SUM(s.Total_Including_Tax) DESC) ORDER BY c.Customer ASC, d.Calendar_Month_Number ASC```
+
+visualization_message
+From the query you generated, generate code for a python function that uses plotly library to best visualize the data from the SQL query.
+  - The function name is visualize_data and it accepts df_sql_result as input. df_sql_result is the pandas dataframe that contains the result of the SQL query.
+  - The function visualize_data decide on the best form of plotly visualization for the business question.
+  - For example: ```Python\nimport plotly.express as px\n\ndef visualize_data(sql_result_df):\n    fig=px.line(sql_result_df, x='Calendar_Month_Label', y='Revenue', color='Customer', title='Monthly Revenue Trends in 2013 for Top 3 Customers')\n    return fig\n```]
+
+few_shot_examples
+
+faq
+What are some of the most common paths a user takes to complete a purchase
