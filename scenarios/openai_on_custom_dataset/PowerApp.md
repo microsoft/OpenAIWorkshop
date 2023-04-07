@@ -62,7 +62,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
     ![](./images/semanti-search-flow-1.png)
 
-11. To navigate back click on **Back (1)** then click **Don’t save (2)**.
+11. To navigate back click on **Back (1)** then click **Save (2)**.
 
     ![](./images/back-1.png)
 
