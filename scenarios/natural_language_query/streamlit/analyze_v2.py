@@ -123,10 +123,6 @@ class AnalyzeGPT:
                 if "Result" in comment_text or "Answer" in comment_text or i>5:
                     print("Result is given or exceed the threshold, finish the loop at ", i)
                     break
-                if "Result" in comment_text or "Answer" in comment_text:
-                    print("Result is given, finish the loop")
-                    break
-
 
             if len(sql_query)>0 or len(python_code)>0:
                 if len(sql_query)>0:
@@ -149,7 +145,6 @@ class AnalyzeGPT:
                 if display_text:
                     st.write(observation)
                 new_content =  llm_output + f"Observation {i-1}: {converted_observation}"
-                new_content =  llm_output + f"Data is returned, comment or explain or plan next step\n: {converted_observation}"
                 new_content= history["content"] +"\n"+new_content
                 history["content"] = new_content
             else:
