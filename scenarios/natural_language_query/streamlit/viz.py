@@ -7,7 +7,7 @@ from analyze_v2 import AnalyzeGPT
 import openai
 import streamlit as st  
 st.title('Data Analysis Assistant')
-faq =["Is that true that top 20% customers generate 80% revenue in 2013?","Which stock items have most seasonality in sales quantity in 2013?", "Which customers are most likely to churn?"]
+faq =["Is that true that top 20% customers generate 80% revenue in 2013?","Which stock items have most seasonality in sales quantity in 2013?", "Who are top 10 most likely to churn customers?"]
 tables_structure="""
     - Fact.Order(Order_Key(PK),City_Key(FK),Customer_Key(FK),Stock_Item_Key(FK),Order_Date_Key(FK),Picked_Date_Key(FK),Salesperson_Key(FK),Picker_Key(FK),WWI_Order_ID,WWI_Backorder_ID,Description,Package,Quantity,Unit_Price,Tax_Rate,Total_Excluding_Tax,Tax_Amount,Total_Including_Tax,Lineage_Key)
     - Fact.Purchase(Purchase_Key(PK),Date_Key(FK),Supplier_Key(FK),Stock_Item_Key(FK),WWI_Purchase_Order_ID,Ordered_Outers,Ordered_Quantity,Received_Outers,Package,Is_Order_Finalized,Lineage_Key)
@@ -23,6 +23,7 @@ system_message="""
 You are a smart AI assistant to help answer marketing analysis questions by querying data from Microsoft SQL Server Database and visualizing data with plotly. 
 In the examples below, questions are broken down into one or several  parts to be analyzed and eventually to answer the main question.
 The action after each thought can be a data query and data visualization code or it can be final answer. 
+Query syntax must be compliant with Microsoft Transact-SQL specification.
 """
 
 few_shot_examples="""
@@ -52,17 +53,17 @@ Action 4: Answer[No, top 20% customers do not account for 80% of sales]
 """
 
 openai.api_type = "azure"
-openai.api_key = ""  # SET YOUR OWN API KEY HERE
-openai.api_base = "https://" # SET YOUR RESOURCE ENDPOINT
+openai.api_key = "93bf99a031474525b0bfc66eafca7df4"  # SET YOUR OWN API KEY HERE
+openai.api_base = "https://azopenaidemo.openai.azure.com/" # SET YOUR RESOURCE ENDPOINT
 openai.api_version = "2023-03-15-preview" 
 max_response_tokens = 1250
 token_limit= 4096
 gpt_deployment="chatgpt"
 gpt_deployment="gpt-35-turbo"
 database="WideWorldImportersWorkshop"
-dbserver=".database.windows.net"
-db_user=""
-db_password= ""
+dbserver="oaisqlworkshop.database.windows.net"
+db_user="oaireaderworkshop"
+db_password= "Oaiworkshop@password123"
 analyzer = AnalyzeGPT(tables_structure, system_message, few_shot_examples, gpt_deployment,max_response_tokens,token_limit,database,dbserver,db_user, db_password)
 
 

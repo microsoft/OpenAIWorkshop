@@ -124,7 +124,7 @@ class AnalyzeGPT:
                     print("Result is given or exceed the threshold, finish the loop at ", i)
                     break
 
-            if len(sql_query)>0 or len(python_code)>0:
+            if len(sql_query)>0: #only make sense to continue querying data if there's a SQL
                 if len(sql_query)>0:
                     st.code(sql_query)
                 if len(python_code)>0:
@@ -132,7 +132,6 @@ class AnalyzeGPT:
 
                 observation = self.execute_sql_query(sql_query)
                 st.write(f"Observation {i-1}:")
-                print("SQL query at observation ", sql_query)
                 display_text=True
                 try:
                     converted_observation = observation.to_json() #Query execute successfully
