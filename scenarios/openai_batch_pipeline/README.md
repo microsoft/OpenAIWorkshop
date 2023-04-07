@@ -25,7 +25,7 @@ This scenario allows using OpenAI to summarize and analyze customer service call
 
 # Architecture Diagram
 
-  ![](images/batcharch.png)
+    ![](images/batcharch.png)
 
 Call logs are uploaded to a designated location in Blob Storage. This upload will trigger the Azure Function which utilizes the [Azure OpenAI Service](https://azure.microsoft.com/en-us/products/cognitive-services/openai-service/) for summarization, sentiment analysis, product offering the conversation was about, the topic of the call, as well as a summary of the call. These results are written into a separate designated location in the Blob Storage. From there, Synapse Analytics is utilized to pull in the newly cleansed data to create a table that can be queried to derive further insights. 
 
@@ -47,7 +47,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
    
 1. Follow the below-mentioned instructions and click on **Create Storage (3)**.
 
-    - Storage account: Enter **openai<inject key="DeploymentID" enableCopy="false"/> (1)**
+    - Storage account: Select **openaistorage<inject key="DeploymentID" enableCopy="false"/> (1)**
     - File Share: Enter **blob (2)**
 
     ![](images/scenario2-03.png)
@@ -111,39 +111,13 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 ## Task 2: Set up Synapse Workspace
 
-### **A. Create the Synapse SQL Pool**
-
-1. In the Azure portal, search and select **Azure Synapse Analytics** in the search bar.
-
-     ![](images/synapse1.1.png)
-     
-1. Select your Azure Synapse Analytics workspace named as **asasynapseanalytics<inject key="DeploymentID" enableCopy="false"/>**.
-
-     ![](images/synapse1.2.png)
-
-1. On the **Overview** blade under the **Getting Started** section, click **Open** to open Synapse Studio.
-     
-    ![](images/open-workspace.png)
-    
-1. Once Synapse Studio is launched, on the left-hand side, click on the **Manage (1)** Option. At the top of the newly opened menu bar, under the **Analytics pools** section, click on **SQL pools (2)**. Then click **New (3)** on the top-left.
-
-   ![](images/synapse1.png)
-
-1. Provide a name for the Synapse SQL Pool as **openaipool** **(1)**. Accept all the defaults and click on **Review + Create (2)** and click on **Create**.
-
-   ![](images/synapse2.png)
-
-1. It may take a moment for your SQL Pool to initialize. Once it is completed you will see that the status of the pool is **Online**.
-
-   ![](images/openaipool-online.png)
-
-### **B. Create Target SQL Table**
+### **A. Create Target SQL Table**
 
 1. Once the SQL Pool has been created, click into the **Develop (1)** section of the Synapse Studio, click the "**+ (2)**" sign in the top left, and select **SQL script (3)**. This will open a new window with a SQL script editor. 
 
    ![](images/synapse3.png)
 
-1. Copy and paste the following script into the editor **(1)** then change the **Connect to** value by selecting **openaipool (2)** from the drop-down and for **Use database** ensure that **openaipool (3)** is selected  and click the **Run (4)** button in the top-left, as shown in the picture below. Finish this step by pressing **Publish all (5)** just above the **Run** button to publish our work thus far.
+1. Copy and paste the following script into the editor **(1)** then change the **Connect to** value by selecting **openaisql (2)** from the drop-down and for **Use database** ensure that **openaisql (3)** is selected  and click the **Run (4)** button in the top-left, as shown in the picture below. Finish this step by pressing **Publish all (5)** just above the **Run** button to publish our work thus far.
 
     ```SQL 
     CREATE TABLE [dbo].[cs_detail]
@@ -162,7 +136,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
     ![](images/publish-sqlscript.png)
 
-### **C. Create Source and Target Linked Services**
+### **B. Create Source and Target Linked Services**
 
 We'll next need to create two linked services: One for our Source (the JSON files in the Data Lake) and another for the Synapse SQL Database that houses the table we created in the previous step.
 
@@ -190,7 +164,7 @@ We'll next need to create two linked services: One for our Source (the JSON file
 
    ![](images/publish-linked.png)
    
-### **D. Create Synapse Data Flow**
+### **C. Create Synapse Data Flow**
 
 While still within the Synapse Studio, we will now need to create a **Data flow** to ingest our JSON data and write it to our SQL Database. For the purposes of this workshop, this will be a very simple data flow that ingests the data, renames some columns, and writes it back out to the target table. 
 
@@ -263,7 +237,7 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
     ![](images/completed-dataflow.png)
 
-### **E. Create Synapse Pipeline**
+### **D. Create Synapse Pipeline**
 
 1. Once we have created our **Data flow**, we will need to set up a **Pipeline** to house it. To create a **Pipeline**, navigate to the left-hand menu bar and choose the **Integrate (1)** option. Then click the **+ (2)** at the top of the Integrate menu to **Add a new resource** and choose **Pipeline (3)**.
 
@@ -280,7 +254,7 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
 
 4. Then click **Publish all** to publish your changes and save your progress.
 
-### **F. Trigger Synapse Pipeline**
+### **E. Trigger Synapse Pipeline**
 
 1. Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the Studio, there is a *lightning bolt* icon that says **Add trigger (1)**. Click to add trigger and select **Trigger now (2)** to begin a pipeline run.
 
