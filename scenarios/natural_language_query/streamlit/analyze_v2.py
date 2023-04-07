@@ -108,7 +108,7 @@ class AnalyzeGPT:
             python_code_result = re.findall(python_pattern, llm_output, re.DOTALL)
             if len(python_code_result)>0:
                 python_code= python_code_result[0]
-            
+  
 
             print("SQL Query:\n", sql_query)  
             print("\nPython Code:\n", python_code)  
