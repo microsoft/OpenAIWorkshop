@@ -10,9 +10,6 @@ import random
 import imp
 import re
 
-# Simple retrieve-then-read implementation, using the Cognitive Search and OpenAI APIs directly. It first retrieves
-# top documents from search, then constructs a prompt with them, and then uses OpenAI to generate an completion 
-# (answer) with that prompt.
 class AnalyzeGPT:
     def __init__(self,tables_structure, system_message,few_shot_examples, gpt_deployment,max_response_tokens,token_limit,database,dbserver,db_user, db_password) -> None:
         self.max_response_tokens = max_response_tokens
@@ -99,7 +96,7 @@ class AnalyzeGPT:
             # comment_text = re.sub(pattern, "", llm_output)
             sql_query, python_code ="",""
             # Extract SQL query  
-            sql_pattern = r"```SQL\\n(.*?)```"  
+            sql_pattern = r"```SQL\n(.*?)```"  
             sql_query_result = re.findall(sql_pattern, llm_output, re.DOTALL)
             if len(sql_query_result)>0:
                 sql_query= sql_query_result[0]
@@ -124,6 +121,9 @@ class AnalyzeGPT:
             if len(comment_text)>0:
                 st.write(f"Thought {i-1}:")
                 st.write(comment_text)
+                if "Result" in comment_text or "Answer" in comment_text:
+                    print("Result is given, finish the loop")
+                    break
 
 
             if len(sql_query)>0 or len(python_code)>0:
@@ -146,7 +146,7 @@ class AnalyzeGPT:
                     converted_observation= str(observation)
                 if display_text:
                     st.write(observation)
-                new_content =  llm_output + f"Result comeback, comment or explain or plan next step\n: {converted_observation}"
+                new_content =  llm_output + f"Data is returned, comment or explain or plan next step\n: {converted_observation}"
                 new_content= history["content"] +"\n"+new_content
                 history["content"] = new_content
             else:
