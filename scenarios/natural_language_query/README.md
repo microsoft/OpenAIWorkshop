@@ -168,19 +168,19 @@ Step 6: Azure function returns the results to end user.
   
 10. Select **Custom (1)** and type `Openai-custom-connector` **(2)** in search and select the custom connector which you created previously **(3)**.
   
-   ![](images/choose-operation-1.png)
+    ![](images/choose-operation-1.png)
 
 11. The flow will look like the image provided below.
   
-   ![](images/top-5.png)
+    ![](images/top-5.png)
   
 12. You need to delete the third step which in your case will be **HTTTP** flow, click on `...` **(1)** next to **HTTP** and click **Delete (2)**.
 
-    ![](images/delete-http-1.png)
+     ![](images/delete-http-1.png)
 
 13. Click the **Parse JSON** step , click inside the **Content (1)** field, click on right side, and select **body (2)**. 
   
-    ![](images/content-body-1.png)
+     ![](images/content-body-1.png)
   
 14. The Control should like the below. Click **Save**.
 
