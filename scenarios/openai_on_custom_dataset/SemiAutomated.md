@@ -2,7 +2,9 @@
 
 ### Prerequisites
 
-* [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Functions.  
+* Contributor permission is required in the Azure subscription.
+* Microsoft.Search Resource provider needs to be registered in the Azure Subscription. 
+* [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Function App.  
 * Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 
 * Azure Open AI already provisioned and text-davinci-003 model is deployed. The model deployment name is required in the Azure Deployment step below. South Central US is recommended region for deploying Azure Open AI. 
 * Conda is recommended if local laptops are used as pip install might interfere with existing python deployment.
@@ -25,7 +27,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 (control+click) to launch in new tab.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FOpenAIWorkshop%2Fanildwa-dev%2Fscenarios%2Fopenai_on_custom_dataset%2Fdeploy%2Fazure-deploy.json) 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FOpenAIWorkshop%2Fmain%2Fscenarios%2Fopenai_on_custom_dataset%2Fdeploy%2Fazure-deploy.json) 
 
 
 
@@ -47,7 +49,7 @@ To make it easy for the labs, the sample document has already been chunked and p
         cd OpenAIWorkshop/scenarios/openai_on_custom_dataset
         
         # conda steps are optional
-        conda create env -n openaiworkshop python=3.9 
+        conda create -n openaiworkshop python=3.9 
         conda activate openaiworkshop
         
         pip install -r ./orchestrator/requirements.txt
@@ -68,12 +70,12 @@ To make it easy for the labs, the sample document has already been chunked and p
 
         
 
-    Add the below entries with correct values to secrets.env.
+    Add the below entries with correct values to secrets.env. Please refer to [this doc](ShowKeysandSecrets.md) to retrieve API Keys and Urls.
 
-        AZSEARCH_EP="https://<>.search.windows.net/"
-        AZSEARCH_KEY=""
-        AFR_ENDPOINT="https://westus2.api.cognitive.microsoft.com/"
-        AFR_API_KEY=""
+        AZSEARCH_EP="https://<YOUR Search Service Name>.search.windows.net/"
+        AZSEARCH_KEY="<YOUR Search Service API Key>"
+        AFR_ENDPOINT="<YOUR Azure Form Recognizer Service API EndPoint>"
+        AFR_API_KEY="<YOUR Azure Form Recognizer API Key>"
         INDEX_NAME="azure-ml-docs"
 
 *   The document processing, chunking, indexing can all be scripted using any preferred language. 
@@ -100,10 +102,26 @@ To configure Azure Search, please follow the steps below.
 
 ## 3. Test Azure Function App service deployment
 
-Launch Postman and test the Azure Function to make sure it is returning results. The num_search_result query parameter can be altered to limit the search results. Notice the query parameter num_search_result in the screen shot below. num_search_result is a mandatory query parameter.
+Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url and code.
 
 
-![](../../documents/media/postman.png)
+* Launch Postman and test the Azure Function to make sure it is returning results. The num_search_result query parameter can be altered to limit the search results. Notice the query parameter num_search_result in the screen shot below. num_search_result is a mandatory query parameter.
+
+
+    ![](../../documents/media/postman.png)
+
+
+* Test the Function App using CLI
+
+
+        #Bash
+        cd OpenAIWorkshop/scenarios/openai_on_custom_dataset/deploy
+        curl -X POST 'https://<Your Function App Name>.azurewebsites.net/api/orchestrator-func-app?code=<Your Function App Code>&num_search_result=5' -d '@test_prompt.json'
+
+        #Powershell
+        cd OpenAIWorkshop/scenarios/openai_on_custom_dataset/deploy
+        (curl -Method POST 'https://<Your Function App Name>.azurewebsites.net/api/orchestrator-func-app?code=<Your Function App Code>&num_search_result=5' -Body '@test_prompt.json').Content
+
 
 ## 4. Deploy client Power App
 
