@@ -9,7 +9,7 @@
 
     ![](./images/import-canvas-1.png)
 
-4. On **Import package** page click on **Upload**.
+4. On the **Import package** page click on **Upload**.
 
     ![](./images/upload-importpackage.png)
 
@@ -21,21 +21,20 @@
 
      ![](./images/review-package-content.png)
 
-7. In the **Import setup** pane select **Create as new (1)** from the drop-down for **Setup**, and click on **Save (2)**.
+7. In the **Import setup** pane select **Create as new (1)** from the drop-down for **Setup** and click on **Save (2)**.
 
       ![](./images/import-setup-1.png)
 
 8.  Repeat Steps 6 and 7 for **Openaisummarization**.
 
-9. Next click on **Import** to import the package into powerapps environment.  
-
+9. Next click on **Import** to import the package into the PowerApps environment.  
      ![](./images/import-openai-package.png)
 
 10. Once the import is completed, click on **Apps (1)**, then click on `...` **(2)** next to **OpenAI Playground** and click on **Edit (3)**.
 
       ![](./images/open-ai-apps-1.png)
 
-11. You will observe that it has import the Power App canvas app and the Power Automate Flow into the workspace.
+11. You will observe that it has imported the Power App canvas app and the Power Automate Flow into the workspace.
 
       ![](./images/gpt-3.png)
 
@@ -43,7 +42,7 @@
 
       ![](./images/exit-openai-powerapp-1.png)
 
-13. Next select the **Flows (1)** Pane, click on **Edit (2)** for **Openaisummarization**.
+13. Next, select the **Flows (1)** Pane, and click on **Edit (2)** for **Openaisummarization**.
 
       ![](./images/open-ai-flows-1.png)
 
