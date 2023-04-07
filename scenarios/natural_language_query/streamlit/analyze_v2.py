@@ -29,13 +29,19 @@ class AnalyzeGPT:
 
         
     def execute_sql_query(self,query):
-        driver="{ODBC Driver 17 for SQL Server}"
         username = self.db_user
         password = self.db_password
-        driver = '{ODBC Driver 17 for SQL Server}' # Update the driver version as per your installation  
+        driver = 'ODBC Driver 17 for SQL Server' # Update the driver version as per your installation  
         
+        # Determine the driver for pyodbc that is loaded
+        driver_names = [x for x in pyodbc.drivers() if x.endswith(' for SQL Server')]
+        if driver_names:
+            driver = driver_names[0]
+        else:
+            print('(No suitable driver found. Cannot connect.)')        
+
         # Establish the connection  
-        conn = pyodbc.connect('DRIVER=' + driver + ';SERVER=' + self.dbserver + ';DATABASE=' + self.database + ';UID=' + username + ';PWD=' + password)  
+        conn = pyodbc.connect('DRIVER={' + driver + '};SERVER=' + self.dbserver + ';DATABASE=' + self.database + ';UID=' + username + ';PWD=' + password)  
 
         
         #logging.info(conn)

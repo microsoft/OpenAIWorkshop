@@ -10,11 +10,6 @@ import streamlit as st
 from dotenv import load_dotenv
 
 from pathlib import Path  # Python 3.6+ only
-env_path = Path('.') / 'secrets.env'
-load_dotenv(dotenv_path=env_path)
-
-
-st.sidebar.title('Data Analysis Assistant')
 
 faq =["Is that true that top 20% customers generate 80% revenue in 2013?","Which stock items have most seasonality in sales quantity in 2013?", "Which customers are most likely to churn?"]
 tables_structure="""
@@ -60,23 +55,32 @@ Thought 4: Result came back and it is less than 80% so top 20% customers do not 
 Action 4: Answer[No, top 20% customers do not account for 80% of sales]
 
 """
+env_path = Path('.') / 'secrets.env'
+load_dotenv(dotenv_path=env_path)
 
+# Check if secrets.env exists and if not error out
+if not os.path.exists("secrets.env"):
+    print("Missing secrets.env file with environment variables. Please create one and try again. See README.md for more details")
+    exit(1)
+
+# NOTE: You need to create a secret.env file to run this in the same folder with these variables
 openai.api_type = "azure"
-openai.api_key = os.environ["AZURE_OPENAI_API_KEY"]  # SET YOUR OWN API KEY HERE
-openai.api_base = os.environ["AZURE_OPENAI_ENDPOINT"] # SET YOUR RESOURCE ENDPOINT
+openai.api_key = os.environ.get("AZURE_OPENAI_API_KEY","OpenAPIKeyMissing")
+openai.api_base = os.environ.get("AZURE_OPENAI_ENDPOINT","OpenAPIEndpointMissing")
 openai.api_version = "2023-03-15-preview" 
 max_response_tokens = 1250
 token_limit= 4096
-gpt_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"]
-database="WideWorldImportersWorkshop"
-dbserver=f"{os.environ['SQL_DATABASE']}.database.windows.net"
-db_user=os.environ["SQL_USER"]
-db_password= os.environ["SQL_PASSWORD"]
+gpt_deployment=os.environ.get("AZURE_OPENAI_DEPLOYMENT_NAME","gpt-35-turbo")
+database=os.environ.get("SQL_DATABASE","WorldWideImportersDW")
+dbserver=os.environ.get("SQL_SERVER","someazureresource.database.windows.net")
+db_user=os.environ.get("SQL_USER","MissingSQLUser")
+db_password= os.environ.get("SQL_PASSWORD","MissingSQLPassword")
+
 analyzer = AnalyzeGPT(tables_structure, system_message, few_shot_examples, gpt_deployment,max_response_tokens,token_limit,database,dbserver,db_user, db_password)
 
+st.sidebar.title('Data Analysis Assistant')
 
 col1, col2  = st.columns((3,1)) 
-
 with st.sidebar:
     option = st.selectbox('FAQs',faq)
     question = st.text_area("Ask me a  question on churn", option)

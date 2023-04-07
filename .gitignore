@@ -134,9 +134,12 @@ __queuestorage__
 __azurite_db*__.json
 .python_packages
 
+# .env files and secrets
 *.env.*
 *.env
 secrets.env
+
+.tmp
 
 .vscode/
 .vscode/launch.json
