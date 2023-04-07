@@ -3,11 +3,18 @@ import random
 import pandas as pd
 import sys
 sys.path.append('../')
-from analyze_v2 import AnalyzeGPT
+from analyze_v3 import AnalyzeGPT
 import openai
-import streamlit as st  
-st.title('Data Analysis Assistant')
-visualization_on = st.checkbox('Enable Visualization', value=False)  
+import streamlit as st
+
+
+st.sidebar.header('Data Analysis Assistant')
+
+with st.sidebar:
+    #st.title()
+    visualization_on = st.checkbox('Enable Visualization', value=False)  
+
+
 
 # helper function to parse tables_structure section  
 def parse_tables_structure(content):  
@@ -88,8 +95,11 @@ def parse_file(content):
     return result    
 # streamlit app code  
 faq, tables_structure, visualization_message,system_message,few_shot_examples="","","","",""
+
+with st.sidebar:
 # file upload  
-uploaded_file = st.file_uploader(label="Config file",help ="Upload config file")  
+    uploaded_file = st.file_uploader(label="Config file",help ="Upload config file")  
+
 if uploaded_file is not None:  
     content = uploaded_file.read().decode('utf-8')  
     try:  
@@ -109,7 +119,7 @@ if visualization_on:
     system_message+= visualization_message
 
 openai.api_type = "azure"
-openai.api_key = "6b134b679f0e4a5b90925cdca6eaf391"  # SET YOUR OWN API KEY HERE
+openai.api_key = "da47a84d34a3401695c6664bf56cedb3"  # SET YOUR OWN API KEY HERE
 openai.api_base = "https://azopenaidemo.openai.azure.com/" # SET YOUR RESOURCE ENDPOINT
 openai.api_version = "2023-03-15-preview" 
 max_response_tokens = 1250
@@ -122,13 +132,11 @@ db_user="oaireaderuser"
 db_password= "Oaiworkshop@password123"
 analyzer = AnalyzeGPT(tables_structure, system_message, few_shot_examples, gpt_deployment,max_response_tokens,token_limit,database,dbserver,db_user, db_password)
 
+col1, col2 = st.columns((3, 1))
 
-option = st.selectbox('FAQs',faq)
-
-
-
-question = st.text_area("Ask me a  question on churn", option)
-if st.button("Submit"):  
-    # Call the execute_query function with the user's question  
-    
-    analyzer.run(question, st)
+with st.sidebar:
+    option = st.selectbox('FAQs',faq)
+    question = st.text_area("Ask me a  question on churn", option)
+    if st.button("Submit"):  
+        # Call the execute_query function with the user's question  
+        analyzer.run(question, col1)
