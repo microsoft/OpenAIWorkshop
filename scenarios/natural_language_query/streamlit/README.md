@@ -13,3 +13,6 @@
 1. Create a python environment
 1. Import the requirements.txt `pip install -r requirements.txt`
 1. From the window, run `streamlit run viz.py`
+
+# Database configuration
+If you want to setup the database there is a [bacpac for the installer](../../../data/WideWorldImportersDW-Custom.bacpac) in the folder. 
