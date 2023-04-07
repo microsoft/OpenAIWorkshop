@@ -1,13 +1,22 @@
 import streamlit as st
-import random
+import os
 import pandas as pd
 import sys
 sys.path.append('../')
 from analyze_v2 import AnalyzeGPT
 import openai
 import streamlit as st  
-st.title('Data Analysis Assistant')
-faq =["Is that true that top 20% customers generate 80% revenue in 2013?","Which stock items have most seasonality in sales quantity in 2013?", "Who are top 10 most likely to churn customers?"]
+
+from dotenv import load_dotenv
+
+from pathlib import Path  # Python 3.6+ only
+env_path = Path('.') / 'secrets.env'
+load_dotenv(dotenv_path=env_path)
+
+
+st.sidebar.title('Data Analysis Assistant')
+
+faq =["Is that true that top 20% customers generate 80% revenue in 2013?","Which stock items have most seasonality in sales quantity in 2013?", "Which customers are most likely to churn?"]
 tables_structure="""
     - Fact.Order(Order_Key(PK),City_Key(FK),Customer_Key(FK),Stock_Item_Key(FK),Order_Date_Key(FK),Picked_Date_Key(FK),Salesperson_Key(FK),Picker_Key(FK),WWI_Order_ID,WWI_Backorder_ID,Description,Package,Quantity,Unit_Price,Tax_Rate,Total_Excluding_Tax,Tax_Amount,Total_Including_Tax,Lineage_Key)
     - Fact.Purchase(Purchase_Key(PK),Date_Key(FK),Supplier_Key(FK),Stock_Item_Key(FK),WWI_Purchase_Order_ID,Ordered_Outers,Ordered_Quantity,Received_Outers,Package,Is_Order_Finalized,Lineage_Key)
@@ -53,26 +62,24 @@ Action 4: Answer[No, top 20% customers do not account for 80% of sales]
 """
 
 openai.api_type = "azure"
-openai.api_key = "93bf99a031474525b0bfc66eafca7df4"  # SET YOUR OWN API KEY HERE
-openai.api_base = "https://azopenaidemo.openai.azure.com/" # SET YOUR RESOURCE ENDPOINT
+openai.api_key = os.environ["AZURE_OPENAI_API_KEY"]  # SET YOUR OWN API KEY HERE
+openai.api_base = os.environ["AZURE_OPENAI_ENDPOINT"] # SET YOUR RESOURCE ENDPOINT
 openai.api_version = "2023-03-15-preview" 
 max_response_tokens = 1250
 token_limit= 4096
-gpt_deployment="chatgpt"
-gpt_deployment="gpt-35-turbo"
+gpt_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"]
 database="WideWorldImportersWorkshop"
-dbserver="oaisqlworkshop.database.windows.net"
-db_user="oaireaderworkshop"
-db_password= "Oaiworkshop@password123"
+dbserver=f"{os.environ['SQL_DATABASE']}.database.windows.net"
+db_user=os.environ["SQL_USER"]
+db_password= os.environ["SQL_PASSWORD"]
 analyzer = AnalyzeGPT(tables_structure, system_message, few_shot_examples, gpt_deployment,max_response_tokens,token_limit,database,dbserver,db_user, db_password)
 
 
-option = st.selectbox('FAQs',faq)
+col1, col2  = st.columns((3,1)) 
 
-
-
-question = st.text_area("Ask me a  question on churn", option)
-if st.button("Submit"):  
-    # Call the execute_query function with the user's question  
-    
-    analyzer.run(question, st)
+with st.sidebar:
+    option = st.selectbox('FAQs',faq)
+    question = st.text_area("Ask me a  question on churn", option)
+    if st.button("Submit"):  
+        # Call the execute_query function with the user's question 
+        analyzer.run(question, col1)
