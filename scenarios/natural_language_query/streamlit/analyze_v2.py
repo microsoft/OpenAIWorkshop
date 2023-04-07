@@ -99,12 +99,12 @@ class AnalyzeGPT:
             sql_pattern = r"```SQL\n(.*?)```"  
             sql_query_result = re.findall(sql_pattern, llm_output, re.DOTALL)
             if len(sql_query_result)>0:
-                sql_query= sql_query_result[0]
+                sql_query= sql_query_result[0].strip()
             # Extract Python code  
             python_pattern = r"```Python\n(.*?)```"  
             python_code_result = re.findall(python_pattern, llm_output, re.DOTALL)
             if len(python_code_result)>0:
-                python_code= python_code_result[0]
+                python_code= python_code_result[0].strip()
   
 
             print("SQL Query:\n", sql_query)  
@@ -119,15 +119,12 @@ class AnalyzeGPT:
             # pattern = r".*?(?=(```))"  
             # comment_text = re.findall(pattern, llm_output, re.DOTALL)
             if len(comment_text)>0:
-                st.write(f"Thought {i-1}:")
                 st.write(comment_text)
-                if "Result" in comment_text or "Answer" in comment_text:
-                    print("Result is given, finish the loop")
+                if "Result" in comment_text or "Answer" in comment_text or i>5:
+                    print("Result is given or exceed the threshold, finish the loop at ", i)
                     break
 
-
             if len(sql_query)>0 or len(python_code)>0:
-                st.write(f"Action {i-1}:")
                 if len(sql_query)>0:
                     st.code(sql_query)
                 if len(python_code)>0:
@@ -135,6 +132,7 @@ class AnalyzeGPT:
 
                 observation = self.execute_sql_query(sql_query)
                 st.write(f"Observation {i-1}:")
+                print("SQL query at observation ", sql_query)
                 display_text=True
                 try:
                     converted_observation = observation.to_json() #Query execute successfully
@@ -146,7 +144,7 @@ class AnalyzeGPT:
                     converted_observation= str(observation)
                 if display_text:
                     st.write(observation)
-                new_content =  llm_output + f"Result comeback, comment or explain or plan next step\n: {converted_observation}"
+                new_content =  llm_output + f"Observation {i-1}: {converted_observation}"
                 new_content= history["content"] +"\n"+new_content
                 history["content"] = new_content
             else:
