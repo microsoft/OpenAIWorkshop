@@ -1,4 +1,6 @@
- 1. Go to <https://portal.azure.com> and sign in with your organizational account. In the search box at the top of the portal, search for your workspace
+# Exercise 4b: Build Open AI application with Python
+
+1. Go to <https://portal.azure.com> and sign in with your organizational account. In the search box at the top of the portal, search for your workspace
     and click on the Synapse workspace which appears under the Resources section.
 
       ![](images/search-select.png)
