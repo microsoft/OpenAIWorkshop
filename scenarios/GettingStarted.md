@@ -42,8 +42,8 @@
 
     ![](media/select-rg.png "Resource groups")
    
-1. Confirm you have a resource group present with name **<inject key="DeploymentID" enableCopy="false" />**. The last six digits in the resource group name are unique for every user.
+1. Confirm you have a resource groups present as shown in the below screenshot. The last six digits in the resource group name are unique for every user.
 
-  
+    ![](media/openai1.png "Resource groups")
    
 1. Now, click on Next from the lower right corner to move to the next page.
