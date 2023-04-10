@@ -42,7 +42,9 @@
 
       ![](./images/exit-openai-powerapp-1.png)
 
-13. Next, on the **Flows** tab, select **Openaisummarization** then click on `...` and turn on (3) your flow.
+13. Next, on the **Flows (1)** tab, select **Openaisummarization (2)** then click on `...` **(3)** and **Turn on (4)** your flow.
+
+      ![](./images/flow-on.png)
 
 14. Click on **Edit (2)** for **Openaisummarization**.
 
@@ -51,6 +53,8 @@
 14. Edit the Power Automate Flow HTTP step by entering your own Azure OpenAI API  **Endpoint (1)** ensure to replace **deployment-id** with `demomodel` and **Key (2)** and click on **Save**.
 
       ![](./images/endpoint-key-1.png)
+   
+    >**Note**: You can get Open AI endpoint and key from the environment details page.
 
 15. From the **Apps (1)** page click on the **OpenAI Playground (2)** app to run the app.
 
