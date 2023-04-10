@@ -264,7 +264,7 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
 
     ![](images/trigger-1.png)
     
-2. To look at the pipeline run, navigate to the left-hand side of the screen, and choose the **Monitor (1)**  option. Then select the **Pipeline runs (2)** option in the **Integration** section. You will then see the pipeline run that you have triggered under the **Triggered (3)** section as **pipeline-1 (4)**. This pipeline should take approximately 4 minutes (if you are using the uploaded data for the workshop).
+2. To look at the pipeline run, navigate to the left-hand side of the screen, and choose the **Monitor (1)**  option. Then select the **Pipeline runs (2)** option in the **Integration** section. You will then see the pipeline run that you have triggered under the **Triggered (3)** section as **pipeline 1 (4)**. This pipeline should take approximately 4 minutes (if you are using the uploaded data for the workshop).
 
    ![](images/pipeline-run-1.png)
 
