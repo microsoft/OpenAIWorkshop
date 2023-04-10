@@ -230,7 +230,7 @@ Step 6: Azure function returns the results to end user.
 
     ![](images/powerapps26.png)
     
-1. Click on Submit to see the products.
+1. Click on **Submit** to see the products.
 
     ![](images/powerapps27.png)
 
