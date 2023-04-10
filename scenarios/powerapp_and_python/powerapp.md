@@ -46,7 +46,7 @@
 
       ![](./images/open-ai-flows-1.png)
 
-14. Edit the Power Automate Flow HTTP step by entering your own Azure OpenAI API  **Endpoint (1)** and **Key (2)** and click on **Save**.
+14. Edit the Power Automate Flow HTTP step by entering your own Azure OpenAI API  **Endpoint (1)** ensure to replace **deployment-id** with `demomodel` and **Key (2)** and click on **Save**.
 
       ![](./images/endpoint-key-1.png)
 
