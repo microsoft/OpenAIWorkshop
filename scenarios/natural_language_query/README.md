@@ -25,24 +25,24 @@ Step 6: Azure function returns the results to end user.
 
 1. Navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the Open AI engine, Open AI rest end point, SQL server and SQL database name in the file and copy the content.
 
-> **Note:** You can get Open AI endpoint, key and model name from the environment details page.
+      >**Note:** You can get Open AI endpoint, key and model name from the environment details page.
 
 1. Go to **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group and open **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject> (2)** function app.
 
    ![](images/openai3.png)
 
-1. Go to deployed function and click "Configuration" -> "Application Settings" and click on "Advance edit" and copy the "func-config.txt" values in the editor. DO not delete the existing contents in "Advance edit", just update ""config-func.txt" values before the last line and ']' mark. After copying the values click "OK" and "Save"
+1. Go to deployed function and click **Configuration** -> **Application Settings** and click on **Advance edit** and copy the **func-config.txt** values in the editor. DO not delete the existing contents in **Advance edit**, just update **config-func.txt** values before the last line and ']' mark. After copying the values click **OK** and **Save**.
    
    ![](images/openai2.png)
    
    ![](images/openai4.png)
 
 
-1. Under Settings in function click on **Identity** , under "System assigned" set the "Status" to **On**, Save the changes.
+1. Under Settings in function click on **Identity** , under **System assigned** set the **Status** to **On**, Save the changes.
 
    ![](images/openai5.png)
 
-1. Go to SQL server **openaiserver-<inject key="DeploymentID" enableCopy="false" /></inject>** under the same resource group, under "settings", click "Azure Active Directory" and click "Set admin", on right side provide the name of function app **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>**. Add the name and click  "Select" and "Save"
+1. Go to SQL server **openaiserver-<inject key="DeploymentID" enableCopy="false" /></inject>** under the same resource group, under **settings**, click **Azure Active Directory** and click **Set admin**, on right side provide the name of function app **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>**. Add the name and click  **Select** and **Save**.
 
    ![](images/openai6.png)
 
@@ -105,10 +105,10 @@ Step 6: Azure function returns the results to end user.
 9. Edit the Power Automate Flow and update **Azure Function Url (1)** with the URL you copied earlier and append `prompt=` at the end. Your URL should look like following. Click **Save (2)**.
 
     ```
-    https://functionappXXXXXX.azurewebsites.net/api/NLQuery?prompt=
+    https://openaifunappXXXXXX.azurewebsites.net/api/NLQuery?prompt=
     ```
   
-      ![](images/nqlquery-url-save-1.png)
+      ![](images/openai-1.png)
 
 10. Got to **Apps** and select the app with the name **NLP Query**. Run the App by clicking on the App.
 
@@ -128,7 +128,7 @@ Step 6: Azure function returns the results to end user.
 
     ![](images/power-automate.png)
    
-3. Enter the **Connector name** as `Openai-custom-connector (1)` and click on **Continue (2)**. Just keep the screen as is and move to the next step.
+3. Enter the **Connector name** as `Openai-custom-connector` **(1)** and click on **Continue (2)**. Just keep the screen as is and move to the next step.
 
       ![](images/openai-custom-connector-1.png)
 
@@ -138,11 +138,11 @@ Step 6: Azure function returns the results to end user.
 
 5. We need to update the below values in the file 
 
-      - host: openaifunapp<inject key="DeploymentID" enableCopy="false" />.azurewebsites.net **(1)**
+      - **host**: `openaifunapp<inject key="DeploymentID" enableCopy="false" />.azurewebsites.net` **(1)**
   
-      - paths:  /api/NLQuery **(2)**
+      - **paths**:  `/api/NLQuery` **(2)**
   
-      - operationId: Get-Prompt **(3)**
+      - **operationId**: `Get-Prompt` **(3)**
 
       ![](images/get-prompt-edit-1.png)
   
@@ -174,7 +174,7 @@ Step 6: Azure function returns the results to end user.
 
 11. The flow will look like the image provided below.
   
-    ![](images/top-5.png)
+     ![](images/top-5.png)
   
 12. You need to delete the third step which in your case will be **HTTTP** flow, click on `...` **(1)** next to **HTTP** and click **Delete (2)**.
 
@@ -220,17 +220,28 @@ Step 6: Azure function returns the results to end user.
    
      ![](images/apps-nlq-1.png)
      
-23. Click on Power Automate,  once Power Automate opens click **Save** on the right top side.
+23. Click on **Power Automate**, then click on `...` next to **Promptinputflow** and click on **Remove from app**.
+
+      ![](images/openai-7.png)
+
+24. Next, click on **+ Add flow** and select **Promptinputflow**.
   
+      ![](images/openai-8.png)
+ 
+ 25. Click **Save** on the top right.
+ 
+     ![](images/openai-9.png)
+ 
+
 ## Task 5. Test the Power App
 
 1. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
 
-1.  Search the App which you deployed in Step 4 and and open it.
+1.  Open the **NLP Query** App.
 
-    ![](images/powerapps26.png)
+    ![](images/openai-3.png)
     
-1. Click on Submit to see the products.
+1. Click on **Submit** to see the products.
 
     ![](images/powerapps27.png)
 

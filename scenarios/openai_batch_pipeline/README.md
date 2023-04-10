@@ -50,9 +50,9 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     - Storage account: Select **openaistorage<inject key="DeploymentID" enableCopy="false"/> (1)**
     - File Share: Enter **blob (2)**
 
-    ![](images/scenario2-03.png)
+    ![](images/openai-4.png)
 
-1.  Once the storage account is created, you will be prompted with the PowerShell window as shown in the below screenshot.
+1.  Once the storage account is created, you will be prompted with the Bash window as shown in the below screenshot.
     
     ![](images/cloudshell.png)
         
@@ -113,7 +113,11 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 ### **A. Create Target SQL Table**
 
-1. Once the SQL Pool has been created, click into the **Develop (1)** section of the Synapse Studio, click the "**+ (2)**" sign in the top left, and select **SQL script (3)**. This will open a new window with a SQL script editor. 
+1. In the [Azure portal](https://portal.azure.com), navigate to **asaworkspace<inject key="DeploymentID" enableCopy="false"/>** synapse workspace from **openai-<inject key="DeploymentID" enableCopy="false"/>** resource group. From the **Overview** tab click on **Open** to launch the synapse workspace.
+
+    ![](images/openai-5.png)
+
+1. Click into the **Develop (1)** section of the Synapse Studio, click the "**+ (2)**" sign in the top left, and select **SQL script (3)**. This will open a new window with a SQL script editor. 
 
    ![](images/synapse3.png)
 
@@ -130,7 +134,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     )
     ```
     
-    ![](images/create-dob.png)
+    ![](images/openai-6.png)
     
 1. Next click on Publish to publish the **SQL Script**.
 
@@ -156,7 +160,7 @@ We'll next need to create two linked services: One for our Source (the JSON file
 
    ![](images/synapse8.png)
 
-1. In the *New linked service* window that opens, fill in a name for your target linked service as **synapselinkedservice** **(1)**. Select the **Azure subscription (2)** in which you have been working and where you created your Synapse SQL Pool. Select the **Server name (3)** and **Database name (4)** and in which created the target table above. Be certain to change the **Authentication type** to **System Assigned Managed Identity (5)** then click on **Test connection (6)** and click  **Create (7)**.
+1. In the *New linked service* window that opens, fill in a name for your target linked service as **synapselinkedservice** **(1)**. Select the **Azure subscription (2)** in which you have been working. Select the **asaworkspace<inject key="DeploymentID" enableCopy="false"/> (3)** for **Server name** and **openaisql (4)** as the **Database name**. Be certain to change the **Authentication type** to **System Assigned Managed Identity (5)** then click on **Test connection (6)** and click  **Create (7)**.
 
    ![](images/openai-synapselinked.png)
 
@@ -260,7 +264,7 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
 
     ![](images/trigger-1.png)
     
-2. To look at the pipeline run, navigate to the left-hand side of the screen, and choose the **Monitor (1)**  option. Then select the **Pipeline runs (2)** option in the **Integration** section. You will then see the pipeline run that you have triggered under the **Triggered (3)** section as **pipeline-1 (4)**. This pipeline should take approximately 4 minutes (if you are using the uploaded data for the workshop).
+2. To look at the pipeline run, navigate to the left-hand side of the screen, and choose the **Monitor (1)**  option. Then select the **Pipeline runs (2)** option in the **Integration** section. You will then see the pipeline run that you have triggered under the **Triggered (3)** section as **pipeline 1 (4)**. This pipeline should take approximately 4 minutes (if you are using the uploaded data for the workshop).
 
    ![](images/pipeline-run-1.png)
 
