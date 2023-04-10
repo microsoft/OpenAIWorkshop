@@ -42,7 +42,9 @@
 
       ![](./images/exit-openai-powerapp-1.png)
 
-13. Next, select the **Flows (1)** Pane, and click on **Edit (2)** for **Openaisummarization**.
+13. Next, on the **Flows** tab, select **Openaisummarization** then click on `...` and turn on (3) your flow.
+
+14. Click on **Edit (2)** for **Openaisummarization**.
 
       ![](./images/open-ai-flows-1.png)
 
