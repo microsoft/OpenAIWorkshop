@@ -66,7 +66,9 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
     ![](./images/back-1.png)
 
-12. Next, select the **Flows (1)** Pane, and click on **Edit (2)** for **Semantic-Search-Flow**. PowerAutomate Flow needs to be enabled. At this point, the powerapp can be run as is. It connects to a pre-built Azure Function App. 
+12.  On the **Flows** Pane, select **Semantic-Search-Flow** then click on `...` and turn on your flow.
+
+13. Next, select the **Flows (1)** click on **Edit (2)** for **Semantic-Search-Flow**. PowerAutomate Flow needs to be enabled. At this point, the powerapp can be run as is. It connects to a pre-built Azure Function App. 
 
     ![](./images/flows-1.1.png)
 
