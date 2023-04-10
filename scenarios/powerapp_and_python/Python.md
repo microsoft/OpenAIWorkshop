@@ -9,6 +9,14 @@
      
     ![](images/open-workspace.png)
     
+1. Click on **Develop (1)** then click on **+ (2)** and select **Import**.
+
+    ![](images/import-note.png)
+
+1. Navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\powerapp_and_python\python` location and select `OpenAI_notebook.ipynb` then click on **Open**.
+
+     ![](images/notebook.png)
+
 1. Select **openaisparkpool** from the drop-down menu of **Attach to**.
 
     ![](images/openai-sparkpool.png)
