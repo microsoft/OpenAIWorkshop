@@ -27,7 +27,17 @@
 
 1. In **2. Import helper libraries and instantiate credentials** replace the **AZURE_OPENAI_API_KEY** and **AZURE_OPENAI_ENDPOINT** with your API key and End point URL.
 
+  
     ![](images/key-endpoint.png)
+
+    > **Note:** If you encounter an error "Openai module not found" in a add a new cell at the top of the notebook and enter the following and run the cell. Then re-run the cells from the top.
+
+     ```
+     pip install --upgrade pip
+     pip uninstall openai
+     ```
+     
+      ![](images/note.png)
 
 1. For **2. Choose a Model**, replace **model** value from **text-curie-001** to **demomodel**.
 
