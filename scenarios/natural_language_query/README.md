@@ -220,10 +220,19 @@ Step 6: Azure function returns the results to end user.
    
      ![](images/apps-nlq-1.png)
      
-23. Click on **Power Automate (1)**,  once Power Automate opens click **Save (2)** on the right top side.
+23. Click on **Power Automate**, then click on `...` next to **Promptinputflow** and click on **Remove from app**.
+
+      ![](images/openai-7.png)
+
+24. Next, click on **+ Add flow** and select **Promptinputflow**.
   
-      ![](images/openai-2.png)
-  
+      ![](images/openai-8.png)
+ 
+ 25. Click **Save** on the top right.
+ 
+     ![](images/openai-9.png)
+ 
+
 ## Task 5. Test the Power App
 
 1. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
