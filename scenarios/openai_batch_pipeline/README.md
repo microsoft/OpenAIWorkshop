@@ -50,9 +50,9 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     - Storage account: Select **openaistorage<inject key="DeploymentID" enableCopy="false"/> (1)**
     - File Share: Enter **blob (2)**
 
-    ![](images/scenario2-03.png)
+    ![](images/openai-4.png)
 
-1.  Once the storage account is created, you will be prompted with the PowerShell window as shown in the below screenshot.
+1.  Once the storage account is created, you will be prompted with the Bash window as shown in the below screenshot.
     
     ![](images/cloudshell.png)
         
@@ -113,7 +113,11 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 ### **A. Create Target SQL Table**
 
-1. Once the SQL Pool has been created, click into the **Develop (1)** section of the Synapse Studio, click the "**+ (2)**" sign in the top left, and select **SQL script (3)**. This will open a new window with a SQL script editor. 
+1. In the [Azure portal](https://portal.azure.com), navigate to **asaworkspace<inject key="DeploymentID" enableCopy="false"/>** synapse workspace from **openai-<inject key="DeploymentID" enableCopy="false"/>** resource group. From the **Overview** tab click on **Open** to launch the synapse workspace.
+
+    ![](images/openai-5.png)
+
+1. Click into the **Develop (1)** section of the Synapse Studio, click the "**+ (2)**" sign in the top left, and select **SQL script (3)**. This will open a new window with a SQL script editor. 
 
    ![](images/synapse3.png)
 
@@ -130,7 +134,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     )
     ```
     
-    ![](images/create-dob.png)
+    ![](images/openai-6.png)
     
 1. Next click on Publish to publish the **SQL Script**.
 
