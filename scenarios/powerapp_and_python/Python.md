@@ -30,14 +30,7 @@
   
     ![](images/key-endpoint.png)
 
-    > **Note:** If you encounter an error "Openai module not found" in a add a new cell at the top of the notebook and enter the following and run the cell. Then re-run the cells from the top.
-
-     ```
-     pip install --upgrade pip
-     pip uninstall openai
-     ```
-     
-      ![](images/note.png)
+    > **Note:** If you encounter an error "Openai module not found", enter `%` in before the **pip install** in the Install OpenAI cell and re-run the notebook again.
 
 1. For **2. Choose a Model**, replace **model** value from **text-curie-001** to **demomodel**.
 
