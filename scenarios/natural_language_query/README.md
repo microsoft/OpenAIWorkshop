@@ -25,18 +25,17 @@ Step 6: Azure function returns the results to end user.
 
 1. Navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the Open AI engine, Open AI rest end point, SQL server and SQL database name in the file and copy the content.
 
-      >**Note:** You can get Open AI endpoint, key and model name from the environment details page. Copy the SQL server and database names by navigating to the **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group.
+      >**Note:** You can get Open AI endpoint, key and model name from the environment details page. Copy the SQL server and database names by navigating to the **openai-<inject key="DeploymentID" enableCopy="false" /></inject>** resource group.
 
 1. Go to **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group and open **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject> (2)** function app.
 
    ![](images/openai3.png)
 
-1. Go to deployed function and click **Configuration** -> **Application Settings** and click on **Advance edit** and copy the **func-config.txt** values in the editor. DO not delete the existing contents in **Advance edit**, just update **config-func.txt** values before the last line and ']' mark. After copying the values click **OK** and **Save**.
+1. Go to deployed function and click **Configuration** -> **Application Settings** and click on **Advance edit** and copy the **func-config.txt** values in the editor. Do not delete the existing contents in **Advance edit**, just update **config-func.txt** values before the last line and ']' mark. After copying the values click **OK** and **Save**.
    
    ![](images/openai2.png)
    
    ![](images/openai4.png)
-
 
 1. Under Settings in function click on **Identity** , under **System assigned** set the **Status** to **On**, Save the changes.
 
@@ -178,7 +177,7 @@ Step 6: Azure function returns the results to end user.
   
 12. You need to delete the third step which in your case will be **HTTTP** flow, click on `...` **(1)** next to **HTTP** and click **Delete (2)**.
 
-     ![](images/delete-http-1.png)
+     ![](images/delete.png)
 
 13. Click the **Parse JSON** step , click inside the **Content (1)** field, click on right side, and select **body (2)**. 
   
