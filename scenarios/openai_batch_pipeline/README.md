@@ -45,12 +45,14 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
    ![](images/scenario2-02.png)
    
-1. Follow the below-mentioned instructions and click on **Create Storage (3)**.
+1. Follow the below-mentioned instructions and click on **Create Storage (5)**.
 
-    - Storage account: Select **openaistorage<inject key="DeploymentID" enableCopy="false"/> (1)**
-    - File Share: Enter **blob (2)**
+    - Subscription: Select the subscription **(1)**
+    - Resource group: Select **Use existing (2)** and select the resource group.
+    - Storage account: Select **openaistorage<inject key="DeploymentID" enableCopy="false"/> (3)**
+    - File Share: Enter **blob (4)**
 
-    ![](images/openai-4.png)
+    ![](images/openai4-new.png)
 
 1.  Once the storage account is created, you will be prompted with the Bash window as shown in the below screenshot.
     
