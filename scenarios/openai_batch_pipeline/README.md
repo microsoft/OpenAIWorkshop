@@ -292,5 +292,3 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
   
    ![](images/query-results-1.png)
 
-[Back to the Top](#Summary)
----
