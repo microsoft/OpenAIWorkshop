@@ -98,9 +98,16 @@ To configure Azure Search, please follow the steps below.
 - In the Customize Target Index, use id as the Azure Document Key and mark text as the Searchable Field. 
 - This should index the chunked sample
 
- 
+## 3. Deploy Azure Function App
+Optionally, the function app can be deployed using the below func cli. Azure Functions Cli can be installed from [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=v4%2Clinux%2Ccsharp%2Cportal%2Cbash#install-the-azure-functions-core-tools). 
 
-## 3. Test Azure Function App service deployment
+
+        cd ./scenarios/openai_on_custom_dataset/orchestrator
+        FUNC_NAME="<name of function>"
+        func azure functionapp publish $FUNC_NAME --force --python
+
+
+## 4. Test Azure Function App service deployment
 
 Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url and code.
 
@@ -123,13 +130,13 @@ Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url a
         (curl -Method POST 'https://<Your Function App Name>.azurewebsites.net/api/orchestrator-func-app?code=<Your Function App Code>&num_search_result=5' -Body '@test_prompt.json').Content
 
 
-## 4. Deploy client Power App
+## 5. Deploy client Power App
 
 Proceed with creating PowerApp. Use the pre-built Powerapp in powerapp/Semantic-Search-App-Template_20230303012916.zip and import the package.
 
 [Create PowerApp](PowerApp.md)
 
-## 5. Test
+## 6. Test
 
 Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp.
 Select an  FAQ from dropdown and click Search. This is should bring up the answers powered by Open AI GPT-3 Models. 
