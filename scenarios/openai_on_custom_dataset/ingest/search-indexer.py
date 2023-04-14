@@ -30,7 +30,17 @@ endpoint = os.environ["AFR_ENDPOINT"]
 key = os.environ["AFR_API_KEY"]
 
 # sample document
-formUrl = "https://github.com/microsoft/OpenAIWorkshop/raw/main/scenarios/data/azure-machine-learning-2-500.pdf"
+#formUrl = "https://st537wok4i75xem.blob.core.windows.net/tibcodocs/TIBCO_Spotfire_Server_12_3_0/TIB_sfire-analyst_python-packages.pdf?sv=2021-10-04&st=2023-04-13T02%3A47%3A28Z&se=2023-04-14T02%3A47%3A28Z&sr=b&sp=r&sig=KlFYMi3noh2ZbmbDYhTo6kszYJOVQhnecp0hGQMNWJ8%3D"
+
+formUrl = os.environ["FILE_URL"]
+localFolderPath = os.environ["LOCAL_FOLDER_PATH"]
+
+
+if (formUrl == "" and localFolderPath == ""):
+    print("Please provide a valid FILE_URL or LOCAL_FOLDER_PATH in secrets.env file.")
+    exit()
+
+
 
 document_analysis_client = DocumentAnalysisClient(
     endpoint=endpoint, credential=AzureKeyCredential(key)
@@ -38,7 +48,7 @@ document_analysis_client = DocumentAnalysisClient(
 
 
 
-index_name = "azure-aml-docs"
+index_name = SEARCH_INDEX
 
 index_schema = {
   "name": index_name,
@@ -65,6 +75,34 @@ index_schema = {
       "key": False,
       "retrievable": True,
       "searchable": True,
+      "sortable": False,
+      "indexAnalyzer": None,
+      "searchAnalyzer": None,
+      "synonymMaps": [],
+      "fields": []
+    },
+    {
+      "name": "fileName",
+      "type": "Edm.String",
+      "facetable": False,
+      "filterable": False,
+      "key": False,
+      "retrievable": True,
+      "searchable": False,
+      "sortable": False,
+      "indexAnalyzer": None,
+      "searchAnalyzer": None,
+      "synonymMaps": [],
+      "fields": []
+    },
+    {
+      "name": "pageNumber",
+      "type": "Edm.String",
+      "facetable": False,
+      "filterable": False,
+      "key": False,
+      "retrievable": True,
+      "searchable": False,
       "sortable": False,
       "indexAnalyzer": None,
       "searchAnalyzer": None,
@@ -178,8 +216,8 @@ def add_document_to_index(page_idx, documents):
         print(e)
 
 
-def process_afr_result(result):
-    print(f"Processing sample document with {len(result.pages)} pages into Azure Search....this might take a few minutes...")
+def process_afr_result(result, filename):
+    print(f"Processing {filename } with {len(result.pages)} pages into Azure Search....this might take a few minutes depending on number of pages...")
     for page_idx in range(len(result.pages)):
         docs = []
         content_chunk = ""
@@ -189,14 +227,18 @@ def process_afr_result(result):
 
             if line_idx != 0 and line_idx % 20 == 0:
               search_doc = {
-                    "id":  f"page-number-{page_idx}-line-number-{line_idx}",
-                    "text": content_chunk
+                    "id":  f"page-number-{page_idx + 1}-line-number-{line_idx}",
+                    "text": content_chunk,
+                    "fileName": filename,
+                    "pageNumber": str(page_idx+1)
               }
               docs.append(search_doc)
               content_chunk = ""
         search_doc = {
-                    "id":  f"page-number-{page_idx}-line-number-{line_idx}",
-                    "text": content_chunk
+                    "id":  f"page-number-{page_idx + 1}-line-number-{line_idx}",
+                    "text": content_chunk,
+                    "fileName": filename,
+                    "pageNumber": str(page_idx + 1)
         }
         docs.append(search_doc)   
         add_document_to_index(page_idx, {"value": docs})
@@ -214,16 +256,29 @@ def create_chunked_data_files(page_idx, search_doc):
     
 
 try:    
-    print(f"Analyze sample azure machine learning document from url: {formUrl}")
-    poller = document_analysis_client.begin_analyze_document_from_url("prebuilt-layout", formUrl)
-
-    print(f"Processing result...this might take a few minutes...")
-    result = poller.result()
-
     delete_search_index()
     create_search_index()    
-    process_afr_result(result)
-    print(f"done")
+    
+    if(formUrl != ""):
+      print(f"Analyzing form from URL {formUrl}...")
+      poller = document_analysis_client.begin_analyze_document_from_url("prebuilt-layout", formUrl)
+      result = poller.result()
+      print(f"Processing result...this might take a few minutes...")
+      process_afr_result(result, "")
+    
+
+    if(localFolderPath != ""):
+      for filename in os.listdir(localFolderPath):
+        file = os.path.join(localFolderPath, filename)    
+        with open(file, "rb") as f:
+          print(f"Analyzing file {filename} from directory {localFolderPath}...")
+          poller = document_analysis_client.begin_analyze_document(
+              "prebuilt-layout", document=f
+          )
+          result = poller.result()
+          print(f"{filename}Processing result...this might take a few minutes...")
+          process_afr_result(result, filename)
+      print(f"done")
 except Exception as e:
     print(e)
 
