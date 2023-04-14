@@ -7,6 +7,7 @@ import os
 import ssl
 import json
 import os
+import pandas as pd
 from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 import openai
@@ -52,24 +53,28 @@ def run_openai(prompt, engine=GPT_ENGINE):
 def azcognitive_score(user_query, topk):
     results = search_client.search(search_text=user_query, include_total_count=True, query_type='semantic', query_language='en-us',semantic_configuration_name=semantic_config)
     document=""
+    sources = []
+    
     i=0
     while i < topk:
         try:
             item = next(results)
             document += (item['text'])
+            sourceInfo = {"fileName": item['fileName'], "pageNumber":  item['pageNumber']}
+            sources.append(sourceInfo)
         except Exception as e:
             print(e)
             break
         i+=1
-    system_message="""
-    You are an AI search Assitant. You are given a question and a context. You need to answer the question using only the context.
-    If you do not know the Answer, you can say "I don't know".  
-    The context is a collection of documents.    
-    """
-    system_message =  {"role": "system", "content": system_message}
+    #system_message="""
+    #You are an AI search Assitant. You are given a question and a context. You need to answer the question using only the context.
+    #If you do not know the Answer, you can say "I don't know".  
+    #The context is a collection of documents.    
+    #"""
+    system_message =  {"role": "system", "content": os.getenv("SYSTEM_MESSAGE")}
     question = {"role":"user", "content":f"Question: {user_query} \n <context> {document} </context>"}
     prompt= [system_message] +[question]
-    return prompt
+    return prompt, sources
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -87,9 +92,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         else:
             prompt = req_body.get('prompt')
     gpt_prompt = None
+    sources = None
 
     try:
-        gpt_prompt = azcognitive_score(prompt,topk)
+        gpt_prompt, sources = azcognitive_score(prompt,topk)
     except Exception as e:
         return func.HttpResponse(json.dumps(e))
 
@@ -98,7 +104,20 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     #result = None
     #try:
     result = run_openai(gpt_prompt)
-    return func.HttpResponse(json.dumps({"result":result, "gpt_prompt":gpt_prompt}))
+
+    # load json into pandas dataframe
+    df = pd.DataFrame(sources)
+    arr_unique_filename = df['fileName'].unique()
+    citations = ""
+    for filename in arr_unique_filename:
+        page_numbers = df.loc[df['fileName'] == filename]
+        citations += f"\n{filename}, page numbers:"
+        for page in page_numbers['pageNumber']:
+            citations += f"[{page}]\n"      
+    
+    result += result + f"\n\n\nCitations: \n{citations}"
+
+    return func.HttpResponse(json.dumps({"result":result, "gpt_prompt":gpt_prompt, "sources":sources}))
     #except Exception as e:
     #    return func.HttpResponse(json.dumps(e))
 
