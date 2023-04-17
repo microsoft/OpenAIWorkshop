@@ -24,4 +24,4 @@
         ```
 3. Create a python environment
 4. Import the requirements.txt `pip install -r requirements.txt`
-5. From the window, run `streamlit run viz.py`
+5. From the window, run `streamlit run viz_v2.py`
