@@ -11,8 +11,8 @@ from dotenv import load_dotenv
 
 from pathlib import Path  # Python 3.6+ only
 
-faq =["Is that true that top 20% customers generate 80% revenue in 2016?","Which products have most seasonality in sales quantity in 2016?", "Which customers are most likely to churn?", " Predicts next 3 months revenue"]
-additional_database_comments="the dimension.Date table can be joined with other table via the column DATE"
+faq =["Is that true that top 20% customers generate 80% revenue in 2016?","Which products have most seasonality in sales quantity in 2016?", "Which customers are most likely to churn?", "Predict monthly revenue for next 3 months using historical data"]
+# additional_database_comments="the dimension.Date table can be joined with other table via the column DATE"
 
 system_message="""
 You are a smart AI assistant to help answer business questions based on analyzing data. 
@@ -36,9 +36,12 @@ Thought 1: Your thought here.
 Action: 
 ```Python
 #Import neccessary libraries here
+import numpy as np
 #Query some data 
 sql_query = "SOME SQL QUERY"
 step1_df = execute_sql(sql_query)
+# Replace 0 with NaN
+step1_df['Some_Column'] = step1_df['Some_Column'].replace(0, np.nan)
 #persist data
 self.st.session_state['step1_df'] = step1_df
 #observe query result
@@ -57,9 +60,9 @@ step1_df = self.st.session_state['step1_df']
 fig=px.line(step2_df)
 #visualize fig object in streamlit for user. Remember to use st directly instead of self.st 
 st.plotly_chart(fig)
-#you can also directly display tabular or text data using. DO NOT use print().
+#you can also directly display tabular or text data to end user using st.write. DO NOT use print().
 st.write(step2_df)
-#also observe it yourself to make comment.
+#also observe it yourself to make comment. Remember you can only see data with observe
 observe("some_label", step2_df) #Always use observe() 
 ```
 Observation: data from step2_df

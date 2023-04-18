@@ -14,53 +14,6 @@ from sqlalchemy import create_engine
 import sqlalchemy as sql
 
 
-# def get_table_schema_lite(sql_query_tool):
-  
-#     sql_query = """    
-#     SELECT m.name AS TABLE_NAME, p.name AS COLUMN_NAME, p.type AS DATA_TYPE  
-#     FROM sqlite_master AS m  
-#     JOIN pragma_table_info(m.name) AS p  
-#     WHERE m.type = 'table'  
-#     """  
-    
-#     # Establish a connection to the SQLite database  
-    
-#     # Execute the SQL query and store the results in a DataFrame  
-#     df = sql_query_tool.execute_sql_query(sql_query, limit=None)      
-#     output = []  
-#     # Initialize variables to store table and column information  
-#     current_table = ''  
-#     columns = []  
-    
-#     # Loop through the query results and output the table and column information  
-#     for index, row in df.iterrows():  
-#         table_name = f"{row['TABLE_NAME']}" 
-#         if " " in table_name:
-#             table_name= f"[{table_name}]" 
-#         column_name = row['COLUMN_NAME']  
-#         if " " in column_name:
-#             column_name= f"[{column_name}]" 
-
-#         data_type = row['DATA_TYPE']  
-    
-#         # If the table name has changed, output the previous table's information  
-#         if current_table != table_name and current_table != '':  
-#             output.append(f"table: {current_table}, columns: {', '.join(columns)}")  
-#             columns = []  
-    
-#         # Add the current column information to the list of columns for the current table  
-#         columns.append(f"{column_name} {data_type}")  
-    
-#         # Update the current table name  
-#         current_table = table_name  
-    
-#     # Output the last table's information  
-#     output.append(f"table: {current_table}, columns: {', '.join(columns)}")  
-#     output = "\n".join(output)  
-    
-#     # Close the connection  
-    
-#     return output  
 
 def get_table_schema(sql_query_tool, sql_engine='sqlite'):
   
@@ -185,9 +138,9 @@ class SQL_Query(ChatGPT_Handler):
 
         result = pd.read_sql_query(query, engine)
         result = result.infer_objects()
-
-        # print("result dtypes", result.dtypes)
-
+        for col in result.columns:  
+            if 'date' in col.lower():  
+                result[col] = pd.to_datetime(result[col], errors="ignore")  
   
         if limit is not None:  
             result = result.head(limit)  # limit to save memory  
@@ -275,7 +228,7 @@ class AnalyzeGPT(ChatGPT_Handler):
                                 observation=self.st.session_state[key]
                                 observations.append((key.split(":")[1],observation))
                                 if type(observation) is pd:
-                                    serialized_obs.append((key.split(":")[1],observation.to_json()))
+                                    serialized_obs.append((key.split(":")[1],observation.to_json(orient='records', date_format='iso')))
                                 else:
                                     serialized_obs.append({key.split(":")[1]:str(observation)})
                                 del self.st.session_state[key]
