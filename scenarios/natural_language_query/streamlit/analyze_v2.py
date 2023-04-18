@@ -156,16 +156,17 @@ class AnalyzeGPT(ChatGPT_Handler):
         
         table_schema = get_table_schema(sql_query_tool,sql_engine)
         # print("table_schema: \n", table_schema)
-        if 'conversation_history' not in st.session_state: #first time conversation
-            system_message = f"""
+        # if 'conversation_history' not in st.session_state: #first time conversation
+        system_message = f"""
         <<data_sources>>
         {table_schema}
         {system_message.format(sql_engine=sql_engine)}
         {few_shot_examples}
         """
-            self.conversation_history =  [{"role": "system", "content": system_message}]
-        else:
-            self.conversation_history =  st.session_state['conversation_history']
+        #     self.conversation_history =  [{"role": "system", "content": system_message}]
+        # else:
+        #     self.conversation_history =  st.session_state['conversation_history']
+        self.conversation_history =  [{"role": "system", "content": system_message}]
         self.st = st
         self.content_extractor = content_extractor
         self.sql_query_tool = sql_query_tool
@@ -179,6 +180,7 @@ class AnalyzeGPT(ChatGPT_Handler):
         n=0
         try:
             llm_output = self._call_llm(self.conversation_history, stop)
+            print(llm_output)
         except Exception as e:
             time.sleep(8) #sleep for 8 seconds
             while n<5:
@@ -186,10 +188,11 @@ class AnalyzeGPT(ChatGPT_Handler):
                     llm_output = self._call_llm(self.conversation_history, stop)
                 except Exception as e:
                     n +=1
+                    print(n)
                     time.sleep(8) #sleep for 8 seconds
                     print(e)
 
-            llm_output = "Error from Open AI, probably exceeding rate limit"     
+            llm_output = "OPENAI_ERROR"     
              
     
         # print("llm_output: ", llm_output)
@@ -200,9 +203,9 @@ class AnalyzeGPT(ChatGPT_Handler):
 
     def run(self, question: str, show_code,st) -> any:
         st.write(f"Question: {question}")
-        if "init" not in self.st.session_state.keys():
+        # if "init" not in self.st.session_state.keys():
             
-            self.st.session_state['init']= True
+        #     self.st.session_state['init']= True
 
         def execute_sql(query):
             return self.sql_query_tool.execute_sql_query(query)
@@ -226,17 +229,20 @@ class AnalyzeGPT(ChatGPT_Handler):
                 pass
             self.st.session_state[f'observation:{name}']=data
 
-        max_steps = 20
+        max_steps = 15
         count =1
 
         finish = False
-        if self.st.session_state['init']:
-            new_input= f"Question: {question}"
-        else:
-            new_input=self.st.session_state['history'] +f"\nQuestion: {question}"
+        new_input= f"Question: {question}"
+        # if self.st.session_state['init']:
+        #     new_input= f"Question: {question}"
+        # else:
+        #     new_input=self.st.session_state['history'] +f"\nQuestion: {question}"
         while not finish:
 
             llm_output,next_steps = self.get_next_steps(new_input, stop=["Observation:", f"Thought {count+1}"])
+            if llm_output=='OPENAI_ERROR':
+                st.write("Error Calling Azure Open AI, probably due to max service limit, please try again")
             new_input += f"\n{llm_output}"
             for key, value in next_steps.items():
                 new_input += f"\n{value}"
@@ -278,11 +284,11 @@ class AnalyzeGPT(ChatGPT_Handler):
                     finish= True
 
             count +=1
-            if count== max_steps:
+            if count>= max_steps:
                 print("Exceeding threshold, finish")
                 break
-        self.st.session_state['init'] = False
-        self.st.session_state['history'] = new_input
+        # self.st.session_state['init'] = False
+        # self.st.session_state['history'] = new_input
             
 
 

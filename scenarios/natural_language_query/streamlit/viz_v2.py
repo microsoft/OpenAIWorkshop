@@ -2,6 +2,10 @@ import streamlit as st
 import os
 import pandas as pd
 import sys
+import numpy as np
+import plotly.express as px
+import plotly.graph_objs as go
+
 sys.path.append('../')
 from analyze_v2 import AnalyzeGPT, SQL_Query, ChatGPT_Handler
 import openai
