@@ -4,8 +4,8 @@
     Option 1: use built-in SQLITE. Then you don't need to install SQL Server.
         ```txt
         AZURE_OPENAI_API_KEY=9999999999999999999999999
-        AZURE_OPENAI_DEPLOYMENT_MASTER_NAME="gpt-4"
-        AZURE_OPENAI_DEPLOYMENT_TOOL_NAME="gpt-35-turbo"
+        AZURE_OPENAI_GPT4_DEPLOYMENT="gpt-4"
+        AZURE_OPENAI_CHATGPT_DEPLOYMENT=gpt-35-turbo
         AZURE_OPENAI_ENDPOINT=https://openairesourcename.openai.azure.com/
         SQLITE_DB_PATH = "../data/northwind.db"
         SQL_ENGINE = "sqlite"
@@ -15,8 +15,8 @@
         ```txt
         AZURE_OPENAI_API_KEY=9999999999999999999999999
         AZURE_OPENAI_ENDPOINT=https://openairesourcename.openai.azure.com/
-        AZURE_OPENAI_DEPLOYMENT_MASTER_NAME="gpt-4"
-        AZURE_OPENAI_DEPLOYMENT_NAME=gpt-35-turbo
+        AZURE_OPENAI_GPT4_DEPLOYMENT="gpt-4"
+        AZURE_OPENAI_CHATGPT_DEPLOYMENT=gpt-35-turbo
         SQL_USER=sqluserid
         SQL_PASSWORD=sqlpassword
         SQL_DATABASE=WideWorldImportersDW

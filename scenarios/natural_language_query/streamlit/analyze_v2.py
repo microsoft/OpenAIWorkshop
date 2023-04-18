@@ -12,8 +12,8 @@ import re
 import json
 from sqlalchemy import create_engine  
 import sqlalchemy as sql
-
-
+from plotly.graph_objects import Figure
+import time
 
 def get_table_schema(sql_query_tool, sql_engine='sqlite'):
   
@@ -83,18 +83,15 @@ class ChatGPT_Handler: #designed for chatcompletion API
         # self.conversation_history = []
         self.extract_patterns=extract_patterns
     def _call_llm(self,prompt, stop):
-        try:
-            response = openai.ChatCompletion.create(
-            engine=self.gpt_deployment, 
-            messages = prompt,
-            temperature=self.temperature,
-            max_tokens=self.max_response_tokens,
-            stop=stop
-            )
-            llm_output = response['choices'][0]['message']['content']
-        except Exception as e:
-            llm_output = "Internal_Error"
-
+        response = openai.ChatCompletion.create(
+        engine=self.gpt_deployment, 
+        messages = prompt,
+        temperature=self.temperature,
+        max_tokens=self.max_response_tokens,
+        stop=stop
+        )
+            
+        llm_output = response['choices'][0]['message']['content']
         return llm_output
     def extract_output(self, text_input):
             output={}
@@ -153,6 +150,9 @@ class AnalyzeGPT(ChatGPT_Handler):
     
     def __init__(self,sql_engine,content_extractor, sql_query_tool, system_message,few_shot_examples,st,**kwargs) -> None:
         super().__init__(**kwargs)
+            
+        
+
         
         table_schema = get_table_schema(sql_query_tool,sql_engine)
         # print("table_schema: \n", table_schema)
@@ -176,27 +176,52 @@ class AnalyzeGPT(ChatGPT_Handler):
             old_user_content=old_user_content['content']+"\n"
         self.conversation_history.append({"role": "user", "content": old_user_content+updated_user_content})
         # print("prompt input ", self.conversation_history)
-        llm_output = self._call_llm(self.conversation_history, stop)
+        n=0
+        try:
+            llm_output = self._call_llm(self.conversation_history, stop)
+        except Exception as e:
+            time.sleep(8) #sleep for 8 seconds
+            while n<5:
+                try:
+                    llm_output = self._call_llm(self.conversation_history, stop)
+                except Exception as e:
+                    n +=1
+                    time.sleep(8) #sleep for 8 seconds
+                    print(e)
+
+            llm_output = "Error from Open AI, probably exceeding rate limit"     
+             
+    
         # print("llm_output: ", llm_output)
         output = self.content_extractor.extract_output(llm_output)
             
 
         return llm_output,output
 
-    def run(self, question: str, st) -> any:
+    def run(self, question: str, show_code,st) -> any:
+        st.write(f"Question: {question}")
+        if "init" not in self.st.session_state.keys():
+            
+            self.st.session_state['init']= True
+
         def execute_sql(query):
             return self.sql_query_tool.execute_sql_query(query)
         observation=None
-        def print(message):
-            st.write(message)
+        def show(data):
+            if type(data) is Figure:
+                st.plotly_chart(data)
+            else:
+                st.write(data)
             i=0
             for key in self.st.session_state.keys():
-                if "observation:printout" in key:
+                if "show" in key:
                     i +=1
-                self.st.session_state[f'observation:printout{i}']=message #use just in case print is used which is discouraged.
+                self.st.session_state[f'show{i}']=data 
+                if type(data) is not Figure:
+                    self.st.session_state[f'observation: show_to_user{i}']=data
         def observe(name, data):
             try:
-                data = data[:15] # limit the print out observation to 15 rows
+                data = data[:10] # limit the print out observation to 15 rows
             except:
                 pass
             self.st.session_state[f'observation:{name}']=data
@@ -205,18 +230,21 @@ class AnalyzeGPT(ChatGPT_Handler):
         count =1
 
         finish = False
-        new_input= f"Question: {question}"
+        if self.st.session_state['init']:
+            new_input= f"Question: {question}"
+        else:
+            new_input=self.st.session_state['history'] +f"\nQuestion: {question}"
         while not finish:
 
-            llm_output,next_steps = self.get_next_steps(new_input, stop="Observation:")
-            new_input=llm_output
+            llm_output,next_steps = self.get_next_steps(new_input, stop=["Observation:", f"Thought {count+1}"])
+            new_input += f"\n{llm_output}"
             for key, value in next_steps.items():
                 new_input += f"\n{value}"
-                st.write(key)
+                
                 if "ACTION" in key.upper():
-                    
-
-                    st.code(value)
+                    if show_code:
+                        st.write(key)
+                        st.code(value)
                     observations =[]
                     serialized_obs=[]
                     try:
@@ -229,7 +257,7 @@ class AnalyzeGPT(ChatGPT_Handler):
                                 observations.append((key.split(":")[1],observation))
                                 if type(observation) is pd:
                                     serialized_obs.append((key.split(":")[1],observation.to_json(orient='records', date_format='iso')))
-                                else:
+                                elif type(observation) is not Figure:
                                     serialized_obs.append({key.split(":")[1]:str(observation)})
                                 del self.st.session_state[key]
                     except Exception as e:
@@ -243,8 +271,9 @@ class AnalyzeGPT(ChatGPT_Handler):
                     obs = f"\nObservation: {serialized_obs}"
                     new_input += obs
                 else:
+                    st.write(key)
                     st.write(value)
-                if "ANSWER" in key.upper():
+                if "Answer" in key:
                     print("Answer is given, finish")
                     finish= True
 
@@ -252,6 +281,8 @@ class AnalyzeGPT(ChatGPT_Handler):
             if count== max_steps:
                 print("Exceeding threshold, finish")
                 break
+        self.st.session_state['init'] = False
+        self.st.session_state['history'] = new_input
             
 
 
