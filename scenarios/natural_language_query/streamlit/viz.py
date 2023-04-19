@@ -18,7 +18,6 @@ faq =["Is that true that top 20% customers generate 80% revenue in 2013?",
       "which brands have the highest revenue by city?",
       "which brands have slowing revenue trend by city in 2013?"
       ]
-
 tables_structure="""
     - Fact.Order(Order_Key(PK),City_Key(FK),Customer_Key(FK),Stock_Item_Key(FK),Order_Date_Key(FK),Picked_Date_Key(FK),Salesperson_Key(FK),Picker_Key(FK),WWI_Order_ID,WWI_Backorder_ID,Description,Package,Quantity,Unit_Price,Tax_Rate,Total_Excluding_Tax,Tax_Amount,Total_Including_Tax,Lineage_Key)
     - Fact.Purchase(Purchase_Key(PK),Date_Key(FK),Supplier_Key(FK),Stock_Item_Key(FK),WWI_Purchase_Order_ID,Ordered_Outers,Ordered_Quantity,Received_Outers,Package,Is_Order_Finalized,Lineage_Key)

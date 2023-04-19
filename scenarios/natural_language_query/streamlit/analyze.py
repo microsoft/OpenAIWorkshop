@@ -10,9 +10,6 @@ import random
 import imp
 import re
 
-# Simple retrieve-then-read implementation, using the Cognitive Search and OpenAI APIs directly. It first retrieves
-# top documents from search, then constructs a prompt with them, and then uses OpenAI to generate an completion 
-# (answer) with that prompt.
 class AnalyzeGPT:
     def __init__(self,tables_structure, system_message,few_shot_examples, gpt_deployment,max_response_tokens,token_limit,database,dbserver,db_user, db_password) -> None:
         self.max_response_tokens = max_response_tokens
@@ -32,13 +29,19 @@ class AnalyzeGPT:
 
         
     def execute_sql_query(self,query):
-        driver="{ODBC Driver 17 for SQL Server}"
         username = self.db_user
         password = self.db_password
-        driver = '{ODBC Driver 17 for SQL Server}' # Update the driver version as per your installation  
+        driver = 'ODBC Driver 17 for SQL Server' # Update the driver version as per your installation  
         
+        # Determine the driver for pyodbc that is loaded
+        driver_names = [x for x in pyodbc.drivers() if x.endswith(' for SQL Server')]
+        if driver_names:
+            driver = driver_names[0]
+        else:
+            print('(No suitable driver found. Cannot connect.)')        
+
         # Establish the connection  
-        conn = pyodbc.connect('DRIVER=' + driver + ';SERVER=' + self.dbserver + ';DATABASE=' + self.database + ';UID=' + username + ';PWD=' + password)  
+        conn = pyodbc.connect('DRIVER={' + driver + '};SERVER=' + self.dbserver + ';DATABASE=' + self.database + ';UID=' + username + ';PWD=' + password)  
 
         
         #logging.info(conn)
@@ -65,16 +68,11 @@ class AnalyzeGPT:
             # Extract the content between the first and second delimiter  
             python_code = python_code[1]
             python_code= python_code.strip('python')
-        st.code(python_code)  
         N=5
-        file_name = ''.join(random.choices(string.ascii_letters, k=N))
-        os.makedirs(".tmp", exist_ok=True)
-        with open(f".tmp/{file_name}.py", "w") as file:
-            file.write(python_code)
-        graph = imp.load_source("graph", f".tmp/{file_name}.py")
-        fig = graph.visualize_data(observation_df)
+        exec(python_code, globals())
+        fig = visualize_data(observation_df)        
         st.plotly_chart(fig)
-        os.remove(f".tmp/{file_name}.py")
+
 
         
 
@@ -85,67 +83,79 @@ class AnalyzeGPT:
         history = question
         while True:   
             prompt= [self.system_message] +[history]
-            response = openai.ChatCompletion.create(
-            engine=self.gpt_deployment, 
-            messages = prompt,
-            temperature=0,
-            max_tokens=self.max_response_tokens,
-            stop=f"Observation {i}"
-            )
-            i+=1
             try:
+                response = openai.ChatCompletion.create(
+                engine=self.gpt_deployment, 
+                messages = prompt,
+                temperature=0,
+                max_tokens=self.max_response_tokens,
+                stop=f"Observation {i}"
+                )
                 llm_output = response['choices'][0]['message']['content']
-                print(llm_output)
-            except:
-                print("error in output ", response)
-            output = llm_output.split("\n")
-            final_answer_given= False
-            for out in output:
-                if len(out)>0 and ("Thought" in out or "Observation" in out):
-                    st.write(out)
-                    if "Answer" in out:
-                        st.write(out)
-                        final_answer_given= True
-
-            if ("Answer" in llm_output) or (("Query[" not in llm_output) and ("Python[" not in llm_output)):
-                if not final_answer_given:
-                    st.write(output[-1])
-                print("Final answer is given or no actionable action is provided, stop")
-                break
+            except Exception as e:
+                print(e)
+                llm_output = "ChatGPT cannot process the message, probably due to large data size"
+            i+=1
+            
+            print("llm_output ",llm_output )
+            # pattern = r"```[\s\S]*?```"
+            # comment_text = re.sub(pattern, "", llm_output)
             sql_query, python_code ="",""
-            try:
-                sql_query = re.findall(r"Query\[(.*?)\]", llm_output, re.DOTALL)[0].strip()
-                python_code = re.findall(r"Python\[```([\s\S]*?)```]", llm_output)[0]
-            except:
+            # Extract SQL query  
+            sql_pattern = r"```SQL\n(.*?)```"  
+            sql_query_result = re.findall(sql_pattern, llm_output, re.DOTALL)
+            if len(sql_query_result)>0:
+                sql_query= sql_query_result[0].strip()
+            # Extract Python code  
+            python_pattern = r"```Python\n(.*?)```"  
+            python_code_result = re.findall(python_pattern, llm_output, re.DOTALL)
+            if len(python_code_result)>0:
+                python_code= python_code_result[0].strip()
+  
 
-                pass
-            if len(sql_query)>0 or len(python_code)>0:
-                st.write(f"Action {i-1}:")
-            if len(sql_query)>0:
-                st.code(sql_query)
-                
-                if ('```' in sql_query):
-                    sql_query = sql_query.split('```')  
-                    # Extract the content between the first and second delimiter  
-                    sql_query = sql_query[1]
+            print("SQL Query:\n", sql_query)  
+            print("\nPython Code:\n", python_code)  
+            comment_text=llm_output.replace(python_code,"")
+            comment_text =comment_text.replace(sql_query,"")
+            comment_text= comment_text.replace("```Python","")
+            comment_text= comment_text.replace("```SQL","")
+            comment_text= comment_text.replace("```","")
+            comment_text= comment_text.strip()
+
+            # pattern = r".*?(?=(```))"  
+            # comment_text = re.findall(pattern, llm_output, re.DOTALL)
+            if len(comment_text)>0:
+                st.write(comment_text)
+                if "Result" in comment_text or "Answer" in comment_text or i>5:
+                    print("Result is given or exceed the threshold, finish the loop at ", i)
+                    break
+
+            if len(sql_query)>0: #only make sense to continue querying data if there's a SQL
+                if len(sql_query)>0:
+                    st.code(sql_query)
+                if len(python_code)>0:
+                    st.code(python_code)        
 
                 observation = self.execute_sql_query(sql_query)
                 st.write(f"Observation {i-1}:")
-                display_text =True
+                display_text=True
                 try:
-                    observation_out = observation.to_json() #Query execute successfully
+                    converted_observation = observation.to_json() #Query execute successfully
                     if len(python_code)>0:
                         self.visualize(python_code,observation,st)
                         display_text=False
-
                 except Exception as e:
                     print(e)
-                    observation_out= str(observation)
+                    converted_observation= str(observation)
                 if display_text:
                     st.write(observation)
-                new_content =  llm_output + f"Observation {i-1}: {observation_out}"
+                new_content =  llm_output + f"Observation {i-1}: {converted_observation}"
                 new_content= history["content"] +"\n"+new_content
                 history["content"] = new_content
+            else:
+                print("Final answer is given or no actionable action is provided, stop")
+                break
+                
                 
 
 
