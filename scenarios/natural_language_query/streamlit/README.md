@@ -20,7 +20,6 @@ We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI 
         SQL_ENGINE = "sqlite"
         ```
     Option 2: use SQL Server
-    
 
         ```txt
         AZURE_OPENAI_API_KEY=9999999999999999999999999
