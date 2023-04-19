@@ -202,6 +202,10 @@ class AnalyzeGPT(ChatGPT_Handler):
         return llm_output,output
 
     def run(self, question: str, show_code,st) -> any:
+        import pandas as pd
+        import numpy as np
+        import plotly.express as px
+        import plotly.graph_objs as go
         st.write(f"Question: {question}")
         # if "init" not in self.st.session_state.keys():
             
@@ -243,6 +247,7 @@ class AnalyzeGPT(ChatGPT_Handler):
             llm_output,next_steps = self.get_next_steps(new_input, stop=["Observation:", f"Thought {count+1}"])
             if llm_output=='OPENAI_ERROR':
                 st.write("Error Calling Azure Open AI, probably due to max service limit, please try again")
+                break
             new_input += f"\n{llm_output}"
             for key, value in next_steps.items():
                 new_input += f"\n{value}"
@@ -262,7 +267,7 @@ class AnalyzeGPT(ChatGPT_Handler):
                                 observation=self.st.session_state[key]
                                 observations.append((key.split(":")[1],observation))
                                 if type(observation) is pd:
-                                    serialized_obs.append((key.split(":")[1],observation.to_json(orient='records', date_format='iso')))
+                                    serialized_obs.append((key.split(":")[1],observation.to_string()))
                                 elif type(observation) is not Figure:
                                     serialized_obs.append({key.split(":")[1]:str(observation)})
                                 del self.st.session_state[key]
