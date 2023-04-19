@@ -15,8 +15,6 @@ from dotenv import load_dotenv
 
 from pathlib import Path  # Python 3.6+ only
 
-faq =["Show me daily revenue trends in 2016  per region","Is that true that top 20% customers generate 80% revenue in 2016?","Which products have most seasonality in sales quantity in 2016?", "Which customers are most likely to churn?", "Predict monthly revenue for next 12 months starting from June-2018"]
-# additional_database_comments="the dimension.Date table can be joined with other table via the column DATE"
 
 system_message="""
 You are a smart AI assistant to help answer business questions based on analyzing data. 
@@ -24,7 +22,7 @@ You can plan solving the question with one more multiple thought step. At each t
 You are given following utilities to help you retrieve data and commmunicate your result to end user.
 1. execute_sql(sql_query: str): A Python function can query data from the database given the query that you need to create which need to be syntactically correct for {sql_engine}. It return a Python pandas dataframe contain the results of the query.
 2. Use plotly library for data visualization. 
-3. Use observe(label: str, data: any) utility function to observe data under the label for your evaluation. Use observe() function instead of print() as this is executed in streamlit environment.
+3. Use observe(label: str, data: any) utility function to observe data under the label for your evaluation. Use observe() function instead of print() as this is executed in streamlit environment. Due to system limitation, you will only see the first 10 rows of the dataset.
 4. To communicate with user, use show() function on data, text and plotly figure. show() is a utility function that can render different types of data to end user. Remember, you don't see data with show(), only user does. You see data with observe()
     - If you want to show  user a plotly visualization, then use ```show(fig)`` 
     - If you want to show user data which is a text or a pandas dataframe or a list, use ```show(data)```
@@ -104,16 +102,31 @@ extractor = ChatGPT_Handler(extract_patterns=extract_patterns)
 # sql_query_tool = SQL_Query(driver='ODBC Driver 17 for SQL Server',dbserver=dbserver, database=database, db_user=db_user ,db_password=db_password)
 sql_query_tool = SQL_Query(db_path=sqllite_db_path)
 gpt_engine = ["ChatGPT", "GPT-4"]
+faq_dict = {  
+    "ChatGPT": [  
+        "Show me daily revenue trends in 2016 per region",  
+        "Is that true that top 20% customers generate 80% revenue in 2016? What's their percentage of revenue contribution?",  
+        "Which products have most seasonality in sales quantity in 2016?",  
+        "Which customers are most likely to churn?", 
+        "What is the impact of discount on sales? What's optimal discount rate?" 
+    ],  
+    "GPT-4": [  
+        "Predict monthly revenue for next 12 months starting from June-2018",  
+        "What is the impact of discount on sales? What's optimal discount rate?" ,  
+    ]  
+}  
+
 st.sidebar.title('Data Analysis Assistant')
 
 col1, col2  = st.columns((3,1)) 
 with st.sidebar:
     gpt_engine = st.selectbox('GPT Model',gpt_engine)
-    if gpt_engine=="ChatGPT":
-        gpt_engine= chatgpt_deployment
-    else:
-        gpt_engine= gpt4_deployment
-
+    if gpt_engine == "ChatGPT":  
+        gpt_engine = chatgpt_deployment  
+        faq = faq_dict["ChatGPT"]  
+    else:  
+        gpt_engine = gpt4_deployment  
+        faq = faq_dict["GPT-4"]  
     option = st.selectbox('FAQs',faq)
 
     analyzer = AnalyzeGPT(sql_engine=sql_engine,content_extractor= extractor, sql_query_tool=sql_query_tool,  system_message=system_message, few_shot_examples=few_shot_examples,st=st, 

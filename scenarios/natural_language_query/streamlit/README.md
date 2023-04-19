@@ -9,7 +9,8 @@ The application support Python's built-in SQLITE as well as Microsoft SQL Server
 1. Create an Azure OpenAI deployment in an Azure subscription with a GPT-35-Turbo deployment and preferably a GPT-4 deployment.
 Here we provide options to use both but GPT-4 should be used to address difficult & vague  questions.
 We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI resource.
-2. Create a `secrets.env` file in the root of this folder
+2. Clone the repo (e.g. ```git clone https://github.com/microsoft/OpenAIWorkshop.git``` or download). Then navigate to ```cd scenarios/natural_language_query/streamlit```
+3. Create a `secrets.env` file in the root of this folder (scenarios/natural_language_query/streamlit)
 
     - Option 1: use built-in SQLITE. Then you don't need to install SQL Server.
         ```txt
@@ -32,7 +33,7 @@ We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI 
         SQL_DATABASE=WideWorldImportersDW
         SQL_SERVER=sqlservername.database.windows.net
         ```
-3. Create a python environment
+3. Create a python environment with version from 3.7 and 3.10
 4. Import the requirements.txt `pip install -r requirements.txt`
 5. From the window, run `streamlit run viz_v2.py`
 6. If you are a Mac user, please follow [this](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos?view=sql-server-ver16) to install ODBC for PYODBC
