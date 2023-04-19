@@ -202,10 +202,10 @@ class AnalyzeGPT(ChatGPT_Handler):
         return llm_output,output
 
     def run(self, question: str, show_code,st) -> any:
-        import pandas as pd
         import numpy as np
         import plotly.express as px
         import plotly.graph_objs as go
+
         st.write(f"Question: {question}")
         # if "init" not in self.st.session_state.keys():
             
@@ -267,19 +267,21 @@ class AnalyzeGPT(ChatGPT_Handler):
                                 observation=self.st.session_state[key]
                                 observations.append((key.split(":")[1],observation))
                                 if type(observation) is pd:
+                                    # serialized_obs.append((key.split(":")[1],observation.to_json(orient='records', date_format='iso')))
                                     serialized_obs.append((key.split(":")[1],observation.to_string()))
+
                                 elif type(observation) is not Figure:
                                     serialized_obs.append({key.split(":")[1]:str(observation)})
                                 del self.st.session_state[key]
                     except Exception as e:
                         observations.append(("Error:",str(e)))
-                        serialized_obs.append({"Error:":str(e)})
+                        serialized_obs.append({"Encounter following error, can you try again?\n:":str(e)})
                         
                     for observation in observations:
                         st.write(observation[0])
                         st.write(observation[1])
 
-                    obs = f"\nObservation: {serialized_obs}"
+                    obs = f"\nObservation on the first 10 rows of data: {serialized_obs}"
                     new_input += obs
                 else:
                     st.write(key)
@@ -292,9 +294,6 @@ class AnalyzeGPT(ChatGPT_Handler):
             if count>= max_steps:
                 print("Exceeding threshold, finish")
                 break
-        # self.st.session_state['init'] = False
-        # self.st.session_state['history'] = new_input
-            
 
 
 
