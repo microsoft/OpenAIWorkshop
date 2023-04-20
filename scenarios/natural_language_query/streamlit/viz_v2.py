@@ -74,26 +74,17 @@ env_path = Path('.') / 'secrets.env'
 load_dotenv(dotenv_path=env_path)
 
 # Check if secrets.env exists and if not error out
-if not os.path.exists("secrets.env"):
-    print("Missing secrets.env file with environment variables. Please create one and try again. See README.md for more details")
-    exit(1)
+# if not os.path.exists("secrets.env"):
+#     print("Missing secrets.env file with environment variables. Please create one and try again. See README.md for more details")
+#     exit(1)
 
 # NOTE: You need to create a secret.env file to run this in the same folder with these variables
 openai.api_type = "azure"
-openai.api_key = os.environ.get("AZURE_OPENAI_API_KEY","OpenAPIKeyMissing")
-openai.api_base = os.environ.get("AZURE_OPENAI_ENDPOINT","OpenAPIEndpointMissing")
 openai.api_version = "2023-03-15-preview" 
 max_response_tokens = 1250
 token_limit= 4096
 temperature=0
-gpt4_deployment=os.environ.get("AZURE_OPENAI_GPT4_DEPLOYMENT","gpt-4")
-chatgpt_deployment=os.environ.get("AZURE_OPENAI_CHATGPT_DEPLOYMENT","gpt-35-turbo")
 
-database=os.environ.get("SQL_DATABASE","WorldWideImportersDW")
-dbserver=os.environ.get("SQL_SERVER","someazureresource.database.windows.net")
-db_user=os.environ.get("SQL_USER","MissingSQLUser")
-db_password= os.environ.get("SQL_PASSWORD","MissingSQLPassword")
-sql_engine= os.environ.get("SQL_ENGINE","sqlite")
 sqllite_db_path= os.environ.get("SQLITE_DB_PATH","../data/northwind.db")
 
 extract_patterns=[("Thought:",r'(Thought \d+):\s*(.*?)(?:\n|$)'), ('Action:',r"```Python\n(.*?)```"),("Answer:",r'([Aa]nswer:) (.*)')]
@@ -119,34 +110,95 @@ faq_dict = {
 st.sidebar.title('Data Analysis Assistant')
 
 col1, col2  = st.columns((3,1)) 
-with st.sidebar:
-    gpt_engine = st.selectbox('GPT Model',gpt_engine)
+def save_setting(setting_name, setting_value):  
+    """  
+    Function to save the setting information to session  
+    """  
+    st.session_state[setting_name] = setting_value  
+  
+def load_setting(setting_name, default_value=''):  
+    """  
+    Function to load the setting information from session  
+    """  
+    if  os.environ.get(setting_name) is not None:
+        return os.environ.get(setting_name)
+    if setting_name not in st.session_state:  
+        st.session_state[setting_name] = default_value  
+    return st.session_state[setting_name]  
+
+gpt4_deployment,chatgpt_deployment, sql_engine="", "",""
+
+with st.sidebar:  
+    # Create settings button  
+    if 'show_settings' not in st.session_state:  
+        st.session_state['show_settings'] = False  
+    if st.button("Settings"):  
+        st.session_state['show_settings'] = not st.session_state['show_settings']  
+    if st.session_state['show_settings']:  
+        # Display settings inputs  
+        chatgpt_deployment = load_setting("AZURE_OPENAI_CHATGPT_DEPLOYMENT")  
+        gpt4_deployment = load_setting("AZURE_OPENAI_GPT4_DEPLOYMENT")  
+        endpoint = load_setting("AZURE_OPENAI_ENDPOINT")  
+        api_key = load_setting("AZURE_OPENAI_API_KEY")  
+        
+        chatgpt_deployment = st.text_input("ChatGPT deployment name:", value=chatgpt_deployment)  
+        gpt4_deployment = st.text_input("GPT-4 deployment name (if not specified, default to ChatGPT's):", value=gpt4_deployment) 
+        if gpt4_deployment=="":
+            gpt4_deployment= chatgpt_deployment 
+        endpoint = st.text_input("Azure OpenAI Endpoint:", value=endpoint)  
+        api_key = st.text_input("Azure OpenAI Key:", value=api_key, type="password")
+
+        save_setting("AZURE_OPENAI_CHATGPT_DEPLOYMENT", chatgpt_deployment)  
+        save_setting("AZURE_OPENAI_GPT4_DEPLOYMENT", gpt4_deployment)  
+        save_setting("AZURE_OPENAI_ENDPOINT", endpoint)  
+        save_setting("AZURE_OPENAI_API_KEY", api_key)  
+
+
+        sql_engine = load_setting("SQL_ENGINE")
+        dbserver = load_setting("SQL_SERVER")
+        database = load_setting("SQL_DATABASE")
+        db_user = load_setting("SQL_USER")
+        db_password = load_setting("SQL_PASSWORD")
+
+        sql_engine = st.selectbox('SQL Engine',["sqlite", "sqlserver"])  
+        if sql_engine =="sqlserver":
+            dbserver = st.text_input("SQL Server:", value=dbserver)  
+            database = st.text_input("SQL Server Database:", value=database)  
+            db_user = st.text_input("SQL Server db_user:", value=db_user)  
+
+            db_password = st.text_input("SQL Server Password:", value=db_password, type="password")
+
+        save_setting("SQL_ENGINE", sql_engine)  
+        save_setting("SQL_SERVER", dbserver)  
+        save_setting("SQL_DATABASE", database) 
+        save_setting("SQL_USER", db_user)   
+        save_setting("SQL_PASSWORD", db_password)  
+
+
+    gpt_engine = st.selectbox('GPT Model', ["ChatGPT", "GPT-4"])  
     if gpt_engine == "ChatGPT":  
         gpt_engine = chatgpt_deployment  
         faq = faq_dict["ChatGPT"]  
     else:  
         gpt_engine = gpt4_deployment  
         faq = faq_dict["GPT-4"]  
-    option = st.selectbox('FAQs',faq)
+    option = st.selectbox('FAQs',faq)  
 
-    analyzer = AnalyzeGPT(sql_engine=sql_engine,content_extractor= extractor, sql_query_tool=sql_query_tool,  system_message=system_message, few_shot_examples=few_shot_examples,st=st, 
-                        gpt_deployment=gpt_engine,max_response_tokens=max_response_tokens,token_limit=token_limit,
-                        temperature=temperature)
+    if gpt_engine!="":
+        analyzer = AnalyzeGPT(sql_engine=sql_engine,content_extractor= extractor, sql_query_tool=sql_query_tool,  system_message=system_message, few_shot_examples=few_shot_examples,st=st,  
+                            gpt_deployment=gpt_engine,max_response_tokens=max_response_tokens,token_limit=token_limit,  
+                            temperature=temperature)  
 
     show_code = st.checkbox("Show code", value=False)  
     # step_break = st.checkbox("Break at every step", value=False)  
-    question = st.text_area("Ask me a  question on churn", option)
+    question = st.text_area("Ask me a question", option)  
     if st.button("Submit"):  
-        # analyzer.run(question,show_code,step_break, col1)
-        for key in st.session_state.keys():
-            del st.session_state[key]
+        if chatgpt_deployment=="" or endpoint=="" or api_key=="":
+            st.write("You need to specify Open AI Deployment Settings!")
+        else:
+        # analyzer.run(question,show_code,step_break, col1)  
+            for key in st.session_state.keys():
+                if "AZURE_OPENAI" not in key and "settings" and "SQL" not in key : 
+                    del st.session_state[key]  
 
-        analyzer.run(question,show_code, col1)
-
-    # if st.button("Start Over"):
-    #     # Call the execute_query function with the user's question 
-    #     # Delete all the items in Session state
-    #     for key in st.session_state.keys():
-    #         del st.session_state[key]
-    #     col1.empty()
-
+            analyzer.run(question,show_code, col1)  

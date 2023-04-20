@@ -205,6 +205,7 @@ class AnalyzeGPT(ChatGPT_Handler):
         import numpy as np
         import plotly.express as px
         import plotly.graph_objs as go
+        import pandas as pd
 
         st.write(f"Question: {question}")
         # if "init" not in self.st.session_state.keys():
