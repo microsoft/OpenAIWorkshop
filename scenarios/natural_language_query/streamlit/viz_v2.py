@@ -126,8 +126,15 @@ def load_setting(setting_name, default_value=''):
         st.session_state[setting_name] = default_value  
     return st.session_state[setting_name]  
 
-gpt4_deployment,chatgpt_deployment, sql_engine="", "",""
-
+chatgpt_deployment = load_setting("AZURE_OPENAI_CHATGPT_DEPLOYMENT")  
+gpt4_deployment = load_setting("AZURE_OPENAI_GPT4_DEPLOYMENT")  
+endpoint = load_setting("AZURE_OPENAI_ENDPOINT")  
+api_key = load_setting("AZURE_OPENAI_API_KEY")  
+sql_engine = load_setting("SQL_ENGINE")
+dbserver = load_setting("SQL_SERVER")
+database = load_setting("SQL_DATABASE")
+db_user = load_setting("SQL_USER")
+db_password = load_setting("SQL_PASSWORD")
 with st.sidebar:  
     # Create settings button  
     if 'show_settings' not in st.session_state:  
@@ -135,11 +142,6 @@ with st.sidebar:
     if st.button("Settings"):  
         st.session_state['show_settings'] = not st.session_state['show_settings']  
     if st.session_state['show_settings']:  
-        # Display settings inputs  
-        chatgpt_deployment = load_setting("AZURE_OPENAI_CHATGPT_DEPLOYMENT")  
-        gpt4_deployment = load_setting("AZURE_OPENAI_GPT4_DEPLOYMENT")  
-        endpoint = load_setting("AZURE_OPENAI_ENDPOINT")  
-        api_key = load_setting("AZURE_OPENAI_API_KEY")  
         
         chatgpt_deployment = st.text_input("ChatGPT deployment name:", value=chatgpt_deployment)  
         gpt4_deployment = st.text_input("GPT-4 deployment name (if not specified, default to ChatGPT's):", value=gpt4_deployment) 
@@ -153,12 +155,6 @@ with st.sidebar:
         save_setting("AZURE_OPENAI_ENDPOINT", endpoint)  
         save_setting("AZURE_OPENAI_API_KEY", api_key)  
 
-
-        sql_engine = load_setting("SQL_ENGINE")
-        dbserver = load_setting("SQL_SERVER")
-        database = load_setting("SQL_DATABASE")
-        db_user = load_setting("SQL_USER")
-        db_password = load_setting("SQL_PASSWORD")
 
         sql_engine = st.selectbox('SQL Engine',["sqlite", "sqlserver"])  
         if sql_engine =="sqlserver":
@@ -191,7 +187,10 @@ with st.sidebar:
 
     show_code = st.checkbox("Show code", value=False)  
     # step_break = st.checkbox("Break at every step", value=False)  
-    question = st.text_area("Ask me a question", option)  
+    question = st.text_area("Ask me a question", option)
+    openai.api_key = api_key
+    openai.api_base = endpoint
+  
     if st.button("Submit"):  
         if chatgpt_deployment=="" or endpoint=="" or api_key=="":
             st.write("You need to specify Open AI Deployment Settings!")
