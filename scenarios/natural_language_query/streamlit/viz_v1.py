@@ -7,7 +7,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 
 sys.path.append('../')
-from analyze_v2 import AnalyzeGPT, SQL_Query, ChatGPT_Handler
+from analyze_v1 import AnalyzeGPT, SQL_Query, ChatGPT_Handler
 import openai
 import streamlit as st  
 
@@ -17,62 +17,20 @@ from pathlib import Path  # Python 3.6+ only
 
 
 system_message="""
-You are a smart AI assistant to help answer business questions based on analyzing data. 
-You can plan solving the question with one more multiple thought step. At each thought step, you can write python code to analyze data to assist you. Observe what you get at each step to plan for the next step.
-You are given following utilities to help you retrieve data and commmunicate your result to end user.
-1. execute_sql(sql_query: str): A Python function can query data from the database given the query that you need to create which need to be syntactically correct for {sql_engine}. It return a Python pandas dataframe contain the results of the query.
-2. Use plotly library for data visualization. 
-3. Use observe(label: str, data: any) utility function to observe data under the label for your evaluation. Use observe() function instead of print() as this is executed in streamlit environment. Due to system limitation, you will only see the first 10 rows of the dataset.
-4. To communicate with user, use show() function on data, text and plotly figure. show() is a utility function that can render different types of data to end user. Remember, you don't see data with show(), only user does. You see data with observe()
-    - If you want to show  user a plotly visualization, then use ```show(fig)`` 
-    - If you want to show user data which is a text or a pandas dataframe or a list, use ```show(data)```
-    - Never use print(). User don't see anything with print()
-5. Lastly, don't forget to deal with data quality problem. You should apply data imputation technique to deal with missing data or NAN data.
-6. Always follow the flow of Thought: , Observation:, Action: and Answer: as in template below strictly. 
+You are an agent designed to interact with a SQL database with schema detail in <<data_sources>>.
+Given an input question, create a syntactically correct {sql_engine} query to run, then look at the results of the query and return the answer.
+You can order the results by a relevant column to return the most interesting examples in the database.
+Never query for all the columns from a specific table, only ask for a the few relevant columns given the question.
+You MUST double check your query before executing it. If you get an error while executing a query, rewrite the query and try again.
+DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database.
+Remember to format SQL query as in ```sql\n SQL QUERY HERE ``` in your response.
 
 """
+few_shot_examples=""
 
-few_shot_examples="""
-<<Template>>
-Question: User Question
-Thought 1: Your thought here.
-Action: 
-```Python
-#Import neccessary libraries here
-import numpy as np
-#Query some data 
-sql_query = "SOME SQL QUERY"
-step1_df = execute_sql(sql_query)
-# Replace 0 with NaN. Always have this step
-step1_df['Some_Column'] = step1_df['Some_Column'].replace(0, np.nan)
-#observe query result
-observe("some_label", step1_df) #Always use observe() instead of print
-```
-Observation: 
-step1_df is displayed here
-Thought 2: Your thought here
-Action:  
-```Python
-import plotly.express as px 
-#from step1_df, perform some data analysis action to produce step2_df
-#To see the data for yourself the only way is to use observe()
-observe("some_label", step2_df) #Always use observe() 
-#Decide to show it to user.
-fig=px.line(step2_df)
-#visualize fig object to user.  
-show(fig)
-#you can also directly display tabular or text data to end user.
-show(step2_df)
-```
-Observation: 
-step2_df is displayed here
-Answer: Your final answer and comment for the question
-<</Template>>
 
-"""
 env_path = Path('.') / 'secrets.env'
 load_dotenv(dotenv_path=env_path)
-
 
 openai.api_type = "azure"
 openai.api_version = "2023-03-15-preview" 
@@ -82,24 +40,24 @@ temperature=0
 
 sqllite_db_path= os.environ.get("SQLITE_DB_PATH","../data/northwind.db")
 
-extract_patterns=[("Thought:",r'(Thought \d+):\s*(.*?)(?:\n|$)'), ('Action:',r"```Python\n(.*?)```"),("Answer:",r'([Aa]nswer:) (.*)')]
+extract_patterns=[('sql',r"```sql\n(.*?)```")]
 
 extractor = ChatGPT_Handler(extract_patterns=extract_patterns)
+sql_query_tool = SQL_Query(db_path=sqllite_db_path)
+gpt_engine = ["ChatGPT", "GPT-4"]
 faq_dict = {  
     "ChatGPT": [  
-        "Show me daily revenue trends in 2016 per region",  
-        "Is that true that top 20% customers generate 80% revenue in 2016? What's their percentage of revenue contribution?",  
-        "Which products have most seasonality in sales quantity in 2016?",  
-        "Which customers are most likely to churn?", 
-        "What is the impact of discount on sales? What's optimal discount rate?" 
+        "Show me revenue by product in ascending order",  
+        "Show me net revenue by year. Revenue time is based on shipped date.",  
+        "For each category, get the list of products sold and the total sales amount", 
     ],  
     "GPT-4": [  
-        "Predict monthly revenue for next 12 months starting from June-2018",  
-        "What is the impact of discount on sales? What's optimal discount rate?" ,  
+        "Pick top 20 customers generated most revenue in 2016 and for each customer show 3 products that they purchased most",  
+        "Which products have most seasonality in sales quantity in 2016?" ,  
     ]  
 }  
 
-st.sidebar.title('Data Analysis Assistant')
+st.sidebar.title('SQL Query Writing Assistant')
 
 col1, col2  = st.columns((3,1)) 
 def save_setting(setting_name, setting_value):  
@@ -152,22 +110,27 @@ with st.sidebar:
         save_setting("AZURE_OPENAI_ENDPOINT", endpoint)  
         save_setting("AZURE_OPENAI_API_KEY", api_key)  
 
-
-        sql_engine = st.selectbox('SQL Engine',["sqlite", "sqlserver"])  
+        if sql_engine == "sqlserver":
+            sql_engine_list = [ "sqlserver", "sqlite"]
+            print(sql_engine_list)
+        else:
+            sql_engine_list = ["sqlite", "sqlserver"]
+        sql_engine = st.selectbox('SQL Engine',sql_engine_list)  
         if sql_engine =="sqlserver":
             dbserver = st.text_input("SQL Server:", value=dbserver)  
             database = st.text_input("SQL Server Database:", value=database)  
             db_user = st.text_input("SQL Server db_user:", value=db_user)  
             db_password = st.text_input("SQL Server Password:", value=db_password, type="password")
             sql_query_tool = SQL_Query(driver='ODBC Driver 17 for SQL Server',dbserver=dbserver, database=database, db_user=db_user ,db_password=db_password)
+            save_setting("SQL_ENGINE", sql_engine)  
+            save_setting("SQL_SERVER", dbserver)  
+            save_setting("SQL_DATABASE", database) 
+            save_setting("SQL_USER", db_user)   
+            save_setting("SQL_PASSWORD", db_password)  
+
         else:
             sql_query_tool = SQL_Query(db_path=sqllite_db_path)
 
-        save_setting("SQL_ENGINE", sql_engine)  
-        save_setting("SQL_SERVER", dbserver)  
-        save_setting("SQL_DATABASE", database) 
-        save_setting("SQL_USER", db_user)   
-        save_setting("SQL_PASSWORD", db_password)  
 
 
     gpt_engine = st.selectbox('GPT Model', ["ChatGPT", "GPT-4"])  
@@ -180,12 +143,12 @@ with st.sidebar:
     option = st.selectbox('FAQs',faq)  
 
     if gpt_engine!="":
-    
         analyzer = AnalyzeGPT(sql_engine=sql_engine,content_extractor= extractor, sql_query_tool=sql_query_tool,  system_message=system_message, few_shot_examples=few_shot_examples,st=st,  
                             gpt_deployment=gpt_engine,max_response_tokens=max_response_tokens,token_limit=token_limit,  
                             temperature=temperature)  
 
     show_code = st.checkbox("Show code", value=False)  
+    # step_break = st.checkbox("Break at every step", value=False)  
     question = st.text_area("Ask me a question", option)
     openai.api_key = api_key
     openai.api_base = endpoint
@@ -195,7 +158,7 @@ with st.sidebar:
             st.write("You need to specify Open AI Deployment Settings!")
         else:
             for key in st.session_state.keys():
-                if "AZURE_OPENAI" not in key and "settings" and "SQL" not in key : 
+                if ("AZURE_OPENAI" not in key )and ("settings" not in key) and ("SQL" not in key) : 
                     del st.session_state[key]  
 
             analyzer.run(question,show_code, col1)  
