@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import sys
 sys.path.append('../')
-from analyze_v2 import AnalyzeGPT
+from analyze import AnalyzeGPT
 import openai
 import streamlit as st  
 
