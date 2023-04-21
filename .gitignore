@@ -1,0 +1,5 @@
+secrets.env
+__pycache__/
+.tmp/
+.vscode/
+.azure
