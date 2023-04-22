@@ -5,6 +5,6 @@ pyodbc==4.0.35
 streamlit==1.20.0
 openai==0.27.2
 python-dotenv==1.0.0
-SQLAlchemy==2.0.9
+SQLAlchemy==1.4.47
 scikit-learn
 pmdarima

@@ -38,7 +38,7 @@ max_response_tokens = 1250
 token_limit= 4096
 temperature=0
 
-sqllite_db_path= os.environ.get("SQLITE_DB_PATH","../data/northwind.db")
+sqllite_db_path= os.environ.get("SQLITE_DB_PATH","data/northwind.db")
 
 extract_patterns=[('sql',r"```sql\n(.*?)```")]
 

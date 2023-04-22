@@ -55,6 +55,13 @@ module web './core/host/appservice.bicep' = {
     runtimeVersion: '3.10'
     scmDoBuildDuringDeployment: true
     appCommandLine: 'python -m streamlit run viz_v2.py --server.port 8000 --server.address 0.0.0.0'
+    appSettings: {
+      AZURE_OPENAI_API_KEY: 'enter key'
+      AZURE_OPENAI_ENDPOINT: 'https://.openai.azure.com/'
+      AZURE_OPENAI_CHATGPT_DEPLOYMENT: 'gpt-35-turbo'
+      AZURE_OPENAI_GPT4_DEPLOYMENT: ''
+      SQLITE_DB_PATH: 'data/northwind.db'
+    }  
   }
 }
 
