@@ -14,6 +14,7 @@ from sqlalchemy import create_engine
 import sqlalchemy as sql
 from plotly.graph_objects import Figure
 import time
+import pyodbc
 
 def get_table_schema(sql_query_tool, sql_engine='sqlite'):
   
@@ -123,6 +124,12 @@ class SQL_Query(ChatGPT_Handler):
         self.db_user = db_user
         self.db_password = db_password
         self.db_path= db_path #This is the built-in demo using SQLite
+        driver_names = [x for x in pyodbc.drivers() if x.endswith(' for SQL Server')]
+        if driver_names:
+            driver = driver_names[0]
+        else:
+            print('No suitable driver found. Cannot connect.')        
+        
         self.driver= driver
         
     def execute_sql_query(self, query, limit=10000):  

@@ -15,7 +15,6 @@ from dotenv import load_dotenv
 
 from pathlib import Path  # Python 3.6+ only
 
-
 system_message="""
 You are a smart AI assistant to help answer business questions based on analyzing data. 
 You can plan solving the question with one more multiple thought step. At each thought step, you can write python code to analyze data to assist you. Observe what you get at each step to plan for the next step.
@@ -80,7 +79,7 @@ max_response_tokens = 1250
 token_limit= 4096
 temperature=0
 
-sqllite_db_path= os.environ.get("SQLITE_DB_PATH","../data/northwind.db")
+sqllite_db_path= os.environ.get("SQLITE_DB_PATH","data/northwind.db")
 
 extract_patterns=[("Thought:",r'(Thought \d+):\s*(.*?)(?:\n|$)'), ('Action:',r"```Python\n(.*?)```"),("Answer:",r'([Aa]nswer:) (.*)')]
 
@@ -118,28 +117,24 @@ def load_setting(setting_name, default_value=''):
         st.session_state[setting_name] = default_value  
     return st.session_state[setting_name]  
 
-chatgpt_deployment = load_setting("AZURE_OPENAI_CHATGPT_DEPLOYMENT")  
-gpt4_deployment = load_setting("AZURE_OPENAI_GPT4_DEPLOYMENT")  
-endpoint = load_setting("AZURE_OPENAI_ENDPOINT")  
+chatgpt_deployment = load_setting("AZURE_OPENAI_CHATGPT_DEPLOYMENT","gpt-35-turbo")  
+gpt4_deployment = load_setting("AZURE_OPENAI_GPT4_DEPLOYMENT","gpt-35-turbo")  
+endpoint = load_setting("AZURE_OPENAI_ENDPOINT","https://resourcenamehere.openai.azure.com/")  
 api_key = load_setting("AZURE_OPENAI_API_KEY")  
-sql_engine = load_setting("SQL_ENGINE")
+sql_engine = load_setting("SQL_ENGINE","sqlite")
 dbserver = load_setting("SQL_SERVER")
 database = load_setting("SQL_DATABASE")
 db_user = load_setting("SQL_USER")
 db_password = load_setting("SQL_PASSWORD")
-if sql_engine =="sqlserver":
-    sql_query_tool = SQL_Query(driver='ODBC Driver 17 for SQL Server',dbserver=dbserver, database=database, db_user=db_user ,db_password=db_password)
-else:
-    sql_query_tool = SQL_Query(db_path=sqllite_db_path)
 
 with st.sidebar:  
     # Create settings button  
-    if 'show_settings' not in st.session_state:  
-        st.session_state['show_settings'] = False  
-    if st.button("Settings"):  
-        st.session_state['show_settings'] = not st.session_state['show_settings']  
-    if st.session_state['show_settings']:  
-        
+    # if 'show_settings' not in st.session_state:  
+    #     st.session_state['show_settings'] = False  
+    # if st.button("Settings"):  
+    #     st.session_state['show_settings'] = not st.session_state['show_settings']  
+    # if st.session_state['show_settings']:  
+    with st.expander("Settings"):
         chatgpt_deployment = st.text_input("ChatGPT deployment name:", value=chatgpt_deployment)  
         gpt4_deployment = st.text_input("GPT-4 deployment name (if not specified, default to ChatGPT's):", value=gpt4_deployment) 
         if gpt4_deployment=="":
@@ -159,16 +154,12 @@ with st.sidebar:
             database = st.text_input("SQL Server Database:", value=database)  
             db_user = st.text_input("SQL Server db_user:", value=db_user)  
             db_password = st.text_input("SQL Server Password:", value=db_password, type="password")
-            sql_query_tool = SQL_Query(driver='ODBC Driver 17 for SQL Server',dbserver=dbserver, database=database, db_user=db_user ,db_password=db_password)
-        else:
-            sql_query_tool = SQL_Query(db_path=sqllite_db_path)
 
         save_setting("SQL_ENGINE", sql_engine)  
         save_setting("SQL_SERVER", dbserver)  
         save_setting("SQL_DATABASE", database) 
         save_setting("SQL_USER", db_user)   
         save_setting("SQL_PASSWORD", db_password)  
-
 
     gpt_engine = st.selectbox('GPT Model', ["ChatGPT", "GPT-4"])  
     if gpt_engine == "ChatGPT":  
@@ -181,6 +172,17 @@ with st.sidebar:
 
     if gpt_engine!="":
     
+        sql_engine = load_setting("SQL_ENGINE")
+        dbserver = load_setting("SQL_SERVER")  
+        database = load_setting("SQL_DATABASE")
+        db_user = load_setting("SQL_USER")
+        db_password = load_setting("SQL_PASSWORD")
+        if sql_engine =="sqlserver":
+            #TODO: Handle if there is not a driver here
+            sql_query_tool = SQL_Query(driver='ODBC Driver 17 for SQL Server',dbserver=dbserver, database=database, db_user=db_user ,db_password=db_password)
+        else:
+            sql_query_tool = SQL_Query(db_path=sqllite_db_path)
+
         analyzer = AnalyzeGPT(sql_engine=sql_engine,content_extractor= extractor, sql_query_tool=sql_query_tool,  system_message=system_message, few_shot_examples=few_shot_examples,st=st,  
                             gpt_deployment=gpt_engine,max_response_tokens=max_response_tokens,token_limit=token_limit,  
                             temperature=temperature)  
@@ -192,7 +194,7 @@ with st.sidebar:
   
     if st.button("Submit"):  
         if chatgpt_deployment=="" or endpoint=="" or api_key=="":
-            st.write("You need to specify Open AI Deployment Settings!")
+            col1.error("You need to specify Open AI Deployment Settings!", icon="🚨")
         else:
             for key in st.session_state.keys():
                 if "AZURE_OPENAI" not in key and "settings" and "SQL" not in key : 
