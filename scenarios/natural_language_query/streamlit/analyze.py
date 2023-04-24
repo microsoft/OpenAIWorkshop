@@ -222,7 +222,7 @@ class AnalyzeGPT(ChatGPT_Handler):
 
         return llm_output,output
 
-    def run(self, question: str, show_code,st) -> any:
+    def run(self, question: str, show_code,show_prompt,st) -> any:
         import numpy as np
         import plotly.express as px
         import plotly.graph_objs as go
@@ -315,21 +315,22 @@ class AnalyzeGPT(ChatGPT_Handler):
                 if "Answer" in key:
                     print("Answer is given, finish")
                     finish= True
+            if show_prompt:
+                self.st.write("Prompt")
+                self.st.write(self.conversation_history)
 
             count +=1
             if count>= max_steps:
                 print("Exceeding threshold, finish")
                 break
 
-    def query_run(self, question: str, show_code,st) -> any:
-
+    def query_run(self, question: str, show_code,show_prompt,st) -> any:
         st.write(f"Question: {question}")
         def execute_sql(query):
             return self.sql_query_tool.execute_sql_query(query)
         max_steps = 15
         count =1
 
-        finish = False
         new_input= f"Question: {question}"
         while count<= max_steps:
 
@@ -360,16 +361,21 @@ class AnalyzeGPT(ChatGPT_Handler):
                 else:
                     if show_code:
                         st.write(value)
+            if show_prompt:
+                self.st.write("Prompt")
+                self.st.write(self.conversation_history)
 
             if output is not None:
                 st.write(output)
                 break
+
             if error:
                 st.write(error)
 
             count +=1
             if count>= max_steps:
                 st.write("Cannot handle the question, please change the question and try again")
+        
 
 
 

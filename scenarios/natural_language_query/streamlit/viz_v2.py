@@ -188,6 +188,8 @@ with st.sidebar:
                             temperature=temperature)  
 
     show_code = st.checkbox("Show code", value=False)  
+    show_prompt = st.checkbox("Show prompt", value=False)
+
     question = st.text_area("Ask me a question", option)
     openai.api_key = api_key
     openai.api_base = endpoint
@@ -200,4 +202,4 @@ with st.sidebar:
                 if "AZURE_OPENAI" not in key and "settings" and "SQL" not in key : 
                     del st.session_state[key]  
 
-            analyzer.run(question,show_code, col1)  
+            analyzer.run(question,show_code,show_prompt, col1)  
