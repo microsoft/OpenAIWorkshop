@@ -7,7 +7,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 
 sys.path.append('../')
-from analyze_v1 import AnalyzeGPT, SQL_Query, ChatGPT_Handler
+from analyze import AnalyzeGPT, SQL_Query, ChatGPT_Handler
 import openai
 import streamlit as st  
 
@@ -48,8 +48,10 @@ gpt_engine = ["ChatGPT", "GPT-4"]
 faq_dict = {  
     "ChatGPT": [  
         "Show me revenue by product in ascending order",  
+        "Show me top 10 most expensive products",
         "Show me net revenue by year. Revenue time is based on shipped date.",  
-        "For each category, get the list of products sold and the total sales amount", 
+        "For each category, get the list of products sold and the total sales amount"
+        "Find Quarterly Orders by Product. First column is Product Name, then year then four other columns, each for a quarter. The Amount is order amount after discount", 
     ],  
     "GPT-4": [  
         "Pick top 20 customers generated most revenue in 2016 and for each customer show 3 products that they purchased most",  
@@ -161,4 +163,4 @@ with st.sidebar:
                 if ("AZURE_OPENAI" not in key )and ("settings" not in key) and ("SQL" not in key) : 
                     del st.session_state[key]  
 
-            analyzer.run(question,show_code, col1)  
+            analyzer.query_run(question,show_code, col1)  
