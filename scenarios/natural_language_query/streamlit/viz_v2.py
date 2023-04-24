@@ -7,7 +7,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 
 sys.path.append('../')
-from analyze_v2 import AnalyzeGPT, SQL_Query, ChatGPT_Handler
+from analyze import AnalyzeGPT, SQL_Query, ChatGPT_Handler
 import openai
 import streamlit as st  
 
@@ -36,7 +36,7 @@ few_shot_examples="""
 Question: User Question
 Thought 1: Your thought here.
 Action: 
-```Python
+```python
 #Import neccessary libraries here
 import numpy as np
 #Query some data 
@@ -51,7 +51,7 @@ Observation:
 step1_df is displayed here
 Thought 2: Your thought here
 Action:  
-```Python
+```python
 import plotly.express as px 
 #from step1_df, perform some data analysis action to produce step2_df
 #To see the data for yourself the only way is to use observe()
@@ -81,7 +81,7 @@ temperature=0
 
 sqllite_db_path= os.environ.get("SQLITE_DB_PATH","data/northwind.db")
 
-extract_patterns=[("Thought:",r'(Thought \d+):\s*(.*?)(?:\n|$)'), ('Action:',r"```Python\n(.*?)```"),("Answer:",r'([Aa]nswer:) (.*)')]
+extract_patterns=[("Thought:",r'(Thought \d+):\s*(.*?)(?:\n|$)'), ('Action:',r"```python\n(.*?)```"),("Answer:",r'([Aa]nswer:) (.*)')]
 
 extractor = ChatGPT_Handler(extract_patterns=extract_patterns)
 faq_dict = {  
