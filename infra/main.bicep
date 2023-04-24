@@ -35,7 +35,7 @@ module appServicePlan './core/host/appserviceplan.bicep' = {
     location: location
     tags: tags
     sku: {
-      name: 'B1'
+      name: 'P2V3'
     }
     kind: 'linux'
     reserved: true
@@ -54,7 +54,7 @@ module web './core/host/appservice.bicep' = {
     runtimeName: 'python'
     runtimeVersion: '3.10'
     scmDoBuildDuringDeployment: true
-    appCommandLine: 'python -m streamlit run viz_v2.py --server.port 8000 --server.address 0.0.0.0'
+    appCommandLine: 'python -m streamlit run app.py --server.port 8000 --server.address 0.0.0.0'
     appSettings: {
       AZURE_OPENAI_API_KEY: ''
       AZURE_OPENAI_ENDPOINT: 'https://.openai.azure.com/'

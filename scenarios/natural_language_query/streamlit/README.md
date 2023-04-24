@@ -36,6 +36,18 @@ We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI 
 5. Import the requirements.txt `pip install -r requirements.txt`
 6. From the window, run `streamlit run viz_v2.py`
 7. If you are a Mac user, please follow [this](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos?view=sql-server-ver16) to install ODBC for PYODBC
+# Upload to use in Azure App Service
+This application can be deployed to an Azure subscription using the Azure Developer CLI. There is no need to have any coding experience to deploy this application but you will need permissions to create resources in an Azure Subscription
+
+To deploy to Azure:
+- Install [Azure Developer CLI](https://aka.ms/azure-dev/install)
+- Use either `git clone https://github.com/microsoft/OpenAIWorkshop.git` to clone the repo or download a zip
+- Go to the local directory of the OpenAIWorkshop
+- Authenticate to Azure by running `azd auth login`
+- Create a local environment `azd env new`
+    > 💡 NOTE: If deploying to the same Subscription as others, use a unique name
+- Deploy the app and infrastructure using `azd up`
+
 # How to use the applications
 
 After you run the run the application, go to website and you'll see UI like this.
