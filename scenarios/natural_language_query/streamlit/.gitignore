@@ -1,1 +1,5 @@
+# Keep this file here as azd deploy skips env files etc when deploying the app to azure
 .azure
+secrets.env
+.env
+__pycache__
