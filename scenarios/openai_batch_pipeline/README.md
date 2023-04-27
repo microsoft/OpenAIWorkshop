@@ -71,10 +71,16 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
      sh Miniconda3-py39_23.1.0-1-Linux-x86_64.sh 
      ```
     > **Note:** The following commands are issued in Bash; please ensure you are using **Bash** in the Cloud Shell.
+    
+    > **Note:** Press down arrow key to read/skip the license agreement. 
 
-1. Accept the agreement and enter **yes** to install on the default path:
+1. Type **yes** and hit enter to accept the agreement and then hit enter to install on the default path:
 
    ![](images/cloudshell-accept.png)
+
+1. Type **yes** and hit enter to initialize the conda environment.
+
+    ![](images/E2T1PBS3.png)
 
 1. Run the following command to store the miniconda installed path to the variable.
 
@@ -90,6 +96,8 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     conda activate document-creation
     pip install -r reqs.txt
     ```
+1. Type **`y`** and hit enter to proceed.
+
 1. In the [Azure portal](https://portal.azure.com), navigate to your Storage Account with suffix `functions` resource by selecting the **openai-<inject key="DeploymentID" enableCopy="false"/>** resource group, and selecting the Storage Account from the list of resources.
 
     ![](images/storage-functions.png)
@@ -198,9 +206,11 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
    ![](images/synapse16.png)
 
-6. Enable the *data flow debug* session, then head to the **Data preview** tab and run a preview to check your work thus far:
+6. Enable the **data flow debug** session, click on **OK** on *Turn on data fow debug* pop-up window.
 
     >**Note:** It will take a minute or two for the **data flow debug** session to get enabled.
+
+7. Now head to the **Data preview** tab and run a preview to check your work thus far:
     
     ![](images/dataflow-datapreview.png)
    
@@ -226,8 +236,8 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
 12.  To correct this, let's use our **Select (1)** tile to change the names as follows to get the expected output values:
 
-     - **Summary**: `Interaction_summary` **(2)**
-     - **CustomerSentiment**: `Sentiment` **(3)**
+     - **Summary**: `interaction_summary` **(2)**
+     - **CustomerSentiment**: `sentiment` **(3)**
 
      ![](images/select-1.png)
     
