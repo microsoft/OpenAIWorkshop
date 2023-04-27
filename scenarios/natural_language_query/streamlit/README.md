@@ -5,7 +5,7 @@ Examples of questions are:
 - More difficult: Is that true that top 20% customers generate 80% revenue in 2016?
 - Advanced: Predict monthly revenue for next 12 months starting from June-2018
 The application supports Python's built-in SQLITE as well as your own Microsoft SQL Server.
-# Minimum Installation
+# Minimum Installation 
 In order to run this locally or deploy to your Azure Subscription, you will need to do the following:
 
 1. Create an Azure OpenAI deployment in an Azure subscription with a GPT-35-Turbo deployment and preferably a GPT-4 deployment.
