@@ -31,7 +31,7 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai3.png)
 
-1. Go to deployed function and click **Configuration** -> **Application Settings** and click on **Advance edit** and copy the **func-config.txt** values in the editor. Do not delete the existing contents in **Advance edit**, just update **config-func.txt** values before the last line and ']' mark. After copying the values click **OK** and **Save**.
+1. Go to deployed function and click **Configuration** -> **Application Settings** and click on **Advance edit** and copy the **func-config.txt** values in the editor. Do not delete the existing contents in **Advance edit**, add **`,`** after last '}' before ']' and just update **config-func.txt** values following. After updating the values click **OK** and **Save**.
    
    ![](images/openai2.png)
    
@@ -130,14 +130,16 @@ Step 6: Azure function returns the results to end user.
 3. Enter the **Connector name** as `Openai-custom-connector` **(1)** and click on **Continue (2)**. Just keep the screen as is and move to the next step.
 
       ![](images/openai-custom-connector-1.png)
-
+   
+   >**Note:** Please Click on **Start Trial** if you get any pop-up to register.
+   
 4.  From the file explorer navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query` and open **get-prompt.txt**.
 
      ![](images/get-prompt.png)
 
 5. We need to update the below values in the file 
 
-      - **host**: `openaifunapp<inject key="DeploymentID" enableCopy="false" />.azurewebsites.net` **(1)**
+      - **host**: `openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>.azurewebsites.net` **(1)**
   
       - **paths**:  `/api/NLQuery` **(2)**
   
@@ -155,7 +157,7 @@ Step 6: Azure function returns the results to end user.
    
    ![](images/start-trail-90days.png)
    
-7. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** **(2)** in the Swagger editor. Click **Create Connector (3)**.
+7. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** **(2)** and replace with the content in the **Swagger editor(2)**. Click **Create Connector (3)**.
 
    ![](images/swagger-editor.png)
    
