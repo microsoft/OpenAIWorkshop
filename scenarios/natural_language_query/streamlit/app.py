@@ -89,8 +89,8 @@ with st.sidebar:
                 "Show me revenue by product in ascending order",  
                 "Show me top 10 most expensive products",
                 "Show me net revenue by year. Revenue time is based on shipped date.",  
-                "For each category, get the list of products sold and the total sales amount"
-                "Find Quarterly Orders by Product. First column is Product Name, then year then four other columns, each for a quarter. The Amount is order amount after discount", 
+                "For each category, get the list of products sold and the total sales amount",
+                "Find Quarterly Orders by Product. First column is Product Name, then year then four other columns, each for a quarter. The amount is order amount after discount", 
             ],  
             "GPT-4": [  
                 "Pick top 20 customers generated most revenue in 2016 and for each customer show 3 products that they purchased most",  
