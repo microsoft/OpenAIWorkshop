@@ -43,7 +43,6 @@ We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI 
 ## Install the application locally 
 1. Clone the repo (e.g. ```git clone https://github.com/microsoft/OpenAIWorkshop.git``` or download). Then navigate to ```cd scenarios/natural_language_query/streamlit```
 2. (Optional) Provide settings for Open AI and Database.You can either create a `secrets.env` file in the root of this folder (scenarios/natural_language_query/streamlit) as below or do it using the app's UI later on. 
-
     - Option 1: use built-in SQLITE. Then you don't need to install SQL Server.
         ```txt
         AZURE_OPENAI_API_KEY="9999999999999999999999999"
@@ -64,15 +63,21 @@ We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI 
         SQL_DATABASE="WideWorldImportersDW"
         SQL_SERVER="sqlservername.database.windows.net"
         ```
-3. Create a python environment with version from 3.7 and 3.10
-4. Import the requirements.txt `pip install -r requirements.txt`
-5. From the window, run `streamlit run viz_v2.py`
-6. If you are a Mac user, please follow [this](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos?view=sql-server-ver16) to install ODBC for PYODBC
-## Deploy the application to Azure 
-This application can be deployed to an Azure subscription using the Azure Developer CLI. There is no need to have any coding experience to deploy this application but you will need permissions to create resources in an Azure Subscription
 
+3. Navigate to ```cd scenarios/natural_language_query/streamlit```
+4. Create a python environment with version from 3.7 and 3.10
+5. Import the requirements.txt `pip install -r requirements.txt`
+6. To run the application from the command line: `streamlit run app.py`
+7. The UI prompts for settings. If you want to save these so the next time you run the project you don't have to type them in, you can create a `secrets.env` file in the root of streamlit folder
+8. If you are a Mac user, please follow [this](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos?view=sql-server-ver16) to install ODBC for PYODBC
+## Deploy the application to Azure 
+This application can be deployed to an Azure subscription using the Azure Developer CLI. 
+There is no need to have any coding experience to deploy this application but you will need permissions to create resources in an Azure Subscription
 To deploy to Azure:
 - Install [Azure Developer CLI](https://aka.ms/azure-dev/install)
+- [Python 3+](https://www.python.org/downloads/)
+    - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
+    - **Important**: Ensure you can run `python --version` from console. On Ubuntu, you might need to run `sudo apt install python-is-python3` to link `python` to `python3`.    
 - Use either `git clone https://github.com/microsoft/OpenAIWorkshop.git` to clone the repo or download a zip
 - Go to the local directory of the OpenAIWorkshop
 - Authenticate to Azure by running `azd auth login`
