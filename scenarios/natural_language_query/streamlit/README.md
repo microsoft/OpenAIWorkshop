@@ -4,6 +4,7 @@ Examples of questions are:
 - Simple: Show me daily revenue trends in 2016  per region
 - More difficult: Is that true that top 20% customers generate 80% revenue in 2016?
 - Advanced: Forecast monthly revenue for next 12 months starting from June-2018
+
 The application supports Python's built-in SQLITE as well as your own Microsoft SQL Server.
 # Quick start with hosted demo application 
 1. Go to our hosted demo at https://app-web-ulajovkr7vyd4.azurewebsites.net/ if you do not want to install yourself.
@@ -16,22 +17,22 @@ The application supports Python's built-in SQLITE as well as your own Microsoft 
     Click on submit to save settings.
 3. There are two applications
     - SQL Query Writing Assistant: a simple application that translate business question into SQL query language then execute and display result.
-    - Data Analysis Assistant: a more sophisticated application to perform advanced data analytics such as statisical analysis and forecasting. Here we demonstrate the use of [Chain of Thought](https://arxiv.org/abs/2201.11903) and [React] (https://arxiv.org/abs/2210.03629) techniques to perform multi-step processing where the next step in the chain also depends on the observation/result from the previous step. 
+    - Data Analysis Assistant: a more sophisticated application to perform advanced data analytics such as statisical analysis and forecasting. Here we demonstrate the use of [Chain of Thought](https://arxiv.org/abs/2201.11903) and [React](https://arxiv.org/abs/2210.03629) techniques to perform multi-step processing where the next step in the chain also depends on the observation/result from the previous step. 
 4. Use SQL Query Writing Assistant
     
      <img width="1159" alt="image" src="../../../documents/media/da_assistant2.png">
     
     - Use a question from the FAQ or enter your own question.
-    - You can select ```show code`` and/or ``show prompt`` to show SQL query and the prompt behind the scene.
+    - You can select ```show code``` and/or ```show prompt``` to show SQL query and the prompt behind the scene.
     - Click on submit to execute and see result.
 4. Use Data Ananalyst Assistant
     
      <img width="1159" alt="image" src="../../../documents/media/da_assistant3.png">
     
     - Use a question from the FAQ or enter your own question.
-    - You can select ```show code`` and/or ``show prompt`` to show SQL & Python code and  the prompt behind the scene.
+    - You can select ```show code``` and/or ```show prompt``` to show SQL & Python code and  the prompt behind the scene.
     - Click on submit to execute and see result.
-    - For advanced question such as forecasting, you can use GPT-4 as the engine 
+    - For advanced questions such as forecasting, you can use GPT-4 as the engine 
 
       <img width="1159" alt="image" src="../../../documents/media/da_assistant4.png">
 
@@ -66,6 +67,9 @@ We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI 
 
 3. Navigate to ```cd scenarios/natural_language_query/streamlit```
 4. Create a python environment with version from 3.7 and 3.10
+    - [Python 3+](https://www.python.org/downloads/)
+        - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
+        - **Important**: Ensure you can run `python --version` from console. On Ubuntu, you might need to run `sudo apt install python-is-python3` to link `python` to `python3`. 
 5. Import the requirements.txt `pip install -r requirements.txt`
 6. To run the application from the command line: `streamlit run app.py`
 7. The UI prompts for settings. If you want to save these so the next time you run the project you don't have to type them in, you can create a `secrets.env` file in the root of streamlit folder
@@ -74,10 +78,7 @@ We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI 
 This application can be deployed to an Azure subscription using the Azure Developer CLI. 
 There is no need to have any coding experience to deploy this application but you will need permissions to create resources in an Azure Subscription
 To deploy to Azure:
-- Install [Azure Developer CLI](https://aka.ms/azure-dev/install)
-- [Python 3+](https://www.python.org/downloads/)
-    - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
-    - **Important**: Ensure you can run `python --version` from console. On Ubuntu, you might need to run `sudo apt install python-is-python3` to link `python` to `python3`.    
+- Install [Azure Developer CLI](https://aka.ms/azure-dev/install)   
 - Use either `git clone https://github.com/microsoft/OpenAIWorkshop.git` to clone the repo or download a zip
 - Go to the local directory of the OpenAIWorkshop
 - Authenticate to Azure by running `azd auth login`
