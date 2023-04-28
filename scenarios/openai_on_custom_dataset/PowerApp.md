@@ -18,9 +18,18 @@ This implementation scenario focuses on building a knowledge retrieval chatbot a
 From the user's query, the solution uses two-stage information retrieval to retrieve the content that best matches the user query. 
 In stage 1, full-text search in Azure Cognitive Search is used to retrieve several relevant documents. In stage 2, the search result is applied with a pre-trained NLP model and embedding search to further narrow down the most relevant content. The content is used by the orchestrator service to form a prompt for the OpenAI deployment of LLM. The OpenAI service returns the result which is then sent to the Power App client application.
 
-# Task 1: Ingest the data into the pre-deployed and configured resource.
+# Task 1: Setup Azure Cognitive Search and prepare data.
+   As part of data preperation step, to work in Open AI, the documents are chunked into smaller units(20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with a python script below. To make it easy for the labs, the sample document has already been chunked and provided in the repo.
    
-1. Navigate to 'C:\labfile\OpenAIWorkshop-main\scenarios\openai_on_custom_dataset\ingest' and you will see a file names as secerts.env, Make sure the valus is updated as expected. However we have already updated the values for you.
+1. Login to Azure portal if you are not already logged in.
+
+1. Navigate to **openaicustom-<inject key="DeploymentID" enableCopy="false"/>** resource group and select search service with the name **search-<inject key="DeploymentID" enableCopy="false"/>**.
+
+1. Now select the **Sementic Search** option from the left side menu and make sure that **Free Plan** is selected
+   
+   ![](./images/addsementic.png)
+   
+1. Now, navigate to 'C:\labfile\OpenAIWorkshop-main\scenarios\openai_on_custom_dataset\ingest' in windows explore and you will see a file names as secerts.env, Make sure the valus is updated as expected. However we have already updated the values for you.
 
 
 1.Now you need to open the CMD and run the below command to change to directory to the ingest folder.
@@ -35,9 +44,10 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
      python search-indexer.py
      ```
      
+     ![](./images/ingestdata.png)
   The above script will ingest the data into the services and you will be able to continue with the lab from here. 
   
-# Task 2: PowerApp
+# Task 2: Import PowerApp and try out the App.
 
 
 1. In the [Azure portal](https://portal.azure.com), navigate to the **func-search-<inject key="DeploymentID" enableCopy="false"/>** function app from the **openaicustom-<inject key="DeploymentID" enableCopy="false"/>** resource group.
@@ -81,9 +91,8 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
     ![](./images/semanti-search-flow-1.png)
 
-11. To navigate back click on **Back (1)** then click **Save (2)**.
+11. To navigate back click on **Back (1)**, if you get a option to leave or Don't leave, click on **leave**.
 
-    ![](./images/back-1.png)
 
 12.  On the **Flows (1)** Pane, select **Semantic-Search-Flow (2)** then click on `...` **(3)** and **Turn on (4)** your flow.
 
