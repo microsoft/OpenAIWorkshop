@@ -1,9 +1,8 @@
 ## Exercise 4b: Build Open AI application with Python
 
-1. Go to <https://portal.azure.com> and sign in with your organizational account. In the search box at the top of the portal, search for your workspace
-    and click on the Synapse workspace which appears under the Resources section.
+1. Search and select **Azure Synapse Analytics** in the azure portal.
 
-      ![](images/search-select.png)
+      ![](images/p2.png)
 
 1.  On the **Overview** blade under **Getting started** section, click **Open** to open Synapse Studio.
      
