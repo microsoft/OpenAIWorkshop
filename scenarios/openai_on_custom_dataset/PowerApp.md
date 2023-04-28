@@ -18,7 +18,26 @@ This implementation scenario focuses on building a knowledge retrieval chatbot a
 From the user's query, the solution uses two-stage information retrieval to retrieve the content that best matches the user query. 
 In stage 1, full-text search in Azure Cognitive Search is used to retrieve several relevant documents. In stage 2, the search result is applied with a pre-trained NLP model and embedding search to further narrow down the most relevant content. The content is used by the orchestrator service to form a prompt for the OpenAI deployment of LLM. The OpenAI service returns the result which is then sent to the Power App client application.
 
-# Task 1: PowerApp
+# Task 1: Ingest the data into the pre-deployed and configured resource.
+   
+1. Navigate to 'C:\labfile\OpenAIWorkshop-main\scenarios\openai_on_custom_dataset\ingest' and you will see a file names as secerts.env, Make sure the valus is updated as expected. However we have already updated the values for you.
+
+
+1.Now you need to open the CMD and run the below command to change to directory to the ingest folder.
+
+     ```
+      cd C:\labfile\OpenAIWorkshop-main\scenarios\openai_on_custom_dataset\ingest
+     ```
+
+1. Once you are in the ingest directory, run the below command to start the ingestion process. Please make sure to have to correct value in secrets.env file below running the below command. The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service.
+
+     ```
+     python search-indexer.py
+     ```
+     
+  The above script will ingest the data into the services and you will be able to continue with the lab from here. 
+  
+# Task 2: PowerApp
 
 
 1. In the [Azure portal](https://portal.azure.com), navigate to the **func-search-<inject key="DeploymentID" enableCopy="false"/>** function app from the **openaicustom-<inject key="DeploymentID" enableCopy="false"/>** resource group.
