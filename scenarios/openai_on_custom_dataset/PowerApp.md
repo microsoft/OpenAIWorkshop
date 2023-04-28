@@ -74,7 +74,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
     ![](./images/upload-importpackage.png)
     
-7. Navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\openai_on_custom_dataset\powerapp` and select `Semantic-Search-App-Template_20230303012916.zip` folder then click **Open**.
+7. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\powerapp` and select `Semantic-Search-App-Template_20230303012916.zip` folder then click **Open**.
 
    ![](./images/upload-semantic-search.png)
    
