@@ -35,7 +35,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 1.Now you need to open the CMD and run the below command to change to directory to the ingest folder.
 
     ```
-      cd C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest
+    cd C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest
     ```
 
 1. Once you are in the ingest directory, run the below command to start the ingestion process. Please make sure to have to correct value in secrets.env file below running the below command. The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service.
