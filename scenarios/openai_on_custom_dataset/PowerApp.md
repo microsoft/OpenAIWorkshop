@@ -27,7 +27,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
 1. Now select the **Sementic Search** option from the left side menu and make sure that **Free Plan** is selected
    
-    ![](../images/addsementic.png)
+    ![](./images/addsementic.png)
    
 1. Now, navigate to 'C:\labfile\OpenAIWorkshop-main\scenarios\openai_on_custom_dataset\ingest' in windows explore and you will see a file names as secerts.env, Make sure the valus is updated as expected. However we have already updated the values for you.
 
