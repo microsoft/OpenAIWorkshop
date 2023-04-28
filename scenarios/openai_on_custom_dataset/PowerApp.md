@@ -44,7 +44,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
      python search-indexer.py
      ```
      
-     ![](../images/ingestdata.png)
+     ![](./images/ingestdata.png)
   The above script will ingest the data into the services and you will be able to continue with the lab from here. 
   
 # Task 2: Import PowerApp and try out the App.
