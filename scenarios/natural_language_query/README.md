@@ -23,7 +23,7 @@ Step 6: Azure function returns the results to end user.
    
 ## Task 1: Configure Azure Function App
 
-1. Navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the Open AI engine, Open AI rest end point, SQL server and SQL database name in the file and copy the content.
+1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the Open AI engine, Open AI rest end point, SQL server and SQL database name in the file and copy the content.
 
       >**Note:** You can get Open AI endpoint, key and model name from the environment details page. Copy the SQL server and database names by navigating to the **openai-<inject key="DeploymentID" enableCopy="false" /></inject>** resource group.
 
