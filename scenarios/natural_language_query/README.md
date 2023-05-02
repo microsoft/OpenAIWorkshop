@@ -77,7 +77,7 @@ Step 6: Azure function returns the results to end user.
 
     ![](./images/upload-importpackage.png)
 
-3. From the file explorer navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query` select the **NLQuery PowerApp Export** folder and click on **Open**.
+3. From the file explorer navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query` select the **NLQuery PowerApp Export** folder and click on **Open**.
 
      ![](./images/nql-update.png)
 
@@ -133,7 +133,7 @@ Step 6: Azure function returns the results to end user.
    
    >**Note:** Please Click on **Start Trial** if you get any pop-up to register.
    
-4.  From the file explorer navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\natural_language_query` and open **get-prompt.txt**.
+4.  From the file explorer navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query` and open **get-prompt.txt**.
 
      ![](images/get-prompt.png)
 
