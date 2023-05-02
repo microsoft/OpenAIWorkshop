@@ -116,6 +116,6 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
  
 16. On the app enter any phrase and hit search to view the result.
    
-      - For example here we are searching for `What is AML stands for?`. 
+      - For example here we are searching for `Is GPU supported by AML?`. 
    
-    ![](./images/p1.png)
+    ![](./images/latquery.png)
