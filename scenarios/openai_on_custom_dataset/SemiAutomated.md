@@ -77,6 +77,8 @@ To make it easy for the labs, the sample document has already been chunked and p
         AFR_ENDPOINT="<YOUR Azure Form Recognizer Service API EndPoint>"
         AFR_API_KEY="<YOUR Azure Form Recognizer API Key>"
         INDEX_NAME="azure-ml-docs"
+        FILE_URL="https://github.com/microsoft/OpenAIWorkshop/raw/main/scenarios/data/azure-machine-learning-2-500.pdf"
+        LOCAL_FOLDER_PATH=""
 
 *   The document processing, chunking, indexing can all be scripted using any preferred language. 
     This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
