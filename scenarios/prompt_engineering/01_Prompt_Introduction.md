@@ -1,4 +1,4 @@
-# Exercise 5A: Introduction to Prompt Engineering (Read-Only)
+# Exercise 3: Introduction to Prompt Engineering (Read-Only)
 ## Topics
 
 - [What is a prompt?](#what-is-a-prompt)
