@@ -72,6 +72,8 @@ Step 6: Azure function returns the results to end user.
 1. Navigate to https://make.powerapps.com/. Select **Apps (1)** on the left navigation and click on **Import Canvas App (2)**. 
 
     ![](./images/import-canvas-1.png)
+    
+  >**Note:** Please click on **Start a free Trial** if you get any pop-up stating **You need a Power Apps Plan**.
 
 2. On the **Import package** page click on **Upload**.
 
@@ -131,7 +133,7 @@ Step 6: Azure function returns the results to end user.
 
       ![](images/openai-custom-connector-1.png)
    
-   >**Note:** Please Click on **Start Trial** if you get any pop-up to register.
+   >**Note:** Please click on **Start Trial** if you get any pop-up to register.
    
 4.  From the file explorer navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query` and open **get-prompt.txt**.
 
