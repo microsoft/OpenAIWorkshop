@@ -241,13 +241,13 @@ class AnalyzeGPT(ChatGPT_Handler):
                 st.plotly_chart(data)
             else:
                 st.write(data)
-            i=0
-            for key in self.st.session_state.keys():
-                if "show" in key:
-                    i +=1
-                self.st.session_state[f'show{i}']=data 
-                if type(data) is not Figure:
-                    self.st.session_state[f'observation: show_to_user{i}']=data
+            # i=0
+            # for key in self.st.session_state.keys():
+            #     if "show" in key:
+            #         i +=1
+            # self.st.session_state[f'show{i}']=data 
+            if type(data) is not Figure:
+                self.st.session_state[f'observation: this was shown to user']=data
         def observe(name, data):
             try:
                 data = data[:10] # limit the print out observation to 15 rows
@@ -301,7 +301,7 @@ class AnalyzeGPT(ChatGPT_Handler):
                                 del self.st.session_state[key]
                     except Exception as e:
                         observations.append(("Error:",str(e)))
-                        serialized_obs.append({"Encounter following error, can you try again?\n:":str(e)})
+                        serialized_obs.append({"\nEncounter following error, can you try again?\n:":str(e)+"\nAction:"})
                         
                     for observation in observations:
                         st.write(observation[0])

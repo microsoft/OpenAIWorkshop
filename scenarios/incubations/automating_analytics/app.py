@@ -126,8 +126,8 @@ with st.sidebar:
         #Query some data 
         sql_query = "SOME SQL QUERY"
         step1_df = execute_sql(sql_query)
-        # Replace 0 with NaN. Always have this step
-        step1_df['Some_Column'] = step1_df['Some_Column'].replace(0, np.nan)
+        # Replace NAN with 0. Always have this step
+        step1_df['Some_Column'] = step1_df['Some_Column'].replace(np.nan,0)
         #observe query result
         observe("some_label", step1_df) #Always use observe() instead of print
         ```
@@ -149,7 +149,7 @@ with st.sidebar:
         ```
         Observation: 
         step2_df is displayed here
-        Answer: Your final answer and comment for the question
+        Answer: Your final answer and comment for the question. Also use Python for computation, never compute result youself.
         <</Template>>
 
         """
@@ -162,10 +162,12 @@ with st.sidebar:
                 "Is that true that top 20% customers generate 80% revenue in 2016? What's their percentage of revenue contribution?",  
                 "Which products have most seasonality in sales quantity in 2016?",  
                 "Which customers are most likely to churn?", 
-                "What is the impact of discount on sales? What's optimal discount rate?" 
+                "What is the impact of discount on sales? What's optimal discount rate?",
+                "Predict monthly revenue for next 6 months starting from June-2018. Do not use Prophet. Show the prediction in a chart together with historical data for comparison."
+
             ],  
             "GPT-4": [  
-                "Predict monthly revenue for next 6 months starting from June-2018. Do not use Prophet.",  
+                "Predict monthly revenue for next 6 months starting from June-2018. Do not use Prophet. Show the prediction in a chart together with historical data for comparison.",  
                 "What is the impact of discount on sales? What's optimal discount rate?" ,  
             ]  
         }  
