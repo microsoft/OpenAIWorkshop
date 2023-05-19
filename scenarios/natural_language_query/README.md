@@ -23,9 +23,33 @@ Step 6: Azure function returns the results to end user.
    
 ## Task 1: Configure Azure Function App
 
+1. In the **Azure portal**, search for **OpenAI** and select **Azure OpenAI**.
+
+   ![](images/openai8.png)
+
+1. On **Cognitive Services | Azure OpenAI** blade, select **openai-<inject key="DeploymentID" enableCopy="false"/>**
+
+   ![](images/openai9.png)
+
+1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Model deployments** under **Resource Management**, and click on **+ Create**.
+
+   ![](images/openai10.png)
+
+1. On **Create Model deployment** blade, enter the **Model deployment name** as **demomodel**, from the drop-down select the Model **text-davinci-003**, and click on **Save**.
+
+   ![](images/openai11.png)
+
+1. On **Create Model deployment** blade, enter the **Model deployment name** as **gptmodel**, from the drop-down select the Model **gpt-35-turbo (version 0301)**, and click on **Save**.
+
+   ![](images/openai12.png)
+
+1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Keys and Endpoint** under **Resource Management**. Copy **Key 1** and the **Endpoint** by clicking on copy to clipboard paste it in a text editor such as notepad for later use. 
+
+   ![](images/openai13.png)
+
 1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the Open AI engine, Open AI rest end point, SQL server and SQL database name in the file and copy the content.
 
-      >**Note:** You can get Open AI endpoint, key and model name from the environment details page. Copy the SQL server and database names by navigating to the **openai-<inject key="DeploymentID" enableCopy="false" /></inject>** resource group.
+      >**Note:** Provide the Model name as **demomodel**. Copy the SQL server and database names by navigating to the **openai-<inject key="DeploymentID" enableCopy="false" /></inject>** resource group.
 
 1. Go to **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group and open **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject> (2)** function app.
 
