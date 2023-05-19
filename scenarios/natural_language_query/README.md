@@ -43,9 +43,9 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai12.png)
 
-1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Keys and Endpoint** under **Resource Management**. Copy **Key 1** and the **Endpoint** by clicking on copy to clipboard paste it in a text editor such as notepad for later use. 
+1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Keys and Endpoint (1)** under **Resource Management**. Copy **Key 1 (2)** and the **Endpoint (3)** by clicking on copy to clipboard paste it in a text editor such as notepad for later use. 
 
-   ![](images/openai13.png)
+   ![](images/openai13a.png)
 
 1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the Open AI engine, Open AI rest end point, SQL server and SQL database name in the file and copy the content.
 
