@@ -74,11 +74,11 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     
     > **Note:** Press down arrow key to read/skip the license agreement. 
 
-1. Type **yes** and hit enter to accept the agreement and then hit enter to install on the default path:
+1. Type **yes** and hit **enter** to accept the agreement and then hit enter to install on the default path:
 
    ![](images/cloudshell-accept.png)
 
-1. Type **yes** and hit enter to initialize the conda environment.
+1. Type **yes** and hit **enter** to initialize the conda environment.
 
     ![](images/E2T1PBS3.png)
 
