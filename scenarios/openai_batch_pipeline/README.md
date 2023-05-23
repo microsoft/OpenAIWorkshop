@@ -106,7 +106,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
    ![](images/storage-fuctions2.png)
 
-1. Go back to the cloud shell bash session and run the below command to upload the JSON files to the storage account and will take a few minutes to complete.
+1. Go back to the cloud shell bash session and run the below command to upload the JSON files to the storage account by replacing the <CONNECTION_STRING> which you copied in the previous step and will take a few minutes to complete.
 
     ```bash 
     python upload_docs.py --conn_string "<CONNECTION_STRING>"
@@ -218,7 +218,7 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
    ![](images/synapse17.png)
 
-8. We can leave all the settings as default. Next, we'll add in our **Sink** tile. This is the step that will write our data out to our Synapse SQL database. Click on the small **+ (1)** sign next to our **Select (2)** tile. Scroll all the way to the bottom of the options menu and select the Sink option:
+8. We can leave all the settings as default. Next, we'll add in our **Sink** tile. This is the step that will write our data out to our Synapse SQL database. Click on the small **+ (1)** sign next to our **Select** tile. Scroll all the way to the bottom of the options menu and select the **Sink (2)** option:
 
    ![](images/synapse18.png)
 
