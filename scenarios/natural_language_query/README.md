@@ -31,17 +31,23 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai9.png)
 
-1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Model deployments** under **Resource Management**, and click on **+ Create**.
+1. In the Azure OpenAI resource pane, click on **Go to Azure OpenAI Studio** it will navaigate to **Azure AI Studio**.
 
-   ![](images/openai10.png)
+   ![](images/openai11-1.png)
 
-1. On **Create Model deployment** blade, enter the **Model deployment name** as **demomodel**, from the drop-down select the Model **text-davinci-003**, and click on **Save**.
+1. In the **Azure AI Studio**, select **Deployments (1)** under Management and click on **+ Create new deployment (2)** 
 
-   ![](images/openai11.png)
+   ![](images/openai10-1.png)
 
-1. On **Create Model deployment** blade, enter the **Model deployment name** as **gptmodel**, from the drop-down select the Model **gpt-35-turbo (version 0301)**, and click on **Save**.
+1. On the Deploy model pop-up, from the drop-down select **text-davinci-003 (1)** for Select a Model, then select the Modle version **1 (2)**, enter deployment name as **demomodel (3)** then click on **Create (4)**. Copy OpenAI Model name into the text file for later use.
 
-   ![](images/openai12.png)
+   ![](images/openai12-1.png)
+
+1. Click on **+ Create new deployment**, On the Deploy model pop-up, from the drop-down select **gpt-35-turbo (1)** for Select a Model, then select the Modle version **0301 (2)**, enter deployment name as **gptmodel (3)** then click on **Create (4)**. Copy OpenAI Model name into the text file for later use.
+
+   ![](images/openai12-2.png)
+
+1. Naviagte back to [Azure portal](http://portal.azure.com/), search and select **Azure OpenAI**, from the **Cognitive Services | Azure OpenAI pane**, select the **SQL-OpenAI-<inject key="Deployment ID" enableCopy="false"/>**.
 
 1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Keys and Endpoint (1)** under **Resource Management**. Copy **Key 1 (2)** and the **Endpoint (3)** by clicking on copy to clipboard paste it in a text editor such as notepad for later use. 
 
