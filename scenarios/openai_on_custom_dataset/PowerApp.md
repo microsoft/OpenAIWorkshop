@@ -38,7 +38,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
        cd C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest
    ```
 
-1. Once you are in the ingest directory, run the below command to start the ingestion process. Please make sure to have to correct value in secrets.env file below running the below command. The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service.
+1. Once you are in the ingest directory, run the below command to start the ingestion process. Please make sure to have the correct value in secrets.env file before running the below command. The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service.
 
      ```
      python search-indexer.py
