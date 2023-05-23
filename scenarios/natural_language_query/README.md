@@ -155,7 +155,7 @@ Step 6: Azure function returns the results to end user.
      ![](images/app-launcher.png)
 
 
-2.  Click on **Data (1)** and select **Custom Connectors (2)**, click on **+ New custom connector (3)** then click on **Create from blank (4)**. Just keep the screen as is and move to the next step.
+2.  Click on **Data (1)** and select **Custom Connectors (2)**, click on **+ New custom connector (3)** then click on **Create from blank (4)**. Just keep the screen as it is and move to the next step.
 
     ![](images/power-automate.png)
    
