@@ -21,7 +21,7 @@ Step 5: The query is executed on SQL database and results are returned to Azure 
 Step 6: Azure function returns the results to end user.
 ### Azure services deployment
    
-## Task 1: Configure Azure Function App
+## Task 1: Deploy Azure OpenAI Model and Configure Azure Function App.
 
 1. In the **Azure portal**, search for **OpenAI** and select **Azure OpenAI**.
 
