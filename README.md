@@ -2,6 +2,8 @@
 
 [Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/overview) provides REST API access to OpenAI's powerful language models including the GPT-3, Codex and Embeddings model series. These models can be easily adapted to your specific task including but not limited to content generation, summarization, semantic search, and natural language to code translation. Users can access the service through REST APIs, Python SDK, or our web-based interface in the Azure OpenAI Studio.
 
+In this workshop, you will learn how to use the Azure OpenAI service to create AI powered solutions. You will get hands-on experience with the latest AI technologies and will learn how to use Azure OpenAI API. 
+
 ![OpenAI ](documents/images/OpenAI.png)
 
 ## Lab Prerequisites and Deployment
@@ -12,10 +14,10 @@ The following prerequisites must be completed before you start these labs
 - You must be connected to the internet
 - Use ither Edge or Chrome when executing the labs.
 - Access to an Azure Subscription with [Contributor Access](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-steps)
-  > **IMPORTANT** Only use your institutions/organization email. Do not use a personal email address (Example: @gmail.com, @yahoo.com, @hotmail.com, etc.)
+  > **IMPORTANT**: Only use your institutions/organization email. Do not use a personal email address (Example: @gmail.com, @yahoo.com, @hotmail.com, etc.)
 - Approved access to Azure OpenAI service to this subscription, you can request access [here](https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUOFA5Qk1UWDRBMjg0WFhPMkIzTzhKQ1dWNyQlQCN0PWcu)
  
-  > **IMPORTANT**:Authorization can take up to 10 business days
+  > **IMPORTANT**: Authorization can take up to 10 business days
 
 - [Azure Open AI](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal) already provisioned and **text-davinci-003** model is deployed. The model deployment name is required in the Azure Deployment step below. **South Central US** is recommended region for deploying Azure Open AI.
 
@@ -26,11 +28,7 @@ The following prerequisites must be completed before you start these labs
 - [Power platform](https://powerplatform.microsoft.com/en-us/?&ef_id=_k_EAIaIQobChMIxp3J2OCf_wIVjqXICh3SlgyJEAAYASABEgI4c_D_BwE_k_&OCID=AIDcmm90q7bk03_SEM__k_EAIaIQobChMIxp3J2OCf_wIVjqXICh3SlgyJEAAYASABEgI4c_D_BwE_k_&gad=1&gclid=EAIaIQobChMIxp3J2OCf_wIVjqXICh3SlgyJEAAYASABEgI4c_D_BwE)- 30 days trial (if no licensing)
 - [Postman](https://www.postman.com/downloads/)
 - Azure Cloud Shell is recommended as it comes with preinstalled dependencies.
-- [Conda](https://conda.io/projects/conda/en/latest/user-guide/install/windows.html) is recommended if local laptops are used as pip install might interfere with existing python deployment
-
-## Introduction
-
-Welcome to the Azure OpenAI workshop! In this workshop, you will learn how to use the Azure OpenAI service to create AI powered solutions. You will get hands-on experience with the latest AI technologies and will learn how to use Azure OpenAI API. 
+- [Conda](https://conda.io/projects/conda/en/latest/user-guide/install/windows.html) is recommended if local laptops are used as pip install might interfere with existing python deployment.
 
 ## Goal
 
