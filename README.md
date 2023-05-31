@@ -1,6 +1,21 @@
-# Using Azure OpenAI like a Pro to build powerful AI applications 
+# Microsoft US Education Azure OpenAI Workshop 
 
 [Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/overview) provides REST API access to OpenAI's powerful language models including the GPT-3, Codex and Embeddings model series. These models can be easily adapted to your specific task including but not limited to content generation, summarization, semantic search, and natural language to code translation. Users can access the service through REST APIs, Python SDK, or our web-based interface in the Azure OpenAI Studio.
+
+## Pre-requisites
+
+For this workshop you will need the following:
+
+- WI-FI enabled Laptop
+- Access to an Azure Subscription with [Contributor Access](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-steps)
+- Approved access to Azure OpenAI service to this subscription, you can request access [here](https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUOFA5Qk1UWDRBMjg0WFhPMkIzTzhKQ1dWNyQlQCN0PWcu)
+
+  > **Authorization can take up to 10 business days**
+
+- Access to Azure services to these services [How to Register Azure Services](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types)
+  - Azure OpenAI
+- [VS Code](https://code.visualstudio.com/download) Installed in your Computer
+- 
 
 ## Introduction
 
