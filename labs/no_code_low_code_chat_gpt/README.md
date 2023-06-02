@@ -9,7 +9,6 @@
 
 - You can sign in to power apps with your existing licence or you can sign up for free - https://powerapps.microsoft.com/
 
-
 ### Step 2. Deploy client Power App
 
 - click on Apps on the left navigation. 
@@ -43,7 +42,7 @@
   <img src="../../documents/media/editflow.png" width=50% height=50%>
 
 
-- Edit the Power Automate Flow HTTP step with your own Azure OpenAI API [key and endpoint](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?pivots=rest-api#retrieve-key-and-endpoint)
+- Edit the Power Automate Flow HTTP step with your own Azure OpenAI API [key and endpoint](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?pivots=rest-api&tabs=command-line#retrieve-key-and-endpoint)
 
 
   <img src="../../documents/media/flowchangeapikey.png" width=50% height=50%>
