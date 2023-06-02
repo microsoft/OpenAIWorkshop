@@ -1,9 +1,4 @@
 # Microsoft US Education Azure OpenAI Workshop
-<<<<<<< HEAD
-=======
-
-Vaibhav Was here
->>>>>>> 92b75f1007a08737531d09a0539ffb956d49b33e
 
 [Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/overview) provides REST API access to OpenAI's powerful language models including the GPT-3, Codex and Embeddings model series. These models can be easily adapted to your specific task including but not limited to content generation, summarization, semantic search, and natural language to code translation. Users can access the service through REST APIs, Python SDK, or our web-based interface in the Azure OpenAI Studio.
 
@@ -49,10 +44,12 @@ The following prerequisites must be completed before you start these labs
 
 ## Agenda
 
+**TODO: Review the timelines
+
 | Activity | Duration |
 | --- | --- |
 | Opening Remarks | 30 minutes |
-| Waht is Azure OpenAI | 30 minutes |
+| What is Azure OpenAI | 30 minutes |
 | Large Language Models & Prompt Engineering | 30 minutes|
 | [Lab 1: Low Code/No Code ChatGPT] | 45 minutes |
 | Lab 2: Chat with your documents | 45 minutes |
