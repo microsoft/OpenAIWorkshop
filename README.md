@@ -36,7 +36,7 @@ The following prerequisites must be completed before you start these labs
   - Microsoft.Application
   - Microsoft.LogiApps
 
-- [VS Code](https://code.visualstudio.com/download) Installed in your Computer
+- [VS Code](https://code.visualstudio.com/download) installed in your Computer
 - [Power platform](https://powerplatform.microsoft.com/en-us/?&ef_id=_k_EAIaIQobChMIxp3J2OCf_wIVjqXICh3SlgyJEAAYASABEgI4c_D_BwE_k_&OCID=AIDcmm90q7bk03_SEM__k_EAIaIQobChMIxp3J2OCf_wIVjqXICh3SlgyJEAAYASABEgI4c_D_BwE_k_&gad=1&gclid=EAIaIQobChMIxp3J2OCf_wIVjqXICh3SlgyJEAAYASABEgI4c_D_BwE)- 30 days trial (if no licensing)
 - [Postman](https://www.postman.com/downloads/)
 - Azure Cloud Shell is recommended as it comes with preinstalled dependencies.
@@ -57,6 +57,10 @@ The following prerequisites must be completed before you start these labs
 | Lab 3: Chat with your databases | 45 minutes |
 | Lab 4: Batch processing with Synapse? | 75 minutes |
 | Build Updates | 30 minutes |
+
+## Before you begin
+
+  [Retrieve your Azure OpenAI end point and keys](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?tabs=command-line&pivots=programming-language-python#retrieve-key-and-endpoint) and copy them to notepad for future reference as you will be using them throuhout this labs
 
 ## Format
 
