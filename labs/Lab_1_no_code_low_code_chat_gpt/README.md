@@ -2,23 +2,24 @@
 
 ## Objective
 
-In this lab you will lean how to use OpenAI to help answer common IT questions
+In this lab you will lean how to use OpenAI to help answer common IT questions sent to help desk mailboxes
 
  <img src="../../documents/images/lab-1-workflow.png" width=50% >
-
- <img src="../../documents/images/lab-1-architecture.png" height=50%>
 
 ## Summary
 
 You will need to deploy 2 logic apps. The first logic app reads incoming email of an outlook mailbox; the second logic app calls OpenAI for anwers to the questions and sends a response.
 
+<img src="../../documents/images/lab-1-architecture.png" height=30%>
+
 ## Step 1. Signin to Azure Portal
 
 Go to https://portal.azure.com and enter your credentials
 
-## Step 2. Deploy Logic Apps
+## Step 2. Deploy first logic app - email-techsupport-integration
 
-- click on Apps on the left navigation.
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmaster%2Flabs%2FLab_1_no_code_low_code_chat_gpt%2Fscripts%2Fopen_ai_integration%2Ftemplate.json)
+
 
   <img src="../../documents/media/powerapp.png" width=50% height=50%>
 
