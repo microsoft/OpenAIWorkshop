@@ -25,7 +25,13 @@
                     "type": "Microsoft.Web/locations/managedApis",
                     "id": "[concat('subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365')]"                    
                 },
-                "displayName": "office365"                
+                "displayName": "office365",
+                 "testLinks": [
+                    {
+                        "requestUri": "[concat('https://management.azure.com:443/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Web/connections/office365/extensions/proxy/testconnection?api-version=2016-06-01')]",
+                        "method": "get"
+                    }
+                ]                
             }
         },
          {
@@ -44,7 +50,13 @@
                     "type": "Microsoft.Web/locations/managedApis",
                     "id": "[concat('subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/sql')]"                    
                 },
-                "displayName": "office365"                
+                "displayName": "SQL Server",
+                "testLinks": [
+                    {
+                        "requestUri": "[concat('https://management.azure.com:443/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().location,'/providers/Microsoft.Web/connections/sql/extensions/proxy/testconnection?api-version=2016-06-01')]",
+                        "method": "get"
+                    }
+                ]
             }
         },
         {
