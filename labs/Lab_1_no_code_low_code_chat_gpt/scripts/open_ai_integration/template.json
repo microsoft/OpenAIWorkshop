@@ -389,12 +389,12 @@
                             "office365": {
                                 "connectionId": "[resourceId('Microsoft.Web/connections', 'office365')]",
                                 "connectionName": "office365",
-                                "id": "[reference(concat('Microsoft.Web/connections/', 'office365'), '2017-07-01').api.id]"
+                                "id": "[reference(concat('Microsoft.Web/connections/', 'office365'), '2016-06-01').api.id]"
                             },
                             "sql": {
                                 "connectionId": "[resourceId('Microsoft.Web/connections', 'sql')]",
                                 "connectionName": "sql",
-                                "id": "[reference(concat('Microsoft.Web/connections/', 'sql'), '2017-07-01').api.id]"
+                                "id": "[reference(concat('Microsoft.Web/connections/', 'sql'), '2016-06-01').api.id]"
                             }
                         }
                     }
