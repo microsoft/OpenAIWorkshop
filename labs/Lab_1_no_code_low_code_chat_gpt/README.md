@@ -1,17 +1,24 @@
+# AUTOMATE YOUR MAILBOX RESPONSES
 
-## POWER APP
+## Objective
 
-### Prerequiste
+In this lab you will lean how to use OpenAI to help answer common IT questions
 
-[Azure OpenAI resource](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal#prerequisites)
+ <img src="../../documents/images/lab-1-workflow.png" width=50% >
 
-### Step 1. Sign in to Power Apps
+ <img src="../../documents/images/lab-1-architecture.png" height=50%>
 
-- You can sign in to power apps with your existing licence or you can sign up for free - https://powerapps.microsoft.com/
+## Summary
 
-### Step 2. Deploy client Power App
+You will need to deploy 2 logic apps. The first logic app reads incoming email of an outlook mailbox; the second logic app calls OpenAI for anwers to the questions and sends a response.
 
-- click on Apps on the left navigation. 
+## Step 1. Signin to Azure Portal
+
+Go to https://portal.azure.com and enter your credentials
+
+## Step 2. Deploy Logic Apps
+
+- click on Apps on the left navigation.
 
   <img src="../../documents/media/powerapp.png" width=50% height=50%>
 
