@@ -31,6 +31,31 @@
                 "displayName": "Content Conversion"
             }
         },
+         {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "location": "[resourceGroup().location]",
+            "name": "office365",
+            "kind": "V1",
+            "properties": {
+                "api": {
+                     "name": "office365",
+                    "displayName": "Office 365 Outlook",
+                    "description": "Microsoft Office 365 is a cloud-based service that is designed to help meet your organization's needs for robust security, reliability, and user productivity.",
+                    "iconUri": "[concat('https://connectoricons-prod.azureedge.net/releases/v1.0.1626/1.0.1626.3238/', 'office365', '/icon.png')]",
+                    "brandColor": "#0078D4",                   
+                    "type": "Microsoft.Web/locations/managedApis",
+                    "id": "[concat('subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365-1')]"                    
+                },
+                "displayName": "office365",
+                 "testLinks": [
+                    {
+                        "requestUri": "[concat('https://management.azure.com:443/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Web/connections/office365/extensions/proxy/testconnection?api-version=2016-06-01')]",
+                        "method": "get"
+                    }
+                ]                
+            }
+        },
         {
             "type": "Microsoft.Logic/workflows",
             "apiVersion": "2017-07-01",
