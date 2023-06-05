@@ -210,19 +210,19 @@
                             "conversionservice": {
                                 "connectionId": "[resourceId('Microsoft.Web/connections', 'conversionservice')]",
                                 "connectionName": "conversionservice",
-                                "id": "[reference(concat('Microsoft.Web/connections/', 'conversionservice'), '2017-07-01').api.id]"
+                                "id": "[reference(concat('Microsoft.Web/connections/', 'conversionservice'), '2016-06-01').api.id]"
                             },
                             "office365": {
                                 "connectionId": "[resourceId('Microsoft.Web/connections', 'office365')]",
                                 "connectionName": "office365",
-                                "id": "[reference(concat('Microsoft.Web/connections/', 'office365'), '2017-07-01').api.id]"
+                                "id": "[reference(concat('Microsoft.Web/connections/', 'office365'), '2016-06-01').api.id]"
                             }
                         }
                     }
                 }
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Web/connections', 'office365')]",
+                "[resourceId('Microsoft.Web/connections', 'office365-1')]",
                 "[resourceId('Microsoft.Web/connections', 'conversionservice')]"
             ]
 
