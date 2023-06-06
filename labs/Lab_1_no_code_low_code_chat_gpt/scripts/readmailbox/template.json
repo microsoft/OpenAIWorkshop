@@ -80,7 +80,7 @@
                             },
                             "evaluatedRecurrence": {
                                 "frequency": "Minute",
-                                "interval": 3
+                                "interval": 2
                             },
                             "splitOn": "@triggerBody()?['value']",
                             "type": "ApiConnection",
