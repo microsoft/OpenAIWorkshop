@@ -17,21 +17,21 @@
             "kind": "V1",
             "properties": {
                 "api": {
-                     "name": "office365",
+                    "name": "office365",
                     "displayName": "Office 365 Outlook",
                     "description": "Microsoft Office 365 is a cloud-based service that is designed to help meet your organization's needs for robust security, reliability, and user productivity.",
                     "iconUri": "[concat('https://connectoricons-prod.azureedge.net/releases/v1.0.1626/1.0.1626.3238/', 'office365', '/icon.png')]",
-                    "brandColor": "#0078D4",                   
+                    "brandColor": "#0078D4",
                     "type": "Microsoft.Web/locations/managedApis",
-                    "id": "[concat('subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365')]"                    
+                    "id": "[concat('subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365')]"
                 },
                 "displayName": "office365",
-                 "testLinks": [
+                "testLinks": [
                     {
                         "requestUri": "[concat('https://management.azure.com:443/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Web/connections/office365/extensions/proxy/testconnection?api-version=2016-06-01')]",
                         "method": "get"
                     }
-                ]                
+                ]
             }
         },
         {
@@ -74,9 +74,9 @@
                     },
                     "actions": {
                         "Condition": {
-                            "actions": {                              
+                            "actions": {
                                 "Send_an_email_(V2)": {
-                                    "runAfter": { },
+                                    "runAfter": {},
                                     "type": "ApiConnection",
                                     "inputs": {
                                         "body": {
@@ -152,23 +152,23 @@
                                 "uri": ""
                             }
                         },
-                         "Initialize_emailTo": {
-                "inputs": {
-                    "variables": [
-                        {
-                            "name": "emailto",
-                            "type": "string",
-                            "value": "@triggerBody()?['emailto']"
-                        }
-                    ]
-                },
-                "runAfter": {
-                    "Initialize_prompt": [
-                        "Succeeded"
-                    ]
-                },
-                "type": "InitializeVariable"
-            },
+                        "Initialize_emailTo": {
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "emailto",
+                                        "type": "string",
+                                        "value": "@triggerBody()?['emailto']"
+                                    }
+                                ]
+                            },
+                            "runAfter": {
+                                "Initialize_prompt": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable"
+                        },
                         "Initialize_final_prompt": {
                             "runAfter": {
                                 "Initialize_question": [
@@ -200,7 +200,7 @@
                         },
                         "Initialize_question": {
                             "runAfter": {
-                                "Initialize_prompt": [
+                                "Initialize_emailTo": [
                                     "Succeeded"
                                 ]
                             },
@@ -365,9 +365,9 @@
                     }
                 }
             },
-              "dependsOn": [
-                "[resourceId('Microsoft.Web/connections', 'office365')]"               
-              ]
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/connections', 'office365')]"
+            ]
         }
     ]
 }
