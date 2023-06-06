@@ -14,7 +14,7 @@ Logic App 1: reads incoming email from an outlook mailbox and calls Logic App2
 
 Logic App 2: Calls Azure OpenAI for answers to the user support question and emails back a response. 
 
-###Note: 
+### Note: 
 
 We will deploy the 2nd logic app first because we need its URL when provisioning the first logic app.
 
