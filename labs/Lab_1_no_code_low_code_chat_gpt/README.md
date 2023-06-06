@@ -9,9 +9,14 @@ In this lab you will lean how to use OpenAI to help answer common IT questions s
 ## Summary
 
 You will need to deploy 2 logic apps:
+
 Logic App 1: reads incoming email from an outlook mailbox and calls Logic App2
+
 Logic App 2: Calls Azure OpenAI for answers to the user support question and emails back a response. 
-Note: We will deploy the 2nd logic app first because we need its URL when provisioning the first logic app.
+
+###Note: 
+
+We will deploy the 2nd logic app first because we need its URL when provisioning the first logic app.
 
 <img src="../../documents/images/lab-1-architecture.png" height=30%>
 
