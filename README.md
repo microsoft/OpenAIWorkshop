@@ -44,19 +44,15 @@ The following prerequisites must be completed before you start these labs
 
 ## Agenda
 
-**TODO: Review the timelines
+**TODO: Review the timelines & add links to the labs/documentation
 
 | Activity | Duration |
 | --- | --- |
-| Opening Remarks | 30 minutes |
-| What is Azure OpenAI | 30 minutes |
-| Large Language Models & Prompt Engineering | 30 minutes|
-| [Lab 1: Low Code/No Code ChatGPT] | 45 minutes |
+| [Lab 1: Low Code/No Code ChatGPT](/labs/Lab_1_no_code_low_code_chat_gpt/README.md) | 45 minutes |
 | Lab 2: Chat with your documents | 45 minutes |
-| Lunch | 60 minutes |
 | Lab 3: Chat with your databases | 45 minutes |
 | Lab 4: Batch processing with Synapse? | 75 minutes |
-| Build Updates | 30 minutes |
+
 
 ## Before you begin
 

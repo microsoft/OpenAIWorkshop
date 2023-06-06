@@ -62,14 +62,40 @@ Scroll down to the condition option and expand it, then expand the true option. 
 
 ![](../../documents/images/lab-1-logicapp-6.png)
 
+Save the logic app
 
 ### Step 3. Deploy second logic app - read-mailbox-techsupport
+
+This logic app scans a mail box every to minutes for new emails, there is a filter on the subject line for **Tech support automation**, you can change that if you choose to
+
+![](../../documents/images/lab-1-logicapp-9.png)
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmaster%2Flabs%2FLab_1_no_code_low_code_chat_gpt%2Fscripts%2Freadmailbox%2Ftemplate.json)
 
 In this step you are going to perform the following actions to deploy and configure the logic app:
 
 - Deploy the logic app that sends the user question to OpenAI
-- Copy the URL for this Logic App for use in the second logic app
-- Enter OpenAI authentication credentials
 - Configure your connection to Outlook
+
+After the deployment you should see the new logic app your resource group, open the logic app and click the edit button
+
+  ![](../../documents/images/lab-1-logicapp-7.png)
+
+Select the top box titled connection and select the appropiate connection to office 365 outlook
+
+![](../../documents/images/lab-1-logicapp-8.png)
+
+### Step 4. Test
+
+Send an email to the mailbox configured in your second logic app
+> **Don't forget the email subject**
+
+You can use this test:
+_______________________________________________________________
+
+Hello,
+
+I can't login into my account, I need to reset my password, also my keyboard is not working
+
+Thank you
+_______________________________________________________________
