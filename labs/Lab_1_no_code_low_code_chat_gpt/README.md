@@ -78,7 +78,7 @@ Save the logic app
 
 ### Step 3. Deploy Logic App 1 (read-mailbox-techsupport)
 
-This logic app scans a mail box every X minutes for new emails with the subject: **"Tech support automation"**.
+This logic app scans a mail box every X minutes for new emails with the subject: **"Helpdesk Bot"**.
 
 ![](../../documents/images/lab-1-logicapp-9.png)
 
@@ -104,7 +104,7 @@ Select the top box titled connection and select the appropiate connection to off
 Send an email to the mailbox configured in your second logic app
 > **Don't forget the email subject**
 
-**"Tech support automation"**
+**"Helpdesk bot"**
 
 You can use this test:
 _______________________________________________________________
