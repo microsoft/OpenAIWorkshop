@@ -308,7 +308,7 @@
                                         "Importance": "Normal",
                                         "Options": "Useful, Not Useful",
                                         "ShowHTMLConfirmationDialog": false,
-                                        "Subject": "Answer to your techinical questions",
+                                        "Subject": "Answer to your technical questions",
                                         "To": "andelcam@microsoft.com"
                                     },
                                     "NotificationUrl": "@{listCallbackUrl()}"

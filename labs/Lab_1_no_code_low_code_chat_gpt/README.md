@@ -8,7 +8,10 @@ In this lab you will lean how to use OpenAI to help answer common IT questions s
 
 ## Summary
 
-You will need to deploy 2 logic apps. The first logic app reads incoming email of an outlook mailbox; the second logic app calls OpenAI for anwers to the questions and sends a response.
+You will need to deploy 2 logic apps:
+Logic App 1: reads incoming email from an outlook mailbox and calls Logic App2
+Logic App 2: Calls Azure OpenAI for answers to the user support question and emails back a response. 
+Note: We will deploy the 2nd logic app first because we need its URL when provisioning the first logic app.
 
 <img src="../../documents/images/lab-1-architecture.png" height=30%>
 
@@ -16,7 +19,7 @@ You will need to deploy 2 logic apps. The first logic app reads incoming email o
 
 Go to https://portal.azure.com and enter your credentials
 
-## Step 2. Deploy first logic app - email-techsupport-integration
+## Step 2. Deploy Logic App 2 (email-techsupport-integration)
 
 ### OpenAI Prompt Overview
 This logic app uses the following prompt to answer questions sent to a technical support mail box:
@@ -50,7 +53,11 @@ Expand the first box "When an HHTP is received" and copy the URL to your text ed
 
 Scroll down to the HTTP box and enter your OpenAI api key and the OpenAI endpoint with the following format:
 
-**"<YOUR_OPEN_AI_URL>/deployments/text-davinci-003/completions?api-version=2022-12-01"**
+**"https://<YOUR_AZURE_OPENAI_RESOURCENAME>.openai.azure.com/openai/deployments/<DEPLOYMENT_NAME>/completions?api-version=2022-12-01"**
+
+You can find the <DEPLOYMENT_NAME> in the Azure OpenAI Studio Deployments blade as shown below:
+
+![](../../documents/images/lab-1-ModelName.png)
 
 ![](../../documents/images/lab-1-logicapp-4.png)
 
@@ -64,11 +71,13 @@ Scroll down to the condition option and expand it, then expand the true option. 
 
 Save the logic app
 
-### Step 3. Deploy second logic app - read-mailbox-techsupport
+### Step 3. Deploy Logic App 1 (read-mailbox-techsupport)
 
-This logic app scans a mail box every to minutes for new emails, there is a filter on the subject line for **Tech support automation**, you can change that if you choose to
+This logic app scans a mail box every X minutes for new emails with the subject: **"Tech support automation"**.
 
 ![](../../documents/images/lab-1-logicapp-9.png)
+
+Note: When you click the 'Deploy to Azure' button below, you will need to provide the URL to your first logic app in the 'Email_integration_url' parameter field.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmaster%2Flabs%2FLab_1_no_code_low_code_chat_gpt%2Fscripts%2Freadmailbox%2Ftemplate.json)
 
@@ -89,6 +98,8 @@ Select the top box titled connection and select the appropiate connection to off
 
 Send an email to the mailbox configured in your second logic app
 > **Don't forget the email subject**
+
+**"Tech support automation"**
 
 You can use this test:
 _______________________________________________________________
