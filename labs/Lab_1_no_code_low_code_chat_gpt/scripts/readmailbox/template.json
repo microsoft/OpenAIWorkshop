@@ -73,33 +73,44 @@
                         }
                     },
                     "triggers": {
-                        "When_a_new_email_arrives": {
-                            "recurrence": {
-                                "frequency": "Minute",
-                                "interval": 1
-                            },
-                            "evaluatedRecurrence": {
-                                "frequency": "Minute",
-                                "interval": 1
-                            },
-                            "splitOn": "@triggerBody()?['value']",
-                            "type": "ApiConnection",
-                            "inputs": {
-                                "host": {
-                                    "connection": {
-                                        "name": "@parameters('$connections')['office365']['connectionId']"
-                                    }
-                                },
-                                "method": "get",
-                                "path": "/Mail/OnNewEmail",
-                                "queries": {
-                                    "folderPath": "Inbox",
-                                    "importance": "Any",
-                                    "includeAttachments": false,
-                                    "subjectFilter": "Tech Support Automation"
-                                }
-                            }
+                       "When_a_new_email_arrives_(V3)": {
+                "inputs": {
+                    "fetch": {
+                        "method": "get",
+                        "pathTemplate": {
+                            "template": "/v3/Mail/OnNewEmail"
+                        },
+                        "queries": {
+                            "fetchOnlyWithAttachment": false,
+                            "folderPath": "Inbox",
+                            "importance": "Any",
+                            "includeAttachments": false,
+                            "subjectFilter": "Helpdesk bot"
                         }
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['office365']['connectionId']"
+                        }
+                    },
+                    "subscribe": {
+                        "body": {
+                            "NotificationUrl": "@{listCallbackUrl()}"
+                        },
+                        "method": "post",
+                        "pathTemplate": {
+                            "template": "/GraphMailSubscriptionPoke/$subscriptions"
+                        },
+                        "queries": {
+                            "fetchOnlyWithAttachment": false,
+                            "folderPath": "Inbox",
+                            "importance": "Any"
+                        }
+                    }
+                },
+                "splitOn": "@triggerBody()?['value']",
+                "type": "ApiConnectionNotification"
+            }
                     },
                     "actions": {
                         "Compose": {
