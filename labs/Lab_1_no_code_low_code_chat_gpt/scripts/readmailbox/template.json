@@ -76,11 +76,11 @@
                         "When_a_new_email_arrives": {
                             "recurrence": {
                                 "frequency": "Minute",
-                                "interval": 3
+                                "interval": 1
                             },
                             "evaluatedRecurrence": {
                                 "frequency": "Minute",
-                                "interval": 2
+                                "interval": 1
                             },
                             "splitOn": "@triggerBody()?['value']",
                             "type": "ApiConnection",
