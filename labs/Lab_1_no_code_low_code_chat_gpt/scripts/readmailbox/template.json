@@ -45,7 +45,7 @@
                     "iconUri": "[concat('https://connectoricons-prod.azureedge.net/releases/v1.0.1626/1.0.1626.3238/', 'office365', '/icon.png')]",
                     "brandColor": "#0078D4",                   
                     "type": "Microsoft.Web/locations/managedApis",
-                    "id": "[concat('subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365-1')]"                    
+                    "id": "[concat('subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365')]"                    
                 },
                 "displayName": "office365",
                  "testLinks": [
@@ -247,7 +247,7 @@
                 }
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Web/connections', 'office365-1')]",
+                "[resourceId('Microsoft.Web/connections', 'office365')]",
                 "[resourceId('Microsoft.Web/connections', 'conversionservice')]"
             ]
 
