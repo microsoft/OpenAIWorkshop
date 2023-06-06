@@ -152,6 +152,23 @@
                                 "uri": ""
                             }
                         },
+                         "Initialize_emailTo": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "emailto",
+                            "type": "string",
+                            "value": "@triggerBody()?['emailto']"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_prompt": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
                         "Initialize_final_prompt": {
                             "runAfter": {
                                 "Initialize_question": [
@@ -176,7 +193,7 @@
                                     {
                                         "name": "prompt",
                                         "type": "string",
-                                        "value": "Extract the person name  and technical problems from the text below, look for possible solutions and write and email that includes posible solutions for software problems include links to websites, if no solutions are indicate we will get back to them. If this is a hardware problem give them tips for troubleshooting and indicate we will create a support ticket and schedule a repair within 48 hours.  Write links to websites in html code"
+                                        "value": "You are a Helpdesk assistant. Extract the person's name and technical problem from the text below. Provide possible solutions including link to websites in html. If no solutions are found, respond with 'We will get back to you in 48 hrs'. \nIf this is a hardware problem give them tips for troubleshooting and indicate we will create a support ticket and schedule a repair within 48 hours."
                                     }
                                 ]
                             }
@@ -309,7 +326,7 @@
                                         "Options": "Useful, Not Useful",
                                         "ShowHTMLConfirmationDialog": false,
                                         "Subject": "Answer to your technical questions",
-                                        "To": "andelcam@microsoft.com"
+                                        "To": "@variables('emailto')"
                                     },
                                     "NotificationUrl": "@{listCallbackUrl()}"
                                 },
@@ -330,7 +347,7 @@
                             "type": "SetVariable",
                             "inputs": {
                                 "name": "finalprompt",
-                                "value": "@{concat(variables('prompt'),variables('question'))}"
+                                "value": "@{concat(variables('prompt'),' ',variables('question'))}"
                             }
                         }
                     },
