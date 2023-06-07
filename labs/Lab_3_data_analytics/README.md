@@ -14,7 +14,7 @@ Examples of questions are:
 
 The application supports Python's built-in SQLITE as well as your own Microsoft SQL Server.
 
-![](../../documents/images/lab-2-data-1.png)
+![](../../documents/images/lab-3-data-1.png)
 
 ## Summary
 
@@ -52,15 +52,15 @@ There are two applications:
 
 Open VS Code and Clone this repository:
 
-![](../../documents/images/lab-2-data-2.png)
+![](../../documents/images/lab-3-data-2.png)
 
 the URL is: https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
 
-from the terminal, navigate to ```cd labs/lab_2_data_analytics```
+from the terminal, navigate to ```cd labs/lab_3_data_analytics```
 
 ## Step 2. Set up enviromental variables
 
- Provide settings for Open AI and Database.You can either create a file named `secrets.env` file in the root of this folder (labs/lab_2_data_analytics) as below or do it using the app's UI later on.
+ Provide settings for Open AI and Database.You can either create a file named `secrets.env` file in the root of this folder (labs/lab_3_data_analytics) as below or do it using the app's UI later on.
 
     - Option 1: use built-in SQLITE. Then you don't need to install SQL Server.
         ```txt
@@ -91,11 +91,11 @@ from the terminal, navigate to ```cd labs/lab_2_data_analytics```
 
 ### Step 3.1 navigate to the root directory of this lab
 
-Navigate to ```cd labs/lab_2_data_analyticst``` 
+Navigate to ```cd labs/lab_3_data_analyticst```
 
 ### Step 3.2 Create a python environment with version from 3.7 and 3.10
 
-**ONLY If did not perform this during pre-requisites**
+This step is required **ONLY If did not perform this during pre-requisites**
 
     - [Python 3+](https://www.python.org/downloads/)
         - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
@@ -109,56 +109,47 @@ run the command: `pip install -r requirements.txt`
 
 To run the application from the command line: `streamlit run app.py`
 
+You will see the application load in your browser
 
+## Deploy the application to Azure
 
-## Deploy the application to Azure 
-This application can be deployed to an Azure subscription using the Azure Developer CLI. 
+This application can be deployed to an Azure subscription using the Azure Developer CLI.
 There is no need to have any coding experience to deploy this application but you will need permissions to create resources in an Azure Subscription
-To deploy to Azure:
-- Install [Azure Developer CLI](https://aka.ms/azure-dev/install)   
-- Use either `git clone https://github.com/microsoft/OpenAIWorkshop.git` to clone the repo or download a zip
-- Go to the local directory of the OpenAIWorkshop
-- Authenticate to Azure by running `azd auth login`
-- Create a local environment `azd env new`
+
+> **Note** All steps will be performed in VS Code Terminal
+
+The following steps are to require to deploy to Azure:
+
+### Step 1. Install Azure Developer CLS
+
+> **Note** This step is required only if you did not installed this as part of pre-requisites Install 
+
+Download and install [Azure Developer CLI](https://aka.ms/azure-dev/install)
+
+### Step 2. Navigate top the root directory of the OpenAIWorkshop
+
+   Go to the local directory of the OpenAIWorkshop
+
+### Step 3. Authenticate to Azure
+
+run the command `azd auth login` and follow instructions
+
+### Step 4. Create a local environment
+
+run the command `azd env new` and follow the prompts
+
     > 💡 NOTE: If deploying to the same Subscription as others, use a unique name
-- Deploy the app and infrastructure using `azd up`
 
-    Click on settings. Provide Open AI keys, deployment name and URL for ChatGPT. Optionally, you can provide deployment name for GPT-4 for advanced questions.
-    For data, you can use the built-in SQLITE demo dataset or you can choose to specify your own SQL Server. In case you use SQLITE, you don't need to enter details for SQL Server.
-    Click on submit to save settings.
-3. 
+### Step 5. Deploy app and infrastructure
 
-# Installation 
-## Open AI setup
-1. Create an Azure OpenAI deployment in an Azure subscription with a GPT-35-Turbo deployment and preferably a GPT-4 deployment.
-Here we provide options to use both but GPT-4 should be used to address difficult & vague  questions.
-We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI resource.
-## Install the application locally 
-1. Clone the repo (e.g. ```git clone https://github.com/microsoft/OpenAIWorkshop.git``` or download). Then navigate to ```cd scenarios/openai_on_custom_dataset/streamlit```
-2. (Optional) Provide settings for Open AI and Database.You can either create a `secrets.env` file in the root of this folder (scenarios/openai_on_custom_dataset/streamlit) as below or do it using the app's UI later on. 
-    - Option 1: use built-in SQLITE. Then you don't need to install SQL Server.
-        ```txt
-        AZURE_OPENAI_API_KEY="9999999999999999999999999"
-        AZURE_OPENAI_GPT4_DEPLOYMENT="NAME_OF_GPT_4_DEPLOYMENT"
-        AZURE_OPENAI_CHATGPT_DEPLOYMENT="NAME_OF_CHATGPT_4_DEPLOYMENT"
-        AZURE_OPENAI_ENDPOINT=https://openairesourcename.openai.azure.com/
-        SQL_ENGINE = "sqlite"
-        ```
-    - Option 2: use your own SQL Server
+run the command `azd up`
 
-        ```txt
-        AZURE_OPENAI_API_KEY="9999999999999999999999999"
-        AZURE_OPENAI_ENDPOINT="https://openairesourcename.openai.azure.com/"
-        AZURE_OPENAI_GPT4_DEPLOYMENT="NAME_OF_GPT_4_DEPLOYMENT"
-        AZURE_OPENAI_CHATGPT_DEPLOYMENT="NAME_OF_CHATGPT_4_DEPLOYMENT"
-        SQL_USER="sqluserid"
-        SQL_PASSWORD="sqlpassword"
-        SQL_DATABASE="WideWorldImportersDW"
-        SQL_SERVER="sqlservername.database.windows.net"
-        ```
+### Step 6. Configure settings
 
+Once the deployment is completed, click on the URL listed  to open the application
 
+Click on settings. Provide Open AI keys, deployment name and URL for ChatGPT. Optionally, you can provide deployment name for GPT-4 for advanced questions.
 
+For data, you can use the built-in SQLITE demo dataset or you can choose to specify your own SQL Server. In case you use SQLITE, you don't need to enter details for SQL Server.
 
-
-
+Click on submit to save settings.
