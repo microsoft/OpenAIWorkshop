@@ -1,4 +1,8 @@
-# Overview
+# DATA ANALYTICS
+
+## Objective
+
+In this lab you will learn how to use OpenAI to query SQL data using natural language query
 
 This application demonstrates the of Open AI (ChatGPT/GPT-4) to help answer business questions by performing advanced data analytic tasks on a business database.
 
@@ -10,12 +14,25 @@ Examples of questions are:
 
 The application supports Python's built-in SQLITE as well as your own Microsoft SQL Server.
 
-# Quick start with hosted demo application 
+![](../../documents/images/lab-2-data-1.png)
 
-1. Go to our hosted demo at https://app-web-ulajovkr7vyd4.azurewebsites.net/ if you do not want to install yourself.
-2. Enter Open AI and database settings if these were not done during installation (see installation below if you want to install yourself).
+## Summary
 
-    <img width="1159" alt="image" src="../../../documents/media/da_assistant1.png">
+You will need [VS Code](https://code.visualstudio.com/download) to run this lab in your local computer and then deploy it to Azure.
+
+You can use an existing SQL database or the default database provided in the lab.
+
+## Step 1. Clone this repository
+
+Open VS Code and Clone this repository:
+
+![](../../documents/images/lab-2-data-2.png)
+
+the URL is: https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
+
+
+
+
 
     Click on settings. Provide Open AI keys, deployment name and URL for ChatGPT. Optionally, you can provide deployment name for GPT-4 for advanced questions.
     For data, you can use the built-in SQLITE demo dataset or you can choose to specify your own SQL Server. In case you use SQLITE, you don't need to enter details for SQL Server.
