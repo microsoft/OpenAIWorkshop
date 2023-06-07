@@ -111,7 +111,7 @@ _______________________________________________________________
 
 Hello,
 
-I can't login into my account, I need to reset my password, also my keyboard is not working
+I can't login into my account, I need to reset my password. Also my keyboard is not working.
 
 Thank you
 _______________________________________________________________
