@@ -19,10 +19,13 @@ openai.api_base = os.getenv("OPENAI_RESOURCE_ENDPOINT")  # SET YOUR RESOURCE END
 openai.api_version = "2022-06-01-preview"
 admin_key = os.environ.get("AZSEARCH_KEY") # Cognitive Search Admin Key
 index_name = os.environ.get("INDEX_NAME") # Cognitive Search index name
+prompt = os.environ.get("PROMPT") # Prompt to use for GPT-3
 credential = AzureKeyCredential(admin_key)
 
 # Create an SDK client
 endpoint = os.environ.get("AZSEARCH_EP")
+
+semantic_config = os.environ.get("SEMANTIC_CONFIG")
 
 search_client = SearchClient(endpoint=endpoint,
                     index_name=index_name,
@@ -39,7 +42,7 @@ def run_openai(prompt, engine=GPT_ENGINE):
     )
     return response.choices[0].text
 def azcognitive_score(user_query, topk):
-    results = search_client.search(search_text=user_query, include_total_count=True, query_type='semantic', query_language='en-us',semantic_configuration_name='semantic-config1')
+    results = search_client.search(search_text=user_query, include_total_count=True, query_type='semantic', query_language='en-us',semantic_configuration_name=semantic_config)
     document=""
     i=0
     while i < topk:
@@ -50,8 +53,8 @@ def azcognitive_score(user_query, topk):
             print(e)
             break
         i+=1
-    #return f"Answer this question \"{user_query}\" using only the following information  \n <context> {document} </context>"
-    return f"{prompt} \"{user_query}\" \n <context> {document} </context>"
+    return f"Answer this question \"{user_query}\" using only the following information  \n <context> {document} </context>. If answer not found in \n <context> {document} </context>, then Reply Not Found"
+    #return f"{prompt} \"{user_query}\" \n <context> {document} </context>"
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
