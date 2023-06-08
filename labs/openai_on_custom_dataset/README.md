@@ -1,7 +1,5 @@
-# Using Azure OpenAI on custom dataset
+# Using Azure OpenAI on Documents
 ### Scenario summary:
-
-test words
 
 This scenario allows use cases to use Open AI as an intelligent agent to answer questions from end users or assist them using knowledge of a proprietary corpus and domain.
 Applications can be: 
@@ -17,29 +15,23 @@ This implementation scenario focuses on building a knowledge retrieval chatbot a
 ### Architecture Diagram
 ![OpenAI on custom dataset](../../documents/media/AzureCognitiveSearchOpenAIArchitecture.png)
 From the user's query, the solution uses two-stage information retrieval to retrieve the content that best matches the user query. 
-In stage 1, full text search in Azure Cognitive Search is used to retrieve a number of relevant documents. In stage 2, these documents are then used by orchestrator service to form a prompt and sent to OpenAI deployment endpoint of LLM. The OpenAI service returns result which is then sent to Power App client application.
+In stage 1, full text search in Azure Cognitive Search is used to retrieve a number of relevant documents. In stage 2, these documents are then used by orchestrator service to form a prompt and sent to OpenAI deployment endpoint of LLM. The OpenAI service returns result which is then sent to Azure Bot Service client application.
 ### Deployment
 
 
 This scenario can be deployed in 2 different ways depending on your preference. 
 
-### 1. Fully automated script. 
-
-In this approach, a single script is run to create Azure Resources, configure the Azure Function App and create the search index. No manual configuration is required. This has the least number of prerequisites and can be run from Azure Cloud Shell. 
-Once the automated script is run, the power app can be configured as the next step. 
-
-To proceed with this approach, please click here. [Automated Script](Automated.md)
-
-
-### 2. Semi automated script. 
+### 1. Deployment Script. 
 
 In this approach, the steps are broken into 3 key steps with a few manual steps.
 - In the first step, provision Azure Resourcs using Azure Portal UI.
 - In the second step, the search-index is configured and executed to create the search index.
 - The search index can be also be created using Azure Portal UI.
-- powerapp can be configured as the next step. 
+- In the third step, a chatbot is developed using Azure Bot Framework Composer. Bot Framework Emulator is used for testing the developed chatbot.
 
-To proceed with this approach, please click here. [Semi-Automated Script](SemiAutomated.md)
+To proceed with this approach, please click here. [Script](SemiAutomated.md)
+
+
 
 
 

@@ -53,7 +53,7 @@ def azcognitive_score(user_query, topk):
             print(e)
             break
         i+=1
-    #return f"Answer this question \"{user_query}\" using only the following information  \n <context> {document} </context>"
+    #return f"Answer this question \"{user_query}\" using only the following information  \n <context> {document} </context>."
     return f"{prompt} \"{user_query}\" \n <context> {document} </context>"
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
