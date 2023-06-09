@@ -15,13 +15,21 @@ Before deploying the Azure resources, you will need Azure OpenAI API endpoint, A
 
 Follow following steps to get the Azure API endpoint and API key. Save the endpoint and API key in a notepad for later use.
 
-1. Navigate to Azure Open AI Studio
+1. Navigate to [Azure Open AI Studio](https://oai.azure.com/portal)
 
-2. Click on the the Gear icon on Top right corner and navigate to Resource Tab.
+2. Click on the the Gear icon on Top right corner.
+
+![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image17_deploymentname.png)
+
+
+3. Navigate to Resource Tab and copy the endpoint and key in a notepad.
+
+![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image19_endpointandkey.png)
+
 
 To get the Azure OpenAI Model deployment name, click on the deployment pane in the left ribbon and copy the model name.
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image17_deploymentname.png)
+![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image18_gearicon.png)
 
 
 ## 1. Azure services deployment
