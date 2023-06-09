@@ -108,43 +108,43 @@ Create a bot in Azure Bot Composer:
 
 2. Select Create New (+) on the homepage.
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image5_bothomepage.png)
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image5_bothomepage.png)
 
 
 
 3. Under C#, select Empty Bot and click next.
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image6_selectbottemplate.png)
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image6_selectbottemplate.png)
 
 
 
 4. Provide a name to your bot (e.g.- CustomdataOpenAI_Bot). Select Runtime Type as 'Azure Web App'. Select a location in your local machine to save the bot files. Click on Create and wait untill the bot is created..
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image7_createabotproject.png)
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image7_createabotproject.png)
 
 
 
 5. Click on "Unknown intent". Click on the three virtical dots (node menu) on the right corner of 'send a response' box, and then click on delete. The send a response intent will be deleted.
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image8_deleteintent.png)
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image8_deleteintent.png)
 
 
 
 6. Click on '+' sign under unknown intent to add an intent. 
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image9_addintent.png)
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image9_addintent.png)
 
 
 
 7. Move the cursor to 'Access external resources' and select 'send an HTTP request'. The HTTP request is sent to make call to Azure function that has been created initially.
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image10_httprequest.png)
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image10_httprequest.png)
 
 
 
 8. Select 'HTTP Method' as 'POST'. Copy the function app url (as copied when tested through postman). Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url. Put this url in under url box of the bot follwed by num_search_result query parameter (see below image).
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image11_url.png)
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image11_url.png)
 
 
 
@@ -154,7 +154,7 @@ Create a bot in Azure Bot Composer:
             "prompt": "${turn.activity.text}"
         }
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image12_bodyprompt.png)
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image12_bodyprompt.png)
 
 
 
@@ -164,7 +164,7 @@ Create a bot in Azure Bot Composer:
 
 11. Click on '+' sign under 'send an HTTP request' intent and select 'send a response'.
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image13_sendresponse.png)
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image13_sendresponse.png)
 
 
 
@@ -182,12 +182,12 @@ Azure bot is now complete. In the next step, the bot is published on the Azure C
 
 1. On the left most menu pane, select publish. 
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image14_publishbot.png)
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image14_publishbot.png)
 
 
 2. Now, a publish target is selected. For selecting the target, click on 'select a publish target' and then select manage profiles.
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image15_manageprofiles.png)
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image15_manageprofiles.png)
 
 3. Click on 'Add new' to create a new publishing profile. Provide a name to the publihsing profile and select 'Publishing target' as 'Publihs bot to Azure'. Click next.
 
@@ -201,7 +201,7 @@ Select LUIS region as 'West US' and click next.
 
 6. Clik on Publish tab and select the bot to be published. Select the profile provisioned in the above step. Click on 'Publish selected bots'. Click on 'Okay' in the next window. Wait for the bot to be published on the Azure Cloud.
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image16_publishbot.png)
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image16_publishbot.png)
 
 
 ## 6. Test
