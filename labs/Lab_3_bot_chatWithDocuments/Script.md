@@ -26,6 +26,14 @@ Here are the SKUs that are needed for the Azure Resources:
 
 The Azure Function App also deploys the function code needed for powerapps automate flow. 
 
+Before deploying the Azure resources, you will need Azure OpenAI API endpoint, API key, and the model deployment name.
+
+Follow following steps to get the Azure API endpoint and API key. Save the endpoint and API key in a notepad for later use.
+
+1. Navigate to Azure Open AI Studio
+
+2. Click on the the Gear icon on Top right corner and navigate to Resource Tab.
+
 (control+click) to launch in new tab.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fvaibhav%2Flab4-edits%2Flabs%2FLab_3_bot_chatWithDocuments%2Fdeploy%2Fazure-deploy.json) 
