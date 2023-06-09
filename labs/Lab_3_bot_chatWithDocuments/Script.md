@@ -100,39 +100,79 @@ Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url a
 
 
 ## 4. Build Chatbot 
-
-- Create an Azure Bot resource: 
-    The Azure Bot resource provides the infrastructure that allows a bot to access secured resources. It also allows the user to communicate with the bot via several channels such as Web Chat.
-    1. Go to the [Azure portal](https://portal.azure.com/)
-    2. In the right pane, select Create a resource.
-    3. In the search box enter bot, then press Enter.
-    4. Select the Azure Bot card.
-    5. Select Create.
-    6. Enter the required values.
-    7. Select Review + create.
-    8. If the validation passes, select Create. You should see the Azure Bot and the related key vault resources listed in the resource group you selected.
-    9. Select Open in Composer.
-
-    The Composer application opens. If the application isn't installed, you'll be asked to install it before you can proceed with the next steps.
-
-    1. In the pop-up window, select Create a new bot.
-    2. Select Open.
-
     
 - Create a bot in Azure Bot Composer:
-    1. Open Composer.
+    1. Open Azure Bot Composer in your local machine.
     2. Select Create New (+) on the homepage.
-    3. Under C#, select Empty Bot and click next.
-    4. Provide a name to your bot (e.g.- OpenAIBot)
-    5. Select Runtime type as "Azure Web App".
-    6. Select a location in your loal computer where bot files will be stored. 
-    7. Click on create. Wait untill the bot is created.
-    8. Click on "Unknown intent".
-    9. 
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image5_bothomepage.png)
 
+    3. Under C#, select Empty Bot and click next.
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image6_selectbottemplate.png)
+
+    4. Provide a name to your bot (e.g.- CustomdataOpenAI_Bot). Select Runtime Type as 'Azure Web App'. Select a location in your local machine to save the bot files. Click on Create and wait untill the bot is created..
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image7_createabotproject.png)
+
+    5. Click on "Unknown intent". Click on the three virtical dots (node menu) on the right corner of 'send a response' box, and then click on delete. The send a response intent will be deleted.
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image8_deleteintent.png)
+
+    6. Click on '+' sign under unknown intent to add an intent. 
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image9_addintent.png)
+
+    7. Move the cursor to 'Access external resources' and select 'send an HTTP request'. The HTTP request is sent to make call to Azure function that has been created initially.
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image10_httprequest.png)
+
+    8. Select 'HTTP Method' as 'POST'. Copy the function app url (as copied when tested through postman). Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url. Put this url in under url box of the bot follwed by num_search_result query parameter (see below image).
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image11_url.png)
+
+    9. Select Body box as 'object' from right corner drop down menu and copy and paste the below prompt in the body.
+            {
+                "prompt": "${turn.activity.text}"
+            }
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image12_bodyprompt.png)
+
+    10. Select 'Response type' as 'json'.
+
+    11. Click on '+' sign under 'send an HTTP request' intent and select 'send a response'.
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image13_sendresponse.png)
+
+    12. In the 'responses' box, type the below expression.  
+            ${turn.results.content.result}
+    
+    Azure bot is now complete. In the next step, the bot is published on the Azure Cloud.
+
+
+## 5. Publish the Chatbot
+
+   1. On the left most menu pane, select publish. 
+   ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image14_publishbot.png)
+
+    2. Now, a publish target is selected. For selecting the target, click on 'select a publish target' and then select manage profiles.
+   ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image15_manageprofiles.png)
+
+    3. Click on 'Add new' to create a new publishing profile. Provide a name to the publihsing profile and select 'Publishing target' as 'Publihs bot to Azure'. Click next.
+
+    4. Select 'Create new resources' and click next. A sign in to your Azure subscription is required- provide your Azure portal credentials to sign in. Once signed in, select the subscription and resource group. Resource group that has been created at the beginning of this lab is preffered, but a new resource group can also be created. 
+    Select operating system as 'windows'. 
+    Provide a name to the host resource.
+    Select region as 'East US'.
+    Select LUIS region as 'West US' and click next.
+
+    5. Uncheck the optional resources and click next and then click on Create in the next window. Wait for the publishing profile to be provisioned.
+
+    6. Clik on Publish tab and select the bot to be published. Select the profile provisioned in the above step. Click on 'Publish selected bots'. Click on 'Okay' in the next window. Wait for the bot to be published on the Azure Cloud.
+   ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image16_publishbot.png)
 
 ## 6. Test
 
-Click on the play button on the top right corner in the PowerApps Portal to launch PowerApp.
-Select an  FAQ from dropdown and click Search. This is should bring up the answers powered by Open AI GPT-3 Models. 
-Feel free to make changes to the PowerApps UI to add your own functionality and UI layout. You can explore expanding PowerAutomate flow to connect to other APIs to provide useful reference links to augment the response returned from OpenAI.
+1. Click on the Home button on the top left corner in the Bot Framework Composer. Select the bot that has been developed in the above steps.
+
+2. Click on 'Start bot' button on the right left cornder of the Bot Framework Composer to start the developed bot. 
+
+3. You can now test the bot either in web chat or in emulator. Click on either 'Open Web Chat' or 'Test in Emulator'. 
+
+You can now ask questions related to 'Azure Machine Learning' to get the response from Azure OpenAI. 
+
+E.g.: 
+        Is GPU supported in AML?
+
+You can explore integrating bot to other platforms, such as Microsoft Teams, a web application, etc. to augment the response returned from Azure OpenAI.
