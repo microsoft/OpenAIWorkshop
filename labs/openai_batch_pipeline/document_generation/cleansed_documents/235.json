@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer recently purchased a phone from Contoso Wireless and was having issues with payment. The agent provided the customer with their current balance of $xxx and the due date of June 4th. The agent also reminded the customer that all payments must be made in full before the product is shipped or delivered, and to contact them if they are unable to make the payment by the due date.",
-    "customerSentiment": "disappointed",
-    "topic": "payment",
-    "product": "phone",
-    "filename": "235_622_535_disappointed_payment_phone_document.txt"
-}

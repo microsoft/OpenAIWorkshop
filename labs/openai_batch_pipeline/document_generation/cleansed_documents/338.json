@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer had an issue with a payment they made for a product from Contoso Wireless. The agent looked into the issue and confirmed that the payment had gone through. They then offered to provide the customer with information on other products available from Contoso Wireless, and asked if the customer had something specific in mind that they were looking for.",
-    "customerSentiment": "upset",
-    "topic": "payment",
-    "product": "other",
-    "filename": "338_433_346_upset_payment_other_document.txt"
-}

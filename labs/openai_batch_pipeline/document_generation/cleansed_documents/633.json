@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer had an issue with their Contoso Wireless streaming subscription where the payment failed to process due to an issue with the credit card number they provided. The agent updated the credit card information on the customer's account and processed the payment, resolving the issue and restoring the customer's streaming subscription.",
-    "customerSentiment": "disappointed",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "633_461_374_disappointed_payment_streaming_document.txt"
-}

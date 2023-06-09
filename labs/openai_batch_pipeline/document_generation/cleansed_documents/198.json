@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having issues with their new phone, including freezing and poor battery life. The agent is attempting to help the customer by sending them instructions on how to improve the battery life, as well as offering to run diagnostics and potentially replace the device if it is defective. The agent also apologizes for the inconvenience and asks if there is anything else they can do to help.",
-    "customerSentiment": "frustrated",
-    "topic": "churn",
-    "product": "phone",
-    "filename": "198_485_398_frustrated_churn_phone_document.txt"
-}

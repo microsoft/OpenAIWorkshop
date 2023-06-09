@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer expressed their dissatisfaction with Contoso Wireless's product and customer service. The agent apologized for the customer's experience and asked for more details about their issue. The customer explained that their signal strength was weak, regardless of phone or plan. The agent offered to switch the customer's plan and checked with network engineers to see if they could improve the signal strength. The agent also informed the customer of all the features Contoso Wireless offers and asked if there was anything else they could do.",
-    "customerSentiment": "negative",
-    "topic": "churn",
-    "product": "other",
-    "filename": "240_773_686_negative_churn_other_document.txt"
-}

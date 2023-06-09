@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer called Contoso Wireless to inquire about an unexplained charge for a streaming product they did not order. The customer service agent determined that the charge was an error on the company's part and issued a full refund for the charge. The streaming product was also removed from the customer's account.",
-    "customerSentiment": "confused",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "143_438_351_confused_payment_streaming_document.txt"
-}

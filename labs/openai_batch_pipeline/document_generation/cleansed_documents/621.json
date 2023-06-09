@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having trouble with their Contoso Wireless internet service and is not getting the speed they were promised when they signed up. The agent is looking into the customer's account and has asked for more details about their setup, such as if they are connected wirelessly or with an ethernet cable, and if there are any other devices connected to their network. The customer has also confirmed that they have tried restarting their modem and router but it did not improve their connection speed.",
-    "customerSentiment": "negative",
-    "topic": "account",
-    "product": "internet",
-    "filename": "621_573_486_negative_account_internet_document.txt"
-}

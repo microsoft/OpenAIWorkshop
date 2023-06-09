@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless to cancel their contract due to unreliable TV service. The agent apologized for the inconvenience and looked into the issue further. They offered the customer other services but the customer declined and asked for the TV service to be fixed. The agent assured them that they would do their best to get the service up and running again and keep the customer updated.",
-    "customerSentiment": "upset",
-    "topic": "churn",
-    "product": "tv",
-    "filename": "382_498_411_upset_churn_tv_document.txt"
-}

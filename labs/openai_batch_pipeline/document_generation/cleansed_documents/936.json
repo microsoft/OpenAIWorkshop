@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was charged twice for the same Contoso Wireless streaming service subscription on August 21st and was unhappy about it. The agent looked into the issue and found that one of their systems had a glitch which caused a duplicate charge to be processed. The agent apologized for the inconvenience and offered to process a refund to the customer's Visa card within 5-7 business days.",
-    "customerSentiment": "angry",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "936_470_383_angry_payment_streaming_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer reached out to Contoso Wireless regarding an unexpected increase in their bill. After reviewing the customer's account information, the agent discovered that an additional data package had been added to the customer's account without their knowledge or consent, resulting in an increased monthly fee. The agent removed the additional data package from the customer's account and updated their billing information accordingly. The customer should receive an updated statement reflecting these changes in the next few days.",
-    "customerSentiment": "disappointed",
-    "topic": "billing",
-    "product": "internet",
-    "filename": "175_655_568_disappointed_billing_internet_document.txt"
-}

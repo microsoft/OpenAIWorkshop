@@ -1,7 +1,0 @@
-{
-    "summary": "\nThe customer is looking to switch providers due to dissatisfaction with Contoso Wireless. The agent provided information about Contoso Wireless' plans, which include an unlimited data plan with hotspot access for $50 per month, as well as reliable coverage in the customer's area. The agent offered to set up the plan for the customer right away so they can start enjoying the benefits of the network.",
-    "customerSentiment": "disappointed",
-    "topic": "churn",
-    "product": "other",
-    "filename": "243_586_499_disappointed_churn_other_document.txt"
-}

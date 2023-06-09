@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was confused about the charges on their Contoso Wireless bill and contacted the agent for help. The agent apologized for the confusion and explained that the advertised price of $50 was only applicable when signing up for a year-long contract, otherwise it was $75. The agent then offered to provide a refund for the difference between the advertised price and what was actually charged, and requested the customer's account number and billing address to begin processing the refund. The customer provided this information, and the agent stated that it should take 2-3 business days for the refund to be reflected in the customer's account.",
-    "customerSentiment": "upset",
-    "topic": "payment",
-    "product": "internet",
-    "filename": "746_615_528_upset_payment_internet_document.txt"
-}

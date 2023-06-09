@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer asked for help understanding the payment process for Contoso Wireless internet service. The agent explained that customers can choose either a one-time fee or a monthly payment option. The one-time fee varies depending on the package selected, and the monthly payments are set amounts. Other services offered by Contoso Wireless include phone plans, TV packages, and add-on features. All payments are due on the same day each month, and autopay options are available.",
-    "customerSentiment": "confused",
-    "topic": "payment",
-    "product": "internet",
-    "filename": "813_651_564_confused_payment_internet_document.txt"
-}

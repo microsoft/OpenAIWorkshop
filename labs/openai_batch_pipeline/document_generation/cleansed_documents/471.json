@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless to report an issue with the payment process for a product streaming subscription. The customer service agent asked for more information and the customer provided details of their account and payment methods they had tried. The customer service agent investigated the issue further and asked for additional documents and information to help speed up the process. The customer service agent apologized for the inconvenience and assured the customer that they were doing their best to investigate the issue quickly and provide an update soon.",
-    "customerSentiment": "upset",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "471_716_629_upset_payment_streaming_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless with an issue regarding their recently purchased television. The customer service agent requested information from the customer, such as the model number of the television and what kind of issues they were having. After finding out that the customer had not made any recent changes to their home network or router settings, the customer service agent suggested running a diagnostic test on the router in order to determine what changes may be necessary for the TV to work properly. The customer opted for a technician to come out in person and the customer service agent confirmed their address so that a technician could be sent out as soon as possible.",
-    "customerSentiment": "angry",
-    "topic": "information",
-    "product": "tv",
-    "filename": "680_611_524_angry_information_tv_document.txt"
-}

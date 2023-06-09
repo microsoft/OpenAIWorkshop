@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless with an issue of their phone not turning on. The agent suggested restarting the device and performing a factory reset after the customer mentioned that they had updated the software on the phone. The agent then provided instructions on how to perform a factory reset and asked the customer to let them know if it resolved the issue.",
-    "customerSentiment": "upset",
-    "topic": "assistance",
-    "product": "phone",
-    "filename": "467_564_477_upset_assistance_phone_document.txt"
-}

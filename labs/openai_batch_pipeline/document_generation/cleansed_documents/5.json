@@ -1,7 +1,0 @@
-{
-    "summary": " \nThe customer is having trouble with their Contoso Wireless internet service and is having to reset their router frequently. The agent provided the customer with several potential solutions to try such as restarting the router, checking for updates, and changing settings. If none of these solutions work, the agent offered to look into replacing the router or exploring other options such as switching packages or adding additional hardware.",
-    "customerSentiment": "negative",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "5_535_448_negative_churn_internet_document.txt"
-}

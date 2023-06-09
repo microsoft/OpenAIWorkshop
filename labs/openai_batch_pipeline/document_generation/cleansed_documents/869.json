@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless for help with their internet service. The customer service agent instructed the customer to reset their modem and then to enable DHCP Renewal in the settings page, which successfully resolved the issue and restored the customer's internet connection.",
-    "customerSentiment": "confused",
-    "topic": "assistance",
-    "product": "internet",
-    "filename": "869_512_425_confused_assistance_internet_document.txt"
-}

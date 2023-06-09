@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having difficulty connecting their Contoso Wireless X-1000 phone to their Wi-Fi network. The agent determined that the issue may have been with the phone's settings and guided the customer through checking the network settings to ensure Wi-Fi was enabled and that the DNS was set to Automatic. After this, the issue was resolved and the customer was no longer having any trouble connecting their phone.",
-    "customerSentiment": "happy",
-    "topic": "assistance",
-    "product": "phone",
-    "filename": "894_527_440_happy_assistance_phone_document.txt"
-}

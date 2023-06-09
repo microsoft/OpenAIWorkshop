@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble making a payment for the Contoso Wireless TV that they had purchased. The agent looked into the issue and found that there was an issue with the customer's credit card information that was preventing the payment from going through. The agent then walked the customer through updating their credit card information and after doing so, the payment should go through without any further issues.",
-    "customerSentiment": "frustrated",
-    "topic": "payment",
-    "product": "tv",
-    "filename": "958_499_412_frustrated_payment_tv_document.txt"
-}

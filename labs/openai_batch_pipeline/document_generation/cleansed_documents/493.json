@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having issues with a Contoso Wireless modem they purchased, which keeps disconnecting and not providing an internet connection. The customer service agent asked for the serial number of the modem, what type of connection was being used with the modem, if the router was up to date, and what type of security protocol the router was using. The customer provided all of this information.",
-    "customerSentiment": "angry",
-    "topic": "support",
-    "product": "other",
-    "filename": "493_472_385_angry_support_other_document.txt"
-}

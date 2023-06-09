@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having an issue with their Contoso Wireless internet service, which was lagging and dropping out. The agent provided the customer with their account information and offered to look into the issue. The agent then offered the customer a discounted rate on their subscription until the issue was resolved. They also suggested that the customer reset their router before contacting them again and that they would check for any updates or changes that may be needed to improve the service.",
-    "customerSentiment": "negative",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "702_613_526_negative_churn_internet_document.txt"
-}

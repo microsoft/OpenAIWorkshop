@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer service agent provided the customer with information about Contoso Wireless' internet packages, including the 1 Gbps package which offers unlimited data usage and no throttling or extra fees, the 500 Mbps package which offers 500 Mbps download and upload speeds with no data caps or extra fees, and the 300 Mbps package which offers 300 Mbps download and upload speeds with no data caps or extra fees. The agent also provided pricing information for each of the packages.",
-    "customerSentiment": "upset",
-    "topic": "information",
-    "product": "internet",
-    "filename": "950_586_499_upset_information_internet_document.txt"
-}

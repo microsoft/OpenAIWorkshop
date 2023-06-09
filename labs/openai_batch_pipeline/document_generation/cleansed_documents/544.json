@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer had difficulty streaming on the service and was receiving an error message. The agent provided assistance by asking for more information and then looking into the issue. The agent discovered that the customer's account settings needed to be updated in order to access the streaming service, and then walked them through the process of updating their settings. Once this was done, the customer should be able to access the streaming service without any issues.",
-    "customerSentiment": "negative",
-    "topic": "assistance",
-    "product": "streaming",
-    "filename": "544_478_391_negative_assistance_streaming_document.txt"
-}

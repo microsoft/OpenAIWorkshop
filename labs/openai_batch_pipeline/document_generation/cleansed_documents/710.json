@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer purchased a Contoso Wireless product, a TV, that is not working properly. The customer reported that the TV won't turn on, has poor picture quality and sound distortion when the volume is turned up too high. The customer provided the model number, serial number and date of purchase, as well as information about the cables used to connect the TV. The agent apologized for the inconvenience and assured the customer that they will look into the issue and try to find a solution as soon as possible.",
-    "customerSentiment": "angry",
-    "topic": "support",
-    "product": "tv",
-    "filename": "710_576_489_angry_support_tv_document.txt"
-}

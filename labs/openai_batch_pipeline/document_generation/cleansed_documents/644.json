@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having issues with their Contoso Wireless internet connection, so the agent looked into the customer's account settings and suggested upgrading to a higher tier plan with more bandwidth. The agent then provided the customer with information about the three different plans available - basic, standard, and premium - and the customer chose the standard plan. The agent then explained how to sign up for the plan and that it would be activated within 24 hours after payment information is received.",
-    "customerSentiment": "neutral",
-    "topic": "account",
-    "product": "internet",
-    "filename": "644_834_747_neutral_account_internet_document.txt"
-}

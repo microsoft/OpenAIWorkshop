@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was disappointed with the Contoso Wireless phone they purchased due to it constantly freezing and lagging. The agent looked into the issue and found that this model of phone is known to have these issues. The agent offered the customer a full refund and also offered to transfer their data to a new device if they wished to purchase a different model from Contoso. The agent also offered to help the customer decide which phone was best for them by discussing their budget, usage habits, and other preferences.",
-    "customerSentiment": "disappointed",
-    "topic": "churn",
-    "product": "phone",
-    "filename": "162_506_419_disappointed_churn_phone_document.txt"
-}

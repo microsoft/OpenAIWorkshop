@@ -1,7 +1,0 @@
-{
-    "summary": "\nThe customer is having trouble setting up their Contoso Wireless TV and the customer service agent asked for the model number to check if there are any known issues or updates that need to be applied. Upon further investigation, it appears that there may be a compatibility issue between the customer's Linksys E2500 router and the Contoso Wireless TV, so the customer service agent suggested trying to connect the TV to a different router or access point.",
-    "customerSentiment": "negative",
-    "topic": "support",
-    "product": "tv",
-    "filename": "165_516_429_negative_support_tv_document.txt"
-}

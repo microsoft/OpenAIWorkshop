@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless with an issue regarding their product streaming not working. The customer service agent ran some tests and troubleshot the issue, which was resolved. The customer was asked to confirm their payment information was up to date and provided their device type. The customer service agent then ran tests and resolved the issue, and asked the customer to try accessing the product streaming again to ensure it was working properly.",
-    "customerSentiment": "negative",
-    "topic": "account",
-    "product": "streaming",
-    "filename": "908_572_485_negative_account_streaming_document.txt"
-}

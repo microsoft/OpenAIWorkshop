@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer had confusion about the payment for Contoso Wireless' product streaming service. The agent explained that the product streaming is a subscription-based service that charges customers based on the amount of products they stream during the month, and that no charges will be applied if no products are streamed. The agent also clarified that customers will not be charged for any products they have streamed prior to cancelling their subscription.",
-    "customerSentiment": "confused",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "883_518_431_confused_payment_streaming_document.txt"
-}

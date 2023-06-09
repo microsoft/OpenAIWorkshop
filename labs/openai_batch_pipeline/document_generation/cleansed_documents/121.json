@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer is having trouble with their Contoso Wireless phone and is considering switching carriers. The agent is helping the customer by looking into what can be done to resolve the issue, as well as providing the customer with special offers such as a free upgrade to their newest phone model and 50% off of the monthly plan for the first three months. The agent is currently looking into other offers that might be available to the customer in order to keep them as a customer.",
-    "customerSentiment": "upset",
-    "topic": "churn",
-    "product": "phone",
-    "filename": "121_510_423_upset_churn_phone_document.txt"
-}

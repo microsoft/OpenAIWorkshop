@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having trouble connecting their Contoso Wireless phone to a Wi-Fi network. The agent suggested resetting the phone back to its factory settings and trying to connect to another Wi-Fi network to see if that works. The agent is going to look into the issue further to see if there are any other solutions.",
-    "customerSentiment": "negative",
-    "topic": "support",
-    "product": "phone",
-    "filename": "164_495_408_negative_support_phone_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer called Contoso Wireless to ask why they were charged for the TV product on their bill. The agent explained that the TV product is an optional add-on and is billed separately from the monthly service plan. The agent then cancelled the customer's subscription to the TV product and refunded the charge back to their account.",
-    "customerSentiment": "positive",
-    "topic": "billing",
-    "product": "tv",
-    "filename": "646_477_390_positive_billing_tv_document.txt"
-}

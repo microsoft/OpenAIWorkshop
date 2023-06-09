@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble making a payment on their Contoso Wireless account and the agent was able to assist them by investigating the issue. The customer provided the agent with their credit card number and billing address for verification. The agent also informed the customer about discounts and promotions for their streaming service.",
-    "customerSentiment": "upset",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "439_488_401_upset_payment_streaming_document.txt"
-}

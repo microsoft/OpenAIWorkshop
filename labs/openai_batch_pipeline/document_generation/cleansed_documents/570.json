@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble with their internet connection and contacted Contoso Wireless customer service. The agent informed the customer that their account was in arrears and they needed to make a payment before they could investigate the issue. The customer asked what payment options were available and the agent informed them that they accepted payments via credit card, debit card, check, or money order. The customer then asked how much they owed and the agent informed them of their current balance.",
-    "customerSentiment": "negative",
-    "topic": "payment",
-    "product": "internet",
-    "filename": "570_452_365_negative_payment_internet_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble understanding how to pay for their Contoso Wireless TV. The agent explained that they need a valid credit card or debit card on file with them, and the customer confirmed they had a debit card. The agent then went on to explain that the payment process is secure and that the customer will need to enter their debit card information into the system and enter the amount of money they want to pay before clicking the \"Pay\" button. The customer thanked the agent for their help and there were no other questions.",
-    "customerSentiment": "confused",
-    "topic": "payment",
-    "product": "tv",
-    "filename": "844_451_364_confused_payment_tv_document.txt"
-}

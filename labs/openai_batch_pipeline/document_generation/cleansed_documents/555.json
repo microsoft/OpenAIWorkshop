@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble connecting their product internet to their home wifi network. The agent identified that the issue was due to security settings on the router being too strict, and provided instructions on how to access the router settings page and adjust the settings in order to fix the issue.",
-    "customerSentiment": "upset",
-    "topic": "support",
-    "product": "internet",
-    "filename": "555_757_670_upset_support_internet_document.txt"
-}

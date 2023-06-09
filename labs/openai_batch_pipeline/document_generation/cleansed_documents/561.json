@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having issues with their internet connection, including slow download speeds and difficulty connecting to certain websites. The agent suggested running a few tests on the device, including an \"ipconfig /all\" command and a speed test. The results of the speed test showed that the download speeds were lower than expected, but the upload speeds were normal. The agent suggested resetting the router to see if it helps improve the speeds.",
-    "customerSentiment": "negative",
-    "topic": "other",
-    "product": "internet",
-    "filename": "561_537_450_negative_other_internet_document.txt"
-}

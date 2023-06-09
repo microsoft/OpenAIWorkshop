@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nMark contacted Contoso Wireless because he was having trouble with his payment for the streaming product. The agent looked into the account and found that the payment had not been processed due to a technical issue. The agent then processed the payment manually and activated the streaming product on Mark's account.",
-    "customerSentiment": "upset",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "921_496_409_upset_payment_streaming_document.txt"
-}

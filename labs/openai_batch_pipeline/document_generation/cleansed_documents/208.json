@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer was frustrated with their Contoso Wireless TV service being downgraded from HD to SD. The agent apologized for the inconvenience and suggested the customer restart their Contoso Wireless TV box. They also explained that sometimes due to high demand services may be downgraded temporarily and that the customer should receive notifications when services are changed in any way. After restarting their TV box, the customer's service should be restored back to HD shortly afterwards. If there are any further issues, they should contact the agent for help.",
-    "customerSentiment": "frustrated",
-    "topic": "downgrade services",
-    "product": "tv",
-    "filename": "208_534_446_frustrated_downgrade services_tv_document.txt"
-}

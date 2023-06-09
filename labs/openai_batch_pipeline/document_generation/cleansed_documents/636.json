@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer was having issues with Contoso Wireless's streaming service, which was buffering and stopping and starting every few minutes. The customer service agent suggested restarting the device and refreshing the page, as well as checking if the customer was connected to a strong enough internet connection. The customer service agent also said they would look into the issue further on their end and get back to the customer with an update.",
-    "customerSentiment": "frustrated",
-    "topic": "churn",
-    "product": "streaming",
-    "filename": "636_532_445_frustrated_churn_streaming_document.txt"
-}

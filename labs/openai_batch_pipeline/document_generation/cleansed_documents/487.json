@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer contacted Contoso Wireless about a TV they purchased and was confused about the product. The agent clarified that the TV does not come with any streaming services pre-installed, and also informed the customer about their return policy and loyalty program. The customer can sign up for the loyalty program now in order to receive discounts and other benefits on future purchases.",
-    "customerSentiment": "confused",
-    "topic": "churn",
-    "product": "tv",
-    "filename": "487_636_549_confused_churn_tv_document.txt"
-}
