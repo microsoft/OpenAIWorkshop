@@ -19,7 +19,6 @@ openai.api_base = os.getenv("OPENAI_RESOURCE_ENDPOINT")  # SET YOUR RESOURCE END
 openai.api_version = "2022-06-01-preview"
 admin_key = os.environ.get("AZSEARCH_KEY") # Cognitive Search Admin Key
 index_name = os.environ.get("INDEX_NAME") # Cognitive Search index name
-prompt = os.environ.get("PROMPT") # Prompt to use for GPT-3
 credential = AzureKeyCredential(admin_key)
 
 # Create an SDK client
@@ -54,7 +53,6 @@ def azcognitive_score(user_query, topk):
             break
         i+=1
     return f"Answer this question \"{user_query}\" using only the following information  \n <context> {document} </context>. If answer not found in \n <context> {document} </context>, then Reply Not Found"
-    #return f"{prompt} \"{user_query}\" \n <context> {document} </context>"
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
