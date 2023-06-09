@@ -21,14 +21,14 @@
     Open the search service that you have provisioned and copy the url 
     
     Search Url is in the form :  https://<your search service name>.search.windows.net
-
-     ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image22_searchurl.png)
+    
+   ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image22_searchurl.png)
 
     
 
     For search service key, click on the 'Keys' on the left ribbon
 
-    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image23_searchkey.png)
+   ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image23_searchkey.png)
 
 
  ## View Azure Form Recognizer Url and Keys
@@ -38,7 +38,7 @@
 
     For Azure Form Recognizer service keys and Endpoint, click on the 'Keys and Endpoint' on the left ribbon
 
-    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image24_afrkey.png)
+   ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image24_afrkey.png)
 
 
 ## View Azure Open AI Endpoint and Key
