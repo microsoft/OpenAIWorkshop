@@ -28,7 +28,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 (control+click) to launch in new tab.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fraw%2Fmain%2Flabs%2FLab_3_bot_chatWithDocuments%2Fdeploy%2Fazure-deploy.json) 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fraw%2Fvaibhav%2Flab4-edits%2Flabs%2FLab_3_bot_chatWithDocuments%2Fdeploy%2Fazure-deploy.json) 
 
 
 
@@ -50,7 +50,7 @@ To make it easy for the labs, the sample document has already been chunked and p
     Run the below commands from cloud shell to configure python environment. 
 
         
-        git clone https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
+        git clone -b vaibhav/lab4-edits --single-branch https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
         
         cd OpenAIWorkshop/labs/Lab_3_bot_chatWithDocuments 
         
