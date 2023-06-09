@@ -19,7 +19,7 @@ Follow following steps to get the Azure API endpoint and API key. Save the endpo
 
 2. Click on the the Gear icon on Top right corner.
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image17_deploymentname.png)
+![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image18_gearicon.png)
 
 
 3. Navigate to Resource Tab and copy the endpoint and key in a notepad.
@@ -29,7 +29,7 @@ Follow following steps to get the Azure API endpoint and API key. Save the endpo
 
 To get the Azure OpenAI Model deployment name, click on the deployment pane in the left ribbon and copy the model name.
 
-![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image18_gearicon.png)
+![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image17_deploymentname.png)
 
 
 ## 1. Azure services deployment
