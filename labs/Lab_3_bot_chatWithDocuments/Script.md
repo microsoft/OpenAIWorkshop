@@ -28,7 +28,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 (control+click) to launch in new tab.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmain%2Flabs%2FLab_3_bot_chatWithDocuments%2Fdeploy%2Fazure-deploy.json) 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fvaibhav%2Flab4-edits%2Flabs%2FLab_3_bot_chatWithDocuments%2Fdeploy%2Fazure-deploy.json) 
 
 
 
@@ -130,9 +130,6 @@ Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url a
     8. Click on "Unknown intent".
     9. 
 
-
-
-[Create PowerApp](PowerApp.md)
 
 ## 6. Test
 
