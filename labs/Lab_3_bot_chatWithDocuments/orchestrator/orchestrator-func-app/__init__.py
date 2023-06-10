@@ -40,6 +40,7 @@ def run_openai(prompt, engine=GPT_ENGINE):
         max_tokens=300,
     )
     return response.choices[0].text
+
 def azcognitive_score(user_query, topk):
     results = search_client.search(search_text=user_query, include_total_count=True, query_type='semantic', query_language='en-us',semantic_configuration_name=semantic_config)
     document=""
