@@ -110,13 +110,35 @@ To make it easy for the labs, the sample document has already been chunked and p
 
 ## 3. Test Azure Function App service deployment
 
-Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url and code.
+* Launch Postman 
 
-
-* Launch Postman and test the Azure Function to make sure it is returning results. The num_search_result query parameter can be altered to limit the search results. Notice the query parameter num_search_result in the screen shot below. **num_search_result** is a mandatory query parameter.
-
+* Click on 'New' as shown in the below screenshot and then select 'HTTP'.
 
     ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image4_postman.png)
+
+* Select method to "POST".
+
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image25_postmethod.png)
+
+* In The enter URL, enter the URL of the Function app that you have created. Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url 
+
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image26_posturl.png)
+
+
+* Add below text just after the function app URL. The num_search_result query parameter can be altered to limit the search results. **num_search_result** is a mandatory query parameter.
+
+        &num_search_result=5
+
+    
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image27_numsearch.png)
+
+
+* Now, you can test the function app by providing the below prompt in the 'Body' tab of the postman and press 'Send'. You must recieve the text result in the response window of the postman.
+
+        {"prompt" : "Is GPU supported in AML"}
+
+    ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image28_prompt.png)
+
 
 
 ## 4. Build Chatbot 
