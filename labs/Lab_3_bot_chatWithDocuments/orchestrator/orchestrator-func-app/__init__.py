@@ -36,8 +36,8 @@ def run_openai(prompt, engine=GPT_ENGINE):
     response = openai.Completion.create(
         engine=engine,
         prompt=prompt,
-        temperature=1,
-        max_tokens=2048,
+        temperature=0,
+        max_tokens=300,
     )
     return response.choices[0].text
 def azcognitive_score(user_query, topk):
