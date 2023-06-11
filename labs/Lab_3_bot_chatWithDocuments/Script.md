@@ -246,7 +246,7 @@ Select LUIS region as 'West US' and click next.
     ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image16_publishbot.png)
 
 
-## 6. Test
+## 6. Test 
 
 1. Click on the Home button on the top left corner in the Bot Framework Composer. Select the bot that has been developed in the above steps.
 
