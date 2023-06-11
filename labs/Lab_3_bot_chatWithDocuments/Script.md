@@ -110,7 +110,7 @@ To make it easy for the labs, the sample document has already been chunked and p
 
 ## 3. Test Azure Function App service deployment
 
-* Launch Postman 
+* Launch Postman
 
 * Click on 'New' as shown in the below screenshot and then select 'HTTP'.
 
