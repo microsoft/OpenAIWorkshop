@@ -53,7 +53,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 (control+click) to launch in new tab.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmain%2Flabs%2FLab_3_bot_ChatWithDocuments%2Fdeploy%2Fazure-deploy.json) 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmain%2Flabs%2FLab_3_bot_chatWithDocuments%2Fdeploy%2Fazure-deploy.json) 
 
 
 
@@ -78,7 +78,7 @@ To make it easy for the labs, the sample document has already been chunked and p
         
         git clone https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
         
-        cd OpenAIWorkshop/labs/Lab_3_bot_ChatWithDocuments 
+        cd OpenAIWorkshop/labs/Lab_3_bot_chatWithDocuments 
         
         pip install -r ./orchestrator/requirements.txt
 
@@ -103,14 +103,14 @@ To make it easy for the labs, the sample document has already been chunked and p
         AFR_ENDPOINT="<YOUR Azure Form Recognizer Service API EndPoint>"
         AFR_API_KEY="<YOUR Azure Form Recognizer API Key>"
         INDEX_NAME="azure-ml-docs"
-        FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/Lab_3_bot_ChatWithDocuments/Data/azure-machine-learning-2-500.pdf"
+        FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/Lab_3_bot_chatWithDocuments/Data/azure-machine-learning-2-500.pdf"
         LOCAL_FOLDER_PATH=""
 
 *   The document processing, chunking, indexing can all be scripted using any preferred language. 
     This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
     The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service. 
     
-        cd OpenAIWorkshop/labs/Lab_3_bot_ChatWithDocuments/ingest
+        cd OpenAIWorkshop/labs/Lab_3_bot_chatWithDocuments/ingest
         python search-indexer.py
         
 
