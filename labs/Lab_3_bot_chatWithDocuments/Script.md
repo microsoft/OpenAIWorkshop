@@ -27,7 +27,7 @@ Follow following steps to get the Azure API endpoint and API key. Save the endpo
 ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image19_endpointandkey.png)
 
 
-To get the Azure OpenAI Model deployment name, click on the deployment under Management, and copy the model name.
+To get the Azure OpenAI Model deployment name, click on the deployment under Management, and copy the model deploment name.
 
 ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image17_deploymentname.png)
 
@@ -48,13 +48,13 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 (control+click) to launch in new tab.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fvaibhav%2Flab4-edits%2Flabs%2FLab_3_bot_chatWithDocuments%2Fdeploy%2Fazure-deploy.json) 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmain%2Flabs%2FLab_3_bot_chatWithDocuments%2Fdeploy%2Fazure-deploy.json) 
 
 
 
 ## 2. Setup Azure Cognitive Search and prepare data
 
-As part of data preperation step, to work in Open AI, the documents are chunked into smaller units(20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with a python script below. 
+As part of data preparation step, to work in Open AI, the documents are chunked into smaller units(20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with a python script below. 
 To make it easy for the labs, the sample document has already been chunked and provided in the repo. 
 
 * Enable Semantic Search on Azure Portal. Navigate to Semantic Search blade and select Free plan. 
@@ -70,7 +70,7 @@ To make it easy for the labs, the sample document has already been chunked and p
     Run the below commands from cloud shell to configure python environment. 
 
         
-        git clone -b vaibhav/lab4-edits --single-branch https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
+        git clone https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
         
         cd OpenAIWorkshop/labs/Lab_3_bot_chatWithDocuments 
         
@@ -97,7 +97,7 @@ To make it easy for the labs, the sample document has already been chunked and p
         AFR_ENDPOINT="<YOUR Azure Form Recognizer Service API EndPoint>"
         AFR_API_KEY="<YOUR Azure Form Recognizer API Key>"
         INDEX_NAME="azure-ml-docs"
-        FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/vaibhav/lab4-edits/labs/Lab_3_bot_chatWithDocuments/Data/azure-machine-learning-2-500.pdf"
+        FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/Lab_3_bot_chatWithDocuments/Data/azure-machine-learning-2-500.pdf"
         LOCAL_FOLDER_PATH=""
 
 *   The document processing, chunking, indexing can all be scripted using any preferred language. 
@@ -184,7 +184,7 @@ Create a bot in Azure Bot Composer:
 
 
 
-8. Select 'HTTP Method' as 'POST'. Copy the function app url (as copied when tested through postman). Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url. Put this url in under url box of the bot follwed by num_search_result query parameter (see below image).
+8. Select 'HTTP Method' as 'POST'. Copy the function app url (as copied when tested through postman). Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url. Put this url in under url box of the bot follwed by **num_search_result** query parameter (see below image).
 
     ![](../../labs/Lab_3_bot_chatWithDocuments/Images/lab3_image11_url.png)
 
