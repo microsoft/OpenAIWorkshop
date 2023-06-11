@@ -103,7 +103,7 @@ To make it easy for the labs, the sample document has already been chunked and p
         AFR_ENDPOINT="<YOUR Azure Form Recognizer Service API EndPoint>"
         AFR_API_KEY="<YOUR Azure Form Recognizer API Key>"
         INDEX_NAME="azure-ml-docs"
-        FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/Lab_3_chatWithDocuments/Data/azure-machine-learning-2-500.pdf"
+        FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/labs/Lab_3_chatWithDocuments/Data/azure-machine-learning-2-500.pdf"
         LOCAL_FOLDER_PATH=""
 
 *   The document processing, chunking, indexing can all be scripted using any preferred language. 
