@@ -34,8 +34,8 @@ Follow following steps to get the Azure API endpoint and API key. Save the endpo
 
 To get the Azure OpenAI Model deployment name, click on the deployment under Management, and copy the model deploment name.
 
+![Alt text](Images/lab3_image17_deploymentname.png)
 
-    ![Alt text](Images/lab3_image17_deploymentname.png)
 
 ## 1. Azure services deployment
 
@@ -62,7 +62,7 @@ The Azure Function App also deploys the function code needed for powerapps autom
 As part of data preparation step, to work in Open AI, the documents are chunked into smaller units(20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with a python script below. 
 To make it easy for the labs, the sample document has already been chunked and provided in the repo. 
 
-* Enable Semantic Search on Azure Portal. Navigate to Semantic Search blade and select Free plan. 
+* Search for Cognitive Search on Azure Portal, Select the Cognitive Search and Navigate to Semantic Search blade and select Free plan. 
 
     ![Alt text](Images/lab3_image2_semanticsearchplan.png)
     
@@ -110,7 +110,6 @@ To make it easy for the labs, the sample document has already been chunked and p
     This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
     The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service. 
     
-        cd OpenAIWorkshop/labs/Lab_3_chatWithDocuments/ingest
         python search-indexer.py
         
 
@@ -150,7 +149,7 @@ To make it easy for the labs, the sample document has already been chunked and p
 
 Create a bot in Azure Bot Composer:
 
-1. Open Azure Bot Composer in your local machine.
+1. Open Bot Framework Composer in your local machine.
 
 
 2. Select Create New (+) on the homepage.
