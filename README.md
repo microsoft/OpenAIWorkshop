@@ -4,7 +4,7 @@
 ![Alt text](documents/images/OpenAI.png)
 
 
-In this workshop, you will learn how to use the Azure OpenAI service to create AI powered solutions. You will get hands-on experience with the latest AI technologies and will learn how to use Azure OpenAI API. 
+In this workshop, you will learn how to leverage the Azure OpenAI service to create AI powered solutions. You will get hands-on experience with the latest AI technologies and will also learn how to interact with the Azure OpenAI APIs. 
 
 ## General Prerequisites
 
@@ -13,9 +13,9 @@ The following prerequisites must be completed before you start these labs
 - WI-FI enabled Laptop
 - You must be connected to the internet
 - Use either Edge or Chrome when executing the labs.
-- Access to an Azure Subscription with [Contributor Access](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-steps)
+- Access to an Azure Subscription with Owner or [Contributor Access](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-steps)
   
-- Approved access to Azure OpenAI service in your subscription. You can request access [here](https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUOFA5Qk1UWDRBMjg0WFhPMkIzTzhKQ1dWNyQlQCN0PWcu)
+- Approved access to Azure OpenAI service in your Azure subscription. You can request access [here](https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUOFA5Qk1UWDRBMjg0WFhPMkIzTzhKQ1dWNyQlQCN0PWcu)
 
 
   **IMPORTANT**: 
@@ -88,7 +88,7 @@ No additional pre-reqs
 
 ## Before you begin
 
-  [Retrieve your Azure OpenAI endpoint and keys](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?tabs=command-line&pivots=programming-language-python#retrieve-key-and-endpoint) and copy them to notepad for future reference as you will be using them throuhout this labs
+  [Retrieve your Azure OpenAI endpoint and keys](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?tabs=command-line&pivots=programming-language-python#retrieve-key-and-endpoint) and copy them to notepad for future reference as you will be using them throughout the labs.
 
 ## Format
 
@@ -99,8 +99,8 @@ No additional pre-reqs
 
 - Power Users
 - Software Engineers
-- Data Scientist
-- AI architects and Managers
+- Data Scientists
+- Solution Architects
 
 ## Contributing
 

@@ -28,7 +28,7 @@ The steps are broken into 3 key steps with a few manual steps.
 - In the second step, the search-index is configured and executed to create the search index.
 - In the third step, a chatbot is developed using Azure Bot Framework Composer. Bot Framework Emulator is used for testing the developed chatbot.
 
-To proceed, please click here. [Script](Script.md)
+To proceed, please click [here](Script.md).
 
 
 
