@@ -37,7 +37,8 @@ The following prerequisites must be completed before you start these labs
   - Microsoft.LogicApps
 
 - [VS Code](https://code.visualstudio.com/download) installed in your computer
-- **Lab-specific pre-reqs:​**
+  
+**Lab-specific pre-reqs:​**
 
 **Lab 2:​**
 
