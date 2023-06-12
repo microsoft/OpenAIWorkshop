@@ -2,9 +2,9 @@
 
 ## Objective
 
-In this lab you will learn how to use OpenAI to query SQL data using natural language query
+In this lab you will learn how to use Azure OpenAI to query SQL data using natural language query.
 
-This application demonstrates the of Open AI (ChatGPT/GPT-4) to help answer business questions by performing advanced data analytic tasks on a business database.
+This application also demonstrates the use of Azure Open AI to help answer business questions by performing advanced data analytic tasks on a enterprise database.
 
 Examples of questions are:
 
@@ -12,7 +12,7 @@ Examples of questions are:
 - More difficult: Is that true that top 20% customers generate 80% revenue in 2016?
 - Advanced: Forecast monthly revenue for next 12 months starting from June-2018
 
-The application supports Python's built-in SQLITE (recommended for lab) as well as your own Microsoft SQL Server.
+The application supports Python's built-in SQLITE (*recommended* for lab) as well as your own Microsoft SQL Server.
 
 ![](../../documents/images/lab-3-data-1.png)
 
@@ -56,7 +56,7 @@ Open VS Code and Clone this repository:
 
 the URL is: https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
 
-from the terminal, navigate to ```cd labs/lab_3_data_analytics```
+from the terminal, navigate to ```cd labs/Lab_2_Data_Analytics```
 
 ## Step 2. Set up enviromental variables
 
@@ -91,7 +91,7 @@ from the terminal, navigate to ```cd labs/lab_3_data_analytics```
 
 ### Step 3.1 navigate to the root directory of this lab
 
-Navigate to ```cd labs/lab_3_data_analyticst```
+Navigate to ```cd labs/Lab_2_Data_Analytics```
 
 ### Step 3.2 Create a python environment with version from 3.7 and 3.10
 

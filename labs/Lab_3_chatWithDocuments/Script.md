@@ -2,7 +2,7 @@
 
 ### Prerequisites
 
-* Contributor permission is required in the Azure subscription.
+* Owner or Contributor permission is required in the Azure subscription.
 * Microsoft.Search Resource provider needs to be registered in the Azure Subscription. 
 * [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Function App.  
 * Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 
@@ -17,7 +17,7 @@
 
 Before deploying the Azure resources, you will need Azure OpenAI API endpoint, API key, and the model deployment name.
 
-Follow following steps to get the Azure API endpoint and API key. Save the endpoint and API key in a notepad for later use.
+Follow the steps below to get the Azure OpenAI endpoint and API key. Save the endpoint and API key in a notepad for later use.
 
 1. Navigate to [Azure Open AI Studio](https://oai.azure.com/portal)
 
@@ -39,17 +39,17 @@ To get the Azure OpenAI Model deployment name, click on the deployment under Man
 
 ## 1. Azure services deployment
 
-Deploy Azure Resources namely - Azure Function App to host facade for OpenAI and Search APIs, Azure Search Service and a Azure Form Recognizer resource.
+Deploy Azure Resources:
+    - Azure Function App to orchestrate calls to Azure OpenAI and Cognitive Search APIs
+    - Azure Cognitive Search Service
+    - Azure Form Recognizer
 
 Here are the SKUs that are needed for the Azure Resources:
 
 - Azure Function App - Consumption Plan
 - Azure Cognitive Search - Standard (To support semantic search)
-- Azure Forms Recognizer - Standard (To support analyzing 500 page document)
+- Azure Forms Recognizer (AFR) - Standard (To support analyzing 500 page document)
 - Azure Storage - general purpose V1 (Needed for Azure Function App and uploading sample documents)
-
-
-The Azure Function App also deploys the function code needed for powerapps automate flow. 
 
 (control+click) to launch in new tab.
 
@@ -59,10 +59,9 @@ The Azure Function App also deploys the function code needed for powerapps autom
 
 ## 2. Setup Azure Cognitive Search and prepare data
 
-As part of data preparation step, to work in Open AI, the documents are chunked into smaller units(20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with a python script below. 
-To make it easy for the labs, the sample document has already been chunked and provided in the repo. 
+As part of the data preparation step, the documents are chunked into smaller sections (20 lines) and stored as individual documents in the search index. The chunking logic is achieved with a python script below. 
 
-* Search for Cognitive Search on Azure Portal, Select the Cognitive Search and Navigate to Semantic Search blade and select Free plan. 
+* Search for Cognitive Search on Azure Portal, Select the Cognitive Search and navigate to Semantic Search blade and select Free plan. 
 
     ![Alt text](Images/lab3_image2_semanticsearchplan.png)
     
@@ -83,7 +82,7 @@ To make it easy for the labs, the sample document has already been chunked and p
         pip install -r ./orchestrator/requirements.txt
 
 
-*   Update Azure Search, Open AI endpoints, AFR Endpoint and API Keys in the secrets.env. 
+*   Update Azure Search, Azure Open AI endpoints, Azure Form Recognizer Endpoint and API Keys in the secrets.env. 
     
     The secrets.env should be placed in the ingest folder along side the python script file search-indexer.py.
     **The endpoints below needs to have the trailing '/' at end for the search-indexer to run correctly.**
@@ -108,7 +107,7 @@ To make it easy for the labs, the sample document has already been chunked and p
 
 *   The document processing, chunking, indexing can all be scripted using any preferred language. 
     This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
-    The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service. 
+    The search indexer chunks a sample pdf document(500 pages) and chunks each page into 20 lines. Each chunk is created as a new search doc in the index. The pdf document processing is achieved using the Azure Form Recognizer service. 
     
         python search-indexer.py
         
@@ -125,12 +124,12 @@ To make it easy for the labs, the sample document has already been chunked and p
 
     ![Alt text](Images/lab3_image25_postmethod.png)
 
-* In The enter URL, enter the URL of the Function app that you have created. Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url 
+* Enter the URL of the Function app that you have created. Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url 
 
     ![Alt text](Images/lab3_image26_posturl.png)
 
 
-* Add below text just after the function app URL. The num_search_result query parameter can be altered to limit the search results. **num_search_result** is a mandatory query parameter.
+* Add below text just after the function app URL. The num_search_result query parameter can be altered to limit the search results. **num_search_result** is a *mandatory* query parameter.
 
         &num_search_result=5
 
@@ -187,7 +186,7 @@ Create a bot in Azure Bot Composer:
 
 
 
-8. Select 'HTTP Method' as 'POST'. Copy the function app url (as copied when tested through postman). Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url. Put this url in under url box of the bot follwed by **num_search_result** query parameter (see below image).
+8. Select 'HTTP Method' as 'POST'. Copy the function app url (as copied when tested through postman). Please refer to [this doc](ShowKeysandSecrets.md) to retrieve the Function App Url. Put this url in under url box of the bot followed by **num_search_result** query parameter (see below image).
 
     ![Alt text](Images/lab3_image11_url.png)
 
@@ -260,6 +259,8 @@ You can now ask questions related to 'Azure Machine Learning' to get the respons
 
 E.g.: 
     
+    What is Azure Machine Learning?
     Is GPU supported in AML?
+    How to track and monitor training runs in AML?
 
 You can explore integrating bot to other platforms, such as Microsoft Teams, a web application, etc. to augment the response returned from Azure OpenAI.
