@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer was having issues with slow internet speeds on their Contoso Wireless account. The agent checked the customer's account and confirmed that their plan includes 10 Mbps download speeds. The agent then proceeded to make some adjustments on their end to try and improve the connection speed before considering switching providers. The customer was satisfied with the help provided by the agent.",
-    "customerSentiment": "mixed",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "119_526_439_mixed_churn_internet_document.txt"
-}

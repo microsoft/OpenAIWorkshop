@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer was having a payment issue with their recent purchase from Contoso Wireless. The customer service agent discovered that the payment had not gone through due to an incorrect billing address. To resolve the issue, the customer provided the correct billing address and was offered a 10% discount on their next purchase as a courtesy. The customer's account information was updated and their payment should go through shortly.",
-    "customerSentiment": "disappointed",
-    "topic": "payment",
-    "product": "tv",
-    "filename": "548_418_331_disappointed_payment_tv_document.txt"
-}

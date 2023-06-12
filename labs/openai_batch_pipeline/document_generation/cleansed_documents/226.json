@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble paying for their Contoso Wireless product. After providing the order number and the last four digits of their credit card, it was determined that the payment was declined due to an incorrect billing address. The agent was able to update the customer's records and process their payment successfully after obtaining the updated address.",
-    "customerSentiment": "mixed",
-    "topic": "payment",
-    "product": "tv",
-    "filename": "226_515_428_mixed_payment_tv_document.txt"
-}

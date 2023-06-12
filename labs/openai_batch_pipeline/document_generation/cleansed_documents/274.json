@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having difficulty connecting to the streaming service provided by Contoso Wireless. The agent asked the customer what type of device they were using and if they were able to connect to other networks or applications. After trying to clear the cache and restart the device, the agent suggested connecting to a different network, which solved the issue. The customer was happy with the outcome and thanked the agent for their help.",
-    "customerSentiment": "mixed",
-    "topic": "assistance",
-    "product": "streaming",
-    "filename": "274_461_374_mixed_assistance_streaming_document.txt"
-}

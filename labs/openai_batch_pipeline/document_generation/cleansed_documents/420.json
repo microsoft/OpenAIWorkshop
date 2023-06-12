@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe agent provided the customer with information about the features, price, and warranty of the Contoso Wireless TV. The customer was also informed of discounts and promotions available, as well as recommended accessories such as a compatible mounting bracket and an extended warranty. The agent also suggested that the customer check the website regularly for updates and new promotions.",
-    "customerSentiment": "mixed",
-    "topic": "information",
-    "product": "tv",
-    "filename": "420_514_427_mixed_information_tv_document.txt"
-}

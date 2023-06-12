@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted the agent because their Contoso Wireless TV was not working. After troubleshooting, the agent determined that a firmware update was needed and provided the customer with instructions on how to download and install it. The agent also offered to provide additional help if needed.",
-    "customerSentiment": "negative",
-    "topic": "service",
-    "product": "tv",
-    "filename": "79_651_564_negative_service_tv_document.txt"
-}

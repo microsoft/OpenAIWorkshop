@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer called Contoso Wireless expressing their dissatisfaction with the service they have been receiving. The customer service agent apologized and asked for more information on the issues they were having. After discussing the customer's coverage concerns, the customer service agent offered three different plans with varying amounts of data ranging from 10GB to 30GB per month. The customer decided to sign up for the 30GB plan, which costs $80 per month plus taxes and fees.",
-    "customerSentiment": "disappointed",
-    "topic": "churn",
-    "product": "other",
-    "filename": "468_918_831_disappointed_churn_other_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nIn this conversation, the customer was having trouble connecting to their Contoso Wireless internet. The agent helped by first checking the customer's account settings and making sure everything was correct. Once that was confirmed, they moved on to checking the connection settings on the customer's laptop. After verifying that all of the login information was correct, the agent suggested restarting both the laptop and modem/router to reset any temporary issues with the connection.",
-    "customerSentiment": "content",
-    "topic": "account",
-    "product": "internet",
-    "filename": "676_588_501_content_account_internet_document.txt"
-}

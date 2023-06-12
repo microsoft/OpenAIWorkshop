@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted the agent for help understanding their billing after purchasing a phone from Contoso Wireless. The agent looked into the customer's account and found that the data package wasn't included in the plan as part of the promotional offer. The agent apologized for any misunderstanding and was able to honor the original promise and include the data package in the customer's plan. The agent also provided instructions on how to add additional data to the plan if needed.",
-    "customerSentiment": "confused",
-    "topic": "billing",
-    "product": "phone",
-    "filename": "105_549_462_confused_billing_phone_document.txt"
-}

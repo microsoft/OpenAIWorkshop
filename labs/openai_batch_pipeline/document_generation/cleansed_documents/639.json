@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble connecting to the Contoso Wireless internet service. The agent checked the customer's settings and asked for the account number, router type, and wireless card type. After making some adjustments on the end, the customer was able to successfully connect to the network. The agent offered further assistance if needed.",
-    "customerSentiment": "mixed",
-    "topic": "assistance",
-    "product": "internet",
-    "filename": "639_518_431_mixed_assistance_internet_document.txt"
-}

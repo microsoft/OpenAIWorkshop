@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless regarding an issue connecting to the internet. The agent suggested resetting the router by unplugging it from the wall outlet for 10 seconds and then plugging it back in. After resetting the router, the customer should wait a few minutes for it to reconnect to the network and then try connecting to the internet again. If that doesn't work, the customer should contact Contoso Wireless again for further assistance.",
-    "customerSentiment": "mixed",
-    "topic": "service",
-    "product": "internet",
-    "filename": "915_475_388_mixed_service_internet_document.txt"
-}

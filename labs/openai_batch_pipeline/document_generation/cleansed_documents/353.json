@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted the agent about a charge for Contoso Wireless TV on their bill, which they did not order. The agent looked up the customer's account and found that they had signed up for a free trial of the service, but had not cancelled it in time and were now being charged. The agent explained that they could cancel their subscription and not be charged any further fees. The customer agreed and the agent provided instructions on how to do so.",
-    "customerSentiment": "frustrated",
-    "topic": "billing",
-    "product": "tv",
-    "filename": "353_527_440_frustrated_billing_tv_document.txt"
-}

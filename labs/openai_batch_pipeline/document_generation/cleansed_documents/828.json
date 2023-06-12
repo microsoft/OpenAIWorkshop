@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble connecting to the internet with their laptop running Windows 10. The customer service representative at Contoso Wireless checked the customer's account and found that there were no issues with the subscription. The representative then suggested disabling the firewall on the customer's Norton Security Suite and after doing so, the customer was able to access the internet. The representative concluded by offering any further assistance and wishing the customer a good day.",
-    "customerSentiment": "neutral",
-    "topic": "support",
-    "product": "internet",
-    "filename": "828_553_466_neutral_support_internet_document.txt"
-}

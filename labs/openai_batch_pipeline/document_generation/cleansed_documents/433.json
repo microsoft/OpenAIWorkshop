@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was confused about the internet product offered by Contoso Wireless. The agent explained that Contoso Wireless offers high-speed internet access with no data caps, but if the customer decides to switch providers before the end of their contract term, they will be subject to an early termination fee of $150. The agent also mentioned that there are some incentives for staying with Contoso Wireless, such as a loyalty program and promotional rates on select services and products.",
-    "customerSentiment": "confused",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "433_592_505_confused_churn_internet_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble streaming content with Contoso Wireless. After investigating the issue, the agent determined that the customer's connection speed was slower than usual and could be caused by being in an area with poor coverage or an outdated router/modem. The agent suggested updating the router/modem if it is outdated and also troubleshooting some of the settings on the router/modem to see if that helps improve streaming speeds.",
-    "customerSentiment": "content",
-    "topic": "assistance",
-    "product": "streaming",
-    "filename": "38_554_467_content_assistance_streaming_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer asked the agent about Contoso Wireless' streaming product, including what is required to set it up and if there are any additional costs associated with streaming. The agent explained that downloading the app and creating an account is all that is required to get started with streaming. There are no additional costs for using the streaming service, but customers can set up automatic payments, take advantage of payment plans, and join the loyalty program to prevent their subscription from being cancelled. The agent also mentioned that new content and features are added to the streaming library regularly.",
-    "customerSentiment": "happy",
-    "topic": "churn",
-    "product": "streaming",
-    "filename": "15_540_453_happy_churn_streaming_document.txt"
-}

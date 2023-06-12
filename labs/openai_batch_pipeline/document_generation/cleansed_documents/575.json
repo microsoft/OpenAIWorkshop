@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having issues with their Contoso Wireless TV, where the sound was cutting in and out. The customer service agent took a look at the settings and determined that the problem was with the speaker settings, which were set to low by default. The customer service agent instructed the customer to adjust the volume setting to a higher level, which resolved the issue.",
-    "customerSentiment": "positive",
-    "topic": "support",
-    "product": "tv",
-    "filename": "575_562_475_positive_support_tv_document.txt"
-}

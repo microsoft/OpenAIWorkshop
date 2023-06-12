@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble streaming with Contoso Wireless and the agent ran diagnostics to determine the issue. After determining that the issue was related to the customer's device settings, the agent asked for permission to remotely access the device and make some adjustments. The customer agreed, and the agent made the necessary changes. The agent also asked how long the customer had been experiencing this issue.",
-    "customerSentiment": "upset",
-    "topic": "support",
-    "product": "streaming",
-    "filename": "962_517_430_upset_support_streaming_document.txt"
-}

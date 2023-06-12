@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless for help with their billing. The agent looked up the customer's account and found that they were on the basic plan which includes unlimited talk and text as well as 2GB of data for $49/month. The agent then made adjustments to the account to add the new device, which increased the monthly cost by $10/month, and updated the data plan to the 2GB plan. The agent then reviewed the updated bill with the customer and answered any other questions they had about the device or related services.",
-    "customerSentiment": "neutral",
-    "topic": "billing",
-    "product": "phone",
-    "filename": "473_534_447_neutral_billing_phone_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble connecting their new Contoso Wireless TV to their account. The agent confirmed the customer's username and password and determined that the issue was related to the TV itself. The agent then found an update for the TV model that should fix the issue, and instructed the customer to download and install it. Once installed, the TV should be able to connect to the customer's account without any further issues.",
-    "customerSentiment": "mixed",
-    "topic": "account",
-    "product": "tv",
-    "filename": "569_507_420_mixed_account_tv_document.txt"
-}

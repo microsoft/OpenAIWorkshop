@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having trouble with their Contoso Wireless internet connection, which keeps going in and out. The agent suggested that the customer run an internet speed test to determine if there is a connection issue and then send a screenshot of the results along with their account information. The agent also informed the customer that they should expect an update within 24-48 hours once the screenshot is received.",
-    "customerSentiment": "negative",
-    "topic": "service",
-    "product": "internet",
-    "filename": "795_473_386_negative_service_internet_document.txt"
-}

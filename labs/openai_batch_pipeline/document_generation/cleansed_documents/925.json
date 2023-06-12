@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless for help setting up their new phone. The agent suggested resetting the Wi-Fi settings and then trying to reconnect, but when that didn't work, the agent suggested restarting the phone to see if that resolved the issue.",
-    "customerSentiment": "negative",
-    "topic": "assistance",
-    "product": "other",
-    "filename": "925_529_442_negative_assistance_other_document.txt"
-}

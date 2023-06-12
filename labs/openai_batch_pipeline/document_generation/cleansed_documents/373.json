@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless regarding slow internet speeds. After the agent asked for the customer's account information and router type, the agent was able to identify that the settings on the customer's router were set too low for optimal performance. The agent adjusted the settings and the customer's connection speed improved.",
-    "customerSentiment": "content",
-    "topic": "support",
-    "product": "internet",
-    "filename": "373_582_495_content_support_internet_document.txt"
-}
