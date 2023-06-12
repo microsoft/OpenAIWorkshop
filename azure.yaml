@@ -3,6 +3,6 @@
 name: OpenAIWorkshop
 services:
   web:
-    project: ./labs/Lab_2_analytics
+    project: ./labs/Lab_2_Data_analytics
     language: py
     host: appservice
