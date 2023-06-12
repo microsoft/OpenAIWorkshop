@@ -84,12 +84,12 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
 *   Update Azure Search, Azure Open AI endpoints, Azure Form Recognizer Endpoint and API Keys in the secrets.env. 
     
-    The secrets.env should be placed in the ingest folder along side the python script file search-indexer.py.
+    Create a secrets.env file in the ingest folder that will be referenced by the search indexer (search-indexer.py):
     **The endpoints below needs to have the trailing '/' at end for the search-indexer to run correctly.**
 
         cd ingest
         
-        # open secrets.env using code editor such as code
+        # create secrets.env using the built-in code editor 
         # When using code, you can type control+s to save the file and control+q to quit the editor
         
         code secrets.env
