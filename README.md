@@ -79,7 +79,7 @@ No additional pre-reqs
 | Activity | Duration |
 | --- | --- |
 | [Lab 1: Automate Mailbox Responses](/labs/Lab_1_Automate_Mailbox_Responses/README.md) | 45 min |
-| [Lab 2: Chat with your database](/labs/Lab_2_Data_Analytics/README.md) | 45 minutes |
+| [Lab 2: Chat with your database](/labs/Lab_2_Data_Analytics/README.md) | 45 min |
 | [Lab 3: Chat with your documents](/labs/Lab_3_chatWithDocuments/README.md) | 60 min |
 
 
