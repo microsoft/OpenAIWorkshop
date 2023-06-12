@@ -69,6 +69,8 @@ No additional pre-reqs
 
 - [.Net Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1) or later​
 
+- Install [Node.js](https://nodejs.org/en/download)
+
 - [Azure Bot Framework Composer​](https://learn.microsoft.com/en-us/composer/install-composer?tabs=windows)
 
 - [Bot Framework Emulator​](https://github.com/Microsoft/BotFramework-Emulator/releases/tag/v4.14.1)
