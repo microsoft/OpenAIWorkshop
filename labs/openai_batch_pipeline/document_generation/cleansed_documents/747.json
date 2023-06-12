@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having difficulty streaming a movie on their iPhone 8 and the agent is gathering more information to investigate the issue. The agent has asked the customer to provide their device model number, software version, and operating system in order to look into the issue further. The agent has also suggested rebooting the device, which the customer has already done multiple times. The agent is working on resolving the issue and will provide an update as soon as possible.",
-    "customerSentiment": "frustrated",
-    "topic": "support",
-    "product": "streaming",
-    "filename": "747_445_358_frustrated_support_streaming_document.txt"
-}

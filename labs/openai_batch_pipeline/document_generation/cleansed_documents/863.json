@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless for help with an issue streaming a movie. The agent confirmed that the customer's account was active and up to date with payment, and that the device being used was compatible with their streaming services. The agent then suggested the customer check to make sure the Contoso Wireless app was up to date, and if the issue persisted, to contact them again. The customer thanked the agent for their help and the conversation ended.",
-    "customerSentiment": "neutral",
-    "topic": "account",
-    "product": "streaming",
-    "filename": "863_498_411_neutral_account_streaming_document.txt"
-}

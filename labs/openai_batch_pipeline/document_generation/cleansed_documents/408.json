@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless about an issue with their streaming product order not being received. The customer service agent requested the order number and looked into the issue. After discovering that the payment went through, the customer mentioned that the shipping company may have caused a delay in delivery. The customer service agent requested the tracking number and promised to investigate further and provide an update on the package's status. The customer service agent also offered to send a replacement product at no additional cost.",
-    "customerSentiment": "angry",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "408_495_408_angry_payment_streaming_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was considering canceling their Contoso Wireless subscription due to dissatisfaction with the TV offerings. The agent was able to provide the customer with a new package that offered over 200 channels, HD streaming quality, and a discounted price of $44 per month when bundled with their wireless services. The customer was happy with the offer and will be able to start using the new package within 24 hours of signing up for it.",
-    "customerSentiment": "mixed",
-    "topic": "churn",
-    "product": "tv",
-    "filename": "343_723_636_mixed_churn_tv_document.txt"
-}

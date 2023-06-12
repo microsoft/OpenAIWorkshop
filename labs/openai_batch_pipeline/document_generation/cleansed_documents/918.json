@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless about an issue with their billing. The customer service agent was able to look into the customer's billing information and confirm that the TV purchased was charged correctly. The customer service agent also provided the customer with additional information about the TV they purchased, such as its resolution and refresh rate. The customer thanked the agent for their help and the call ended.",
-    "customerSentiment": "happy",
-    "topic": "billing",
-    "product": "tv",
-    "filename": "918_428_341_happy_billing_tv_document.txt"
-}

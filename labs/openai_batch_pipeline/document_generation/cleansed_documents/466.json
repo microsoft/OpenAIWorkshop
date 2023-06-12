@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble connecting to the internet. The agent attempted to troubleshoot the issue by asking the customer to check if their device was within range of the router, restarting the device, disconnecting and reconnecting from the wireless network, resetting the router, checking for firmware updates, and resetting the network settings on the device. After checking the system logs, it was determined that there might be an issue with the router settings that needed to be fixed remotely. The customer confirmed that they were using the latest version of the Contoso Wireless router.",
-    "customerSentiment": "neutral",
-    "topic": "support",
-    "product": "internet",
-    "filename": "466_680_593_neutral_support_internet_document.txt"
-}

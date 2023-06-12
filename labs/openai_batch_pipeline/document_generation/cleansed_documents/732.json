@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having an issue with their internet service being down for over an hour. The agent ran tests and discovered that there was an outage in the City of Oaks which was causing the problem. The agent estimated that the service should be restored within the next 2 hours and offered a credit for the lost service to be applied to the customer's next bill. The agent also informed the customer that they will keep them updated if anything changes or additional information is discovered about the outage.",
-    "customerSentiment": "upset",
-    "topic": "service",
-    "product": "internet",
-    "filename": "732_608_521_upset_service_internet_document.txt"
-}

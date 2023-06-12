@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe agent provided information about Contoso's upgrade plans, which offer a variety of speeds ranging from 25 Mbps to 500 Mbps. The cost of the upgrade depends on the plan chosen and there are additional savings available when customers bundle their services or sign up for an annual plan. The basic plan starts at $49.99 per month, while the fastest plan starts at $89.99 per month. Annual plans start at $599 per year for the basic plan and $899 per year for the fastest plan.",
-    "customerSentiment": "upset",
-    "topic": "upgrade services",
-    "product": "internet",
-    "filename": "582_597_509_upset_upgrade services_internet_document.txt"
-}

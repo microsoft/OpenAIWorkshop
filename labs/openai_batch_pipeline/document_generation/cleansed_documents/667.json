@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nIn this customer service exchange, the customer was frustrated with a product they purchased from Contoso Wireless. The customer service representative apologized for the inconvenience and asked for more details about the issue. After learning that the product was a phone and that it wouldn't turn on, the representative suggested running a diagnostic test on the device to determine what might be causing the issue. The customer confirmed they had access to a computer, so the representative instructed them to open up their web browser and type in www.contosowireless.com/diagnostics into the search bar to begin running tests.",
-    "customerSentiment": "angry",
-    "topic": "service",
-    "product": "other",
-    "filename": "667_583_496_angry_service_other_document.txt"
-}

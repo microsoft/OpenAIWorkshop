@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having issues with the picture quality on their Contoso Wireless TV. The agent asked the customer to provide the model of the TV and what type of connections were being used. The agent then asked the customer to turn off the TV and unplug it for 30 seconds before plugging it back in. After the customer did this, the picture quality had improved and the issue was resolved.",
-    "customerSentiment": "happy",
-    "topic": "support",
-    "product": "tv",
-    "filename": "53_488_401_happy_support_tv_document.txt"
-}

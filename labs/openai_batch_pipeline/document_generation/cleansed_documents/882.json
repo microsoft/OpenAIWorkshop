@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having trouble streaming on their Contoso Wireless device and the agent has tried various troubleshooting steps such as restarting the device, checking the connection speed, resetting network settings, and clearing app caches, but none of these have resolved the issue. The agent has requested more details from the customer so they can take a deeper look into the issue and find a resolution.",
-    "customerSentiment": "neutral",
-    "topic": "support",
-    "product": "streaming",
-    "filename": "882_729_642_neutral_support_streaming_document.txt"
-}

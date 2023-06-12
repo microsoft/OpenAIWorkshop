@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble connecting to the internet with their Contoso Wireless account. The customer service agent helped them troubleshoot the issue by having them update their account settings, connection type, and encryption type on their device. They then instructed the customer to reboot their device so that the new settings could take effect and try connecting again.",
-    "customerSentiment": "neutral",
-    "topic": "account",
-    "product": "internet",
-    "filename": "662_591_504_neutral_account_internet_document.txt"
-}

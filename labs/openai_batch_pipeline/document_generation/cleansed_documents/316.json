@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble streaming a movie using their Contoso Wireless account. The agent attempted to troubleshoot the issue by having the customer confirm their username and password, clear their browser cache and cookies, restart their device, and check if their device had the latest version of the Contoso Wireless app installed. The issue was not resolved and the agent is now looking into the issue further with the help of technical support.",
-    "customerSentiment": "confused",
-    "topic": "account",
-    "product": "streaming",
-    "filename": "316_572_485_confused_account_streaming_document.txt"
-}

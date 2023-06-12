@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having an issue with their internet connection, and the agent is suggesting that the customer try disconnecting other devices from the router to see if that improves the connection. The agent also suggests running a speed test from the router settings page to check for any hardware or settings issues.",
-    "customerSentiment": "neutral",
-    "topic": "support",
-    "product": "internet",
-    "filename": "819_455_368_neutral_support_internet_document.txt"
-}

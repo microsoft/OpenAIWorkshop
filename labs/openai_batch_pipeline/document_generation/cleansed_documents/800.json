@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted the customer service agent with an issue regarding an unexpected charge on their Contoso Wireless bill. After confirming that the customer had not ordered or received any new phones, the agent apologized for the mistake and offered to refund the charge. The customer then asked about other products and plans offered by Contoso Wireless, and the agent provided information about their flagship smartphone, the Contoso 9X Pro, as well as details about their various data plans.",
-    "customerSentiment": "negative",
-    "topic": "payment",
-    "product": "other",
-    "filename": "800_594_507_negative_payment_other_document.txt"
-}

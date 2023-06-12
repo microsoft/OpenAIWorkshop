@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer called Contoso Wireless to express their frustration with slow speeds and frequent outages of their internet service. The agent apologized for the inconvenience and assured the customer that they were working hard to resolve the issue as quickly as possible. The agent asked for additional information about the customer's account in order to identify the issue more precisely. As an apology, the agent offered the customer a free month of service. The customer accepted the offer but expressed their dissatisfaction with the situation and hope that it would be resolved quickly.",
-    "customerSentiment": "upset",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "261_687_600_upset_churn_internet_document.txt"
-}

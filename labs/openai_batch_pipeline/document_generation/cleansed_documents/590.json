@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble with their Contoso Wireless Galaxy S10 phone, which would not turn on. The agent ran some troubleshooting steps and asked the customer questions about the device, including what version of Android it was running and what apps were installed. The agent then suggested that the customer remove and re-insert the battery to see if that fixes the issue. If that doesn't work, they may need to replace the battery or do a factory reset of the device.",
-    "customerSentiment": "happy",
-    "topic": "support",
-    "product": "phone",
-    "filename": "590_603_516_happy_support_phone_document.txt"
-}

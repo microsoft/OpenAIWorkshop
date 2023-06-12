@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless regarding a product phone they purchased but had not received. The agent apologized for the inconvenience and requested the customer's order number to look into it further. After the customer provided the order number, the agent determined that the product phone was shipped but had not arrived yet. The agent offered a refund or a resend of the product phone, which the customer chose to accept. The agent then requested the customer's shipping address in order to resend the product phone.",
-    "customerSentiment": "frustrated",
-    "topic": "payment",
-    "product": "phone",
-    "filename": "432_506_419_frustrated_payment_phone_document.txt"
-}

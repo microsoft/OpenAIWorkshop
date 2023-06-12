@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having issues with their billing for their Contoso Wireless phone and the agent was able to help them by investigating their account and determining that the high bill was caused by one of the phones in their plan using significantly more data than usual. The agent then provided advice on how to reduce the bill in the future, such as setting up data usage limits or switching to a different plan with lower data caps, and walked the customer through how to set up those restrictions.",
-    "customerSentiment": "frustrated",
-    "topic": "billing",
-    "product": "phone",
-    "filename": "804_608_521_frustrated_billing_phone_document.txt"
-}

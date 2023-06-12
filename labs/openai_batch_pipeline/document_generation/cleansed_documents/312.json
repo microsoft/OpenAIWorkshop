@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having issues connecting their Contoso Wireless TV to the internet. The agent troubleshooted and determined that the issue was likely caused by outdated firmware on the TV. The agent then recommended that the customer update the firmware by downloading the latest version from the Contoso website onto a USB drive and connecting it to their TV. The customer agreed to try this and the agent offered to provide further assistance if needed.",
-    "customerSentiment": "disappointed",
-    "topic": "service",
-    "product": "tv",
-    "filename": "312_748_661_disappointed_service_tv_document.txt"
-}

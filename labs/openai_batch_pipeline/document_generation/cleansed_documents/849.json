@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having issues with their Contoso Wireless internet and the agent attempted to help by asking the customer what type of device they were using, if they could connect to other networks, checking their account status, resetting the modem/router, and resetting the laptop's network settings. In the end, the customer was still unable to connect to the Contoso Wireless network.",
-    "customerSentiment": "angry",
-    "topic": "account",
-    "product": "internet",
-    "filename": "849_536_449_angry_account_internet_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer service representative provided the customer with information about the Contoso Wireless product streaming service, including how it works, what it offers, and how much it costs. They also discussed the ability to cancel without penalty and the features and benefits that come with the service. Finally, they provided instructions on how to sign up for the service.",
-    "customerSentiment": "content",
-    "topic": "churn",
-    "product": "streaming",
-    "filename": "340_505_418_content_churn_streaming_document.txt"
-}

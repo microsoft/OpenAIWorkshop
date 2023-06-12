@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble accessing the streaming service and the agent identified that the issue was due to an incorrect subscription status in their system. The agent reset the subscription status manually, which should resolve the issue within 10-15 minutes.",
-    "customerSentiment": "confused",
-    "topic": "service",
-    "product": "streaming",
-    "filename": "305_604_517_confused_service_streaming_document.txt"
-}

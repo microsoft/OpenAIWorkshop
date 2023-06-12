@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer called Contoso Wireless to inquire about their bill. The agent was able to help the customer by confirming that they had been charged for a phone that they had returned, and that the refund had been processed and would show up on their next statement. The agent also provided information about fees associated with a different phone that the customer was considering purchasing.",
-    "customerSentiment": "neutral",
-    "topic": "billing",
-    "product": "phone",
-    "filename": "750_475_388_neutral_billing_phone_document.txt"
-}

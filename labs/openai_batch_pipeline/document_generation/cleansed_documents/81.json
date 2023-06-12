@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was charged for a Premium Streaming option that they had not selected when signing up for their plan. The agent apologized for the confusion and processed a refund for the charge as well as removed the Premium Streaming option from the customer's plan. The agent also explained that there was a misunderstanding when the customer initially signed up, causing the confusion.",
-    "customerSentiment": "angry",
-    "topic": "billing",
-    "product": "streaming",
-    "filename": "81_488_401_angry_billing_streaming_document.txt"
-}

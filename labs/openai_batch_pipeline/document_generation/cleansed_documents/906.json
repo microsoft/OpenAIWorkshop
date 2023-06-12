@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was considering leaving Contoso Wireless due to the poor streaming product. The customer service agent apologized for the inconvenience and explained that the issue is likely caused by overloaded servers due to high demand. The customer service agent then offered a refund and an upgrade to the premium streaming package at no additional cost in order to improve the customer's experience. The customer agreed to try the upgraded package, but warned that they would leave if it didn't work out. The customer service agent expressed appreciation for the customer's loyalty and offered to help with anything else needed.",
-    "customerSentiment": "upset",
-    "topic": "churn",
-    "product": "streaming",
-    "filename": "906_678_591_upset_churn_streaming_document.txt"
-}

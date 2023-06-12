@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer had a problem with their payment for the Contoso Wireless streaming service. The agent provided instructions on how to update the payment information in their account settings, and explained that if the payment is declined again, they will be contacted for an alternate payment method. The agent also advised the customer to check the minimum requirements for streaming content, read the terms of service and privacy policy, and to remember that limited customer support is available for streaming related issues.",
-    "customerSentiment": "upset",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "910_540_453_upset_payment_streaming_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless regarding an unreliable and spotty internet connection. The agent asked for more information on the issue and the customer provided them with the type of devices they were using to access the internet. The agent requested the serial numbers of the devices in order to further investigate the issue. The agent then suggested restarting both devices, running a speed test, and resetting/unplugging the router/modem in order to try and improve the connection. The agent is currently investigating the issue and looking for a solution.",
-    "customerSentiment": "negative",
-    "topic": "service",
-    "product": "internet",
-    "filename": "141_506_419_negative_service_internet_document.txt"
-}

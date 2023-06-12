@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was unhappy with an unauthorized payment made from their account for a phone purchased from Contoso Wireless. After verifying the payment was authorized by the customer, the agent offered a refund which will be processed and should be reflected in the customer's bank account within 3-5 business days. The customer was also informed that they had purchased an Apple iPhone 8 Plus.",
-    "customerSentiment": "angry",
-    "topic": "payment",
-    "product": "phone",
-    "filename": "779_556_469_angry_payment_phone_document.txt"
-}

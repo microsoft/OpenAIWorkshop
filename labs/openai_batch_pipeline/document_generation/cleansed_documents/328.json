@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having issues with their Contoso Wireless internet connection, which has been dropping out randomly. The agent has suggested resetting the router by unplugging it from the wall for 10 seconds and then plugging it back in again. The customer is going to try this and will let the agent know how it goes.",
-    "customerSentiment": "confused",
-    "topic": "assistance",
-    "product": "internet",
-    "filename": "328_548_461_confused_assistance_internet_document.txt"
-}

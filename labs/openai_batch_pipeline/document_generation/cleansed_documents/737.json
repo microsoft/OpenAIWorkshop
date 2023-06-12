@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer had received a bill for a Contoso Wireless internet plan that they had not signed up for. The agent looked into the issue and discovered that it was an error in their system. The charge was refunded to the customer and the agent also provided them with information about the various Contoso Wireless internet plans, including pricing and features. The customer was then sent a link to the website so they could compare plans in more detail.",
-    "customerSentiment": "upset",
-    "topic": "payment",
-    "product": "internet",
-    "filename": "737_619_532_upset_payment_internet_document.txt"
-}

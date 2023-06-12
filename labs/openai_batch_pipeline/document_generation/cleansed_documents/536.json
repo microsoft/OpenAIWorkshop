@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is unhappy with their internet service, claiming it is slow and unreliable. The agent is working to investigate the issues and find a resolution. They have asked for additional information from the customer in order to do so. The agent has also offered various options to prevent the customer from leaving, such as discounted services or free upgrades, as well as their loyalty program which rewards customers who stay with them over time.",
-    "customerSentiment": "angry",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "536_600_513_angry_churn_internet_document.txt"
-}
