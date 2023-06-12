@@ -11,3 +11,4 @@ pyodbc
 azure-search-documents==11.4.0b3
 azure-ai-formrecognizer
 python-dotenv
+numpy==1.24.3
