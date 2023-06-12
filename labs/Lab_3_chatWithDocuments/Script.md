@@ -10,7 +10,10 @@
 
 * Install [.Net Core 3.1 or later](https://dotnet.microsoft.com/en-us/download/dotnet/3.1)
 
+* Install [Node.js](https://nodejs.org/en/download)
+
 * [Azure Bot Framework Composer](https://learn.microsoft.com/en-us/composer/install-composer?tabs=windows#install-and-run-composer) is installed in local computer.
+
 * [Bot Framework Emulator](https://github.com/Microsoft/BotFramework-Emulator/releases/tag/v4.14.1) installed in local computer. 
 
 
