@@ -4,8 +4,6 @@
 
 In this workshop, you will learn how to use the Azure OpenAI service to create AI powered solutions. You will get hands-on experience with the latest AI technologies and will learn how to use Azure OpenAI API. 
 
-![OpenAI ](documents/images/OpenAI.png)
-
 ## General Prerequisites
 
 The following prerequisites must be completed before you start these labs
@@ -36,9 +34,10 @@ The following prerequisites must be completed before you start these labs
   - Microsoft.Application
   - Microsoft.LogicApps
 
-- [VS Code](https://code.visualstudio.com/download) installed in your computer
-  
-**Lab-specific pre-reqs:​**
+- [VS Code](https://code.visualstudio.com/download) installed on your computer.
+
+
+## Lab-specific pre-reqs:
 
 **Lab 2:​**
 
