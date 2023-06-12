@@ -12,13 +12,17 @@ The following prerequisites must be completed before you start these labs
 - You must be connected to the internet
 - Use either Edge or Chrome when executing the labs.
 - Access to an Azure Subscription with [Contributor Access](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-steps)
-  > **IMPORTANT**: Only use your institutions/organization email. Do not use a personal email address (Example: @gmail.com, @yahoo.com, @hotmail.com, etc.)
+  
 - Approved access to Azure OpenAI service in your subscription. You can request access [here](https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUOFA5Qk1UWDRBMjg0WFhPMkIzTzhKQ1dWNyQlQCN0PWcu)
 
-  > **IMPORTANT**: Authorization can take up to 10 business days
+
+  **IMPORTANT**: 
+    - Only use your institutions/organization email. Do not use a personal email address (Example: @gmail.com, hotmail.com, etc.)
+    - Authorization can take up to 10 business days.  
+  
 
 - [Azure Open AI](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal) already provisioned and **text-davinci-003** model deployed.
-  **South Central US** is recommended region for deploying Azure Open AI.
+  For this lab, we recommend **South Central US** region for your Azure Open AI deployment.
 
 - Required Resource Providers [How to Register Azure Services](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types)
   
