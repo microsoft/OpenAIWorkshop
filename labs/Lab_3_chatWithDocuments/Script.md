@@ -61,12 +61,12 @@ Here are the SKUs that are needed for the Azure Resources:
 
 As part of the data preparation step, the documents are chunked into smaller sections (20 lines) and stored as individual documents in the search index. The chunking logic is achieved with a python script below. 
 
-* Search for Cognitive Search on Azure Portal, Select the Cognitive Search and navigate to Semantic Search blade and select Free plan. 
+* Go to the Resource Group created from the previous step, and open the Cognitive Search resource. Navigate to Semantic Search blade and then select the Free plan.
 
     ![Alt text](Images/lab3_image2_semanticsearchplan.png)
     
 
-*   Create Search Index, Sematic Configuration and Index a few documents using automated script. The script can be run multiple times without any side effects.
+*   Create Search Index, Semantic Configuration and Index a few documents using automated script. The script can be run multiple times without any side effects.
     
     Open Cloud Shell by clicking cloud shell icon on the upper right corner of the Azure portal and select PowerShell. Create a Fileshare if it prompts, to save all the files of this lab.
 
