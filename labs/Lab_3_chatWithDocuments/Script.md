@@ -137,7 +137,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
     ![Alt text](Images/lab3_image27_numsearch.png)
 
 
-* Now, you can test the function app by providing the below prompt in the 'Body' tab of the postman and press 'Send'. You must recieve the text result in the response window of the postman.
+* Now, you can test the function app by providing the below prompt in the 'Body' tab of postman. Make sure the 'raw' option is selected. Press 'Send'. The result will be displayed in the response window of Postman.
 
         {"prompt" : "Is GPU supported in AML"}
 
