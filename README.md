@@ -46,14 +46,13 @@ The following prerequisites must be completed before you start these labs
 
 ## Agenda
 
-**TODO: Review the timelines & add links to the labs/documentation
+**TODO: Review the timelines & add links to the labs/documentation**
 
 | Activity | Duration |
 | --- | --- |
 | [Lab 1: Low Code/No Code ChatGPT](/labs/Lab_1_no_code_low_code_chat_gpt/README.md) | 45 minutes |
-| Lab 2: Chat with your documents | 45 minutes |
+| [Lab 2: Chat with your documents](/labs/Lab_3_chatWithDocuments/README.md) | 45 minutes |
 | [Lab 3: Chat with your databases](/labs/Lab_3_data_analytics/README.md) | 45 minutes |
-| Lab 4: Batch processing with Synapse? | 75 minutes |
 
 
 ## Before you begin
