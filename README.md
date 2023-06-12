@@ -39,6 +39,10 @@ The following prerequisites must be completed before you start these labs
 
 ## Lab-specific pre-reqs:
 
+**Lab 1:​**
+
+No additional pre-reqs
+
 **Lab 2:​**
 
 - [Git](https://git-scm.com/downloads)​
