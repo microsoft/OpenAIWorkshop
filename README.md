@@ -52,7 +52,7 @@ The following prerequisites must be completed before you start these labs
 | --- | --- |
 | [Lab 1: Low Code/No Code ChatGPT](/labs/Lab_1_no_code_low_code_chat_gpt/README.md) | 45 minutes |
 | [Lab 2: Chat with your documents](/labs/Lab_3_chatWithDocuments/README.md) | 45 minutes |
-| [Lab 3: Chat with your databases](/labs/Lab_3_data_analytics/README.md) | 45 minutes |
+| [Lab 3: Chat with your databases](/labs/Lab_2_Data_Analytics/README.md) | 45 minutes |
 
 
 ## Before you begin
