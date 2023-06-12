@@ -75,7 +75,7 @@ Scroll down to the condition option and expand it, then expand the true option. 
 
 ![](../../documents/images/lab-1-logicapp-6.png)
 
-Save the logic app
+> IMPORTANT: **Save the logic app**
 
 ### Step 3. Deploy Logic App 1 (read-mailbox-techsupport)
 
