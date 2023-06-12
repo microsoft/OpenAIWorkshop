@@ -12,7 +12,7 @@ Examples of questions are:
 - More difficult: Is that true that top 20% customers generate 80% revenue in 2016?
 - Advanced: Forecast monthly revenue for next 12 months starting from June-2018
 
-The application supports Python's built-in SQLITE as well as your own Microsoft SQL Server.
+The application supports Python's built-in SQLITE (recommended for lab) as well as your own Microsoft SQL Server.
 
 ![](../../documents/images/lab-3-data-1.png)
 
@@ -62,7 +62,7 @@ from the terminal, navigate to ```cd labs/lab_3_data_analytics```
 
  Provide settings for Open AI and Database.You can either create a file named `secrets.env` file in the root of this folder (labs/lab_3_data_analytics) as below or do it using the app's UI later on.
 
-    - Option 1: use built-in SQLITE. Then you don't need to install SQL Server.
+    - Option 1: use built-in SQLITE (recommended). Then you don't need to install SQL Server.
         ```txt
         AZURE_OPENAI_API_KEY="9999999999999999999999999"
         AZURE_OPENAI_GPT4_DEPLOYMENT="NAME_OF_GPT_4_DEPLOYMENT"
@@ -111,7 +111,7 @@ To run the application from the command line: `streamlit run app.py`
 
 You will see the application load in your browser
 
-## Deploy the application to Azure
+## Deploy the application to Azure (optional)
 
 This application can be deployed to an Azure subscription using the Azure Developer CLI.
 There is no need to have any coding experience to deploy this application but you will need permissions to create resources in an Azure Subscription
