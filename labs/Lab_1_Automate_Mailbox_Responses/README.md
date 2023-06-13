@@ -53,7 +53,7 @@ After the deployment you should see two new items in your resource group
 
    ![](../../documents/images/lab-1-logicapp-2.png)
 
-Expand the first box "When an HHTP is received" and copy the URL to your text editor
+Expand the first box "When an HTTP request is received" and copy the URL to your text editor
 
 ![](../../documents/images/lab-1-logicapp-3.png)
 
