@@ -20,7 +20,7 @@ The application supports Python's built-in SQLITE (*recommended* for lab) as wel
 
 You will need [VS Code](https://code.visualstudio.com/download) to run this lab in your local computer and then optionally deploy it to Azure.
 
-You can use an existing SQL database or the default database provided in the lab.
+You can use an existing SQL database or the default SQLlite embedded database (*recommended*) provided in the lab.
 
 ## Appplication Overview
 
