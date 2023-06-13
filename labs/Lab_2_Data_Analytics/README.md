@@ -14,6 +14,8 @@ Examples of questions are:
 
 The application supports Python's built-in SQLITE (*recommended* for lab) as well as your own Microsoft SQL Server.
 
+From a EDU perspective, think of how this solution might be applied to Student Analytics where faculty/staff can ask questions about Student performance/tuition payments etc as shown below:
+
 ![](../../documents/images/lab-3-data-1.png)
 
 ## Summary
