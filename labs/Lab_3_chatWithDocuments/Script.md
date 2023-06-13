@@ -1,6 +1,6 @@
 # Deployment Script
 
-### Prerequisites
+## Prerequisites
 
 * Owner or Contributor permission is required in the Azure subscription.
 * Microsoft.Search Resource provider needs to be registered in the Azure Subscription. 
@@ -39,8 +39,9 @@ To get the Azure OpenAI Model deployment name, click on the deployment under Man
 
 ![Alt text](Images/lab3_image17_deploymentname.png)
 
+<br />
 
-## 1. Azure services deployment
+# 1. Azure services deployment
 
 Deploy Azure Resources:
     - Azure Function App to orchestrate calls to Azure OpenAI and Cognitive Search APIs
@@ -58,9 +59,9 @@ Here are the SKUs that are needed for the Azure Resources:
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmain%2Flabs%2FLab_3_chatWithDocuments%2Fdeploy%2Fazure-deploy.json) 
 
+<br />
 
-
-## 2. Setup Azure Cognitive Search and prepare data
+# 2. Setup Azure Cognitive Search and prepare data
 
 As part of the data preparation step, the documents are chunked into smaller sections (20 lines) and stored as individual documents in the search index. The chunking logic is achieved with a python script below. 
 
@@ -113,11 +114,14 @@ As part of the data preparation step, the documents are chunked into smaller sec
     The search indexer chunks a sample pdf document(500 pages) and chunks each page into 20 lines. Each chunk is created as a new search doc in the index. The pdf document processing is achieved using the Azure Form Recognizer service. 
     
         python search-indexer.py
-        
 
-## 3. Test Azure Function App service deployment
+<br />        
 
-* Launch Postman
+# 3. Test Azure Function App service deployment
+Choose your preferred test method below to confirm your Function App deployment before continuing to Step 4.
+
+
+## Postman
 
 * Click on 'New' as shown in the below screenshot and then select 'HTTP'.
 
@@ -147,7 +151,40 @@ As part of the data preparation step, the documents are chunked into smaller sec
     ![Alt text](Images/lab3_image28_prompt.png)
 
 
-## 4. Build Chatbot 
+## Azure Portal
+
+* Navigate to the function app in the Azure Portal
+
+* Select the `Functions` tab
+
+* Select the `orchestrator` function
+
+* Select the `Code + Test` tab
+
+* Click the `Test/Run` button at the top of the page
+
+* Add a query parameter called `num_search_result` with a value of `5`
+
+* Add the following body content: `{"prompt" : "Is GPU supported in AML"}` to the body section, then click `Run`
+
+    ![Input](Images/function-test-portal.PNG)
+
+* Confirm the response was successful in the `Output` tab 
+
+    ![Output](Images/function-test-success-portal.PNG)
+
+## Visual Studio/VS Code
+> :information_source: This method requires the REST Client extension when using VS Code
+
+* Update [test.http](./orchestrator/test.http) with your function URL and key
+
+* Click `Send Request`
+
+    ![HTTP File Test](Images/http-file-test.PNG)
+
+<br />
+
+# 4. Build Chatbot 
 
 Create a bot in Azure Bot Composer:
 
@@ -222,8 +259,9 @@ Create a bot in Azure Bot Composer:
 
 Azure bot is now complete. In the next step, the bot is published on the Azure Cloud.
 
+<br />
 
-## 5. Publish the Chatbot
+# 5. Publish the Chatbot
 
 
 1. On the left most menu pane, select publish. 
@@ -250,7 +288,9 @@ Select LUIS region as 'West US' and click next.
     ![Alt text](Images/lab3_image16_publishbot.png)
 
 
-## 6. Test 
+<br />
+
+# 6. Test 
 
 1. Click on the Home button on the top left corner in the Bot Framework Composer. Select the bot that has been developed in the above steps.
 
