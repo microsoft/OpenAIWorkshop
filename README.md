@@ -39,6 +39,7 @@ The following prerequisites must be completed before you start these labs
   - Microsoft.Insights 
   - Microsoft.Application
   - Microsoft.LogicApps
+  - Microsoft.BotService
 
 - [VS Code](https://code.visualstudio.com/download) installed on your computer.
 
