@@ -20,7 +20,7 @@ From a EDU perspective, think of how this solution might be applied to Student A
 
 ## Summary
 
-You will need [VS Code](https://code.visualstudio.com/download) to run this lab in your local computer and then optionally deploy it to Azure.
+You will need [VS Code](https://code.visualstudio.com/download) to run this lab in your local computer.
 
 You can use an existing SQL database or the default SQLlite embedded database (*recommended*) provided in the lab.
 
@@ -112,47 +112,3 @@ run the command: `pip install -r requirements.txt`
 To run the application from the command line: `streamlit run app.py`
 
 You will see the application load in your browser.
-
-
-## Deploy the application to Azure (*optional*)
-
-This application can be deployed to an Azure subscription using the Azure Developer CLI.
-There is no need to have any coding experience to deploy this application but you will need permissions to create resources in an Azure Subscription.
-
-> **Note** All steps will be performed in the VS Code Terminal.
-
-The following steps are required to deploy to Azure:
-
-### Step 1. Install Azure Developer CLI
-
-> **Note** This step is required only if you did not install this earlier as part of the pre-requisites.
-
-Download and install [Azure Developer CLI](https://aka.ms/azure-dev/install)
-
-### Step 2. Navigate to the root directory of this lab.   
-
-```cd labs/Lab_2_Data_Analytics```
-
-### Step 3. Authenticate to Azure
-
-run the command `azd auth login` and follow instructions
-
-### Step 4. Create a local environment
-
-run the command `azd env new` and follow the prompts
-
-    > 💡 NOTE: If deploying to the same Subscription as others, use a unique name
-
-### Step 5. Deploy app and infrastructure
-
-run the command `azd up`
-
-### Step 6. Configure settings
-
-Once the deployment is completed, click on the published URL to open the application.
-
-Click on settings. Provide Open AI keys, deployment name and URL for ChatGPT. Optionally, you can provide deployment name for GPT-4 for advanced questions.
-
-For data, you can use the built-in SQLITE demo dataset or you can choose to specify your own SQL Server. In case you use SQLITE, you don't need to enter details for SQL Server.
-
-Click on submit to save settings.
