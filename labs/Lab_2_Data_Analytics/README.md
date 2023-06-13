@@ -53,26 +53,27 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 
 Open VS Code and Clone this repository:
 
+URL: https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
+
 ![](../../documents/images/lab-3-data-2.png)
 
-the URL is: https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
-
-from the terminal, navigate to ```cd labs/Lab_2_Data_Analytics```
+From the terminal, navigate to ```cd labs/Lab_2_Data_Analytics```
 
 ## Step 2. Set up enviromental variables
 
- Provide settings for Open AI and Database.You can either create a file named `secrets.env` file in the root of this folder (labs/lab_3_data_analytics) as below or do it using the app's UI later on.
+ Provide settings for Open AI and Database.You can either create a file named `secrets.env` file in the root of this folder (labs/lab_3_data_analytics) as below or do it using the app's UI later on (*easier*).
 
-    - Option 1: use built-in SQLITE (recommended). Then you don't need to install SQL Server.
-        ```txt
+    - Option 1: use built-in SQLITE (*recommended*). Then you don't need to install SQL Server.
+         
         AZURE_OPENAI_API_KEY="9999999999999999999999999"
         AZURE_OPENAI_GPT4_DEPLOYMENT="NAME_OF_GPT_4_DEPLOYMENT"
         AZURE_OPENAI_CHATGPT_DEPLOYMENT="NAME_OF_CHATGPT_4_DEPLOYMENT"
         AZURE_OPENAI_ENDPOINT=https://openairesourcename.openai.azure.com/
         SQL_ENGINE = "sqlite"
-        ```
+       
+
     - Option 2: use your own SQL Server
-        ```txt
+        
         AZURE_OPENAI_API_KEY="9999999999999999999999999"
         AZURE_OPENAI_ENDPOINT="https://openairesourcename.openai.azure.com/"
         AZURE_OPENAI_GPT4_DEPLOYMENT="NAME_OF_GPT_4_DEPLOYMENT"
@@ -82,7 +83,7 @@ from the terminal, navigate to ```cd labs/Lab_2_Data_Analytics```
         SQL_DATABASE="WideWorldImportersDW"
         SQL_SERVER="sqlservername.database.windows.net"
      
-        ```
+      
 
 > **IMPORTANT** If you are a Mac user, please follow [this](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos?view=sql-server-ver16) to install ODBC for PYODBC
 
