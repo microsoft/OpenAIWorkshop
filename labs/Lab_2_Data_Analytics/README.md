@@ -28,9 +28,9 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 
 - **SQL Query Writing Assistant**: Translates business question into SQL query language, then executes and displays the result.
   
-- **Data Analysis Assistant**: A more sophisticated application to perform advanced data analytics such as statisical analysis and forecasting. Here we demonstrate the use of [Chain of Thought](https://arxiv.org/abs/2201.11903) and [React](https://arxiv.org/abs/2210.03629) techniques to perform multi-step processing where the next step in the chain also depends on the observation/result from the previous step.
+- **Data Analysis Assistant**: A more sophisticated application to perform advanced data analytics such as statisical analysis and forecasting. Here we demonstrate the use of [Chain of Thought](https://arxiv.org/abs/2201.11903) and [ReAct](https://arxiv.org/abs/2210.03629) techniques to perform multi-step processing where the next step in the chain also depends on the observation/result from the previous step.
 
-### First Appication: Use SQL Query Writing Assistant
+### SQL Query Writing Assistant:
 
 ![](../../documents/media/da_assistant2.png)
 
@@ -38,14 +38,14 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 - You can select ```show code``` and/or ```show prompt``` to show SQL query and the prompt behind the scene.
 - Click on submit to execute and see result.
 
-### Second Application: Use Data Ananalyst Assistant
+### Data Analyst Assistant:
 
 ![](../../documents/media/da_assistant3.png) 
 
 - Use a question from the FAQ or enter your own question.
-- You can select ```show code``` and/or ```show prompt``` to show SQL & Python code and  the prompt behind the scene.
+- You can select ```show code``` and/or ```show prompt``` to show SQL & Python code and the prompt behind the scene.
 - Click on submit to execute and see result.
-- For advanced questions such as forecasting, you can use GPT-4 as the engine 
+- For advanced questions such as forecasting, you can use GPT-4 (if available) as the engine.
 
 ![](../../documents/media/da_assistant4.png)
 
