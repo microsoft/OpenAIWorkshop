@@ -113,24 +113,23 @@ To run the application from the command line: `streamlit run app.py`
 
 You will see the application load in your browser
 
+
 ## Deploy the application to Azure (optional)
 
 This application can be deployed to an Azure subscription using the Azure Developer CLI.
-There is no need to have any coding experience to deploy this application but you will need permissions to create resources in an Azure Subscription
+There is no need to have any coding experience to deploy this application but you will need permissions to create resources in an Azure Subscription.
 
 > **Note** All steps will be performed in VS Code Terminal
 
-The following steps are to require to deploy to Azure:
+The following steps are required to deploy to Azure:
 
-### Step 1. Install Azure Developer CLS
+### Step 1. Install Azure Developer CLI
 
-> **Note** This step is required only if you did not installed this as part of pre-requisites Install 
+> **Note** This step is required only if you did not install this earlier as part of the pre-requisites.
 
 Download and install [Azure Developer CLI](https://aka.ms/azure-dev/install)
 
-### Step 2. Navigate top the root directory of the OpenAIWorkshop
-
-   Go to the local directory of the OpenAIWorkshop
+### Step 2. Navigate to the root directory of the OpenAIWorkshop   
 
 ### Step 3. Authenticate to Azure
 
@@ -148,7 +147,7 @@ run the command `azd up`
 
 ### Step 6. Configure settings
 
-Once the deployment is completed, click on the URL listed  to open the application
+Once the deployment is completed, click on the published URL to open the application.
 
 Click on settings. Provide Open AI keys, deployment name and URL for ChatGPT. Optionally, you can provide deployment name for GPT-4 for advanced questions.
 
