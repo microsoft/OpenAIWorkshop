@@ -91,13 +91,13 @@ From the terminal, navigate to ```cd labs/Lab_2_Data_Analytics```
 
 > **NOTE** all activities in this step will performed using the command line in VS Code terminal
 
-### Step 3.1 navigate to the root directory of this lab
+### Step 3.1 Navigate to the root directory of this lab
 
 Navigate to ```cd labs/Lab_2_Data_Analytics```
 
 ### Step 3.2 Create a python environment with version from 3.7 and 3.10
 
-This step is required **ONLY If did not perform this during pre-requisites**
+This step is required **ONLY if did not perform this earlier as part of the pre-requisites**
 
     - [Python 3+](https://www.python.org/downloads/)
         - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
@@ -107,19 +107,19 @@ This step is required **ONLY If did not perform this during pre-requisites**
 
 run the command: `pip install -r requirements.txt`
 
-### Step 3.4 run the application locally
+### Step 3.4 Run the application locally
 
 To run the application from the command line: `streamlit run app.py`
 
-You will see the application load in your browser
+You will see the application load in your browser.
 
 
-## Deploy the application to Azure (optional)
+## Deploy the application to Azure (*optional*)
 
 This application can be deployed to an Azure subscription using the Azure Developer CLI.
 There is no need to have any coding experience to deploy this application but you will need permissions to create resources in an Azure Subscription.
 
-> **Note** All steps will be performed in VS Code Terminal
+> **Note** All steps will be performed in the VS Code Terminal.
 
 The following steps are required to deploy to Azure:
 
@@ -129,7 +129,9 @@ The following steps are required to deploy to Azure:
 
 Download and install [Azure Developer CLI](https://aka.ms/azure-dev/install)
 
-### Step 2. Navigate to the root directory of the OpenAIWorkshop   
+### Step 2. Navigate to the root directory of this lab.   
+
+```cd labs/Lab_2_Data_Analytics```
 
 ### Step 3. Authenticate to Azure
 
