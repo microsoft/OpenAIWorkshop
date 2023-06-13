@@ -26,10 +26,9 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 
 ## Appplication Overview
 
-There are two applications:
-
-- **SQL Query Writing Assistant**: a simple application that translate business question into SQL query language then execute and display result.
-- **Data Analysis Assistant**: a more sophisticated application to perform advanced data analytics such as statisical analysis and forecasting. Here we demonstrate the use of [Chain of Thought](https://arxiv.org/abs/2201.11903) and [React](https://arxiv.org/abs/2210.03629) techniques to perform multi-step processing where the next step in the chain also depends on the observation/result from the previous step.
+- **SQL Query Writing Assistant**: Translates business question into SQL query language, then executes and displays the result.
+  
+- **Data Analysis Assistant**: A more sophisticated application to perform advanced data analytics such as statisical analysis and forecasting. Here we demonstrate the use of [Chain of Thought](https://arxiv.org/abs/2201.11903) and [React](https://arxiv.org/abs/2210.03629) techniques to perform multi-step processing where the next step in the chain also depends on the observation/result from the previous step.
 
 ### First Appication: Use SQL Query Writing Assistant
 
