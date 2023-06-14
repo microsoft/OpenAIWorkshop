@@ -3,10 +3,10 @@
 ### Prerequisites
 
 * Owner or Contributor permission is required in the Azure subscription.
-* Microsoft.Search Resource provider needs to be registered in the Azure Subscription. 
-* [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Function App.  
-* Azure Cloud Shell is recommended as it comes with preinstalled dependencies. 
-* Azure Open AI already provisioned and text-davinci-003 model is deployed. The model deployment name is required in the Azure Deployment step below. 
+* Microsoft.Search Resource provider needs to be registered in the Azure Subscription.
+* [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Function App.
+* Azure Cloud Shell is recommended as it comes with preinstalled dependencies.
+* Azure Open AI already provisioned and text-davinci-003 model is deployed. The model deployment name is required in the Azure Deployment step below.
 
 * Install [.Net Core 3.1 or later](https://dotnet.microsoft.com/en-us/download/dotnet/3.1)
 
@@ -14,7 +14,7 @@
 
 * [Azure Bot Framework Composer](https://learn.microsoft.com/en-us/composer/install-composer?tabs=windows#install-and-run-composer) is installed in local computer.
 
-* [Bot Framework Emulator](https://github.com/Microsoft/BotFramework-Emulator/releases/tag/v4.14.1) installed in local computer. 
+* [Bot Framework Emulator](https://github.com/Microsoft/BotFramework-Emulator/releases/tag/v4.14.1) installed in local computer.
 
 
 
@@ -56,45 +56,45 @@ Here are the SKUs that are needed for the Azure Resources:
 
 (control+click) to launch in new tab.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmain%2Flabs%2FLab_3_chatWithDocuments%2Fdeploy%2Fazure-deploy.json) 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2FVishal%2FLabEdits-Outputs%2Flabs%2FLab_3_chatWithDocuments%2Fdeploy%2Fazure-deploy.json)
 
 
 
 ## 2. Setup Azure Cognitive Search and prepare data
 
-As part of the data preparation step, the documents are chunked into smaller sections (20 lines) and stored as individual documents in the search index. The chunking logic is achieved with a python script below. 
+As part of the data preparation step, the documents are chunked into smaller sections (20 lines) and stored as individual documents in the search index. The chunking logic is achieved with a python script below.
 
 * Go to the Resource Group created from the previous step, and open the Cognitive Search resource. Navigate to Semantic Search blade and then select the Free plan.
 
     ![Alt text](Images/lab3_image2_semanticsearchplan.png)
-    
+
 
 *   Create Search Index, Semantic Configuration and Index a few documents using automated script. The script can be run multiple times without any side effects.
-    
+
     Open Cloud Shell by clicking cloud shell icon on the upper right corner of the Azure portal and select PowerShell. Create a Fileshare if it prompts, to save all the files of this lab.
 
     ![Alt text](Images/lab3_image3_cloudshell.png)
-    
-    Run the below commands from cloud shell to configure python environment. 
 
-        
+    Run the below commands from cloud shell to configure python environment.
+
+
         git clone https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
-        
-        cd OpenAIWorkshop/labs/Lab_3_chatWithDocuments 
-        
+
+        cd OpenAIWorkshop/labs/Lab_3_chatWithDocuments
+
         pip install -r ./orchestrator/requirements.txt
 
 
-*   Update Azure Search, Azure Open AI endpoints, Azure Form Recognizer Endpoint and API Keys in the secrets.env. 
-    
+*   Update Azure Search, Azure Open AI endpoints, Azure Form Recognizer Endpoint and API Keys in the secrets.env.
+
     Create a secrets.env file in the ingest folder that will be referenced by the search indexer (search-indexer.py):
     **The endpoints below needs to have the trailing '/' at end for the search-indexer to run correctly.**
 
         cd ingest
-        
-        # create secrets.env using the built-in code editor 
+
+        # create secrets.env using the built-in code editor
         # When using code, you can type control+s to save the file and control+q to quit the editor
-        
+
         code secrets.env
 
 
@@ -108,12 +108,12 @@ As part of the data preparation step, the documents are chunked into smaller sec
         FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/labs/Lab_3_chatWithDocuments/Data/azure-machine-learning-2-500.pdf"
         LOCAL_FOLDER_PATH=""
 
-*   The document processing, chunking, indexing can all be scripted using any preferred language. 
-    This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc. 
-    The search indexer chunks a sample pdf document(500 pages) and chunks each page into 20 lines. Each chunk is created as a new search doc in the index. The pdf document processing is achieved using the Azure Form Recognizer service. 
-    
+*   The document processing, chunking, indexing can all be scripted using any preferred language.
+    This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc.
+    The search indexer chunks a sample pdf document(500 pages) and chunks each page into 20 lines. Each chunk is created as a new search doc in the index. The pdf document processing is achieved using the Azure Form Recognizer service.
+
         python search-indexer.py
-        
+
 
 ## 3. Test Azure Function App service deployment
 
@@ -127,7 +127,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
     ![Alt text](Images/lab3_image25_postmethod.png)
 
-* Enter the URL of the Function app that you have created. Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url 
+* Enter the URL of the Function app that you have created. Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url
 
     ![Alt text](Images/lab3_image26_posturl.png)
 
@@ -136,7 +136,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
         &num_search_result=5
 
-    
+
     ![Alt text](Images/lab3_image27_numsearch.png)
 
 
@@ -147,7 +147,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
     ![Alt text](Images/lab3_image28_prompt.png)
 
 
-## 4. Build Chatbot 
+## 4. Build Chatbot
 
 Create a bot in Azure Bot Composer:
 
@@ -178,7 +178,7 @@ Create a bot in Azure Bot Composer:
 
 
 
-6. Click on '+' sign under unknown intent to add an intent. 
+6. Click on '+' sign under unknown intent to add an intent.
 
     ![Alt text](Images/lab3_image9_addintent.png)
 
@@ -196,7 +196,7 @@ Create a bot in Azure Bot Composer:
 
 
 9. Select Body box as 'object' from right corner drop down menu and copy and paste the below prompt in the body.
-        
+
         {
             "prompt": "${turn.activity.text}"
         }
@@ -214,10 +214,10 @@ Create a bot in Azure Bot Composer:
     ![Alt text](Images/lab3_image13_sendresponse.png)
 
 
-12. In the 'responses' box, type the below expression.  
-        
+12. In the 'responses' box, type the below expression.
+
         ${turn.results.content.result}
-    
+
 
 
 Azure bot is now complete. In the next step, the bot is published on the Azure Cloud.
@@ -226,7 +226,7 @@ Azure bot is now complete. In the next step, the bot is published on the Azure C
 ## 5. Publish the Chatbot
 
 
-1. On the left most menu pane, select publish. 
+1. On the left most menu pane, select publish.
 
     ![Alt text](Images/lab3_image14_publishbot.png)
 
@@ -237,8 +237,8 @@ Azure bot is now complete. In the next step, the bot is published on the Azure C
 
 3. Click on 'Add new' to create a new publishing profile. Provide a name to the publihsing profile and select 'Publishing target' as 'Publihs bot to Azure'. Click next.
 
-4. Select 'Create new resources' and click next. A sign in to your Azure subscription is required- provide your Azure portal credentials to sign in. Once signed in, select the subscription and resource group. Resource group that has been created at the beginning of this lab is preffered, but a new resource group can also be created. 
-Select operating system as 'windows'. 
+4. Select 'Create new resources' and click next. A sign in to your Azure subscription is required- provide your Azure portal credentials to sign in. Once signed in, select the subscription and resource group. Resource group that has been created at the beginning of this lab is preffered, but a new resource group can also be created.
+Select operating system as 'windows'.
 Provide a name to the host resource.
 Select region as 'East US'.
 Select LUIS region as 'West US' and click next.
@@ -250,18 +250,18 @@ Select LUIS region as 'West US' and click next.
     ![Alt text](Images/lab3_image16_publishbot.png)
 
 
-## 6. Test 
+## 6. Test
 
 1. Click on the Home button on the top left corner in the Bot Framework Composer. Select the bot that has been developed in the above steps.
 
-2. Click on 'Start bot' button on the right left cornder of the Bot Framework Composer to start the developed bot. 
+2. Click on 'Start bot' button on the right left cornder of the Bot Framework Composer to start the developed bot.
 
-3. You can now test the bot either in web chat or in emulator. Click on either 'Open Web Chat' or 'Test in Emulator'. 
+3. You can now test the bot either in web chat or in emulator. Click on either 'Open Web Chat' or 'Test in Emulator'.
 
-You can now ask questions related to 'Azure Machine Learning' to get the response from Azure OpenAI. 
+You can now ask questions related to 'Azure Machine Learning' to get the response from Azure OpenAI.
 
-E.g.: 
-    
+E.g.:
+
     What is Azure Machine Learning?
     Is GPU supported in AML?
     How to track and monitor training runs in AML?
