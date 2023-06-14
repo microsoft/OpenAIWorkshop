@@ -189,18 +189,18 @@
             {
                 "name": "INDEX_NAME",
                 "value": "azure-ml-docs"
-    
+
             },
             {
                 "name": "SEMANTIC_CONFIG",
                 "value": "semantic-config"
-    
+
             },
             {
               "name": "GPT_ENGINE",
               "value": "[parameters('OPENAI_Model_Deployment_Name')]"
             }
-           
+
 
           ]
         }
@@ -237,8 +237,23 @@
         }
       }
     }
-   
-    
-  ]
-  
+  ],
+  "outputs": {
+    "AZSEARCH_EP": {
+      "type": "string",
+      "value": "[concat('https://',format('search-{0}', uniqueString(resourceGroup().id)),'.search.windows.net/')]"
+    },
+    "AZSEARCH_KEY": {
+      "type": "string",
+      "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2020-08-01').primaryKey]"
+    },
+    "AFR_ENDPOINT": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', format('afr-cognitive-{0}', uniqueString(resourceGroup().id))), '2021-10-01').endpoint]"
+    },
+    "AFR_API_KEY": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', format('afr-cognitive-{0}', uniqueString(resourceGroup().id))), '2021-10-01').key1]"
+    }
+  }
 }
