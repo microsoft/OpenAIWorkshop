@@ -241,26 +241,26 @@
     }
   ],
   "outputs": {
-    "AzSearch_Endpoint": {
+    "azSearchEndpoint": {
       "type": "string",
       "value": "[concat('https://',format('search-{0}', uniqueString(resourceGroup().id)),'.search.windows.net/')]"
       // "value": "[reference(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2021-04-01-preview').endpoints.default]"
     },
-    "AzSearch_Key": {
+    "azSearchKey": {
       "type": "string",
       "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2021-04-01-preview').primaryKey]"
     },
-    "AFR_Endpoint": {
+    "afrEndpoint": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', format('afr-cognitive-{0}', uniqueString(resourceGroup().id))), '2021-10-01').endpoint]"
     },
-    "AFR_API_KEY": {
+    "afrApiKey": {
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', format('afr-cognitive-{0}', uniqueString(resourceGroup().id))), '2021-10-01').key1]"
     },
     "AzFunctionUrl": {
       "type": "string",
-      "value": "[concat('https://',parameters('functionAppName'),'.azurewebsites.net/api/orchestrator','?code=',listKeys(resourceId('Microsoft.Web/sites/functions', parameters('functionAppName'), 'orchestrator'), '2022-03-01').default,'&num_search_results=5')]"
+      "value": "[concat('https://',parameters('functionAppName'),'.azurewebsites.net/api/orchestrator','?code=',listKeys(resourceId('Microsoft.Web/sites/functions', parameters('functionAppName'), 'orchestrator'), '2022-03-01').default,'&num_search_result=5')]"
     }
   }
 }
