@@ -257,6 +257,10 @@
     "AFR_API_KEY": {
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', format('afr-cognitive-{0}', uniqueString(resourceGroup().id))), '2021-10-01').key1]"
+    },
+    "AzFunctionKey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.Web/sites/functions', 'orchestrator'), '2022-03-01').default]"
     }
   }
 }
