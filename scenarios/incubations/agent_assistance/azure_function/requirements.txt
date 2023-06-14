@@ -1,0 +1,11 @@
+# DO NOT include azure-functions-worker in this file
+# The Python Worker is managed by Azure Functions platform
+# Manually managing azure-functions-worker may cause unexpected issues
+
+azure-functions
+azure-functions-durable
+faiss-cpu
+openai==0.27.8
+openai[embeddings]
+openapi-schema-pydantic==1.2.4
+pandas==1.4.3
