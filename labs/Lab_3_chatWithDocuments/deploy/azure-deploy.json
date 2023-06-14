@@ -243,11 +243,11 @@
   "outputs": {
     "AZSEARCH_EP": {
       "type": "string",
-      "value": "[concat('https://',format('search-{0}', uniqueString(resourceGroup().id)),'.search.windows.net/')]"
+      "value": "[reference(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2022-09-01').endpoint]"
     },
     "AZSEARCH_KEY": {
       "type": "string",
-      "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2020-08-01').primaryKey]"
+      "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2022-09-01').primaryKey]"
     },
     "AFR_ENDPOINT": {
       "type": "string",
