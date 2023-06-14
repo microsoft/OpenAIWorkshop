@@ -261,6 +261,10 @@
     "AzFunction": {
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.Web/sites/functions', parameters('functionAppName'), 'orchestrator'), '2022-03-01').default]"
+    },
+    "AzFunctionUrl:": {
+      "type": "string",
+      "value": "[concat('https://',parameters('functionAppName'),'.azurewebsites.net/api/orchestrator','?code=',listKeys(resourceId('Microsoft.Web/sites/functions', parameters('functionAppName'), 'orchestrator'), '2022-03-01').default)]"
     }
   }
 }
