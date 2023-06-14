@@ -243,7 +243,7 @@
   "outputs": {
     "AzSearch_Endpoint": {
       "type": "string",
-      "value": "[reference(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2021-04-01-preview').endpoint.default]"
+      "value": "[reference(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2021-04-01-preview').endpoints.default]"
     },
     "AzSearch_Key": {
       "type": "string",
