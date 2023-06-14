@@ -1,0 +1,13 @@
+# PREREQUISITE: requests in this file can be excecuted natively in Visual Studio, or by installing the REST Client extension in VSCode
+#   VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+@endpoint=https://func-xc66v4d2ge26g.azurewebsites.net/api/orchestrator?num_search_result=5
+@functionKey=Wjhu7Ez7bTzQiHUuM-xN6lB5-ajySD_mo1kTENQGuavfAzFuJsjh3g==
+
+
+POST {{endpoint}}
+x-functions-key: {{functionKey}}
+
+{
+    "prompt": "Is GPU supported in AML"
+}
