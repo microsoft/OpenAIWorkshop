@@ -214,7 +214,7 @@
     },
     {
         "type": "Microsoft.Search/searchServices",
-        "apiVersion": "2022-09-01",
+        "apiVersion": "2021-04-01-preview",
         "name": "[format('search-{0}', uniqueString(resourceGroup().id))]",
         "location": "[resourceGroup().location]",
         "sku": {
@@ -243,11 +243,11 @@
   "outputs": {
     "AZSEARCH_EP": {
       "type": "string",
-      "value": "[reference(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2022-09-01').endpoint]"
+      "value": "[reference(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2021-04-01-preview').endpoint]"
     },
     "AZSEARCH_KEY": {
       "type": "string",
-      "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2022-09-01').primaryKey]"
+      "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2021-04-01-preview').primaryKey]"
     },
     "AFR_ENDPOINT": {
       "type": "string",
