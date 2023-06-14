@@ -260,7 +260,7 @@
     },
     "AzFunctionKey": {
       "type": "string",
-      "value": "[listKeys(resourceId('Microsoft.Web/sites/functions', 'orchestrator'), '2022-03-01').default]"
+      "value": "[listKeys(resourceId('Microsoft.Web/sites/functions', parameters('functionAppName'), 'orchestrator'), '2022-03-01').default]"
     }
   }
 }
