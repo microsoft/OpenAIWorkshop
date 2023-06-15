@@ -39,13 +39,13 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai10-1.png)
 
-1. On the Deploy model pop-up, from the drop-down select **text-davinci-003 (1)** for Select a Model, then select the Modle version **1 (2)**, enter deployment name as **demomodel (3)** then click on **Create (4)**. Copy OpenAI Model name into the text file for later use.
+1. On the Deploy model pop-up, from the drop-down select **text-davinci-003 (1)** for Select a Model, enter deployment name as **demomodel (2)** then click on **Create (3)**. Copy OpenAI Model name into the text file for later use.
 
-   ![](images/openai12-1.png)
+   ![](images/openai-model1.png)
 
-1. Click on **+ Create new deployment**, On the Deploy model pop-up, from the drop-down select **gpt-35-turbo (1)** for Select a Model, then select the Modle version **0301 (2)**, enter deployment name as **gptmodel (3)** then click on **Create (4)**. Copy OpenAI Model name into the text file for later use.
+1. Click on **+ Create new deployment**, On the Deploy model pop-up, from the drop-down select **gpt-35-turbo (1)** for Select a Model, enter deployment name as **gptmodel (2)** then click on **Create (3)**. Copy OpenAI Model name into the text file for later use.
 
-   ![](images/openai12-2.png)
+   ![](images/openai-model2.png)
 
 1. Naviagte back to [Azure portal](http://portal.azure.com/), search and select **Azure OpenAI**, from the **Cognitive Services | Azure OpenAI pane**, select the **SQL-OpenAI-<inject key="Deployment ID" enableCopy="false"/>**.
 
