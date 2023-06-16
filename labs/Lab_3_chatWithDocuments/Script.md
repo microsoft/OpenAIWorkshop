@@ -3,8 +3,7 @@
 ### Prerequisites
 
 - Owner or Contributor permission is required in the Azure subscription.
-- Microsoft.Search Resource provider needs to be registered in the Azure Subscription.
-- Microsoft.BotService Resource provider needs to be registered in the Azure Subscription.
+- Microsoft.Search and Microsoft.BotService Resource provider needs to be registered in the Azure Subscription.
 - Azure Cloud Shell is recommended as it comes with preinstalled dependencies.
 - Azure Open AI already provisioned and text-davinci-003 model is deployed. The model deployment name is required in the Azure Deployment step below.
 
@@ -59,9 +58,8 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
 - Create Search Index, Semantic Configuration and Index a few documents using automated script. The script can be run multiple times without any side effects.
 
-  Open Cloud Shell by clicking cloud shell icon on the upper right corner of the Azure portal and select PowerShell. Create a Fileshare if it prompts, to save all the files of this lab.
+- Open [Azure Cloud Shell](https://portal.azure.com/#cloudshell/) and select PowerShell. If this is first time you are starting Cloud Shell, you will be prompted to create an Azure Storage account for the Azure file share.
 
-  ![Alt text](Images/lab3_image3_cloudshell.png)
 
   Run the below commands from cloud shell to configure python environment.
 
