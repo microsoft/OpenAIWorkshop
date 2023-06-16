@@ -131,7 +131,7 @@ Choose your preferred method to test and confirm Azure Function App before conti
     ![Alt text](Images/lab-3-function-test-success-portal.png)
 
 ## Option B: Visual Studio/VS Code
-  > :information_source: This method requires the REST Client extension when using VS Code
+  > :information_source: This method requires the [REST Client extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) when using VS Code.
 
   - Update [test.http](./orchestrator/test.http) with your function URL and key
 
