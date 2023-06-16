@@ -100,10 +100,10 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
     Add the below entries with correct values to secrets.env. Please refer to [this doc](ShowKeysandSecrets.md) to retrieve API Keys and Urls.
 
-        AZSEARCH_EP="https://<YOUR Search Service Name>.search.windows.net/"
-        AZSEARCH_KEY="<YOUR Search Service API Key>"
-        AFR_ENDPOINT="<YOUR Azure Form Recognizer Service API EndPoint>"
-        AFR_API_KEY="<YOUR Azure Form Recognizer API Key>"
+        azSearchEndpoint="https://<YOUR Search Service Name>.search.windows.net/"
+        azSearchKey="<YOUR Search Service API Key>"
+        afrEndpoint="<YOUR Azure Form Recognizer Service API EndPoint>"
+        afrApiKey="<YOUR Azure Form Recognizer API Key>"
         INDEX_NAME="azure-ml-docs"
         FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/labs/Lab_3_chatWithDocuments/Data/azure-machine-learning-2-500.pdf"
         LOCAL_FOLDER_PATH=""
