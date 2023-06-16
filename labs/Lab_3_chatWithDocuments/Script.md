@@ -4,17 +4,15 @@
 
 * Owner or Contributor permission is required in the Azure subscription.
 * Microsoft.Search Resource provider needs to be registered in the Azure Subscription.
-* [PostMan Client Installed](https://www.postman.com/downloads/) for testing Azure Functions. Azure portal can also be used to test Azure Function App.
+* Microsoft.BotService Resource provider needs to be registered in the Azure Subscription.
 * Azure Cloud Shell is recommended as it comes with preinstalled dependencies.
 * Azure Open AI already provisioned and text-davinci-003 model is deployed. The model deployment name is required in the Azure Deployment step below.
 
-* Install [.Net Core 3.1 or later](https://dotnet.microsoft.com/en-us/download/dotnet/3.1)
+* Install [.Net Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1)
 
 * Install [Node.js](https://nodejs.org/en/download)
 
 * [Azure Bot Framework Composer](https://learn.microsoft.com/en-us/composer/install-composer?tabs=windows#install-and-run-composer) is installed in local computer.
-
-* [Bot Framework Emulator](https://github.com/Microsoft/BotFramework-Emulator/releases/tag/v4.14.1) installed in local computer.
 
 
 
@@ -58,16 +56,15 @@ Here are the SKUs that are needed for the Azure Resources:
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2FVishal%2FLabEdits-Outputs%2Flabs%2FLab_3_chatWithDocuments%2Fdeploy%2Fazure-deploy.json)
 
+Wait for the deployment to complete. The deployment can take upto 10 minutes. Once deployment is successfully completed, navigate to Output Section as shown below and copy the output values in a notepad file. We will be using these values in the next steps:
 
+   ![Alt text](Images/lab-3-deployment-completed.png)
+
+   ![Alt text](Images/lab-3-copy-output-values.png)
 
 ## 2. Setup Azure Cognitive Search and prepare data
 
 As part of the data preparation step, the documents are chunked into smaller sections (20 lines) and stored as individual documents in the search index. The chunking logic is achieved with a python script below.
-
-* Go to the Resource Group created from the previous step, and open the Cognitive Search resource. Navigate to Semantic Search blade and then select the Free plan.
-
-    ![Alt text](Images/lab3_image2_semanticsearchplan.png)
-
 
 *   Create Search Index, Semantic Configuration and Index a few documents using automated script. The script can be run multiple times without any side effects.
 
