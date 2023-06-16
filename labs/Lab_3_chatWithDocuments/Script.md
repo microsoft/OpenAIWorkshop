@@ -47,9 +47,11 @@ Here are the SKUs that are needed for the Azure Resources:
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2FVishal%2FLabEdits-Outputs%2Flabs%2FLab_3_chatWithDocuments%2Fdeploy%2Fazure-deploy.json)
 
-- Wait for the deployment to complete. The deployment can take upto 10 minutes. Once deployment is  successfully completed, navigate to Outputs Section as shown below and copy the output values in a notepad file. We will be using these values in the next steps:
+- Wait for the deployment to complete. The deployment can take upto 10 minutes.
 
    ![Alt text](Images/lab-3-deployment-completed.png)
+
+- Once deployment is successfully completed, navigate to Outputs Section as shown below and Click on `Copy to Clipboard` to copy the output values along with the output keys in a notepad file. Please copy all the output values, we will be using these values in the next steps:
 
    ![Alt text](Images/lab-3-copy-output-values.png)
 
