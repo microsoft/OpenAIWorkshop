@@ -189,18 +189,18 @@
             {
                 "name": "INDEX_NAME",
                 "value": "azure-ml-docs"
-    
+
             },
             {
                 "name": "SEMANTIC_CONFIG",
                 "value": "semantic-config"
-    
+
             },
             {
               "name": "GPT_ENGINE",
               "value": "[parameters('OPENAI_Model_Deployment_Name')]"
             }
-           
+
 
           ]
         }
@@ -214,13 +214,15 @@
     },
     {
         "type": "Microsoft.Search/searchServices",
-        "apiVersion": "2022-09-01",
+        "apiVersion": "2021-04-01-preview",
         "name": "[format('search-{0}', uniqueString(resourceGroup().id))]",
         "location": "[resourceGroup().location]",
         "sku": {
           "name": "standard"
         },
-        "properties": {}
+        "properties": {
+          "semanticSearch": "free"
+        }
     },
     {
       "type": "Microsoft.CognitiveServices/accounts",
@@ -237,8 +239,27 @@
         }
       }
     }
-   
-    
-  ]
-  
+  ],
+  "outputs": {
+    "AZSEARCH_EP": {
+      "type": "string",
+      "value": "[concat('https://',format('search-{0}', uniqueString(resourceGroup().id)),'.search.windows.net/')]"
+    },
+    "AZSEARCH_KEY": {
+      "type": "string",
+      "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2021-04-01-preview').primaryKey]"
+    },
+    "AFR_ENDPOINT": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', format('afr-cognitive-{0}', uniqueString(resourceGroup().id))), '2021-10-01').endpoint]"
+    },
+    "AFR_API_KEY": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', format('afr-cognitive-{0}', uniqueString(resourceGroup().id))), '2021-10-01').key1]"
+    },
+    "AzFunctionUrl": {
+      "type": "string",
+      "value": "[concat('https://',parameters('functionAppName'),'.azurewebsites.net/api/orchestrator','?code=',listKeys(resourceId('Microsoft.Web/sites/functions', parameters('functionAppName'), 'orchestrator'), '2022-03-01').default,'&num_search_result=5')]"
+    }
+  }
 }
