@@ -99,8 +99,10 @@ As part of the data preparation step, the documents are chunked into smaller sec
         python search-indexer.py
 
 
-## 3. Test Azure Function App Service deployment
-* **Option 1: Test from Azure Portal (Recommended)**:
+# 3. Test Azure Function App Service deployment
+Choose your preferred method to test and confirm Azure Function App before continuing to Step 4.
+
+## Option A: Test from Azure Portal (Recommended)
 
   - Open [Azure Portal](https://portal.azure.com/) and navigate to the Resource Group deployed for Lab 3:
 -
@@ -126,7 +128,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
     ![Alt text](Images/lab-3-function-test-success-portal.png)
 
-* **Option 2: Visual Studio/VS Code**
+## Option B: Visual Studio/VS Code
   > :information_source: This method requires the REST Client extension when using VS Code
 
   - Update [test.http](./orchestrator/test.http) with your function URL and key
@@ -135,7 +137,8 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
     ![HTTP File Test](Images/http-file-test.PNG)
 
-* **Option 3: Launch Postman**
+## Option C: Launch Postman
+> :information_source: This method requires Postman client to be installed locally in your system. If not installed, please download fromm [Postman Client](https://www.postman.com/downloads/))
 
   - Select Azure Function:
 
