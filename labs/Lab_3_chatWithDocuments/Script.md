@@ -103,6 +103,8 @@ As part of the data preparation step, the documents are chunked into smaller sec
 * **Option 1: Test from Azure Portal (Recommended)**:
 
   - Open [Azure Portal](https://portal.azure.com/) and navigate to the Resource Group deployed for Lab 3:
+-
+  - Select Function App:
 
     ![Alt text](Images/lab-3-navigate-to-rg-for-function.png)
 
@@ -125,6 +127,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
     ![Alt text](Images/lab-3-function-test-success-portal.png)
 
 * **Option 2: Visual Studio/VS Code**
+  > :information_source: This method requires the REST Client extension when using VS Code
 
   - Update [test.http](./orchestrator/test.http) with your function URL and key
 
