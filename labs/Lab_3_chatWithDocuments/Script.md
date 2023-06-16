@@ -1,6 +1,6 @@
 # Deployment Script
 
-### Prerequisites
+## Prerequisites
 
 - Owner or Contributor permission is required in the Azure subscription.
 - Microsoft.Search and Microsoft.BotService Resource provider needs to be registered in the Azure Subscription.
@@ -17,21 +17,22 @@ Before deploying the Azure resources, you will need Azure OpenAI API endpoint, A
 
 Follow the steps below to get the Azure OpenAI endpoint and API key. Save the endpoint and API key in a notepad for later use.
 
-1. Navigate to [Azure Open AI Studio](https://oai.azure.com/portal)
+- Navigate to [Azure Open AI Studio](https://oai.azure.com/portal)
 
-2. Click on the the Gear icon on Top right corner.
+- Click on the the Gear icon on Top right corner.
 
    ![Alt text](Images/lab3_image18_gearicon.png)
 
-3. Navigate to Resource Tab and copy the endpoint and key in a notepad.
+- Navigate to Resource Tab and copy the endpoint and key in a notepad.
 
    ![Alt text](Images/lab3_image19_endpointandkey.png)
 
-To get the Azure OpenAI Model deployment name, click on the deployment under Management, and copy the model deploment name.
+- To get the Azure OpenAI Model deployment name, click on the deployment under Management, and copy the model deploment name.
 
-![Alt text](Images/lab3_image17_deploymentname.png)
+    ![Alt text](Images/lab3_image17_deploymentname.png)
 
-## 1. Azure services deployment
+
+## 1. Azure Services deployment
 
 Deploy Azure Resources: - Azure Function App to orchestrate calls to Azure OpenAI and Cognitive Search APIs - Azure Cognitive Search Service - Azure Form Recognizer
 
@@ -46,11 +47,12 @@ Here are the SKUs that are needed for the Azure Resources:
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2FVishal%2FLabEdits-Outputs%2Flabs%2FLab_3_chatWithDocuments%2Fdeploy%2Fazure-deploy.json)
 
-Wait for the deployment to complete. The deployment can take upto 10 minutes. Once deployment is successfully completed, navigate to Outputs Section as shown below and copy the output values in a notepad file. We will be using these values in the next steps:
+- Wait for the deployment to complete. The deployment can take upto 10 minutes. Once deployment is  successfully completed, navigate to Outputs Section as shown below and copy the output values in a notepad file. We will be using these values in the next steps:
 
-![Alt text](Images/lab-3-deployment-completed.png)
+   ![Alt text](Images/lab-3-deployment-completed.png)
 
-![Alt text](Images/lab-3-copy-output-values.png)
+   ![Alt text](Images/lab-3-copy-output-values.png)
+
 
 ## 2. Setup Azure Cognitive Search and prepare data
 
@@ -90,35 +92,61 @@ As part of the data preparation step, the documents are chunked into smaller sec
       FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/labs/Lab_3_chatWithDocuments/Data/azure-machine-learning-2-500.pdf"
       LOCAL_FOLDER_PATH=""
 
-  Once copied, press Ctrl + S to save the secrests.env file.
+*   The document processing, chunking, indexing can all be scripted using any preferred language.
+    This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc.
+    The search indexer chunks a sample pdf document(500 pages) and chunks each page into 20 lines. Each chunk is created as a new search doc in the index. The pdf document processing is achieved using the Azure Form Recognizer service.
 
-  Press Ctrl + q to exist from code editor.
+        python search-indexer.py
 
-- The document processing, chunking, indexing can all be scripted using any preferred language.
-  This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc.
-  The search indexer chunks a sample pdf document(500 pages) and chunks each page into 20 lines. Each chunk is created as a new search doc in the index. The pdf document processing is achieved using the Azure Form Recognizer service.
 
-      python search-indexer.py
+## 3. Test Azure Function App Service deployment
+* **Option 1: Test from Azure Portal (Recommended)**:
 
-## 3. Test Azure Function App service from Azure Portal
-
-- Open [Azure Portal](https://portal.azure.com) and navigate to the Resource Group created for Lab 3:
+  - Open [Azure Portal](https://portal.azure.com/) and navigate to the Resource Group deployed for Lab 3:
 
     ![Alt text](Images/lab-3-navigate-to-rg-for-function.png)
 
-- Select Azure Function:
+  - Select `Functions` in the left navigation pane and click on `orchestrator` function:
 
-  ![Alt text](Images/lab3_image4_postman.png)
+     ![Alt text](Images/lab-3-select-function.png)
 
-- Select method to "POST".
+  - Select `Code + Test` under Developer:
 
-  ![Alt text](Images/lab3_image25_postmethod.png)
+    ![Alt text](Images/lab-3-function-test-run.png)
+
+  - Add a query parameter called `num_search_result` with a value of `5` and Add the following body content: `{"prompt" : "Is GPU supported in AML"}` to the body section:
+
+    ![Alt text](images/function-test-portal.PNG)
+
+  - then click `Run`
+
+  - Confirm the response was successful in the `Output` tab
+
+    ![Alt text](images/function-test-success-portal.PNG)
+
+* **Option 2: Visual Studio/VS Code**
+
+  - Update [test.http](./orchestrator/test.http) with your function URL and key
+
+  - Click `Send Request`
+
+    ![HTTP File Test](Images/http-file-test.PNG)
+
+* **Option 3: Launch Postman**
+
+  - Select Azure Function:
+
+    ![Alt text](Images/lab3_image4_postman.png)
+
+  - Select method to "POST".
+
+    ![Alt text](Images/lab3_image25_postmethod.png)
 
 - Enter the URL of the Function app that you have created. Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url
 
   ![Alt text](Images/lab3_image26_posturl.png)
 
-- Add below text just after the function app URL. The num_search_result query parameter can be altered to limit the search results. **num_search_result** is a _mandatory_ query parameter.
+- Add below text just after the function app URL. The num_search_result query parameter can be altered to limit the search results. num_search_result is a _mandatory_ query parameter.
 
         &num_search_result=5
 
@@ -129,6 +157,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
         {"prompt" : "Is GPU supported in AML"}
 
   ![Alt text](Images/lab3_image28_prompt.png)
+
 
 ## 4. Build Chatbot
 
@@ -184,6 +213,7 @@ Create a bot in Azure Bot Composer:
 
 Azure bot is now complete. In the next step, the bot is published on the Azure Cloud.
 
+
 ## 5. Publish the Chatbot
 
 1. On the left most menu pane, select publish.
@@ -207,6 +237,7 @@ Azure bot is now complete. In the next step, the bot is published on the Azure C
 6. Clik on Publish tab and select the bot to be published. Select the profile provisioned in the above step. Click on 'Publish selected bots'. Click on 'Okay' in the next window. Wait for the bot to be published on the Azure Cloud.
 
    ![Alt text](Images/lab3_image16_publishbot.png)
+
 
 ## 6. Test
 
