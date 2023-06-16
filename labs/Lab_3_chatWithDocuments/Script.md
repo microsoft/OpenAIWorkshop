@@ -110,19 +110,19 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
      ![Alt text](Images/lab-3-select-function.png)
 
-  - Select `Code + Test` under Developer:
+  - Select `Code + Test` under Developer and click on `Test/Run`:
 
     ![Alt text](Images/lab-3-function-test-run.png)
 
   - Add a query parameter called `num_search_result` with a value of `5` and Add the following body content: `{"prompt" : "Is GPU supported in AML"}` to the body section:
 
-    ![Alt text](Images/function-test-portal.png)
+    ![Alt text](Images/lab-3-function-test-portal.png)
 
   - then click `Run`
 
   - Confirm the response was successful in the `Output` tab
 
-    ![Alt text](Images/function-test-success-portal.png)
+    ![Alt text](Images/lab-3-function-test-success-portal.png)
 
 * **Option 2: Visual Studio/VS Code**
 
