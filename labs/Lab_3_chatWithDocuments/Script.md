@@ -45,7 +45,7 @@ Here are the SKUs that are needed for the Azure Resources:
 
 (control+click) to launch in new tab.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2FVishal%2FLabEdits-Outputs%2Flabs%2FLab_3_chatWithDocuments%2Fdeploy%2Fazure-deploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2FVishal%2FLabEdits-Outputs%2Flabs%2FLab_3_chatWithDocuments%2Fdeploy%2Fazure-deploy.json){:target="_blank"}
 
 - Wait for the deployment to complete. The deployment can take upto 10 minutes.
 
@@ -62,7 +62,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
 - Create Search Index, Semantic Configuration and Index a few documents using automated script. The script can be run multiple times without any side effects.
 
-- Open [Azure Cloud Shell](https://portal.azure.com/#cloudshell/) and select `PowerShell`. If this is first time you are starting Cloud Shell, you will be prompted to create an Azure Storage account for the Azure file share.
+- Open [Azure Cloud Shell](https://portal.azure.com/#cloudshell/){:target="_blank"} and select `PowerShell`. If this is first time you are starting Cloud Shell, you will be prompted to create an Azure Storage account for the Azure file share.
 
 
   Run the below commands from cloud shell to configure python environment.
