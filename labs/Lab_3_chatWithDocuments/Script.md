@@ -60,7 +60,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
 - Create Search Index, Semantic Configuration and Index a few documents using automated script. The script can be run multiple times without any side effects.
 
-- Open [Azure Cloud Shell](https://portal.azure.com/#cloudshell/) and select PowerShell. If this is first time you are starting Cloud Shell, you will be prompted to create an Azure Storage account for the Azure file share.
+- Open [Azure Cloud Shell](https://portal.azure.com/#cloudshell/) and select `PowerShell`. If this is first time you are starting Cloud Shell, you will be prompted to create an Azure Storage account for the Azure file share.
 
 
   Run the below commands from cloud shell to configure python environment.
@@ -138,7 +138,7 @@ Choose your preferred method to test and confirm Azure Function App before conti
     ![HTTP File Test](Images/http-file-test.PNG)
 
 ## Option C: Launch Postman
-> :information_source: This method requires Postman client to be installed locally in your system. If its installed already, please download from [Postman Client](https://www.postman.com/downloads/))
+> :information_source: This method requires Postman client to be installed locally in your system. If its installed already, please download from [Postman Client](https://www.postman.com/downloads/)
 
   - Open Postman in your system and click on **New** as shown in the below screenshot and then select `HTTP`:
 
@@ -148,7 +148,7 @@ Choose your preferred method to test and confirm Azure Function App before conti
 
     ![Alt text](Images/lab3_image25_postmethod.png)
 
-- Enter the URL of the Function app that you have created copied in the notepad:
+- Enter the URL of the Function app that you have copied in the notepad:
 
   ![Alt text](Images/lab3_image26_posturl.png)
 
@@ -189,7 +189,7 @@ Create a bot in Azure Bot Composer:
 
     ![Alt text](Images/lab3_image10_httprequest.png)
 
-8.  Select 'HTTP Method' as 'POST'. Copy the function app url (as copied when tested through postman). Please refer to [this doc](ShowKeysandSecrets.md) to retrieve the Function App Url. Put this url in under url box of the bot followed by **num_search_result** query parameter (see below image).
+8.  Select 'HTTP Method' as 'POST'. Paste Azure Function App url that you have copied to notepad.
 
     ![Alt text](Images/lab3_image11_url.png)
 
