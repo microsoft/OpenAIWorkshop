@@ -7,11 +7,11 @@
 - Azure Cloud Shell is recommended as it comes with preinstalled dependencies.
 - Azure Open AI already provisioned and text-davinci-003 model is deployed. The model deployment name is required in the Azure Deployment step below.
 
-- Install [.Net Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1)
+- Install [.Net Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1).
 
-- Install [Node.js](https://nodejs.org/en/download)
+- Install [Node.js](https://nodejs.org/en/download).
 
-- [Azure Bot Framework Composer](https://learn.microsoft.com/en-us/composer/install-composer?tabs=windows#install-and-run-composer) is installed in local computer.
+- Install [Azure Bot Framework Composer](https://learn.microsoft.com/en-us/composer/install-composer?tabs=windows#install-and-run-composer).
 
 Before deploying the Azure resources, you will need Azure OpenAI API endpoint, API key, and the model deployment name.
 
