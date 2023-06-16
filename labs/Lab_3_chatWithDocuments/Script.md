@@ -140,7 +140,7 @@ Choose your preferred method to test and confirm Azure Function App before conti
     ![HTTP File Test](Images/http-file-test.PNG)
 
 ## Option C: Launch Postman
-> :information_source: This method requires Postman client to be installed locally in your system. If its installed already, please download from [Postman Client](https://www.postman.com/downloads/)
+> :information_source: This method requires Postman client to be installed locally in your system. If its not installed already, please download from [Postman Client](https://www.postman.com/downloads/)
 
   - Open Postman in your system and click on **New** as shown in the below screenshot and then select `HTTP`:
 
