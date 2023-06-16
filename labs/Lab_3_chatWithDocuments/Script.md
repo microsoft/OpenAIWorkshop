@@ -138,27 +138,21 @@ Choose your preferred method to test and confirm Azure Function App before conti
     ![HTTP File Test](Images/http-file-test.PNG)
 
 ## Option C: Launch Postman
-> :information_source: This method requires Postman client to be installed locally in your system. If not installed, please download fromm [Postman Client](https://www.postman.com/downloads/))
+> :information_source: This method requires Postman client to be installed locally in your system. If its installed already, please download from [Postman Client](https://www.postman.com/downloads/))
 
-  - Select Azure Function:
+  - Open Postman in your system and click on **New** as shown in the below screenshot and then select `HTTP`:
 
     ![Alt text](Images/lab3_image4_postman.png)
 
-  - Select method to "POST".
+  - Select method to `POST`:
 
     ![Alt text](Images/lab3_image25_postmethod.png)
 
-- Enter the URL of the Function app that you have created. Please refer to [this doc](ShowKeysandSecrets.md) to retrieve Function App Url
+- Enter the URL of the Function app that you have created copied in the notepad:
 
   ![Alt text](Images/lab3_image26_posturl.png)
 
-- Add below text just after the function app URL. The num_search_result query parameter can be altered to limit the search results. num_search_result is a _mandatory_ query parameter.
-
-        &num_search_result=5
-
-  ![Alt text](Images/lab3_image27_numsearch.png)
-
-- Now, you can test the function app by providing the below prompt in the 'Body' tab of postman. Make sure the 'raw' option is selected. Press 'Send'. The result will be displayed in the response window of Postman.
+- Now, you can test the function app by providing the below prompt in the `Body` tab of postman. Make sure the `raw` option is selected. Press `Send`. The result will be displayed in the response window of Postman:
 
         {"prompt" : "Is GPU supported in AML"}
 
