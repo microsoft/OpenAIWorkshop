@@ -241,20 +241,19 @@
     }
   ],
   "outputs": {
-    "azSearchEndpoint": {
+    "AZSEARCH_EP": {
       "type": "string",
       "value": "[concat('https://',format('search-{0}', uniqueString(resourceGroup().id)),'.search.windows.net/')]"
-      // "value": "[reference(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2021-04-01-preview').endpoints.default]"
     },
-    "azSearchKey": {
+    "AZSEARCH_KEY": {
       "type": "string",
       "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2021-04-01-preview').primaryKey]"
     },
-    "afrEndpoint": {
+    "AFR_ENDPOINT": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', format('afr-cognitive-{0}', uniqueString(resourceGroup().id))), '2021-10-01').endpoint]"
     },
-    "afrApiKey": {
+    "AFR_API_KEY": {
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', format('afr-cognitive-{0}', uniqueString(resourceGroup().id))), '2021-10-01').key1]"
     },
