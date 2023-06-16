@@ -116,13 +116,13 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
   - Add a query parameter called `num_search_result` with a value of `5` and Add the following body content: `{"prompt" : "Is GPU supported in AML"}` to the body section:
 
-    ![Alt text](images/function-test-portal.PNG)
+    ![Alt text](images/function-test-portal.png)
 
   - then click `Run`
 
   - Confirm the response was successful in the `Output` tab
 
-    ![Alt text](images/function-test-success-portal.PNG)
+    ![Alt text](images/function-test-success-portal.png)
 
 * **Option 2: Visual Studio/VS Code**
 
