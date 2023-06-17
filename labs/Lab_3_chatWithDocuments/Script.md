@@ -5,19 +5,19 @@
 - Owner or Contributor permission is required in the Azure subscription.
 - Microsoft.Search and Microsoft.BotService Resource provider needs to be registered in the Azure Subscription.
 - Azure Cloud Shell is recommended as it comes with preinstalled dependencies.
-- Azure Open AI already provisioned and text-davinci-003 model is deployed. The model deployment name is required in the Azure Deployment step below.
+- Azure Open AI already provisioned and `text-davinci-003` model is deployed. The model deployment name is required in the Azure Deployment step below.
 
-- Install [.Net Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1).
+- Right Click and Open ***[.Net Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1)*** in a new tab to Install .Net Core 3.1.
 
-- Install [Node.js](https://nodejs.org/en/download).
+- Right Click and Open ***[Node.js](https://nodejs.org/en/download)*** in a new tab to Install Node.js.
 
-- Install [Azure Bot Framework Composer](https://learn.microsoft.com/en-us/composer/install-composer?tabs=windows#install-and-run-composer).
+- Right Click and Open ***[Azure Bot Framework Composer](https://learn.microsoft.com/en-us/composer/install-composer?tabs=windows#install-and-run-composer)*** in a new tab to Install Azure Bot Framework Composer.
 
-Before deploying the Azure resources, you will need Azure OpenAI API endpoint, API key, and the model deployment name.
+Before deploying the Azure resources, you will need **_Azure OpenAI API endpoint, API key, and the model deployment name_**.
 
 Follow the steps below to get the Azure OpenAI endpoint and API key. Save the endpoint and API key in a notepad for later use.
 
-- Navigate to [Azure Open AI Studio](https://oai.azure.com/portal)
+- Right Click and Open ***[Azure Open AI Studio](https://oai.azure.com/portal)*** in a new tab.
 
 - Click on the the Gear icon on Top right corner.
 
@@ -43,9 +43,9 @@ Here are the SKUs that are needed for the Azure Resources:
 - Azure Forms Recognizer (AFR) - Standard (To support analyzing 500 page document)
 - Azure Storage - general purpose V1 (Needed for Azure Function App and uploading sample documents)
 
-(control+click) to launch in new tab.
+Right Click on ***Deploy to Azure button*** and Open in a new tab.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2FVishal%2FLabEdits-Outputs%2Flabs%2FLab_3_chatWithDocuments%2Fdeploy%2Fazure-deploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fblob%2Fmain%2Flabs%2FLab_3_chatWithDocuments%2Fdeploy%2Fazure-deploy.json)
 
 - Wait for the deployment to complete. The deployment can take upto 10 minutes.
 
@@ -62,11 +62,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
 - Create Search Index, Semantic Configuration and Index a few documents using automated script. The script can be run multiple times without any side effects.
 
-- Open [Azure Cloud Shell](https://portal.azure.com/#cloudshell/) and select `PowerShell`. If this is first time you are starting Cloud Shell, you will be prompted to create an Azure Storage account for the Azure file share.
-
-
-<a href="https://google.com" target="_blank" rel="noopener"><span>Google</span> </a>.
-
+- Right Click and Open ***[Azure Cloud Shell](https://portal.azure.com/#cloudshell/)*** in a new tab and select `PowerShell`. If this is first time you are starting Cloud Shell, you will be prompted to create an Azure Storage account for the Azure file share.
 
   Run the below commands from cloud shell to configure python environment.
 
@@ -109,7 +105,7 @@ Choose your preferred method to test and confirm Azure Function App before conti
 
 ## Option A: Test from Azure Portal (Recommended)
 
-  - Open [Azure Portal](https://portal.azure.com/) and navigate to the Resource Group deployed for Lab 3:
+  - Right Click and Open ***[Azure Portal](https://portal.azure.com/)*** in a new tab and navigate to the Resource Group deployed for Lab 3:
 -
   - Select Function App:
 
@@ -143,7 +139,7 @@ Choose your preferred method to test and confirm Azure Function App before conti
     ![HTTP File Test](Images/http-file-test.PNG)
 
 ## Option C: Launch Postman
-> :information_source: This method requires Postman client to be installed locally in your system. If its not installed already, please download and install [Postman Client](https://www.postman.com/downloads/)
+> :information_source: This method requires Postman client to be installed locally in your system. If its not installed already, Right Click and Open ***[Postman Client](https://www.postman.com/downloads/)*** in a new tab to download and install Postman.
 
   - Open Postman in your system and click on **New** as shown in the below screenshot and then select `HTTP`:
 
