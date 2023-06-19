@@ -187,11 +187,11 @@ Step 6: Azure function returns the results to end user.
 
 5. We need to update the below values in the file 
 
-      - **host**: `openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>.azurewebsites.net` **(1)**
+      - **host**: **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>.azurewebsites.net (1)**
   
-      - **paths**:  `/api/NLQuery` **(2)**
+      - **paths**:  **/api/NLQuery (2)**
   
-      - **operationId**: `Get-Prompt` **(3)**
+      - **operationId**: **Get-Prompt (3)**
 
       ![](images/get-prompt-edit-1.png)
   
