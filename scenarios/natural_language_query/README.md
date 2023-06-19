@@ -269,9 +269,9 @@ Step 6: Azure function returns the results to end user.
    
      ![](images/apps-nlq-1.png)
      
-23. Click on **Power Automate**, then click on `...` next to **Promptinputflow** and click on **Remove from app**.
+23. Click on **Power Automate**, then click on `...` next to **Logic flows** and click on **Remove from app**.
 
-      ![](images/openai-7.png)
+      ![](images/nlplogic.png)
 
 24. Next, click on **+ Add flow** and select **Promptinputflow**.
   
