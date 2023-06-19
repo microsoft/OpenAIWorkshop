@@ -91,7 +91,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
     ![](./images/semanti-search-flow-1.png)
 
-11. To navigate back click on **Back (1)**, if you get a option to leave or Don't leave, click on **leave**.
+11. To navigate back click on **Back**, if you get a option to leave or Don't leave, click on **leave**.
 
 
 12.  On the **Flows (1)** Pane, select **Semantic-Search-Flow (2)** then click on `...` **(3)** and **Turn on (4)** your flow.
