@@ -164,7 +164,7 @@ Step 6: Azure function returns the results to end user.
       ![](images/powerapps9-1.png)
 
 
-## Task 4. Build the Connector App (Optional)
+## Task 4. Build the Connector App
 
 1. Navigate to https://make.powerapps.com/ and click on **App launcher** on the top left corner and select **Power Automate**.
 
