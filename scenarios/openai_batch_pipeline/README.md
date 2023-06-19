@@ -290,7 +290,7 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
 
 2. Now that the data is in the target table it is available for usage by running SQL queries against it or connecting PowerBI and creating visualizations. The Azure Function is running as well, so try uploading some of the transcript files to the generated_documents folder in your container and see how the function processes it and creates a new file in the cleansed_documents file.
 
-3. To query the new data, navigate to the menu on the left-hand side, and choose **Develop (1)**. Click on the existing **SQL Script (2)** and replace the content with the **SQL Code (3)** below. Then select **Run (4)**. 
+3. To query the new data, navigate to the menu on the left-hand side, and choose **Develop (1)**. Click on the existing **SQL Script (2)** and replace the content with the **SQL Code (3)** below. Then select **openaisql (4)** pool **Run (5)**. 
 
      ```sql 
     SELECT sentiment, count(*) as "Sum of Sentiment"
@@ -302,5 +302,5 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
    - Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar **Results (5)** to those below.
 
   
-   ![](images/query-results-1.png)
+   ![](images/lastpic.png)
 
