@@ -53,9 +53,25 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai13a.png)
 
+1. Navigate to **openai-<inject key="DeploymentID" enableCopy="false" /></inject>** resource group, and search and select **SQL database**.
+
+   ![](images/database.png)
+
+1. Now, copy the database name paste it in a text editor such as notepad for later use. 
+
+   ![](images/copydb.png)
+
+1. In **openai-<inject key="DeploymentID" enableCopy="false" /></inject>** resource group, search and select **SQL server**.
+
+   ![](images/server.png)
+
+1. Now, copy the **SQL server** name paste it in a text editor such as notepad for later use. 
+
+   ![](images/copyserver.png)
+
 1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the Open AI engine, Open AI rest end point, SQL server and SQL database name in the file and copy the content.
 
-      >**Note:** Provide the Model name as **demomodel**. Copy the SQL server and database names by navigating to the **openai-<inject key="DeploymentID" enableCopy="false" /></inject>** resource group.
+      >**Note:** Provide the Model name as **demomodel**.
 
 1. Go to **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group and open **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject> (2)** function app.
 
@@ -86,7 +102,7 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai7.png)
 
-3. From NLQuery go to **Code + Test (1)**, then click **Test/Run (2)** select **GET (3)** in **HTTP method** dropdown, click **+ Add parameter** under Query and enter **prompt (4)** in the Name field and enter **show top 10 products (5)** in the value field. Click **Run (6)**.
+3. From NLQuery go to **Code + Test (1)**, then click **Test/Run (2)** select **GET (3)** in **HTTP method** dropdown, click **+ Add parameter** under **Query** and enter **prompt (4)** in the **Name** field and enter **show top 10 products (5)** in the **Value** field. Click **Run (6)**.
 
    ![](images/code+test.png)
 
