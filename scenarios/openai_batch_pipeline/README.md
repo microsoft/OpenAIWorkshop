@@ -166,7 +166,7 @@ We'll next need to create two linked services: One for our Source (the JSON file
 
    ![](images/openai-linkedservice.png)
 
-1. Search for **Synapse (1)**, select **Azure Synapse Analytics (2)** and click on **Continue (3)**.
+1.  Click **New (3)** in the top-left. Search for **Synapse (1)**, select **Azure Synapse Analytics (2)** and click on **Continue (3)**.
 
    ![](images/synapse8.png)
 
