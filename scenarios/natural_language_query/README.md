@@ -284,9 +284,7 @@ Step 6: Azure function returns the results to end user.
 
 ## Task 5. Test the Power App
 
-1. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
-
-1.  Open the **NLP Query** App.
+1. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. Open the **NLP Query** App.
 
     ![](images/openai-3.png)
     
