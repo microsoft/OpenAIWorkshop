@@ -29,13 +29,13 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
    
     ![](./images/addsementic.png)
    
-1. Now, navigate to 'C:\labfile\OpenAIWorkshop-main\scenarios\openai_on_custom_dataset\ingest' in windows explore and you will see a file names as secerts.env, Make sure the valus is updated as expected. However we have already updated the values for you.
+1. Now, navigate to `C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest` in windows explore and you will see a file names as secerts.env, Make sure the valus is updated as expected. However we have already updated the values for you.
 
 
 1. Now you need to open the CMD and run the below command to change to directory to the ingest folder.
 
    ```
-       cd C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest
+   cd C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest
    ```
 
 1. Once you are in the ingest directory, run the below command to start the ingestion process. Please make sure to have the correct value in secrets.env file before running the below command. The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service.
@@ -44,7 +44,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
      python search-indexer.py
      ```
      
-     ![](./images/ingestdata.png)
+     ![](./images/cmd.png)
   The above script will ingest the data into the services and you will be able to continue with the lab from here. 
   
 # Task 2: Import PowerApp and try out the App.
@@ -91,7 +91,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
     ![](./images/semanti-search-flow-1.png)
 
-11. To navigate back click on **Back (1)**, if you get a option to leave or Don't leave, click on **leave**.
+11. To navigate back click on **Back**, if you get a option to leave or Don't leave, click on **leave**.
 
 
 12.  On the **Flows (1)** Pane, select **Semantic-Search-Flow (2)** then click on `...` **(3)** and **Turn on (4)** your flow.

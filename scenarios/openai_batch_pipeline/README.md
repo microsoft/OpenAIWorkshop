@@ -166,13 +166,13 @@ We'll next need to create two linked services: One for our Source (the JSON file
 
    ![](images/openai-linkedservice.png)
 
-1. Search for **Synapse (1)**, select **Azure Synapse Analytics (2)** and click on **Continue (3)**.
+1.  Click **New (3)** in the top-left. Search for **Synapse (1)**, select **Azure Synapse Analytics (2)** and click on **Continue (3)**.
 
    ![](images/synapse8.png)
 
 1. In the *New linked service* window that opens, fill in a name for your target linked service as **synapselinkedservice** **(1)**. Select the **Azure subscription (2)** in which you have been working. Select the **asaworkspace<inject key="DeploymentID" enableCopy="false"/> (3)** for **Server name** and **openaisql (4)** as the **Database name**. Be certain to change the **Authentication type** to **System Assigned Managed Identity (5)** then click on **Test connection (6)** and click  **Create (7)**.
 
-   ![](images/openai-synapselinked.png)
+   ![](images/synapse-1.png)
 
 1. Once you have created the two Linked Services, be certain to press the **Publish all** button at the top to publish our work and finalize the creation of the linked services and click **Publish**.
 
@@ -290,7 +290,7 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
 
 2. Now that the data is in the target table it is available for usage by running SQL queries against it or connecting PowerBI and creating visualizations. The Azure Function is running as well, so try uploading some of the transcript files to the generated_documents folder in your container and see how the function processes it and creates a new file in the cleansed_documents file.
 
-3. To query the new data, navigate to the menu on the left-hand side, and choose **Develop (1)**. Click on the existing **SQL Script (2)** and replace the content with the **SQL Code (3)** below. Then select **Run (4)**. 
+3. To query the new data, navigate to the menu on the left-hand side, and choose **Develop (1)**. Click on the existing **SQL Script (2)** and replace the content with the **SQL Code (3)** below. Then select **openaisql (4)** pool **Run (5)**. 
 
      ```sql 
     SELECT sentiment, count(*) as "Sum of Sentiment"
@@ -302,5 +302,5 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
    - Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar **Results (5)** to those below.
 
   
-   ![](images/query-results-1.png)
+   ![](images/lastpic.png)
 

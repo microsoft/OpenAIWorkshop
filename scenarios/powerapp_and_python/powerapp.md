@@ -54,7 +54,7 @@
 
       ![](./images/endpoint-key-1.png)
    
-    >**Note**: You can get Open AI endpoint and key from the environment details page.
+    > **Note**: Enter the **Open AI endpoint** and **key** that you copied in **Exercise-1 Task-1 Step-8**.
 
 15. From the **Apps (1)** page click on the **OpenAI Playground (2)** app to run the app.
 

@@ -35,9 +35,9 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai11-1.png)
 
-1. In the **Azure AI Studio**, select **Deployments (1)** under Management and click on **+ Create new deployment (2)** 
+1. In the **Azure AI Studio**, select **Deployments (1)** under Management and click on **+ Create new deployment (2)**. 
 
-   ![](images/openai10-1.png)
+   ![](images/openai10-1.2.png)
 
 1. On the Deploy model pop-up, from the drop-down select **text-davinci-003 (1)** for Select a Model, enter deployment name as **demomodel (2)** then click on **Create (3)**. Copy OpenAI Model name into the text file for later use.
 
@@ -47,15 +47,51 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai-model2.png)
 
-1. Naviagte back to [Azure portal](http://portal.azure.com/), search and select **Azure OpenAI**, from the **Cognitive Services | Azure OpenAI pane**, select the **SQL-OpenAI-<inject key="Deployment ID" enableCopy="false"/>**.
+1. Once the models are deployed, click on **demomodel** from the **Deployments** page.
+
+   ![](images/deployments.png)
+
+1. Next, click on **Edit deployment**.
+
+   ![](images/editdep.png)
+
+1. On the **Edit deployment** pop-up, expand **Advanced options (1)** and scale-down the **Tokens per Minute Rate Limit (thousands) (2)** to **10k** and click **Save and close (3)**.
+
+   ![](images/tokens.png)
+
+1. Navigate back to **Deployments** page, Select **gptmodel** and click on **Edit deployment**.
+
+   ![](images/gpt.png)
+
+1. On the **Edit deployment** pop-up, expand **Advanced options (1)** and scale-down the **Tokens per Minute Rate Limit (thousands) (2)** to **10k** and click **Save and close (3)**.
+
+   ![](images/gptedit.png)
+
+1. Naviagte back to [Azure portal](http://portal.azure.com/), search and select **Azure OpenAI**, from the **Cognitive Services | Azure OpenAI pane**, select the **OpenAI-<inject key="Deployment ID" enableCopy="false"/>**.
 
 1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Keys and Endpoint (1)** under **Resource Management**. Copy **Key 1 (2)** and the **Endpoint (3)** by clicking on copy to clipboard paste it in a text editor such as notepad for later use. 
 
    ![](images/openai13a.png)
 
+1. Navigate to **openai-<inject key="DeploymentID" enableCopy="false" /></inject>** resource group, and search and select **SQL database**.
+
+   ![](images/database.png)
+
+1. Now, copy the database name paste it in a text editor such as notepad for later use. 
+
+   ![](images/copydb.png)
+
+1. In **openai-<inject key="DeploymentID" enableCopy="false" /></inject>** resource group, search and select **SQL server**.
+
+   ![](images/server.png)
+
+1. Now, copy the **SQL server** name paste it in a text editor such as notepad for later use. 
+
+   ![](images/copyserver.png)
+
 1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the Open AI engine, Open AI rest end point, SQL server and SQL database name in the file and copy the content.
 
-      >**Note:** Provide the Model name as **demomodel**. Copy the SQL server and database names by navigating to the **openai-<inject key="DeploymentID" enableCopy="false" /></inject>** resource group.
+      >**Note:** Provide the Model name as **demomodel**.
 
 1. Go to **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group and open **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject> (2)** function app.
 
@@ -86,7 +122,7 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai7.png)
 
-3. From NLQuery go to **Code + Test (1)**, then click **Test/Run (2)** select **GET (3)** in **HTTP method** dropdown, click **+ Add parameter** under Query and enter **prompt (4)** in the Name field and enter **show top 10 products (5)** in the value field. Click **Run (6)**.
+3. From NLQuery go to **Code + Test (1)**, then click **Test/Run (2)** select **GET (3)** in **HTTP method** dropdown, click **+ Add parameter** under **Query** and enter **prompt (4)** in the **Name** field and enter **show top 10 products (5)** in the **Value** field. Click **Run (6)**.
 
    ![](images/code+test.png)
 
@@ -148,7 +184,7 @@ Step 6: Azure function returns the results to end user.
       ![](images/powerapps9-1.png)
 
 
-## Task 4. Build the Connector App (Optional)
+## Task 4. Build the Connector App
 
 1. Navigate to https://make.powerapps.com/ and click on **App launcher** on the top left corner and select **Power Automate**.
 
@@ -171,11 +207,11 @@ Step 6: Azure function returns the results to end user.
 
 5. We need to update the below values in the file 
 
-      - **host**: `openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>.azurewebsites.net` **(1)**
+      - **host**: **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>.azurewebsites.net (1)**
   
-      - **paths**:  `/api/NLQuery` **(2)**
+      - **paths**:  **/api/NLQuery (2)**
   
-      - **operationId**: `Get-Prompt` **(3)**
+      - **operationId**: **Get-Prompt (3)**
 
       ![](images/get-prompt-edit-1.png)
   
@@ -253,9 +289,9 @@ Step 6: Azure function returns the results to end user.
    
      ![](images/apps-nlq-1.png)
      
-23. Click on **Power Automate**, then click on `...` next to **Promptinputflow** and click on **Remove from app**.
+23. Click on **Power Automate**, then click on `...` next to **Logic flows** and click on **Remove from app**.
 
-      ![](images/openai-7.png)
+      ![](images/nlplogic.png)
 
 24. Next, click on **+ Add flow** and select **Promptinputflow**.
   
@@ -268,9 +304,7 @@ Step 6: Azure function returns the results to end user.
 
 ## Task 5. Test the Power App
 
-1. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation.
-
-1.  Open the **NLP Query** App.
+1. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. Open the **NLP Query** App.
 
     ![](images/openai-3.png)
     
