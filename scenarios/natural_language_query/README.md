@@ -59,7 +59,13 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/tokens.png)
 
-1. Repeat the steps 7 to 9 for **gptmodel**.
+1. Navigate back to **Deployments** page, Select **gptmodel** and click on **Edit deployment**.
+
+   ![](images/gpt.png)
+
+1. On the **Edit deployment** pop-up, expand **Advanced options (1)** and scale-down the **Tokens per Minute Rate Limit (thousands) (2)** to **10k** and click **Save and close (3)**.
+
+   ![](images/gptedit.png)
 
 1. Naviagte back to [Azure portal](http://portal.azure.com/), search and select **Azure OpenAI**, from the **Cognitive Services | Azure OpenAI pane**, select the **OpenAI-<inject key="Deployment ID" enableCopy="false"/>**.
 
