@@ -7,16 +7,20 @@
       "Order": 1
     },
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/powerapp_and_python/powerapp.md",
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/natural_language_query/EDU-exercise1.md",
       "Order": 2
     },
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/powerapp_and_python/Python.md",
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/powerapp_and_python/EDU-exercise2.md",
       "Order": 3
     },
     {
-    "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/prompt_engineering/01_Prompt_Introduction.md",
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/powerapp_and_python/EDU-exercise3.md",
       "Order": 4
+    },
+    {
+    "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/prompt_engineering/EDU-exercise4.md",
+      "Order": 5
     }  
   ]
 } ]
