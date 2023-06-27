@@ -193,6 +193,8 @@ echo "AZSEARCH_KEY=$azsearch_api_key" >> ../ingest/secrets.env
 echo "INDEX_NAME=azure-ml-docs" >> ../ingest/secrets.env
 echo "AFR_ENDPOINT=$afr_ep" >> ../ingest/secrets.env
 echo "AFR_API_KEY=$afr_api_key" >> ../ingest/secrets.env
+echo "FILE_URL="https://github.com/microsoft/OpenAIWorkshop/raw/anildwa-dev/scenarios/data/azure-machine-learning-2-500.pdf"" >> ../ingest/secrets.env
+echo "LOCAL_FOLDER_PATH="" #for e.g C:\\source\\repos\\tibco\\testfile for Windows and /mnt/source/folder for Linux" >> ../ingest/secrets.env
 
 printf "\nIngesting data into Azure Cognitive Search...\n"
 cd ../ingest

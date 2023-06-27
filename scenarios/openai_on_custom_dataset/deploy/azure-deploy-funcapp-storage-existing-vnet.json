@@ -138,21 +138,18 @@
         },
         "OPENAI_RESOURCE_ENDPOINT" : {
         "type": "string",
-        "defaultValue":"https://openai-tibco.openai.azure.com/",
         "metadata": {
             "description": "OpenAI resource endpoint. https://<openai-endpoint-name>.openai.azure.com/"
         }
         },
         "OPENAI_API_KEY" : {
         "type": "string",
-        "defaultValue":"7b07438ae07a43f6be5430f559eabecf",
         "metadata": {
             "description": "OpenAI API key."
         }
         },
         "OPENAI_Model_Deployment_Name" : {
         "type": "string",
-        "defaultValue":"text-davinci-003",
         "metadata": {
             "description": "Deployment name of the OpenAI model."
         }
@@ -325,7 +322,7 @@
             },
             {
                 "name": "INDEX_NAME",
-                "value": "azure-aml-docs"
+                "value": "azure-ml-docs"
     
             },
             {
