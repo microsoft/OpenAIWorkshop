@@ -89,7 +89,7 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/copyserver.png)
 
-1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the Open AI engine, Open AI rest end point, SQL server and SQL database name in the file and copy the content.
+1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the **Open AI engine**, **Open AI rest end point**, **SQL server** and **SQL database** name in the file and copy the content.
 
       >**Note:** Provide the Model name as **demomodel**.
 
