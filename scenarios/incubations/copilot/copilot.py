@@ -32,8 +32,8 @@ There are 4 departments
 - Office 365: support customers around Microsoft Office products
 - Azure: support customers using Azure cloud solution
 - Windows: supporting customers of windows operating system 
-- HR: supporting customers in HR and Payroll related question
-- Others: if it's not clear which department the customer should be routed to Others
+- HR: supporting customers in HR and Payroll related questions
+- Others: if it's not clear which department the customer should be routed, then route to Others
 Write a message in this format:
 [department] where department is one of following values ["Office 365","Azure", "Windows", "HR", "Others"]
 In the message, DO NOT ADD any other text or the system will fail.
@@ -55,7 +55,7 @@ def intent_capture(history,new_input):
     for user_question, bot_response in history:
         history_text += f"user:{user_question}\nbot:{bot_response}\n\n"
     history_text += f"user:{new_input}"
-    input = "Given the following conversation, what is your determination?\n\n" + history_text + "\n\determination:"
+    input = "Given the following conversation:\n\n" + history_text + "\n\Customer should be routed to:"
     print("input to intent capture: ",input)
     output = monitoring_agent.run(new_input=input)
     print(output)
