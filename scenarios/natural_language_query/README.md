@@ -71,7 +71,7 @@ Step 6: Azure function returns the results to end user.
 
 1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Keys and Endpoint (1)** under **Resource Management**. Copy **Key 1 (2)** and the **Endpoint (3)** by clicking on copy to clipboard paste it in a text editor such as notepad for later use. 
 
-   ![](images/openai13a.png)
+   ![](images/img-3.png)
 
 1. Navigate to **openai-<inject key="DeploymentID" enableCopy="false" /></inject>** resource group, and search and select **SQL database**.
 
@@ -167,9 +167,13 @@ Step 6: Azure function returns the results to end user.
 
     ![](./images/get-nlquery-url.png)
 
-8. Navigate back on the PowerApps, select the **Flows** Pane and click on **Edit** for **PromptlnputFlow**.
+8. On the **Flows (1)** Pane, select **PromptlnputFlow (2)** then click on **... (3)** and **Turn on (4)** your flow.
 
-    ![](./images/promptin-flow-1.png)
+    ![](./images/img-4.png)
+
+1. Next, click on **Edit** for **PromptlnputFlow**.
+
+    ![](./images/img-5.png)
  
 9. Edit the Power Automate Flow and update **Azure Function Url (1)** with the URL you copied earlier and append `prompt=` at the end. Your URL should look like following. Click **Save (2)**.
 
