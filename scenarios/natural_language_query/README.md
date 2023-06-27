@@ -262,11 +262,7 @@ Step 6: Azure function returns the results to end user.
 14. The Control should like the below. Click **Save**.
 
      ![](images/save.png)
-
-15. On the **Flows** tab, select **PromptlnputFlow (1)**  then click on `...` **(2)** and **turn on (3)** your flow.
-   
-    ![](images/turn-on-1.png)
-   
+ 
 16. Click on **Flows** and select the flow which you imported in the previous task and click **Edit** then on **Test**.
     
     ![](images/test-flow.png)
