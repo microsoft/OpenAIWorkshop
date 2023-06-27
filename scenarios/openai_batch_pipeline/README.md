@@ -162,17 +162,17 @@ We'll next need to create two linked services: One for our Source (the JSON file
 
    ![](images/synapse6.png)
 
-1. Provide the name for your Linked Service as **openailinkedservice (1)**. Change the **Authentication type** to **System Assigned Managed Identity (2)**. Then select the **subscription (3)** you have been working in, and finally select the Storage account with the suffix **functions (4)** which you created in the initial template and loaded the JSON files into then click on **Test connection (5)**. Once the connection is successful, click the **Create (6)** button in blue on the bottom left of the New linked service window.
+1. Provide the name for your Linked Service as **openailinkedservice (1)**. Change the **Authentication type** to **Account key (2)**. Then select the **subscription (3)** you have been working in, and finally select the Storage account with the suffix **functions (4)** which you created in the initial template and loaded the JSON files into then click on **Test connection (5)**. Once the connection is successful, click the **Create (6)** button in blue on the bottom left of the New linked service window.
 
-   ![](images/openai-linkedservice.png)
+   ![](images/img-6.png)
 
 1.  Click **New (3)** in the top-left. Search for **Synapse (1)**, select **Azure Synapse Analytics (2)** and click on **Continue (3)**.
 
-   ![](images/synapse8.png)
+     ![](images/synapse8.png)
 
 1. In the *New linked service* window that opens, fill in a name for your target linked service as **synapselinkedservice** **(1)**. Select the **Azure subscription (2)** in which you have been working. Select the **asaworkspace<inject key="DeploymentID" enableCopy="false"/> (3)** for **Server name** and **openaisql (4)** as the **Database name**. Be certain to change the **Authentication type** to **System Assigned Managed Identity (5)** then click on **Test connection (6)** and click  **Create (7)**.
 
-   ![](images/synapse-1.png)
+    ![](images/synapse-1.png)
 
 1. Once you have created the two Linked Services, be certain to press the **Publish all** button at the top to publish our work and finalize the creation of the linked services and click **Publish**.
 

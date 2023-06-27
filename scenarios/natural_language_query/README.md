@@ -71,7 +71,7 @@ Step 6: Azure function returns the results to end user.
 
 1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Keys and Endpoint (1)** under **Resource Management**. Copy **Key 1 (2)** and the **Endpoint (3)** by clicking on copy to clipboard paste it in a text editor such as notepad for later use. 
 
-   ![](images/openai13a.png)
+   ![](images/img-3.png)
 
 1. Navigate to **openai-<inject key="DeploymentID" enableCopy="false" /></inject>** resource group, and search and select **SQL database**.
 
@@ -85,13 +85,15 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/server.png)
 
-1. Now, copy the **SQL server** name paste it in a text editor such as notepad for later use. 
+1. Now, copy the **Server name** and paste it in a text editor such as notepad for later use. 
 
-   ![](images/copyserver.png)
+   ![](images/img-1.png)
 
-1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the Open AI engine, Open AI rest end point, SQL server and SQL database name in the file and copy the content.
+1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the **Open AI engine**, **Open AI rest end point**, **SQL server** and **SQL database** name in the file and copy the content.
 
       >**Note:** Provide the Model name as **demomodel**.
+
+   ![](images/img-2.png)
 
 1. Go to **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group and open **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject> (2)** function app.
 
@@ -165,9 +167,13 @@ Step 6: Azure function returns the results to end user.
 
     ![](./images/get-nlquery-url.png)
 
-8. Navigate back on the PowerApps, select the **Flows** Pane and click on **Edit** for **PromptlnputFlow**.
+8. On the **Flows (1)** Pane, select **PromptlnputFlow (2)** then click on **... (3)** and **Turn on (4)** your flow.
 
-    ![](./images/promptin-flow-1.png)
+    ![](./images/img-4.png)
+
+1. Next, click on **Edit** for **PromptlnputFlow**.
+
+    ![](./images/img-5.png)
  
 9. Edit the Power Automate Flow and update **Azure Function Url (1)** with the URL you copied earlier and append `prompt=` at the end. Your URL should look like following. Click **Save (2)**.
 
@@ -256,11 +262,7 @@ Step 6: Azure function returns the results to end user.
 14. The Control should like the below. Click **Save**.
 
      ![](images/save.png)
-
-15. On the **Flows** tab, select **PromptlnputFlow (1)**  then click on `...` **(2)** and **turn on (3)** your flow.
-   
-    ![](images/turn-on-1.png)
-   
+ 
 16. Click on **Flows** and select the flow which you imported in the previous task and click **Edit** then on **Test**.
     
     ![](images/test-flow.png)

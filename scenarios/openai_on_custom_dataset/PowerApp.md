@@ -29,7 +29,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
    
     ![](./images/addsementic.png)
    
-1. Now, navigate to `C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest` in windows explore and you will see a file names as secerts.env, Make sure the valus is updated as expected. However we have already updated the values for you.
+1. Now, navigate to `C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest` in windows explore and you will see a file names as secerts.env, Make sure the value is updated as expected. However we have already updated the values for you.
 
 
 1. Now you need to open the CMD and run the below command to change to directory to the ingest folder.
