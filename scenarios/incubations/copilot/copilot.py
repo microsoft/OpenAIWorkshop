@@ -182,43 +182,42 @@ if user_input:
     message("")
     t = st.empty()
     rewrite_done = False
+    #Output response in streaming manner
     for chunk in response:
         chunk_msg= chunk['choices'][0]['delta']
         chunk_msg= chunk_msg.get('content',"")
         complete_response.append(chunk_msg)
-        # t.markdown("".join(complete_response))
         if not r_future.done() :
             t.markdown("".join(complete_response))
         else:
             session_type =r_future.result()
+            #in case the session type is changed which indicate customer switched to a new domain, we need to regenerate the response.
+            #This is done mid-way in the response generation
             if session_type is not None:
                 print("new session type is ",session_type)
                 agent= get_agent(session_type)
                 print("Switching agent while in conversation, inside loop, regenerating response")
-                message(f"{session_type} agent",  is_user=False,key=str(i+1))
                 response = agent.run(new_input=user_input, history=history, stream=True)
                 complete_response =[]
-                t = st.empty()
                 for chunk in response:
                     chunk_msg= chunk['choices'][0]['delta']
                     chunk_msg= chunk_msg.get('content',"")
                     complete_response.append(chunk_msg)
                     t.markdown(" ".join(complete_response))
-                rewrite_done = True
+                rewrite_done = True #indicate that the response has been regenerated, no need to post-process
                 break
-    session_type =r_future.result()
-    print("session_type ",session_type)
 
+    session_type =r_future.result()
+    #in case the session type is changed which indicate customer switched to a new domain, we need to regenerate the response.
+    #This is done after the initial response generation is done
     if not rewrite_done and session_type is not None and session_type != st.session_state['session_type'] and session_type != "Others":
 
         st.session_state['session_type'] =session_type
         print("new session type is ",session_type)
         agent= get_agent(session_type)
         print("Switching agent while in conversation, regenerating response")
-        message(f"{session_type} agent",  is_user=False,key=str(i+1))
         response = agent.run(new_input=user_input, history=history, stream=True)
         complete_response =[]
-        t = st.empty()
         for chunk in response:
             chunk_msg= chunk['choices'][0]['delta']
             chunk_msg= chunk_msg.get('content',"")
