@@ -85,13 +85,15 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/server.png)
 
-1. Now, copy the **SQL server** name paste it in a text editor such as notepad for later use. 
+1. Now, copy the **Server name** and paste it in a text editor such as notepad for later use. 
 
-   ![](images/copyserver.png)
+   ![](images/img-1.png)
 
 1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the **Open AI engine**, **Open AI rest end point**, **SQL server** and **SQL database** name in the file and copy the content.
 
       >**Note:** Provide the Model name as **demomodel**.
+
+   ![](images/img-2.png)
 
 1. Go to **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group and open **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject> (2)** function app.
 
