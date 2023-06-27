@@ -1,0 +1,5 @@
+streamlit
+openai
+streamlit-chat
+streamlit-extras
+python-dotenv 
