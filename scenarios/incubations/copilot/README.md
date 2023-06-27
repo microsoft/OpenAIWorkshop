@@ -1,8 +1,8 @@
 # Overview
 This solution demonstrate the design of multi-agent flow where multiple agents working together to address diverse needs from customers. Each agent has its own skillset, designed with its own prompt and tools.
-The orchestrator starts the conversation and based on user's intent, assigning one of the specialist agent to support the conversation.
+The routing agent starts the conversation and based on user's intent, assigning one of the specialist agent to support the conversation.
 Then while the conversation happens between a specialist agent and the customer, a monitoring agent asynchronously listen to the conversation and detect if the conversation needs to be handed over to another specialist agent.
-The application supports Python's built-in SQLITE as well as your own Microsoft SQL Server.
+![multi-agent conversation](media/mult-agent.png)
 # Installation 
 ## Open AI setup
 Create an Azure OpenAI deployment in an Azure subscription with a GPT-35-Turbo deployment .
