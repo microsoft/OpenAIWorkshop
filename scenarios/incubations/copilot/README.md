@@ -2,7 +2,12 @@
 This solution demonstrate the design of multi-agent flow where multiple agents working together to address diverse needs from customers. Each agent has its own skillset, designed with its own prompt and tools.
 The routing agent starts the conversation and based on user's intent, assigning one of the specialist agent to support the conversation.
 Then while the conversation happens between a specialist agent and the customer, a monitoring agent asynchronously listen to the conversation and detect if the conversation needs to be handed over to another specialist agent.
-![multi-agent conversation](media/mult-agent.png)
+![multi-agent conversation](media/multi-agent.png)
+
+In this screen shot, each color (red/yellow) denotes a different topic which is handled by a different specialist agent transparently.
+
+![multi-agent demo](media/demo_multi-agent.png)
+
 # Installation 
 ## Open AI setup
 Create an Azure OpenAI deployment in an Azure subscription with a GPT-35-Turbo deployment .
