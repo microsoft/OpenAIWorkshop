@@ -56,9 +56,10 @@ class Agent(): #Base class for Agent
         if new_input is None: # return init message 
             return self.init_history[1]["content"]
         messages = self.init_history.copy()
-        for user_question, bot_response in history:
-            messages.append({"role":"user", "content":user_question})
-            messages.append({"role":"assistant", "content":bot_response})
+        if history is not None:
+            for user_question, bot_response in history:
+                messages.append({"role":"user", "content":user_question})
+                messages.append({"role":"assistant", "content":bot_response})
         messages.append({"role":"user", "content":new_input})
         response = openai.ChatCompletion.create(
             engine=self.engine,
@@ -66,11 +67,15 @@ class Agent(): #Base class for Agent
             stream=stream,
             request_timeout =request_timeout
         )
-        return response
+        if not stream:
+            return response['choices'][0]['message']['content']
+        else:
+            return response
     def run(self, **kwargs):
         return self.generate_response(**kwargs)
 
 class SmartAgent(Agent):
+    #Agent that can use tools such as search to answer questions.
     answer_prompt_template= """
 {persona}. Be brief in your answers.
 Answer ONLY with the facts listed in the list of sources below. If there isn't enough information below, say you don't know. Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.
@@ -116,12 +121,10 @@ Search query:
             stop=["\n"])
         q = completion['choices'][0]['message']['content']
         sources = self.search_client.find_article(q)
-        print(sources)
+        # print(sources)
         # STEP 2: Generate a contextual and content specific answer using the search results and chat history
         prompt = self.answer_prompt_template.format(persona=self.persona, sources= sources, chat_history=chat_history)
-        print(prompt)
         messages = [{"role":"system", "content":prompt}, {"role":"user", "content":new_input}]
-        print(messages)
         openai.api_version = "2023-05-15" 
 
         response = openai.ChatCompletion.create(

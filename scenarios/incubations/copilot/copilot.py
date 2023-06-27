@@ -12,6 +12,9 @@ from pathlib import Path  # Python 3.6+ only
 import json
 
 base_agent = Agent(persona="You are a helpful AI assistant", init_message="I'm Julia, How may I help you?")
+office365_agent = Agent(persona="You are an assistant helping answer customer's question about Office 365", init_message="I'm Office 365 Julia, How may I help you?")
+azure_agent = Agent(persona="You are an assistant helping answer customer's question about Microsoft Azure", init_message="I'm Azure Julia, How may I help you?")
+windows_agent = Agent(persona="You are an assistant helping answer customer's question about Microsoft Windows", init_message="I'm Windows Julia, How may I help you?")
 
 coordinator_persona ="""
 You are a 1st level customer support agent. Your job is to route the customer's call to one of the following departments:
@@ -20,36 +23,71 @@ You are a 1st level customer support agent. Your job is to route the customer's 
 - Windows: supporting customers of windows operating system 
 - HR: supporting customers in HR and Payroll related question
 Interact with customers and ask questions to determine where they should be routed.
-Once you are sure about where to route the customer to, write a signal in this format:
-[routing]:[department] where department is one of following values ["Office 365","Azure", "Windows", "HR"]
-In the signal message, DO NOT ADD any other text or the system will fail.
-For examples:
-[routing]:[Office 365]
-[routing]:[Azure]
-[routing]:[Windows]
-[routing]:[HR]
+Once you are clear about the department, write a message in this format: "I will now ask [department] to help you" where department is one of following values ["Office 365","Azure", "Windows", "HR"]
 """
+coordinator_agent = Agent(persona= coordinator_persona, init_message="I'm a customer support agent, How may I help you?")
+monitoring_persona ="""
+You are a customer support monitoring agent. Your job is to listen to the customer support call and determine the main department that the customer should be routed to. 
+There are 4 departments
+- Office 365: support customers around Microsoft Office products
+- Azure: support customers using Azure cloud solution
+- Windows: supporting customers of windows operating system 
+- HR: supporting customers in HR and Payroll related question
+- Others: if it's not clear which department the customer should be routed to Others
+Write a message in this format:
+[department] where department is one of following values ["Office 365","Azure", "Windows", "HR", "Others"]
+In the message, DO NOT ADD any other text or the system will fail.
+For examples:
+[Office 365]
+[Azure]
+[Windows]
+[HR]
+[Others]
+"""
+monitoring_agent = Agent(persona= monitoring_persona)
+
 payroll_support_persona = "You are a customer support agent for HR/Payroll management company. You helps the clients with their payroll/HR related questions."
+search_client = Search_Client("../../data/agent_assistant/chunk_emb_map.json")
+payroll_support_agent =SmartAgent(persona = payroll_support_persona,search_client=search_client)
 
+def intent_capture(history,new_input):
+    history_text = ""
+    for user_question, bot_response in history:
+        history_text += f"user:{user_question}\nbot:{bot_response}\n\n"
+    history_text += f"user:{new_input}"
+    input = "Given the following conversation, what is your determination?\n\n" + history_text + "\n\determination:"
+    print("input to intent capture: ",input)
+    output = monitoring_agent.run(new_input=input)
+    print(output)
+    session_type= get_session_type(output)
 
-def intent_capturer(hist):
-    time.sleep(3)
-    r = random.choice([0,1])
-    r =0
-    return r
+    return session_type
 def get_session_type(response):
     session_type = None
     if "[HR]" in response:
         session_type = "HR"
-        print("get session type ", session_type)
+    elif "[Windows]" in response:
+        session_type = "Windows"
+    elif "[Azure]" in response:
+        session_type = "Azure"
+    elif "[Office 365]" in response:
+        session_type = "Office 365"
+    elif "[Others]" in response:
+        session_type = "Others"
+
     return session_type
 def get_agent(session_type=None):
-    agent = base_agent
+    agent = coordinator_agent
     if session_type is None:
-        agent = Agent(persona= coordinator_persona, init_message="I'm a customer support agent, How may I help you?")
+        agent = coordinator_agent
     elif "HR" in session_type:
-        search_client = Search_Client("../../data/agent_assistant/chunk_emb_map.json")
-        agent = SmartAgent(persona = payroll_support_persona,search_client=search_client)
+        agent = payroll_support_agent
+    elif "Windows" in session_type:
+        agent = windows_agent
+    elif "Azure" in session_type:
+        agent = azure_agent
+    elif "Office 365" in session_type:
+        agent = office365_agent
     return agent
 st.set_page_config(layout="wide",page_title="ChatGPT Enterprise - A demo app to make ChatGPT work for enterprise")
 styl = f"""
@@ -85,29 +123,27 @@ with st.sidebar:
 
         if 'user' in st.session_state:
             st.session_state['user'] = []
+        if 'session_type' not in st.session_state:
+            st.session_state['session_type'] = "Others"
 
-
-
-
-
-if 'session_type' not in st.session_state:
     agent= get_agent() #get default coordinator agent to start with
-    st.session_state['bot'] = [agent.run(new_input=None)]
-else:
-    session_type = st.session_state['session_type']
-    agent= get_agent(session_type) #get default coordinator agent to start with
+    if 'bot' not in st.session_state:
+        st.session_state['bot'] = [agent.run(new_input=None)]
+    if 'input' not in st.session_state:
+        st.session_state['input'] = ""
+
+    if 'user' not in st.session_state:
+        st.session_state['user'] = []
+    if 'session_type' not in st.session_state:
+        st.session_state['session_type'] = "Others"
 
 
-if 'input' not in st.session_state:
-    st.session_state['input'] = ""
 
-if 'user' not in st.session_state:
-    st.session_state['user'] = []
 
-# Layout of input/response containers
-# input_container = st.container()
-# colored_header(label='', description='', color_name='blue-30')
-# response_container = st.container()
+session_type = st.session_state['session_type']
+agent= get_agent(session_type) #get default coordinator agent to start with
+
+
 
 # User input
 ## Function for taking user provided prompt as input
@@ -122,16 +158,6 @@ def get_text():
 # with input_container:
 user_input = get_text()
 
-# Response output
-# def generate_response(input):
-#     response = openai.ChatCompletion.create(
-#         engine=engine,
-#         messages=input,
-#         stream=True,
-#         request_timeout =2
-#     )
-#     return response
-
 ## Conditional display of AI generated responses as a function of user provided prompts
 if st.session_state['bot']:
     #trim history
@@ -145,51 +171,63 @@ if st.session_state['bot']:
 
 if user_input:
     history= zip(st.session_state['user'],st.session_state['bot'][1-len(st.session_state['bot']):])
+    history = list(history)
     st.session_state['user'].append(user_input)
     message(user_input,  is_user=True,key=str(len(st.session_state["user"]))+ '_user')
     response = agent.run(new_input=user_input, history=history, stream=True)
     executor= concurrent.futures.ThreadPoolExecutor()
-    r_future = executor.submit(intent_capturer,history)
-
+    r_future = executor.submit(intent_capture,history,user_input)
+    
     complete_response =[]
     message("")
     t = st.empty()
+    rewrite_done = False
     for chunk in response:
         chunk_msg= chunk['choices'][0]['delta']
         chunk_msg= chunk_msg.get('content',"")
         complete_response.append(chunk_msg)
+        # t.markdown("".join(complete_response))
         if not r_future.done() :
-            t.markdown(" ".join(complete_response))
+            t.markdown("".join(complete_response))
         else:
-            if r_future.result():
-                t.markdown("switching context")
+            session_type =r_future.result()
+            if session_type is not None:
+                print("new session type is ",session_type)
+                agent= get_agent(session_type)
+                print("Switching agent while in conversation, inside loop, regenerating response")
+                message(f"{session_type} agent",  is_user=False,key=str(i+1))
+                response = agent.run(new_input=user_input, history=history, stream=True)
+                complete_response =[]
+                t = st.empty()
+                for chunk in response:
+                    chunk_msg= chunk['choices'][0]['delta']
+                    chunk_msg= chunk_msg.get('content',"")
+                    complete_response.append(chunk_msg)
+                    t.markdown(" ".join(complete_response))
+                rewrite_done = True
                 break
-            else:
-                t.markdown(" ".join(complete_response))
-    complete_response= "".join(complete_response)
-    if 'session_type' not in st.session_state: 
-        session_type = get_session_type(complete_response)
-        if session_type is not None:
-            st.session_state['session_type'] =session_type
-            agent= get_agent(session_type)
-            print("Switching agent, regenerating response")
-            # new_bot_welcome= "\nHello, this is HR support Agent, I will now take over the call and start supporting you"
-            # t.markdown(new_bot_welcome)
-            # complete_response += new_bot_welcome
-            # st.session_state.bot.append(complete_response)
-            # #Rerun the response using a new bot
-            # history= zip(st.session_state['user'],st.session_state['bot'][1-len(st.session_state['bot']):])
-            response = agent.run(new_input=user_input, history=history, stream=True)
-            complete_response =[]
-            t = st.empty()
-            for chunk in response:
-                chunk_msg= chunk['choices'][0]['delta']
-                chunk_msg= chunk_msg.get('content',"")
-                complete_response.append(chunk_msg)
-                t.markdown(" ".join(complete_response))
-            complete_response= "".join(complete_response)
+    session_type =r_future.result()
+    print("session_type ",session_type)
 
-    st.session_state.bot.append(complete_response)
+    if not rewrite_done and session_type is not None and session_type != st.session_state['session_type'] and session_type != "Others":
+
+        st.session_state['session_type'] =session_type
+        print("new session type is ",session_type)
+        agent= get_agent(session_type)
+        print("Switching agent while in conversation, regenerating response")
+        message(f"{session_type} agent",  is_user=False,key=str(i+1))
+        response = agent.run(new_input=user_input, history=history, stream=True)
+        complete_response =[]
+        t = st.empty()
+        for chunk in response:
+            chunk_msg= chunk['choices'][0]['delta']
+            chunk_msg= chunk_msg.get('content',"")
+            complete_response.append(chunk_msg)
+            t.markdown(" ".join(complete_response))
+
+    complete_response= "".join(complete_response)
+    st.session_state["bot"].append(complete_response)
+
         
 
 # page load that it needs to re-evaluate where "bottom" is
