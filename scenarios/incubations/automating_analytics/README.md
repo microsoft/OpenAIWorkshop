@@ -42,7 +42,7 @@ The application supports Python's built-in SQLITE as well as your own Microsoft 
 Here we provide options to use both but GPT-4 should be used to address difficult & vague  questions.
 We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI resource.
 ## Install the application locally 
-1. Clone the repo (e.g. ```git clone https://github.com/microsoft/OpenAIWorkshop.git``` or download). Then navigate to ```cd scenarios/natural_language_query/streamlit```
+1. Clone the repo (e.g. ```git clone https://github.com/microsoft/OpenAIWorkshop.git``` or download). Then navigate to ```cd scenarios/incubations/automating_analytics```
 2. (Optional) Provide settings for Open AI and Database.You can either create a `secrets.env` file in the root of this folder (scenarios/natural_language_query/streamlit) as below or do it using the app's UI later on. 
     - Option 1: use built-in SQLITE. Then you don't need to install SQL Server.
         ```txt
@@ -65,7 +65,7 @@ We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI 
         SQL_SERVER="sqlservername.database.windows.net"
         ```
 
-3. Navigate to ```cd scenarios/natural_language_query/streamlit```
+3. Navigate to ```cd scenarios/incubations/automating_analytics```
 4. Create a python environment with version from 3.7 and 3.10
     - [Python 3+](https://www.python.org/downloads/)
         - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
