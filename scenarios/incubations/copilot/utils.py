@@ -4,6 +4,7 @@ import openai
 import os
 from pathlib import Path  
 import json
+import re
 from dotenv import load_dotenv
 import concurrent.futures
 from openai.embeddings_utils import get_embedding, cosine_similarity
@@ -41,6 +42,11 @@ class Search_Client():
         for chunk_id, content in zip(best_chunks, contents):
             text_content += f"{chunk_id}\n{content}\n"
         return text_content
+def gpt_stream_wrapper(response):
+    for chunk in response:
+        chunk_msg= chunk['choices'][0]['delta']
+        chunk_msg= chunk_msg.get('content',"")
+        yield chunk_msg
 class Agent(): #Base class for Agent
     def __init__(self, persona, init_message=None, engine= "gpt-35-turbo"):
         if init_message is not None:
@@ -51,7 +57,7 @@ class Agent(): #Base class for Agent
         self.init_history =  init_hist
         self.persona = persona
         self.engine = engine
-    def generate_response(self, new_input,history=None, stream = False,request_timeout =5):
+    def generate_response(self, new_input,history=None, stream = False,request_timeout =10):
         openai.api_version = "2023-05-15" 
         if new_input is None: # return init message 
             return self.init_history[1]["content"]
@@ -70,11 +76,11 @@ class Agent(): #Base class for Agent
         if not stream:
             return response['choices'][0]['message']['content']
         else:
-            return response
+            return gpt_stream_wrapper(response)
     def run(self, **kwargs):
         return self.generate_response(**kwargs)
 
-class SmartAgent(Agent):
+class RAG_Agent(Agent):
     #Agent that can use tools such as search to answer questions.
     answer_prompt_template= """
 {persona}. Be brief in your answers.
@@ -134,6 +140,88 @@ Search query:
         if not stream:
             return response['choices'][0]['message']['content']
         else:
+            return gpt_stream_wrapper(response)
+
+
+
+class Smart_Agent(Agent):
+
+#Agent that can use other agents and tools to answer questions.
+
+    def __init__(self, persona,tools, stop, init_message=None, engine= "gpt-35-turbo"):
+        super().__init__(persona, init_message, engine)
+        #list of {"tool_name":tool} that the agent can use to answer questions. Tool must have a run method that takes a question and returns an answer.
+        self.tools = tools
+        self.stop= stop
+    def llm(self, new_input,stop, history=None, stream = False):
+        openai.api_version = "2023-05-15" 
+        if new_input is None: #if no input return init message
+            return self.init_history[1]["content"]
+        messages = self.init_history.copy()
+        if history is not None:
+            for user_question, bot_response in history:
+                messages.append({"role":"user", "content":user_question})
+                messages.append({"role":"assistant", "content":bot_response})
+        messages.append({"role":"user", "content":new_input})
+        response = openai.ChatCompletion.create(
+            engine=self.engine,
+            messages=messages,
+            stream=stream,
+            stop=stop
+        )
+        if not stream:
+            return response['choices'][0]['message']['content']
+        else:
             return response
-
-
+    def _run(self, new_input, stop, history=None, stream = False):
+        llm_output = self.llm(new_input, stop, history, stream)
+        complete_response = []
+        action=[]
+        action_string_started = False
+        close_bracket_count=0
+        if stream:
+            for chunk in llm_output:
+                chunk_msg= chunk['choices'][0]['delta']
+                chunk_msg= chunk_msg.get('content',"")
+                if "[" in chunk_msg or action_string_started: #action string starts
+                    action_string_started = True
+                    action.append(chunk_msg)
+                elif "]" in chunk_msg: #action string ends
+                    close_bracket_count +=1
+                    if close_bracket_count == 3:
+                        action_string_started = False
+                    action.append(chunk_msg)
+                else:
+                    complete_response.append(chunk_msg)
+                    yield chunk_msg
+            action = "".join(action)
+        else:
+            complete_response = llm_output #non-streaming response
+            pattern = r"\[(.*?)\]\[(.*?)\]\[(.*?)\]"  
+            
+            result = re.search(pattern, complete_response)  
+            
+            if result:  
+                action =result.group()
+        action_output = ""
+        if type(action) != list:
+            pattern = r"\[Message\]\[(.*?)\]\[(.*?)\]"  
+    
+            result = re.search(pattern, action)
+            action_output = None  
+            if result:
+                tool_name = result.group(1)
+                description = result.group(2)
+                action_output = self.tools[tool_name].run(new_input=description, stream=stream, request_timeout=10)
+            if stream and action_output is not None:
+                print("back channel output: ", action_output)
+                yield "\n"
+                for chunk_msg in action_output:
+                    yield chunk_msg
+        if not stream:
+            yield complete_response+"\n"+action_output
+    def run(self, new_input, history=None, stream = False):
+        if stream:
+            return self._run(new_input, self.stop, history, stream)
+        else:
+            return list(self._run(new_input, self.stop, history, stream))[0]
