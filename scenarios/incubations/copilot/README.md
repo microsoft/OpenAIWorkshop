@@ -7,6 +7,9 @@ Then while the conversation happens between a specialist agent and the customer,
 In this screen shot, each color (red/yellow) denotes a different topic which is handled by a different specialist agent transparently.
 
 ![multi-agent demo](media/demo_multi-agent.png)
+# [Advanced] Copilot version
+The copilot version of this solution ```copilot_v2`` demonstrate smart agent concept which is a kind of agent that can leverage other agents to help answer questions and use tools to create transactions.
+In this version, there are still a routing agent that delegate request to two specialist agents. One is the same RAG HR agent, another is a smart IT agent. The smart IT agent can work with other 2nd level specialists in each area of IT (Hardware, Software, OS) to answer end user's question. It can also interact with an ticket creation API to register support request.
 
 # Installation 
 ## Open AI setup
