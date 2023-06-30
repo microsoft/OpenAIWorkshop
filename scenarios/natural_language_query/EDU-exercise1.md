@@ -52,9 +52,5 @@ In this exercise, you will create a deployment and model in Azure OpenAI studio 
 
 1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Keys and Endpoint (1)** under **Resource Management**. Copy **Key 1 (2)** and the **Endpoint (3)** by clicking on copy to clipboard paste it in a text editor such as notepad for later use. 
 
-   ![](images/openai13a.png)
-
-
-
-
+   ![](images/img-3.png)
 
