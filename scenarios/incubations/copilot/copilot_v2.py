@@ -229,28 +229,28 @@ if user_input:
     #Output response in streaming manner
     for chunk in response:
         complete_response.append(chunk)
-        session_type =r_future.result()
-        if (not r_future.done()) or (session_type == st.session_state['session_type']): #determination not done yet or no change in the determination 
+        
+        if (not r_future.done()): #determination not done yet or no change in the determination 
             t.markdown("".join(complete_response))
-        else:
+        elif r_future.result()!= st.session_state['session_type']:
+            session_type =r_future.result()
             print("new session type is ",session_type)
-            if session_type != st.session_state['session_type']:
-                agent= get_agent(session_type)
-                print("Switching agent while in conversation, inside loop, regenerating response")
-                response = agent.run(new_input=user_input, history=history, stream=True)
-                complete_response =[]
-                for chunk in response:
-                    complete_response.append(chunk)
-                    t.markdown(" ".join(complete_response))
-                rewrite_done = True #indicate that the response has been regenerated, no need to post-process
-                st.session_state['session_type'] =session_type #update the session type in state
-                break
+            agent= get_agent(session_type)
+            print("Switching agent while in conversation, inside loop, regenerating response")
+            response = agent.run(new_input=user_input, history=history, stream=True)
+            complete_response =[]
+            for chunk in response:
+                complete_response.append(chunk)
+                t.markdown(" ".join(complete_response))
+            rewrite_done = True #indicate that the response has been regenerated, no need to post-process
+            st.session_state['session_type'] =session_type #update the session type in state
+            break
 
     session_type =r_future.result()
     #in case the session type is changed which indicate customer switched to a new domain, we need to regenerate the response.
     #This is done after the initial response generation is done
-    if not rewrite_done and session_type is not None and session_type != st.session_state['session_type'] and session_type != "General":
-
+    if not rewrite_done and session_type != st.session_state['session_type'] and session_type != "General":
+        print("new session type is ",session_type)
         st.session_state['session_type'] =session_type
         agent= get_agent(session_type)
         print("Switching agent after regenerating response with original agent, regenerating response")
@@ -259,7 +259,6 @@ if user_input:
         for chunk in response:
             complete_response.append(chunk)
             t.markdown(" ".join(complete_response))
-
     complete_response= "".join(complete_response)
     st.session_state["bot"].append(complete_response)
 

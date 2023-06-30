@@ -145,8 +145,28 @@ Search query:
 
 
 class Smart_Agent(Agent):
+    """
+    Agent that can use other agents and tools to answer questions.
 
-#Agent that can use other agents and tools to answer questions.
+    Args:
+        persona (str): The persona of the agent.
+        tools (list): A list of {"tool_name":tool} that the agent can use to answer questions. Tool must have a run method that takes a question and returns an answer.
+        stop (list): A list of strings that the agent will use to stop the conversation.
+        init_message (str): The initial message of the agent. Defaults to None.
+        engine (str): The name of the GPT engine to use. Defaults to "gpt-35-turbo".
+
+    Methods:
+        llm(new_input, stop, history=None, stream=False): Generates a response to the input using the LLM model.
+        _run(new_input, stop, history=None, stream=False): Runs the agent and generates a response to the input.
+        run(new_input, history=None, stream=False): Runs the agent and generates a response to the input.
+
+    Attributes:
+        persona (str): The persona of the agent.
+        tools (list): A list of {"tool_name":tool} that the agent can use to answer questions. Tool must have a run method that takes a question and returns an answer.
+        stop (list): A list of strings that the agent will use to stop the conversation.
+        init_message (str): The initial message of the agent.
+        engine (str): The name of the GPT engine to use.
+    """
 
     def __init__(self, persona,tools, stop, init_message=None, engine= "gpt-35-turbo"):
         super().__init__(persona, init_message, engine)
