@@ -184,27 +184,25 @@ if user_input:
     rewrite_done = False
     #Output response in streaming manner
     for chunk in response:
-        chunk_msg= chunk['choices'][0]['delta']
-        chunk_msg= chunk_msg.get('content',"")
-        complete_response.append(chunk_msg)
-        if not r_future.done() :
+        complete_response.append(chunk)
+        # session_type =r_future.result()
+        if (not r_future.done()): #determination not done yet or no change in the determination 
+            # (session_type == st.session_state['session_type'])
             t.markdown("".join(complete_response))
         else:
             session_type =r_future.result()
-            #in case the session type is changed which indicate customer switched to a new domain, we need to regenerate the response.
-            #This is done mid-way in the response generation
-            if session_type is not None:
+
+            if session_type != st.session_state['session_type']:
                 print("new session type is ",session_type)
                 agent= get_agent(session_type)
                 print("Switching agent while in conversation, inside loop, regenerating response")
                 response = agent.run(new_input=user_input, history=history, stream=True)
                 complete_response =[]
                 for chunk in response:
-                    chunk_msg= chunk['choices'][0]['delta']
-                    chunk_msg= chunk_msg.get('content',"")
-                    complete_response.append(chunk_msg)
+                    complete_response.append(chunk)
                     t.markdown(" ".join(complete_response))
                 rewrite_done = True #indicate that the response has been regenerated, no need to post-process
+                st.session_state['session_type'] =session_type #update the session type in state
                 break
 
     session_type =r_future.result()
@@ -219,9 +217,7 @@ if user_input:
         response = agent.run(new_input=user_input, history=history, stream=True)
         complete_response =[]
         for chunk in response:
-            chunk_msg= chunk['choices'][0]['delta']
-            chunk_msg= chunk_msg.get('content',"")
-            complete_response.append(chunk_msg)
+            complete_response.append(chunk)
             t.markdown(" ".join(complete_response))
 
     complete_response= "".join(complete_response)
