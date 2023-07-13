@@ -20,25 +20,9 @@ In this exercise, you will create a deployment and model in Azure OpenAI studio 
 
    ![](images/openai10-1.2.png)
 
-1. On the Deploy model pop-up, from the drop-down select **text-davinci-003 (1)** for Select a Model, enter deployment name as **demomodel (2)** then click on **Create (3)**. Copy OpenAI Model name into the text file for later use.
-
-   ![](images/openai-model1.png)
-
 1. Click on **+ Create new deployment**, On the Deploy model pop-up, from the drop-down select **gpt-35-turbo (1)** for Select a Model, enter deployment name as **gptmodel (2)** then click on **Create (3)**. Copy OpenAI Model name into the text file for later use.
 
    ![](images/openai-model2.png)
-
-1. Once the models are deployed, click on **demomodel** from the **Deployments** page.
-
-   ![](images/deployments.png)
-
-1. Next, click on **Edit deployment**.
-
-   ![](images/editdep.png)
-
-1. On the **Edit deployment** pop-up, expand **Advanced options (1)** and scale-down the **Tokens per Minute Rate Limit (thousands) (2)** to **10k** and click **Save and close (3)**.
-
-   ![](images/tokens.png)
 
 1. Navigate back to **Deployments** page, Select **gptmodel** and click on **Edit deployment**.
 
