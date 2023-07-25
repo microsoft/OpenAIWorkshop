@@ -5,7 +5,7 @@
 - Owner or Contributor permission is required in the Azure subscription.
 - Microsoft.Search and Microsoft.BotService Resource provider needs to be registered in the Azure Subscription.
 - Azure Cloud Shell is recommended as it comes with preinstalled dependencies.
-- Azure Open AI already provisioned and `text-davinci-003` model is deployed. The model deployment name is required in the Azure Deployment step below.
+- Azure Open AI already provisioned and `gpt-35-turbo` model is deployed. The model deployment name is required in the Azure Deployment step below.
 
 - Right Click and Open ***[.Net Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1)*** in a new tab to Install .Net Core 3.1.
 
