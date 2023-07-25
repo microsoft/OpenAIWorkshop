@@ -12,9 +12,9 @@ You will need to deploy 2 logic apps:
 
 Logic App 1 (read-mailbox-techsupport): reads incoming email from an Outlook mailbox and calls Logic App2
 
-Logic App 2 (email-techsupport-integration): Calls Azure OpenAI for answers to the user support question and emails back a response. 
+Logic App 2 (email-techsupport-integration): Calls Azure OpenAI for answers to the user support question and emails back a response.
 
-### Note: 
+### Note:
 
 We will deploy the second logic app first because we will need its URL when provisioning the first logic app.
 
@@ -30,7 +30,7 @@ Go to https://portal.azure.com and enter your credentials
 This logic app uses the following prompt to answer questions sent to a technical support mail box:
 
 _________________________________________________________________________
-You are a Helpdesk assistant. Extract the person's name and technical problem from the text below. Provide possible solutions including links to websites in html. If no solutions are found, respond with 'We will get back to you in 48 hrs'. 
+You are a Helpdesk assistant. Extract the person's name and technical problem from the text below. Provide possible solutions including links to websites in html. If no solutions are found, respond with 'We will get back to you in 48 hrs'.
 If this is a hardware problem give them tips for troubleshooting and indicate we will create a support ticket and schedule a repair within 48 hours.
 
 ______________________________________________________________________________
@@ -115,4 +115,5 @@ Hello,
 I can't login into my account, I need to reset my password. Also my keyboard is not working.
 
 Thank you
+Your Name
 _______________________________________________________________

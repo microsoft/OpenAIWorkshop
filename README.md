@@ -52,14 +52,6 @@ The following prerequisites must be completed before you start these labs
 
 **Lab 2:​**
 
-- [Git](https://git-scm.com/downloads)​
-
-- [Python](https://www.python.org/downloads/) v3.7-v3.10​
-
-- (Optional): [Azure Developer CLI​](https://aka.ms/azure-dev/install)
-
-**Lab 3:​**
-
 - Microsoft.Search and Microsoft.BotService Resource provider needs to be [registered](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types#register-resource-provider) in the Azure Subscription.​
 
 - [PostMan Client](https://www.postman.com/downloads/)  installed on your laptop. ​
@@ -74,13 +66,22 @@ The following prerequisites must be completed before you start these labs
 
 - [Bot Framework Emulator​](https://github.com/Microsoft/BotFramework-Emulator/releases/tag/v4.14.1)
 
+**Lab 3:​**
+
+- [Git](https://git-scm.com/downloads)​
+
+- [Python](https://www.python.org/downloads/) v3.7-v3.10​
+
+- (Optional): [Azure Developer CLI​](https://aka.ms/azure-dev/install)
+
+
 ## Agenda
 
 | Activity | Duration |
 | --- | --- |
 | [Lab 1: Automate Mailbox Responses](/labs/Lab_1_Automate_Mailbox_Responses/README.md) | 45 min |
-| [Lab 2: Chat with your documents](/labs/Lab_3_chatWithDocuments/README.md) | 60 min |
-| [Lab 3: Chat with your database](/labs/Lab_2_Data_Analytics/README.md) | 45 min |
+| [Lab 2: Chat with your documents](/labs/Lab_2_chatWithDocuments/README.md) | 60 min |
+| [Lab 3: Chat with your database](/labs/Lab_3_Data_Analytics/README.md) | 45 min |
 
 ## Before you begin
 

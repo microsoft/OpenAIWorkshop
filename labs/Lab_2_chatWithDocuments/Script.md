@@ -21,15 +21,15 @@ Follow the steps below to get the Azure OpenAI endpoint and API key. Save the en
 
 - Click on the the Gear icon on Top right corner.
 
-   ![Alt text](Images/lab3_image18_gearicon.png)
+   ![Alt text](Images/lab2_image18_gearicon.png)
 
 - Navigate to Resource Tab and copy the endpoint and key in a notepad.
 
-   ![Alt text](Images/lab3_image19_endpointandkey.png)
+   ![Alt text](Images/lab2_image19_endpointandkey.png)
 
 - To get the Azure OpenAI Model deployment name, click on the deployment under Management, and copy the model deploment name.
 
-    ![Alt text](Images/lab3_image17_deploymentname.png)
+    ![Alt text](Images/lab2_image17_gpt_3_turbo.png)
 
 
 ## 1. Azure Services deployment
@@ -49,11 +49,11 @@ Right Click on ***Deploy to Azure button*** and Open in a new tab.
 
 - Wait for the deployment to complete. The deployment can take upto 10 minutes.
 
-   ![Alt text](Images/lab-3-deployment-completed.png)
+   ![Alt text](Images/lab-2-deployment-completed.png)
 
 - Once deployment is successfully completed, navigate to Outputs Section as shown below and Click on `Copy to Clipboard` to copy the output values along with the output keys in a notepad file. Please copy all the output values, we will be using these values in the next steps:
 
-   ![Alt text](Images/lab-3-copy-output-values.png)
+   ![Alt text](Images/lab-2-copy-output-values.png)
 
 
 ## 2. Setup Azure Cognitive Search and prepare data
@@ -68,7 +68,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
       git clone https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
 
-      cd OpenAIWorkshop/labs/Lab_3_chatWithDocuments
+      cd OpenAIWorkshop/labs/Lab_2_chatWithDocuments
 
       pip install -r ./orchestrator/requirements.txt
 
@@ -90,7 +90,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
       AFR_ENDPOINT="<YOUR Azure Form Recognizer Service API EndPoint>"
       AFR_API_KEY="<YOUR Azure Form Recognizer API Key>"
       INDEX_NAME="azure-ml-docs"
-      FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/labs/Lab_3_chatWithDocuments/Data/azure-machine-learning-2-500.pdf"
+      FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/labs/Lab_2_chatWithDocuments/Data/azure-machine-learning-2-500.pdf"
       LOCAL_FOLDER_PATH=""
 
 *   The document processing, chunking, indexing can all be scripted using any preferred language.
@@ -109,25 +109,25 @@ Choose your preferred method to test and confirm Azure Function App before conti
 -
   - Select Function App:
 
-    ![Alt text](Images/lab-3-navigate-to-rg-for-function.png)
+    ![Alt text](Images/lab-2-navigate-to-rg-for-function.png)
 
   - Select `Functions` in the left navigation pane and click on `orchestrator` function:
 
-     ![Alt text](Images/lab-3-select-function.png)
+     ![Alt text](Images/lab-2-select-function.png)
 
   - Select `Code + Test` under Developer and click on `Test/Run`:
 
-    ![Alt text](Images/lab-3-function-test-run.png)
+    ![Alt text](Images/lab-2-function-test-run.png)
 
   - Add a query parameter called `num_search_result` with a value of `5` and Add the following body content: `{"prompt" : "Is GPU supported in AML"}` to the body section:
 
-    ![Alt text](Images/lab-3-function-test-portal.png)
+    ![Alt text](Images/lab-2-function-test-portal.png)
 
   - then click `Run`
 
   - Confirm the response was successful in the `Output` tab
 
-    ![Alt text](Images/lab-3-function-test-success-portal.png)
+    ![Alt text](Images/lab-2-function-test-success-portal.png)
 
 ## Option B: Visual Studio/VS Code
   > :information_source: This method requires the [REST Client extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) when using VS Code.
@@ -143,21 +143,21 @@ Choose your preferred method to test and confirm Azure Function App before conti
 
   - Open Postman in your system and click on **New** as shown in the below screenshot and then select `HTTP`:
 
-    ![Alt text](Images/lab3_image4_postman.png)
+    ![Alt text](Images/lab2_image4_postman.png)
 
   - Select method to `POST`:
 
-    ![Alt text](Images/lab3_image25_postmethod.png)
+    ![Alt text](Images/lab2_image25_postmethod.png)
 
 - Enter the URL of the Function app that you have copied in the notepad:
 
-  ![Alt text](Images/lab3_image26_posturl.png)
+  ![Alt text](Images/lab2_image26_posturl.png)
 
 - Now, you can test the function app by providing the below prompt in the `Body` tab of postman. Make sure the `raw` option is selected. Press `Send`. The result will be displayed in the response window of Postman:
 
         {"prompt" : "Is GPU supported in AML"}
 
-  ![Alt text](Images/lab3_image28_prompt.png)
+  ![Alt text](Images/lab2_image28_prompt.png)
 
 
 ## 4. Build Chatbot
@@ -168,31 +168,31 @@ Create a bot in Azure Bot Composer:
 
 2.  Select Create New (+) on the homepage.
 
-    ![Alt text](Images/lab3_image5_bothomepage.png)
+    ![Alt text](Images/lab2_image5_bothomepage.png)
 
 3.  Under C#, select Empty Bot and click next.
 
-    ![Alt text](Images/lab3_image6_selectbottemplate.png)
+    ![Alt text](Images/lab2_image6_selectbottemplate.png)
 
 4.  Provide a name to your bot (e.g.- CustomdataOpenAI_Bot). Select Runtime Type as 'Azure Web App'. Select a location in your local machine to save the bot files. Click on Create and wait untill the bot is created..
 
-    ![Alt text](Images/lab3_image7_createabotproject.png)
+    ![Alt text](Images/lab2_image7_createabotproject.png)
 
 5.  Click on "Unknown intent". Click on the three virtical dots (node menu) on the right corner of 'send a response' box, and then click on delete. The send a response intent will be deleted.
 
-    ![Alt text](Images/lab3_image8_deleteintent.png)
+    ![Alt text](Images/lab2_image8_deleteintent.png)
 
 6.  Click on '+' sign under unknown intent to add an intent.
 
-    ![Alt text](Images/lab3_image9_addintent.png)
+    ![Alt text](Images/lab2_image9_addintent.png)
 
 7.  Move the cursor to 'Access external resources' and select 'send an HTTP request'. The HTTP request is sent to make call to Azure function that has been created initially.
 
-    ![Alt text](Images/lab3_image10_httprequest.png)
+    ![Alt text](Images/lab2_image10_httprequest.png)
 
 8.  Select 'HTTP Method' as 'POST'. Paste Azure Function App url that you have copied to notepad.
 
-    ![Alt text](Images/lab3_image11_url.png)
+    ![Alt text](Images/lab2_image11_url.png)
 
 9.  Select Body box as 'object' from right corner drop down menu and copy and paste the below prompt in the body.
 
@@ -200,13 +200,13 @@ Create a bot in Azure Bot Composer:
             "prompt": "${turn.activity.text}"
         }
 
-    ![Alt text](Images/lab3_image12_bodyprompt.png)
+    ![Alt text](Images/lab2_image12_bodyprompt.png)
 
 10. Select 'Response type' as 'json'.
 
 11. Click on '+' sign under 'send an HTTP request' intent and select 'send a response'.
 
-    ![Alt text](Images/lab3_image13_sendresponse.png)
+    ![Alt text](Images/lab2_image13_sendresponse.png)
 
 12. In the 'responses' box, type the below expression.
 
@@ -219,11 +219,11 @@ Azure bot is now complete. In the next step, the bot is published on the Azure C
 
 1. On the left most menu pane, select publish.
 
-   ![Alt text](Images/lab3_image14_publishbot.png)
+   ![Alt text](Images/lab2_image14_publishbot.png)
 
 2. Now, a publish target is selected. For selecting the target, click on 'select a publish target' and then select manage profiles.
 
-   ![Alt text](Images/lab3_image15_manageprofiles.png)
+   ![Alt text](Images/lab2_image15_manageprofiles.png)
 
 3. Click on 'Add new' to create a new publishing profile. Provide a name to the publihsing profile and select 'Publishing target' as 'Publihs bot to Azure'. Click next.
 
@@ -237,7 +237,7 @@ Azure bot is now complete. In the next step, the bot is published on the Azure C
 
 6. Clik on Publish tab and select the bot to be published. Select the profile provisioned in the above step. Click on 'Publish selected bots'. Click on 'Okay' in the next window. Wait for the bot to be published on the Azure Cloud.
 
-   ![Alt text](Images/lab3_image16_publishbot.png)
+   ![Alt text](Images/lab2_image16_publishbot.png)
 
 
 ## 6. Test
