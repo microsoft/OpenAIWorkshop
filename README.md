@@ -48,7 +48,7 @@ The following prerequisites must be completed before you start these labs
 
 **Lab 1:​**
 
-No additional pre-reqs
+- No additional pre-reqs
 
 **Lab 2:​**
 
@@ -57,8 +57,6 @@ No additional pre-reqs
 - [Python](https://www.python.org/downloads/) v3.7-v3.10​
 
 - (Optional): [Azure Developer CLI​](https://aka.ms/azure-dev/install)
-
-​
 
 **Lab 3:​**
 
@@ -75,8 +73,6 @@ No additional pre-reqs
 - [Azure Bot Framework Composer​](https://learn.microsoft.com/en-us/composer/install-composer?tabs=windows)
 
 - [Bot Framework Emulator​](https://github.com/Microsoft/BotFramework-Emulator/releases/tag/v4.14.1)
-
-​
 
 ## Agenda
 
