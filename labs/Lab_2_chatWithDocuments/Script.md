@@ -105,7 +105,7 @@ Choose your preferred method to test and confirm Azure Function App before conti
 
 ## Option A: Test from Azure Portal (Recommended)
 
-  - Right Click and Open ***[Azure Portal](https://portal.azure.com/)*** in a new tab and navigate to the Resource Group deployed for Lab 3:
+  - Right Click and Open ***[Azure Portal](https://portal.azure.com/)*** in a new tab and navigate to the Resource Group deployed for Lab 2:
 -
   - Select Function App:
 
