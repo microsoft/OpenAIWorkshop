@@ -60,11 +60,11 @@ The following prerequisites must be completed before you start these labs
 
 **Lab 3:​**
 
-- Microsoft.Search Resource provider needs to be [registered](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types#register-resource-provider) in the Azure Subscription.​
+- Microsoft.Search and Microsoft.BotService Resource provider needs to be [registered](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types#register-resource-provider) in the Azure Subscription.​
 
 - [PostMan Client](https://www.postman.com/downloads/)  installed on your laptop. ​
 
-- Azure Cloud Shell (shell.azure.com)​
+- [Azure Cloud Shell](https://shell.azure.com/)​
 
 - [.Net Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1) or later​
 
@@ -81,7 +81,6 @@ The following prerequisites must be completed before you start these labs
 | [Lab 1: Automate Mailbox Responses](/labs/Lab_1_Automate_Mailbox_Responses/README.md) | 45 min |
 | [Lab 2: Chat with your documents](/labs/Lab_3_chatWithDocuments/README.md) | 60 min |
 | [Lab 3: Chat with your database](/labs/Lab_2_Data_Analytics/README.md) | 45 min |
-
 
 ## Before you begin
 
