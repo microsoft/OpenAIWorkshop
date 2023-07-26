@@ -16,7 +16,7 @@ The application supports Python's built-in SQLITE (*recommended* for lab) as wel
 
 From a EDU perspective, think of how this solution might be applied to Student Analytics where faculty/staff can ask questions about Student performance/tuition payments etc as shown below:
 
-![](../../documents/images/lab-3-data-1.png)
+![](./Images/lab-3-data-1.png)
 
 ## Summary
 
@@ -27,12 +27,12 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 ## Appplication Overview
 
 - **SQL Query Writing Assistant**: Translates business question into SQL query language, then executes and displays the result.
-  
+
 - **Data Analysis Assistant**: A more sophisticated application to perform advanced data analytics such as statisical analysis and forecasting. Here we demonstrate the use of [Chain of Thought](https://arxiv.org/abs/2201.11903) and [ReAct](https://arxiv.org/abs/2210.03629) techniques to perform multi-step processing where the next step in the chain also depends on the observation/result from the previous step.
 
 ### SQL Query Writing Assistant:
 
-![](../../documents/media/da_assistant2.png)
+![](./Images/da_assistant2.png)
 
 - Use a question from the FAQ or enter your own question.
 - You can select ```show code``` and/or ```show prompt``` to show SQL query and the prompt behind the scene.
@@ -40,14 +40,14 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 
 ### Data Analyst Assistant:
 
-![](../../documents/media/da_assistant3.png) 
+![](./Images/da_assistant3.png)
 
 - Use a question from the FAQ or enter your own question.
 - You can select ```show code``` and/or ```show prompt``` to show SQL & Python code and the prompt behind the scene.
 - Click on submit to execute and see result.
 - For advanced questions such as forecasting, you can use GPT-4 (if available) as the engine.
 
-![](../../documents/media/da_assistant4.png)
+![](../Images/da_assistant4.png)
 
 ## Step 1. Clone this repository
 
@@ -55,25 +55,25 @@ Open VS Code and Clone this repository:
 
 URL: https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
 
-![](../../documents/images/lab-3-data-2.png)
+![](../Images/lab-3-data-2.png)
 
-From the terminal, navigate to ```cd labs/Lab_2_Data_Analytics```
+From the terminal, navigate to ```cd labs/Lab_3_Data_Analytics```
 
 ## Step 2. Set up enviromental variables
 
  Provide settings for Open AI and Database.You can either create a file named `secrets.env` file in the root of this folder (labs/lab_3_data_analytics) as below or do it using the app's UI later on (*easier*).
 
     - Option 1: use built-in SQLITE (*recommended*). Then you don't need to install SQL Server.
-         
+
         AZURE_OPENAI_API_KEY="9999999999999999999999999"
         AZURE_OPENAI_GPT4_DEPLOYMENT="NAME_OF_GPT_4_DEPLOYMENT"
         AZURE_OPENAI_CHATGPT_DEPLOYMENT="NAME_OF_CHATGPT_4_DEPLOYMENT"
         AZURE_OPENAI_ENDPOINT=https://openairesourcename.openai.azure.com/
         SQL_ENGINE = "sqlite"
-       
+
 
     - Option 2: use your own SQL Server
-        
+
         AZURE_OPENAI_API_KEY="9999999999999999999999999"
         AZURE_OPENAI_ENDPOINT="https://openairesourcename.openai.azure.com/"
         AZURE_OPENAI_GPT4_DEPLOYMENT="NAME_OF_GPT_4_DEPLOYMENT"
@@ -82,8 +82,8 @@ From the terminal, navigate to ```cd labs/Lab_2_Data_Analytics```
         SQL_PASSWORD="sqlpassword"
         SQL_DATABASE="WideWorldImportersDW"
         SQL_SERVER="sqlservername.database.windows.net"
-     
-      
+
+
 
 > **IMPORTANT** If you are a Mac user, please follow [this](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos?view=sql-server-ver16) to install ODBC for PYODBC
 
@@ -93,7 +93,7 @@ From the terminal, navigate to ```cd labs/Lab_2_Data_Analytics```
 
 ### Step 3.1 Navigate to the root directory of this lab
 
-Navigate to ```cd labs/Lab_2_Data_Analytics```
+Navigate to ```cd labs/Lab_3_Data_Analytics```
 
 ### Step 3.2 Create a python environment with version from 3.7 and 3.10
 
@@ -101,7 +101,7 @@ This step is required **ONLY if did not perform this earlier as part of the pre-
 
     - [Python 3+](https://www.python.org/downloads/)
         - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
-        - **Important**: Ensure you can run `python --version` from console. On Ubuntu, you might need to run `sudo apt install python-is-python3` to link `python` to `python3`. 
+        - **Important**: Ensure you can run `python --version` from console. On Ubuntu, you might need to run `sudo apt install python-is-python3` to link `python` to `python3`.
 
 ### Step 3.3  Import the requirements.txt
 

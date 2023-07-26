@@ -2,7 +2,7 @@
 ### Scenario summary:
 
 This scenario allows use cases to use Open AI as an intelligent agent to answer questions from end users or assist them using knowledge of a proprietary corpus and domain.
-Applications can be: 
+Applications can be:
 - Giving direct answer to questions about specific product, service and process based on a knowledge corpus that can be updated frequently. This is an alternative to classic search where the result are just documents with relevant information to the question. Think of this as Bing Chat on proprietary data.
 - Giving recommendation & assistance: based on information that can be implicitly gathered about the user, formulate useful content for the user's purpose. For example, a travel website may utilize users' personal information, past posts and transaction history to personalize recommendations when users need to be helped with creating next trip idea/itinerary
 
@@ -13,10 +13,10 @@ Regardless of the application scenario, the solution flow is:
 This implementation scenario focuses on building a knowledge retrieval chatbot application on top of unstructured data corpus but the same design can be used for recommendation & generative scenarios.
 
 ### Architecture Diagram
-![Alt text](Images/lab3_image1_architecture.png)
+![Alt text](Images/lab2_image1_architecture.png)
 
 
-From the user's query, the solution uses two-stage information retrieval to retrieve the content that best matches the user query. 
+From the user's query, the solution uses two-stage information retrieval to retrieve the content that best matches the user query.
 In stage 1, full text search in Azure Cognitive Search is used to retrieve a number of relevant documents. In stage 2, these documents are then used by orchestrator service to form a prompt and sent to OpenAI deployment endpoint of LLM. The OpenAI service returns result which is then sent to Power App client application.
 ### Deployment
 
