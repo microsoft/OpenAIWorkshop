@@ -31,7 +31,7 @@ Create an Azure OpenAI deployment in an Azure subscription with a GPT-4-0603 dep
         - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
         - **Important**: Ensure you can run `python --version` from console. On Ubuntu, you might need to run `sudo apt install python-is-python3` to link `python` to `python3`. 
 4. Import the requirements.txt `pip install -r requirements.txt`
-5. To run the application from the command line: `streamlit run copilot.py`
+5. To run the application from the command line: `streamlit run hr_copilot.py`
 ## Deploy the application to Azure 
 ##To be added
 
