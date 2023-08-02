@@ -1,22 +1,25 @@
 # Overview
-This solution demonstrates the use of function calling capabily in version 0613 to build your own copilot.
-The copilot can interact with users using NL and produce API calls to multiple tools and systems to get information & create updates.
+    This is a demo of Multi-Agent Copilot concept. The Copilot helps employees answer questions and update information.
+    There are 3 agents in the Copilot: HR, IT and Generalist. Each agent has a different persona and skillset.
+    Depending on the needs of the user, the Copilot will assign the right agent to answer the question.
+    1. For HR Copilot, the agent will answer questions about HR and Payroll and update personal information.
 
-This is a demo of Copilot Concept for HR/Payroll. The Copilot helps employees answer questions and update personal information.
-
-Copilot will first validate the identity of the employee before answering any questions or updating any information. Use ids such as 1234 or 5678 to test the demo.
-
-Example questions to ask:
-
-- When do I receive W2 form?
-- What are deducted from my paycheck?
-- These questions are answered by the Copilot by searching a knowledge base and providing the answer.
-
-Copilot also can help update information.
-
-- For address update, the Copilot will update the information in the system.
-- For other information update requests, the Copilot will log a ticket to the HR team to update the information.
-
+    Copilot will first validate the identity of the employee before answering any questions or updating any information.
+    Use ids such as 1234 or 5678 to test the demo.
+   
+    Example questions to ask:
+    - When do I receive W2 form?
+    - What are deducted from my paycheck?    
+    When do I receive W2 form?When do I receive W2 form?
+                
+    These questions are answered by the Copilot by searching a knowledge base and providing the answer.
+                
+    Copilot also can help update information. 
+    - For address update, the Copilot will update the information in the system. 
+    - For other information update requests, the Copilot will log a ticket to the HR team to update the information.
+    2. For IT copilot, it helps answer questions about IT
+    3. Generalist copilot helps answer general questions such as company policies, benefits, etc.When do I receive W2 form?
+                
 # Installation 
 ## Open AI setup
 Create an Azure OpenAI deployment in an Azure subscription with a GPT-4-0603 deployment .
