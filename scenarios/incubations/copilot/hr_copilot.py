@@ -73,8 +73,19 @@ else:
 if user_input:
     with st.chat_message("user"):
         st.markdown(user_input)
-    history, agent_response = hr_agent.run(user_input=user_input, conversation=history)
+    stream_out, history, agent_response = hr_agent.run(user_input=user_input, conversation=history, stream=True)
+
     with st.chat_message("assistant"):
-        st.markdown(agent_response)
+        if stream_out:
+            message_placeholder = st.empty()
+            full_response = ""
+            for response in agent_response:
+                if len(response.choices)>0:
+                    full_response += response.choices[0].delta.get("content", "")
+                    message_placeholder.markdown(full_response + "▌")
+            message_placeholder.markdown(full_response)
+            history.append({"role": "assistant", "content": full_response})      
+        else:
+            st.markdown(agent_response)
 
 st.session_state['history'] = history
