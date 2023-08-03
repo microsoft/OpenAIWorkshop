@@ -1,5 +1,7 @@
 streamlit
 openai
-streamlit-chat
 streamlit-extras
 python-dotenv 
+plotly
+scipy
+scikit-learn

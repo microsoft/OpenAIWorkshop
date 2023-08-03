@@ -1,12 +1,8 @@
 import streamlit as st
-from streamlit_chat import message
-from streamlit_extras.colored_header import colored_header
 from streamlit_extras.add_vertical_space import add_vertical_space
 from utils import Smart_Agent, HR_PERSONA, HR_AVAILABLE_FUNCTIONS, HR_FUNCTIONS_SPEC
-import concurrent.futures
 import time
 import random
-import openai
 import os
 from pathlib import Path  
 import json
@@ -58,42 +54,27 @@ with st.sidebar:
         st.session_state['input'] = ""
 
 
-
-
-# User input
-## Function for taking user provided prompt as input
-def clear():
-    st.session_state.input_var = st.session_state.input
-    st.session_state.input = ''
-
-def get_text():
-    st.text_input("You: ", "", key="input", on_change= clear())
-    return st.session_state.input_var
-## Applying the user input box
-# with input_container:
-user_input = get_text()
+user_input= st.chat_input("You:")
 
 ## Conditional display of AI generated responses as a function of user provided prompts
 history = st.session_state['history']
       
 if len(history) > 0:
-    bot_history = [item['content'] for item in history if (item['role'] == 'assistant') and (item.get("name") is  None)]
-    #trim history
-    # bot_history = bot_history[-MAX_HIST-1:]
-    user_history = [item['content'] for item in history if item['role'] == 'user']
-    # user_history = user_history[-MAX_HIST-1:]
-
-    for i in range(len(bot_history)):
-        if i>0:
-            if len(user_history) > i-1:
-                message(user_history[i-1], is_user=True, key=str(i) + '_user') #this is because the bot starts first.
-        message(bot_history[i], key=str(i))
+    for message in history:
+        if message.get("role") != "system" and message.get("name") is  None:
+            with st.chat_message(message["role"]):
+                    st.markdown(message["content"])
 else:
     history, agent_response = hr_agent.run(user_input=None)
-    message(agent_response, is_user=False, key=str(0) + '_assistant')
+    # message(agent_response, is_user=False, key=str(0) + '_assistant')
+    with st.chat_message("assistant"):
+        st.markdown(agent_response)
     user_history=[]
 if user_input:
-    message(user_input,  is_user=True,key=str(len(user_history)+1)+ '_user')
+    with st.chat_message("user"):
+        st.markdown(user_input)
     history, agent_response = hr_agent.run(user_input=user_input, conversation=history)
-    message(agent_response,  is_user=False,key=str(len(bot_history)+1)+ '_assistant')
+    with st.chat_message("assistant"):
+        st.markdown(agent_response)
+
 st.session_state['history'] = history
