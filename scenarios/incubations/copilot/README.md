@@ -55,6 +55,36 @@ Smart Agent:At the heart of the solution is the python object Smart_Agent.  The 
 - Memory: The agent maintain a memomory of the conversation history. The memory is backed by Streamlit's session state.
 - LLM: The agent is linked to a 0613 GPT-4 model to power its intelligence.
 
+### 4. Multi-Agent Copilot
+<img width="1159" alt="image" src="../../../documents/media/multi-agent_model.png">
+
+When the scope for automation span across multiple functional domains, just like human, agent may perform better when it specializes in a single area.
+In terms of implementation, a specialized agent's instruction and prompt can be limited into a narrow domain so it may perform more reliably.
+On the other hand, there needs to be a coordination mechanism to move the session across participating agents smoothly and to enable hand-over of information from one agent to next. In addition, each participating agent needs to be intructed as how to hand over when it's supposed to.
+
+#### Function flow
+
+This is a demo of Multi-Agent Copilot concept. The Copilot helps employees answer questions and update information.
+There are 3 agents in the Copilot: HR, IT and Generalist. Each agent has a different persona and skillset.
+Depending on the needs of the user, the Copilot will assign the right agent to answer the question.
+1. For HR Copilot, the agent will answer questions about HR and Payroll and update personal information.
+
+Copilot will first validate the identity of the employee before answering any questions or updating any information.
+Use ids such as 1234 or 5678 to test the demo.
+
+Example questions to ask:
+- When do I receive W2 form?
+- What are deducted from my paycheck?    
+When do I receive W2 form?When do I receive W2 form?
+            
+These questions are answered by the Copilot by searching a knowledge base and providing the answer.
+            
+Copilot also can help update information. 
+- For address update, the Copilot will update the information in the system. 
+- For other information update requests, the Copilot will log a ticket to the HR team to update the information.
+2. For IT copilot, it helps answer questions about IT
+3. Generalist copilot helps answer general questions such as company policies, benefits, etc.When do I receive W2 form?
+
 
 # Installation 
 ## Open AI setup
@@ -70,7 +100,9 @@ Create an Azure OpenAI deployment in an Azure subscription with a GPT-4-0603 dep
         - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
         - **Important**: Ensure you can run `python --version` from console. On Ubuntu, you might need to run `sudo apt install python-is-python3` to link `python` to `python3`. 
 4. Import the requirements.txt `pip install -r requirements.txt`
-5. To run the application from the command line: `streamlit run hr_copilot.py`
+5. To run the HR/Payroll copilot from the command line: `streamlit run hr_copilot.py`
+5. To run the multi-agent copilot, ```cd multi-agent``` then `streamlit run /copilot.py`
+
 ## Deploy the application to Azure 
 ##To be added
 
