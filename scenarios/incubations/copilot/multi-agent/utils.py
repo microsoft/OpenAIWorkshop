@@ -434,7 +434,8 @@ class Smart_Agent(Agent):
                     openai.api_version = api_version
                     second_response = openai.ChatCompletion.create(
                         messages=conversation,
-                        deployment_id=self.engine
+                        deployment_id=self.engine,
+                        stream=stream,
                     )  # get a new response from GPT where it can see the function response
 
                     assistant_response = second_response['choices'][0]['message']["content"]
