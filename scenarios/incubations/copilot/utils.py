@@ -50,7 +50,7 @@ Answer ONLY with the facts from the search tool. If there isn't enough informati
 Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brakets to reference the source, e.g. [info1.txt]. Don't combine sources, list each source separately, e.g. [info1.txt][info2.pdf].
 When employee request updating their address, use the tool provided to update in the system.
 For all other information update requests, log a ticket to the HR team to update the information.
-If the employee is asking for information that is not related to HR or Payroll, offer to route the call to general customer support then transfer the call.
+If the employee is asking for information that is not related to HR or Payroll, say it's not your area of expertise.
 """
 def search_knowlebase(search_query):
     return search_client.find_article(search_query)
@@ -143,23 +143,6 @@ HR_FUNCTIONS_SPEC= [
         },
 
     },
-    {
-        "name": "route_call",
-        "description": "When the employee wants to talk about a topic that is not in IT, call this function to route the call to the appropriate department",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "department": {
-                    "type": "string",
-                    "description": "department to route the call to"
-                },
-
-            },
-            "required": ["department"],
-        },
-
-    },
-
 
 ]  
 
@@ -311,13 +294,21 @@ class Smart_Agent(Agent):
                         }
                     )  # extend conversation with function response
                     openai.api_version = api_version
+                
                     second_response = openai.ChatCompletion.create(
                         messages=conversation,
-                        deployment_id=self.engine
+                        deployment_id=self.engine,
+                        stream=stream,
                     )  # get a new response from GPT where it can see the function response
+                    
+                    if not stream:
+                        assistant_response = second_response["choices"][0]["message"]["content"]
+                        conversation.append({"role": "assistant", "content": assistant_response})
 
-                    assistant_response = second_response['choices'][0]['message']["content"]
-                    conversation.append({"role": "assistant", "content": assistant_response})
+                    else:
+                        assistant_response = second_response
+
+                    return stream,conversation, assistant_response
                 else:
                     assistant_response = response_message["content"]
                     conversation.append({"role": "assistant", "content": assistant_response})
@@ -326,6 +317,7 @@ class Smart_Agent(Agent):
                 if i>3: 
                     break
                 print("Exception as below, will retry\n", str(e))
+                assistant_response="Haizz, my internal body is having some internal trouble, please repeat your question."
                 time.sleep(5)
 
-        return conversation, assistant_response
+        return False, conversation, assistant_response

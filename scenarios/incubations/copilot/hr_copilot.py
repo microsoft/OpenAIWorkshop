@@ -84,7 +84,8 @@ if user_input:
                     full_response += response.choices[0].delta.get("content", "")
                     message_placeholder.markdown(full_response + "▌")
             message_placeholder.markdown(full_response)
-            history.append({"role": "assistant", "content": full_response})      
+            history.append({"role": "assistant", "content": full_response})
+            print("append ", full_response)      
         else:
             st.markdown(agent_response)
 
