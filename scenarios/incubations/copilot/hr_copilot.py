@@ -28,17 +28,17 @@ with st.sidebar:
     This is a demo of Copilot Concept for HR/Payroll. The Copilot helps employees answer questions and update personal information.
 
     Copilot will first validate the identity of the employee before answering any questions or updating any information.
-    Use ids such as 1234 or 5678 to test the demo.
+    Use ID 1234 or 5678 to test the demo.
    
     Example questions to ask:
-    - When do I receive W2 form?
-    - What are deducted from my paycheck?    
+    - When will I receive W2 form?
+    - Can you explain what are deducted from my paycheck?    
     
     These questions are answered by the Copilot by searching a knowledge base and providing the answer.
                 
     Copilot also can help update information. 
-    - For address update, the Copilot will update the information in the system. 
-    - For other information update requests, the Copilot will log a ticket to the HR team to update the information.
+    - For address update, the Copilot will update the information in the system. For example: I moved to 123 Main St, San Jose, CA 95112, please update my address
+    - For other information update requests, the Copilot will log a ticket to the HR team to update the information, for example: I got married, please update my marital status to married.
     
     ''')
     add_vertical_space(5)
@@ -66,7 +66,6 @@ if len(history) > 0:
                     st.markdown(message["content"])
 else:
     history, agent_response = hr_agent.run(user_input=None)
-    # message(agent_response, is_user=False, key=str(0) + '_assistant')
     with st.chat_message("assistant"):
         st.markdown(agent_response)
     user_history=[]
@@ -74,7 +73,6 @@ if user_input:
     with st.chat_message("user"):
         st.markdown(user_input)
     stream_out, history, agent_response = hr_agent.run(user_input=user_input, conversation=history, stream=True)
-
     with st.chat_message("assistant"):
         if stream_out:
             message_placeholder = st.empty()
