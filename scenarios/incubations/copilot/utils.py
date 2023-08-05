@@ -52,7 +52,7 @@ When employee request updating their address, use the tool provided to update in
 For all other information update requests, log a ticket to the HR team to update the information.
 If the employee is asking for information that is not related to HR or Payroll, say it's not your area of expertise.
 """
-def search_knowlebase(search_query):
+def search_knowledgebase(search_query):
     return search_client.find_article(search_query)
 def validate_identity(employee_id):
     if employee_id in ["1234","5678"]:
@@ -65,7 +65,7 @@ def create_ticket(employee_id, updates):
     return f"A ticket number 1233445 has been created for employee {employee_id} with the following updates: {updates} "
 
 HR_AVAILABLE_FUNCTIONS = {
-            "search_knowledgebase": search_knowlebase,
+            "search_knowledgebase": search_knowledgebase,
             "validate_identity": validate_identity,
             "update_address": update_address,
             "create_ticket": create_ticket,
@@ -152,7 +152,7 @@ def gpt_stream_wrapper(response):
         chunk_msg= chunk_msg.get('content',"")
         yield chunk_msg
 class Agent(): #Base class for Agent
-    def __init__(self, engine, persona, init_message=None):
+    def __init__(self, engine,persona, name=None, init_message=None):
         if init_message is not None:
             init_hist =[{"role":"system", "content":persona}, {"role":"assistant", "content":init_message}]
         else:
@@ -161,6 +161,7 @@ class Agent(): #Base class for Agent
         self.init_history =  init_hist
         self.persona = persona
         self.engine = engine
+        self.name= name
     def generate_response(self, new_input,history=None, stream = False,request_timeout =20,api_version = "2023-05-15"):
         openai.api_version = api_version
         if new_input is None: # return init message 
@@ -226,9 +227,10 @@ class Smart_Agent(Agent):
     """
 
     def __init__(self, persona,functions_spec, functions_list, name=None, init_message=None, engine ="gpt-4"):
-        super().__init__(engine=engine,persona=persona, init_message=init_message)
+        super().__init__(engine=engine,persona=persona, init_message=init_message, name=name)
         self.functions_spec = functions_spec
         self.functions_list= functions_list
+
     def run(self, user_input, conversation=None, stream = False, api_version = "2023-07-01-preview"):
         openai.api_version = api_version
         if user_input is None: #if no input return init message
@@ -315,9 +317,9 @@ class Smart_Agent(Agent):
                 break
             except Exception as e:
                 if i>3: 
+                    assistant_response="Haizz, my memory is having some trouble, can you repeat what you just said?"
                     break
                 print("Exception as below, will retry\n", str(e))
-                assistant_response="Haizz, my internal body is having some internal trouble, please repeat your question."
-                time.sleep(5)
+                time.sleep(8)
 
         return False, conversation, assistant_response
