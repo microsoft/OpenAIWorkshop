@@ -32,9 +32,10 @@ Copilot will first validate the identity of the employee before answering any qu
 
 Example questions to ask:
 
-- When do I receive W2 form?
+- When will I receive W2 form?
 - What are deducted from my paycheck?
-- These questions are answered by the Copilot by searching a knowledge base and providing the answer.
+
+These questions are answered by the Copilot by searching a knowledge base and providing the answer.
 
 Copilot also can help update information.
 
@@ -58,33 +59,51 @@ Smart Agent:At the heart of the solution is the python object Smart_Agent.  The 
 ### 4. Multi-Agent Copilot
 <img width="1159" alt="image" src="../../../documents/media/multi-agent_model.png">
 
-When the scope for automation span across multiple functional domains, just like human, agent may perform better when it specializes in a single area.
-In terms of implementation, a specialized agent's instruction and prompt can be limited into a narrow domain so it may perform more reliably.
-On the other hand, there needs to be a coordination mechanism to move the session across participating agents smoothly and to enable hand-over of information from one agent to next. In addition, each participating agent needs to be intructed as how to hand over when it's supposed to.
 
+When scope for automation spans across multiple functional domains, like human, agent may perform better when it can specialize in a single area.
+
+So instead of stuffing a single agent with multiple capabilities, we can employ multiple agents model, each specializing in a single domain. These agents are managed and coordinated by a manager agent (agent runner).
+This is called multi-agent copilot model.
+
+The agent runner is responsible to promote the right agent from the agent pool to be the active agent to interact with user.
+It also is responsible to transfer relavant contextfrom agent to agent to ensure continuity.
+In this model, the agent runner relies on the specialist agent's cue to back-off from conversation to start the transfer.
+Each specialist agent has to implement a skill to send a notification (back-off method) when it thinks its skillset cannot handle the user's request.
+
+On the other hand, the decision on exactly which agent should be selected to take over the conversation is still with agent runner.
+When receiving such request, agent runner will revaluate the from the input by the requesting agent to decide on which agent to select for the job. This skill also relies on a LLM. 
+
+Agent runner runs each specialist agent's run method.
+
+There can be some persistent context that should be available across agent's sessions. This is implemented as the persistent memory at agent runner.
+
+Each specialist agent depending on the requirement for skill, can be powered by a gpt-35-turbo or gpt-4.
+
+Multi-agent solution has same application platform (streamlit) as the single HR Copilot. 
 #### Function flow
 
 This is a demo of Multi-Agent Copilot concept. The Copilot helps employees answer questions and update information.
 There are 3 agents in the Copilot: HR, IT and Generalist. Each agent has a different persona and skillset.
 Depending on the needs of the user, the Copilot will assign the right agent to answer the question.
-1. For HR Copilot, the agent will answer questions about HR and Payroll and update personal information.
 
-Copilot will first validate the identity of the employee before answering any questions or updating any information.
-Use ids such as 1234 or 5678 to test the demo.
+1. Generalist copilot help validate the user and answer general questions that are not related to HR and IT. Use ids such as 1234 or 5678 to test the demo. When the conversation enters any of the HR or IT area, generalist agent will request to transfer to the right specialist agent.
+
+2. For HR Copilot, the agent will answer questions about HR and Payroll and update personal information.
 
 Example questions to ask:
-- When do I receive W2 form?
-- What are deducted from my paycheck?    
-When do I receive W2 form?When do I receive W2 form?
-            
-These questions are answered by the Copilot by searching a knowledge base and providing the answer.
-            
-Copilot also can help update information. 
-- For address update, the Copilot will update the information in the system. 
-- For other information update requests, the Copilot will log a ticket to the HR team to update the information.
-2. For IT copilot, it helps answer questions about IT
-3. Generalist copilot helps answer general questions such as company policies, benefits, etc.When do I receive W2 form?
 
+- When will I receive W2 form?
+- What are deducted from my paycheck?
+
+These questions are answered by the Copilot by searching a knowledge base and providing the answer.
+
+Copilot also can help update information.
+
+- For address update, the Copilot will update the information in the system.
+- For other information update requests, the Copilot will log a ticket to the HR team to update the information.
+
+
+2. For IT copilot, it helps answer questions about IT
 
 # Installation 
 ## Open AI setup

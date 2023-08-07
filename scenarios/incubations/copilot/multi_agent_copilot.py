@@ -21,25 +21,31 @@ MAX_HIST= 5
 with st.sidebar:
     st.title('Copilot')
     st.markdown('''
-    This is a demo of Multi-Agent Copilot Concept. The Copilot helps employees answer questions and update information.
-    There are 3 agents in the Copilot: HR, IT and Generalist. Each agent has a different persona and skillset.
-    Depending on the needs of the user, the Copilot will assign the right agent to answer the question.
-    1. Generalist copilot helps answer general questions such as company policies, benefits, etc.
+This is a demo of Multi-Agent Copilot concept. The Copilot helps employees answer questions and update information.
+There are 3 agents in the Copilot: HR, IT and Generalist. Each agent has a different persona and skillset.
+Depending on the needs of the user, the Copilot will assign the right agent to answer the question.
 
-    2. For HR Copilot, the agent will answer questions about HR and Payroll and update personal information.
+1. Generalist copilot help validate the user and answer general questions that are not related to HR and IT.
+   - Use ids such as 1234 or 5678 to test the demo. 
+   - When the conversation enters any of the HR or IT area, generalist agent will request to transfer to the right specialist agent.
 
-        - When will I receive W2 form?
-        - Can you explain what are deducted from my paycheck?    
-        
-        These questions are answered by the Copilot by searching a knowledge base and providing the answer.
-                    
-        HR Copilot also can help update information. 
-        - For address update, the Copilot will update the information in the system. 
-                    For example: I moved to 123 Main St, San Jose, CA 95112, please update my address
-        - For other information update requests, the Copilot will log a ticket to the HR team to update the information.
-                    For example: I got married, please update my marital status to married.
-                
-    3. For IT copilot, it helps answer questions about IT. It's a simple agent which directly mimic ChatGPT
+2. For HR Copilot, the agent will answer questions about HR and Payroll and update personal information.
+
+    Example questions to ask:
+
+    - When will I receive W2 form?
+    - What are deducted from my paycheck?
+
+    These questions are answered by the Copilot by searching a knowledge base and providing the answer.
+
+    Copilot also can help update information.
+
+    - For address update, the Copilot will update the information in the system. For example: I moved to 123 Main St, San Jose, CA 95112, please update my address
+    - For other information update requests, the Copilot will log a ticket to the HR team to update the information, for example: I got married, please update my marital status to married.
+
+
+3. For IT copilot, it helps answer questions about IT. So ask question such as how to do I reset my password? or I need a new laptop.
+
                 
     ''')
     add_vertical_space(5)
