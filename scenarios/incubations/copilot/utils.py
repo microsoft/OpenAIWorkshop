@@ -264,13 +264,13 @@ class Smart_Agent(Agent):
                     
                     # verify function exists
                     if function_name not in self.functions_list:
-                        return "Function " + function_name + " does not exist"
+                        raise Exception("Function " + function_name + " does not exist")
                     function_to_call = self.functions_list[function_name]  
                     
                     # verify function has correct number of arguments
                     function_args = json.loads(response_message["function_call"]["arguments"])
                     if check_args(function_to_call, function_args) is False:
-                        return "Invalid number of arguments for function: " + function_name
+                        raise Exception("Invalid number of arguments for function: " + function_name)
                     function_response = function_to_call(**function_args)
                     print("Output of function call:")
                     print(function_response)
