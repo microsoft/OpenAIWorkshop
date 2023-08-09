@@ -308,7 +308,7 @@ class Smart_Coordinating_Agent(Smart_Agent):
                     messages=conversation,
                 functions=self.functions_spec,
                 function_call="auto", 
-                request_timeout=15,
+                request_timeout=20,
                 )
                 response_message = response["choices"][0]["message"]
 
