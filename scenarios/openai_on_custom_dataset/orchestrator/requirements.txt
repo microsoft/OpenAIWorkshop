@@ -4,7 +4,7 @@
 
 azure-core
 azure-functions
-openai
+openai==0.27.2
 azure-kusto-data==4.0.2
 pandas
 pyodbc

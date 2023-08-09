@@ -1,3 +1,4 @@
+### <span style="color:red">The newer and more advanced version of this lab is available [here](../incubations/automating_analytics//README.md)! Try it out</span>.
 # Build Open AI Application on Power App to allow users to use natural language question on top of SQL data
 ### Summary.
 
