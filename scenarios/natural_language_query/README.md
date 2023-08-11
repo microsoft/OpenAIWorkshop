@@ -92,9 +92,9 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai3.png)
 
-2. On the left hand side click on **Functions (1)** and click deployed function **NLQuery (2)**.
+2. In the **Overview (1)** page, under **Functions (2)** tab  select **NLQuery (3)**.
 
-   ![](images/openai7.png)
+   ![](images/newai1.png)
 
 3. From NLQuery go to **Code + Test (1)**, then click **Test/Run (2)** select **GET (3)** in **HTTP method** dropdown, click **+ Add parameter** under **Query** and enter **prompt (4)** in the **Name** field and enter **show top 10 products (5)** in the **Value** field. Click **Run (6)**.
 
