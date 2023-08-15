@@ -1,12 +1,17 @@
 # Agent class
 ### responsbility definition: expertise, scope, conversation script, style 
-import time
 import openai
 import os
 from pathlib import Path  
 import json
-import random
+import time
+from azure.search.documents.models import Vector  
+import uuid
+from tenacity import retry, wait_random_exponential, stop_after_attempt  
+
 from dotenv import load_dotenv
+from azure.core.credentials import AzureKeyCredential  
+from azure.search.documents import SearchClient  
 from openai.embeddings_utils import get_embedding, cosine_similarity
 import inspect
 env_path = Path('..') / 'secrets.env'
@@ -14,7 +19,238 @@ load_dotenv(dotenv_path=env_path)
 openai.api_key =  os.environ.get("AZURE_OPENAI_API_KEY")
 openai.api_base =  os.environ.get("AZURE_OPENAI_ENDPOINT")
 openai.api_type = "azure"
-from utils import Agent, Smart_Agent, check_args, Search_Client, update_address, create_ticket, search_knowledgebase
+import sys
+import random
+sys.path.append("..")
+from utils import Agent, Smart_Agent, check_args
+
+class Search_Client():
+    def __init__(self,emb_map_file_path):
+        with open(emb_map_file_path) as file:
+            self.chunks_emb = json.load(file)
+
+    def find_article(self,question, topk=3):  
+        """  
+        Given an input vector and a dictionary of label vectors,  
+        returns the label with the highest cosine similarity to the input vector.  
+        """  
+        input_vector = get_embedding(question, engine = 'text-embedding-ada-002')        
+        # Compute cosine similarity between input vector and each label vector
+        cosine_list=[]  
+        for chunk_id,chunk_content, vector in self.chunks_emb:  
+            #by default, we use embedding for the entire content of the topic (plus topic descrition).
+            # If you you want to use embedding on just topic name and description use this code cosine_sim = cosine_similarity(input_vector, vector[0])
+            cosine_sim = cosine_similarity(input_vector, vector) 
+            cosine_list.append((chunk_id,chunk_content,cosine_sim ))
+        cosine_list.sort(key=lambda x:x[2],reverse=True)
+        cosine_list= cosine_list[:topk]
+        best_chunks =[chunk[0] for chunk in cosine_list]
+        contents = [chunk[1] for chunk in cosine_list]
+        text_content = ""
+        for chunk_id, content in zip(best_chunks, contents):
+            text_content += f"{chunk_id}\n{content}\n"
+
+        return text_content
+
+
+#azcs implementation
+if os.getenv("USE_AZCS") == "True":
+    service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT") 
+    index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 
+    key = os.getenv("AZURE_SEARCH_ADMIN_KEY") 
+    @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
+    # Function to generate embeddings for title and content fields, also used for query embeddings
+    def generate_embeddings(text):
+        response = openai.Embedding.create(
+            input=text, engine="text-embedding-ada-002")
+        embeddings = response['data'][0]['embedding']
+        return embeddings
+
+    credential = AzureKeyCredential(key)
+    azcs_search_client = SearchClient(service_endpoint, index_name, credential=credential)
+else:
+    faiss_search_client = Search_Client("../data/chunk_emb_map.json")
+
+def search_knowledgebase_acs(search_query):
+    vector = Vector(value=generate_embeddings(search_query), k=3, fields="contentVector")
+  
+    results = azcs_search_client.search(  
+        search_text=None,  
+        vectors= [vector],
+        select=["id", "content"],
+    )  
+    text_content =""
+    for result in results:  
+        text_content += f"{result['id']}\n{result['content']}\n"
+    return text_content
+
+def search_knowledgebase_faiss(search_query):
+    return faiss_search_client.find_article(search_query)
+
+def search_knowledgebase(search_query):
+    if os.getenv("USE_AZCS") == "True":
+        print("using azcs")
+        return search_knowledgebase_acs(search_query)
+    else:
+        print("using faiss")
+        return search_knowledgebase_faiss(search_query)
+
+
+
+###Sematic caching implementation
+if os.getenv("USE_SEMANTIC_CACHE") == "True":
+    cache_index_name = os.getenv("CACHE_INDEX_NAME")
+    azcs_semantic_cache_search_client = SearchClient(service_endpoint, cache_index_name, credential=credential)
+
+def add_to_cache(search_query, gpt_response):
+    search_doc = {
+                 "id" : str(uuid.uuid4()),
+                 "search_query" : search_query,
+                 "search_query_vector" : generate_embeddings(search_query),
+                "gpt_response" : gpt_response
+              }
+    azcs_semantic_cache_search_client.upload_documents(documents = [search_doc])
+
+def get_cache(search_query):
+    vector = Vector(value=generate_embeddings(search_query), k=3, fields="search_query_vector")
+  
+    results = azcs_semantic_cache_search_client.search(  
+        search_text=None,  
+        vectors= [vector],
+        select=["gpt_response"],
+    )  
+    try:
+        result =next(results)
+        print("threshold ", result['@search.score'])
+        if result['@search.score']>= float(os.getenv("SEMANTIC_HIT_THRESHOLD")):
+            return result['gpt_response']
+    except StopIteration:
+        pass
+
+    return None
+
+    
+
+
+
+HR_PERSONA = """
+You are Lucy, an HR support specialist responsible for answering questions about HR & Payroll from employees and handling personal information updates.
+You start the conversation by validating the identity of the employee. Do not proceed until you have validated the identity of the employee.
+When you are asked with a question, use the search tool to find relavent knowlege articles to create the answer.
+Answer ONLY with the facts from the search tool. If there isn't enough information, say you don't know. Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.
+Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brakets to reference the source, e.g. [info1.txt]. Don't combine sources, list each source separately, e.g. [info1.txt][info2.pdf].
+When employee request updating their address, interact with them to get their new country, new state, new city and zipcode. If they don't provide new country, check if it's still United States. Make sure you have all information then use update address tool provided to update in the system. 
+For all other information update requests, log a ticket to the HR team to update the information.
+If the employee is asking for information that is not related to HR or Payroll, say it's not your area of expertise.
+"""
+
+def validate_identity(employee_id):
+    if employee_id in ["1234","5678"]:
+        return "valid employee"
+    else:
+        return "This employee id is not valid"
+def update_address(employee_id, country, state, city, zipcode):
+    return f"Address of employee {employee_id} address has been updated to {country}, {state}, {city}, {zipcode}"
+def create_ticket(employee_id, updates):
+    return f"A ticket number 1233445 has been created for employee {employee_id} with the following updates: {updates} "
+
+HR_AVAILABLE_FUNCTIONS = {
+            "search_knowledgebase": search_knowledgebase,
+            "validate_identity": validate_identity,
+            "update_address": update_address,
+            "create_ticket": create_ticket,
+
+        } 
+
+HR_FUNCTIONS_SPEC= [  
+    {
+        "name": "search_knowledgebase",
+        "description": "Searches the knowledge base for an answer to the HR/Payroll question",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "search_query": {
+                    "type": "string",
+                    "description": "The search query to use to search the knowledge base"
+                }
+            },
+            "required": ["search_query"],
+        },
+    },
+    {
+        "name": "validate_identity",
+        "description": "validates the identity of the employee",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "employee_id": {
+                    "type": "string",
+                    "description": "The employee id to validate"
+                }
+            },
+            "required": ["employee_id"],
+        },
+
+    },
+    {
+        "name": "update_address",
+        "description": "Update the address of the employee",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "employee_id": {
+                    "type": "string",
+                    "description": "The employee id to validate"
+                },
+                "city": {
+                    "type": "string",
+                    "description": "The new city to update"
+                },
+                "state": {
+                    "type": "string",
+                    "description": "The new state to update"
+                },
+                "zipcode": {
+                    "type": "integer",
+                    "description": "The new zipcode to update"
+                },
+                "country": {
+                    "type": "string",
+                    "description": "The new country to update"
+                }
+
+            },
+            "required": ["employee_id","city", "state", "zipcode", "country"],
+        },
+
+    },
+    {
+        "name": "create_ticket",
+        "description": "Create a support ticket for the employee to update personal information other than address",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "employee_id": {
+                    "type": "string",
+                    "description": "The employee id to validate"
+                },
+                "updates": {
+                    "type": "string",
+                    "description": "The new/changed information to update"
+                }
+
+            },
+            "required": ["employee_id","updates"],
+        },
+
+    },
+
+]  
+
+
+#function for multi-agents
+
+
 
  
 def route_call(next_agent):
@@ -124,81 +360,6 @@ IT_FUNCTIONS_SPEC= [
 
 ]  
 
-
-HR_FUNCTIONS_SPEC= [  
-    {
-        "name": "search_knowledgebase",
-        "description": "Searches the knowledge base for an answer to the HR/Payroll question",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "search_query": {
-                    "type": "string",
-                    "description": "The search query to use to search the knowledge base"
-                }
-            },
-            "required": ["search_query"],
-        },
-    },
-    {
-        "name": "update_address",
-        "description": "Update the address of the employee",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "employee_id": {
-                    "type": "string",
-                    "description": "The employee id to validate"
-                },
-                "new_address": {
-                    "type": "string",
-                    "description": "The new address to update"
-                }
-
-            },
-            "required": ["employee_id","new_address"],
-        },
-
-    },
-    {
-        "name": "create_ticket",
-        "description": "Create a support ticket for the employee to update personal information other than address",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "employee_id": {
-                    "type": "string",
-                    "description": "The employee id to validate"
-                },
-                "updates": {
-                    "type": "string",
-                    "description": "The new/changed information to update"
-                }
-
-            },
-            "required": ["employee_id","updates"],
-        },
-
-    },
-    {
-        "name": "route_call",
-        "description": "When the employee wants to talk about a topic that is not in your area of expertise, call this function to route request the transfer",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "next_agent": {
-                    "type": "string",
-                    "description": "description of the agent you think the call route the call should be routed to"
-                },
-
-            },
-            "required": ["department"],
-        },
-
-    },
-
-
-]  
 
 
 class Agent_Runner():
@@ -392,4 +553,5 @@ class Smart_Coordinating_Agent(Smart_Agent):
                 time.sleep(8)
 
         return False, request_agent_change,context_to_persist, conversation, assistant_response
+
 
