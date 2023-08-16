@@ -35,9 +35,9 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai11-1.png)
 
-1. In the **Azure AI Studio**, select **Deployments** under Management and verify that two models with the corresponding **Deployment names** of **gptmodel** and **demomodel** are present and the capacity of the model is set to **10K TPM**.
+1. In the **Azure AI Studio**, select **Deployments** under Management and verify that two models with the corresponding **Deployment names** of **gptmodel** and **demomodel** are present and the capacity of the model is set to **15K TPM**.
 
-   ![](images/deployed-model.png)
+   ![](images/newai.png)
 
 1. Naviagte back to [Azure portal](http://portal.azure.com/), search and select **Azure OpenAI**, from the **Cognitive Services | Azure OpenAI pane**, select the **OpenAI-<inject key="Deployment ID" enableCopy="false"/>**.
 
@@ -92,9 +92,9 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai3.png)
 
-2. On the left hand side click on **Functions (1)** and click deployed function **NLQuery (2)**.
+2. In the **Overview (1)** page, under **Functions (2)** tab  select **NLQuery (3)**.
 
-   ![](images/openai7.png)
+   ![](images/newai1.png)
 
 3. From NLQuery go to **Code + Test (1)**, then click **Test/Run (2)** select **GET (3)** in **HTTP method** dropdown, click **+ Add parameter** under **Query** and enter **prompt (4)** in the **Name** field and enter **show top 10 products (5)** in the **Value** field. Click **Run (6)**.
 

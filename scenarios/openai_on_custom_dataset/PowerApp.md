@@ -54,9 +54,9 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
    ![](./images/synapse1.3.png)
 
-2. From the **Function app** go to **Functions (1)** on the left menu and select **orchestrator-func-app (2)**.
+2. From the **Function app**, **Overview** page go to **Functions** select **orchestrator-func-app**.
 
-   ![](./images/openai-img1.png)
+   ![](./images/openai1.png)
    
 3. On the **orchestrator-func-app** function click on **Get Function Url (1)**, from the drop-down menu select **default (function key) (2)** then **Copy (3)** the URL. Click **OK (4)**. Paste the URL in a text editor such as _Notepad_ for later use.
 
