@@ -1,12 +1,15 @@
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
-from utils import Smart_Agent,add_to_cache
 from hr_copilot_utils import HR_PERSONA, HR_AVAILABLE_FUNCTIONS, HR_FUNCTIONS_SPEC
+import sys
+sys.path.append("..")
+from utils import Smart_Agent,add_to_cache
 import time
 import random
 import os
 from pathlib import Path  
 import json
+print("HR_AVAILABLE_FUNCTIONS", HR_AVAILABLE_FUNCTIONS)
 hr_agent = Smart_Agent(persona=HR_PERSONA,functions_list=HR_AVAILABLE_FUNCTIONS, functions_spec=HR_FUNCTIONS_SPEC, init_message="Hi there, this is Lucy, HR specialist helping with answering questions about HR & Payroll and handle personal information updates, may I have your name and employee ID?")
 
 st.set_page_config(layout="wide",page_title="Enterprise Copilot- A demo of Copilot application using GPT")

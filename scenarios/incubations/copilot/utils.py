@@ -20,6 +20,112 @@ openai.api_key =  os.environ.get("AZURE_OPENAI_API_KEY")
 openai.api_base =  os.environ.get("AZURE_OPENAI_ENDPOINT")
 openai.api_type = "azure"
 
+class Search_Client():
+    def __init__(self,emb_map_file_path):
+        with open(emb_map_file_path) as file:
+            self.chunks_emb = json.load(file)
+
+    def find_article(self,question, topk=3):  
+        """  
+        Given an input vector and a dictionary of label vectors,  
+        returns the label with the highest cosine similarity to the input vector.  
+        """  
+        input_vector = get_embedding(question, engine = 'text-embedding-ada-002')        
+        # Compute cosine similarity between input vector and each label vector
+        cosine_list=[]  
+        for chunk_id,chunk_content, vector in self.chunks_emb:  
+            #by default, we use embedding for the entire content of the topic (plus topic descrition).
+            # If you you want to use embedding on just topic name and description use this code cosine_sim = cosine_similarity(input_vector, vector[0])
+            cosine_sim = cosine_similarity(input_vector, vector) 
+            cosine_list.append((chunk_id,chunk_content,cosine_sim ))
+        cosine_list.sort(key=lambda x:x[2],reverse=True)
+        cosine_list= cosine_list[:topk]
+        best_chunks =[chunk[0] for chunk in cosine_list]
+        contents = [chunk[1] for chunk in cosine_list]
+        text_content = ""
+        for chunk_id, content in zip(best_chunks, contents):
+            text_content += f"{chunk_id}\n{content}\n"
+
+        return text_content
+
+
+#azcs implementation
+if os.getenv("USE_AZCS") == "True":
+    service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT") 
+    index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 
+    key = os.getenv("AZURE_SEARCH_ADMIN_KEY") 
+    @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
+    # Function to generate embeddings for title and content fields, also used for query embeddings
+    def generate_embeddings(text):
+        response = openai.Embedding.create(
+            input=text, engine="text-embedding-ada-002")
+        embeddings = response['data'][0]['embedding']
+        return embeddings
+
+    credential = AzureKeyCredential(key)
+    azcs_search_client = SearchClient(service_endpoint, index_name, credential=credential)
+else:
+    faiss_search_client = Search_Client("../data/chunk_emb_map.json")
+
+def search_knowledgebase_acs(search_query):
+    vector = Vector(value=generate_embeddings(search_query), k=3, fields="contentVector")
+  
+    results = azcs_search_client.search(  
+        search_text=None,  
+        vectors= [vector],
+        select=["id", "content"],
+    )  
+    text_content =""
+    for result in results:  
+        text_content += f"{result['id']}\n{result['content']}\n"
+    return text_content
+
+def search_knowledgebase_faiss(search_query):
+    return faiss_search_client.find_article(search_query)
+
+def search_knowledgebase(search_query):
+    if os.getenv("USE_AZCS") == "True":
+        print("using azcs")
+        return search_knowledgebase_acs(search_query)
+    else:
+        print("using faiss")
+        return search_knowledgebase_faiss(search_query)
+
+
+
+###Sematic caching implementation
+if os.getenv("USE_SEMANTIC_CACHE") == "True":
+    cache_index_name = os.getenv("CACHE_INDEX_NAME")
+    azcs_semantic_cache_search_client = SearchClient(service_endpoint, cache_index_name, credential=credential)
+
+def add_to_cache(search_query, gpt_response):
+    search_doc = {
+                 "id" : str(uuid.uuid4()),
+                 "search_query" : search_query,
+                 "search_query_vector" : generate_embeddings(search_query),
+                "gpt_response" : gpt_response
+              }
+    azcs_semantic_cache_search_client.upload_documents(documents = [search_doc])
+
+def get_cache(search_query):
+    vector = Vector(value=generate_embeddings(search_query), k=3, fields="search_query_vector")
+  
+    results = azcs_semantic_cache_search_client.search(  
+        search_text=None,  
+        vectors= [vector],
+        select=["gpt_response"],
+    )  
+    try:
+        result =next(results)
+        print("threshold ", result['@search.score'])
+        if result['@search.score']>= float(os.getenv("SEMANTIC_HIT_THRESHOLD")):
+            return result['gpt_response']
+    except StopIteration:
+        pass
+
+    return None
+
+
 def gpt_stream_wrapper(response):
     for chunk in response:
         chunk_msg= chunk['choices'][0]['delta']
@@ -140,6 +246,7 @@ class Smart_Agent(Agent):
                     
                     # verify function exists
                     if function_name not in self.functions_list:
+                        print("function list:", self.functions_list)
                         raise Exception("Function " + function_name + " does not exist")
                     function_to_call = self.functions_list[function_name]  
                     

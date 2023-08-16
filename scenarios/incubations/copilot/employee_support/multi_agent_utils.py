@@ -16,8 +16,8 @@ openai.api_base =  os.environ.get("AZURE_OPENAI_ENDPOINT")
 openai.api_type = "azure"
 import sys
 sys.path.append("..")
-from utils import Agent, Smart_Agent, check_args
-from hr_copilot_utils import update_address, create_ticket, search_knowledgebase_faiss as search_knowledgebase
+from utils import Agent, Smart_Agent, check_args, search_knowledgebase
+from hr_copilot_utils import update_address, create_ticket
  
 
 def route_call(next_agent):
