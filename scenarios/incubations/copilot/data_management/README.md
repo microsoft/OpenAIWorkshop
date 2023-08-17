@@ -2,7 +2,7 @@ This is a demo of Multi-Agent Copilot concept. The Copilot helps employees answe
 There are 2 agents in the Copilot: inventory forecast and sales forecast. Each agent is responsible for its own domain (sales and inventory).
 Depending on the needs of the user, the Copilot will assign the right agent to answer the question.
 
-1. first level support agent help routing the call to the right specialist agent.
+1. First level support agent help routing the call to the right specialist agent.
 
 2. Sales forecast Copilot help query data and update forecast for sales team. 
 

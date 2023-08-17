@@ -2,8 +2,8 @@ import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 from functions import *
 generic_agent = Smart_Coordinating_Agent(persona=ROUTING_AGENT_PERSONA, name="Jenny",functions_spec=ROUTING_AGENT_FUNCTIONS_SPEC, functions_list= ROUTING_AGENT_FUNCTIONS,init_message="Hi there, this is Jenny, what can I do for you?")
-forecast_update_agent = Smart_Coordinating_Agent(persona=SALES_FORECAST_PERSONA,name="Lucy",functions_list=FORECAST_AVAILABLE_FUNCTIONS, functions_spec=SALES_FORECAST_FUNCTIONS_SPEC)
-forecast_select_agent = Smart_Coordinating_Agent(persona=INVENTORY_FORECAST_PERSONA,name="Betty",functions_list=FORECAST_AVAILABLE_FUNCTIONS, functions_spec=INVENTORY_FORECAST_FUNCTIONS_SPEC)
+forecast_update_agent = Smart_Coordinating_Agent(persona=SALES_FORECAST_PERSONA,name="Lucy",functions_list=SALES_AVAILABLE_FUNCTIONS, functions_spec=SALES_FORECAST_FUNCTIONS_SPEC)
+forecast_select_agent = Smart_Coordinating_Agent(persona=COST_FORECAST_PERSONA,name="Betty",functions_list=COST_AVAILABLE_FUNCTIONS, functions_spec=COST_FORECAST_FUNCTIONS_SPEC)
 
 st.set_page_config(layout="wide",page_title="Enterprise Copilot- A demo of Copilot application using GPT")
 styl = f"""
@@ -23,7 +23,7 @@ with st.sidebar:
     st.title('Copilot')
     st.markdown('''
 This is a demo of Multi-Agent Copilot concept. The Copilot helps employees answer questions and update information.
-There are 2 agents in the Copilot: inventory forecast and sales forecast. Each agent is responsible for its own domain (sales and inventory).
+There are 2 agents in the Copilot: cost forecast and sales forecast. Each agent is responsible for its own domain (sales and cost).
 Depending on the needs of the user, the Copilot will assign the right agent to answer the question.
 
 1. first level support agent help routing the call to the right specialist agent.
@@ -32,14 +32,14 @@ Depending on the needs of the user, the Copilot will assign the right agent to a
 
     Example questions to ask:
 
-    - What's the forecast for government and product fan at December-01-2022?
-    - Can you update the forecast for government and product fan to 3200 at December-01-2022?
+    - What's the sales forecast for government and product fan at December-01-2022?
+    - Can you update the sales forecast for government and product fan to 3200 at December-01-2022?
     
                 
     If questions are not clear, copilot will ask for clarification. For example, if the request to update does not have product, business unit, copilot will ask for clarification. 
                 
     Behind the scene, Copilot uses function calling capability to query data and update forecast.
-3. Inventory forecast Copilot help query data and update forecast for inventory. It works similar to sales forecast Copilot.
+3. Cost forecast Copilot help query data and update forecast for cost. It works similar to sales forecast Copilot.
 
 
                 

@@ -19,7 +19,6 @@ load_dotenv(dotenv_path=env_path)
 openai.api_key =  os.environ.get("AZURE_OPENAI_API_KEY")
 openai.api_base =  os.environ.get("AZURE_OPENAI_ENDPOINT")
 openai.api_type = "azure"
-
 class Search_Client():
     def __init__(self,emb_map_file_path):
         with open(emb_map_file_path) as file:
@@ -321,6 +320,6 @@ class Smart_Agent(Agent):
                     assistant_response="Haizz, my memory is having some trouble, can you repeat what you just said?"
                     break
                 print("Exception as below, will retry\n", str(e))
-                time.sleep(8)
+                time.sleep(5)
 
         return False,query_used, conversation, assistant_response

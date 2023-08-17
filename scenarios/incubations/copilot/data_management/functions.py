@@ -21,14 +21,8 @@ sys.path.append("..")
 from utils import Agent, Smart_Agent, check_args
 
 
-def update_information(entity, filter, update):
-    file_name = None
-    if entity == "sales_forecast":
-        file_name = "../data/forecast_sales.json"
-    elif entity == "inventory_forecast":
-        file_name = "../data/forecast_inventory.json"
-    if file_name is None:
-        return f"Entity {entity} is not recognized, has to be one of sales_forecast or inventory_forecast"
+def update_sales(filter, update):
+    file_name = "../data/forecast_sales.json"
     filter = ast.literal_eval(filter)
     update = ast.literal_eval(update).items()
     update = list(update)[0]
@@ -43,16 +37,38 @@ def update_information(entity, filter, update):
     with open(file_name, 'w') as f:
         data.to_json(f)
 
-    return f"Update information in the {entity} with filter {filter} and update {update}"
+    return f"Update sales forecast in with filter {filter} and update {update}"
+def update_cost(filter, update):
+    file_name = "../data/forecast_cost.json"
+    filter = ast.literal_eval(filter)
+    update = ast.literal_eval(update).items()
+    update = list(update)[0]
+    with open(file_name) as f:
+        data = pd.read_json(f)
+    filter_data = data.copy()
+    for filter_item in filter.items():
+        filter_data = filter_data[filter_data[filter_item[0]] == filter_item[1]]
+    filter_data[update[0]]=update[1]
+    print(filter_data)
+    data.update(filter_data,overwrite=True)
+    with open(file_name, 'w') as f:
+        data.to_json(f)
 
-def query_information(entity, filter):
-    file_name = None
-    if entity == "sales_forecast":
-        file_name = "../data/forecast_sales.json"
-    elif entity == "inventory_forecast":
-        file_name = "../data/forecast_inventory.json"
-    if file_name is None:
-        return f"Entity {entity} is not recognized, has to be one of sales_forecast or inventory_forecast"
+    return f"Update cost forecast in with filter {filter} and update {update}"
+
+
+def query_cost(filter):
+    file_name = "../data/forecast_cost.json"
+    filter = ast.literal_eval(filter)
+    with open(file_name) as f:
+        data = pd.read_json(f)
+    for filter_item in filter.items():
+        print(filter_item[0],filter_item[1])
+        data = data[data[filter_item[0]] == filter_item[1]]
+
+    return f"Query result: {data.to_dict(orient='records')}"
+def query_sales(filter):
+    file_name = "../data/forecast_sales.json"
     filter = ast.literal_eval(filter)
     with open(file_name) as f:
         data = pd.read_json(f)
@@ -78,15 +94,15 @@ You are Jenny, a helpful digital assistant helping to determine the right specia
 Engage in the conversation with the user to understand the request and route the call to the right specialist.
 Limit the conversation to understand what their request is about. 
 There are 2 specialists available to help with the request:
-    - Inventory forecast data analyst responsible for helping users to query and update inventory forecast information
+    - Cost forecast data analyst responsible for helping users to query and update cost forecast information
     - Sales forecast data analyst responsible for helping users to query and update sales forecast information
 If there's ambiguity in the request, ask for clarification till you know for sure which agent to route the call to.
-Act as a single point of contact. Users don't need to know that there are 4 agents available to help with the request.
-If none of the agent's profile match the request, apologize that the scope of service only cover the above 3 areas and end the conversation.
+Act as a single point of contact. Users don't need to know that there are 2 agents available to help with the request.
+If none of the agent's profile match the request, apologize that the scope of service only cover the above 2 areas and end the conversation.
 """
 
 SALES_FORECAST_PERSONA = """
-You are Lucy, an information system specialist responsible for helping users.
+You are Lucy, an information system specialist responsible for helping users maintaining sales forecast data.
 You are given following data entity:
     {
         "name": "sales_forecast",
@@ -124,18 +140,19 @@ If the user request is to query the sales forecast, you need to:
 - If there's ambiguity in user's request, you need to ask for clarification. 
 - Use the information query tool to query the data.
 - Only use data that is from the search tool to answer question. Do not generate answer that is not from the tool.
+For any other request, call route_call function.
 """
 
-INVENTORY_FORECAST_PERSONA = """
-You are Betty, an information system specialist responsible for helping users.
+COST_FORECAST_PERSONA = """
+You are Betty, an information system specialist responsible for helping users maintaining cost forecast data.
 You are given following data entity:
     {
-        "name": "inventory_forecast",
-        "description": "contain data about inventory forecast data",
+        "name": "cost_forecast",
+        "description": "contain data about cost forecast data",
         "attributes": 
 		{
             "name": "date",
-            "description": "date of the sales data in dd/mm/yyyy, ranging from 01/01/2010 to 31/12/2024"
+            "description": "date of the cost data in dd/mm/yyyy, ranging from 01/01/2010 to 31/12/2024"
         },
 		{
             "name": "business_unit",
@@ -150,7 +167,7 @@ You are given following data entity:
             "description": "product that generates sales, as one of the following values ['heater', 'air conditioner' ,'fan']"
         },
     },
-If the user request is to update the inventory forecast, you need to:
+If the user request is to update the cost forecast, you need to:
 - Interact with the user to confirm the changes that need to be made. Your goal is to identify the attribute values that help locate the data entity and the new 
 attribute values that need to be updated.
 - You need at least date, business_unit and product to locate the data entity.
@@ -158,21 +175,28 @@ attribute values that need to be updated.
 - If there's ambiguity in user's request, you need to ask for clarification. 
 - Once you can confirm all the information, summarize and confirm with user.
 - If they agree, use the update tool to update the data entity.
-If the user request is to query the inventory forecast, you need to:
+If the user request is to query the cost forecast, you need to:
 - Interact with the user to confirm the filter condition for the query. Your goal is to identify the attribute values that help locate the data entity.
 - You need at least date, business_unit and product to locate the data entity.
 - For attributes that have restriction in the value, for example business_unit, you need to validate the new value is in the list of allowed values.
 - If there's ambiguity in user's request, you need to ask for clarification. 
 - Use the information query tool to query the data.
 - Only use data that is from the search tool to answer question. Do not generate answer that is not from the tool.
+For any other request, call route_call function.
 """
 
 
 
-FORECAST_AVAILABLE_FUNCTIONS = {
-            "update_information": update_information,
-            "query_information": query_information,
+COST_AVAILABLE_FUNCTIONS = {
+            "update_cost": update_cost,
+            "query_cost": query_cost,
 
+            "route_call": route_call
+
+        } 
+SALES_AVAILABLE_FUNCTIONS = {
+            "update_sales": update_sales,
+            "query_sales": query_sales,
             "route_call": route_call
 
         } 
@@ -204,15 +228,11 @@ ROUTING_AGENT_FUNCTIONS_SPEC= [
 
 SALES_FORECAST_FUNCTIONS_SPEC= [  
     {
-        "name": "update_information",
-        "description": "Update information in the data entity",
+        "name": "update_sales",
+        "description": "Update sales forecast data only, not other data entities",
         "parameters": {
             "type": "object",
             "properties": {
-                "entity": {
-                    "type": "string",
-                    "description": "name of the data entity to update, as one of the follow values 'sales_forecast', 'inventory_forecast'"
-                },
 
                 "filter": {
                     "type": "string",
@@ -224,27 +244,22 @@ SALES_FORECAST_FUNCTIONS_SPEC= [
                 }
 
             },
-            "required": ["entity","filter","update"],
+            "required": ["filter","update"],
         },
 
     },
     {
-        "name": "query_information",
-        "description": "Query information",
+        "name": "query_sales",
+        "description": "Query tool for sales forecast only, not other data entities",
         "parameters": {
             "type": "object",
             "properties": {
-                "entity": {
-                    "type": "string",
-                    "description": "name of the data entity to query, as one of the follow values 'sales_forecast', 'inventory_forecast'"
-                },
-
                 "filter": {
                     "type": "string",
                     "description": "attribute name and value pairs to filter the data, for example {'date':'2021-01=01','business_unit':'commercial'}"
                 }
             },
-            "required": ["entity","filter"],
+            "required": ["filter"],
         },
 
     },
@@ -252,7 +267,7 @@ SALES_FORECAST_FUNCTIONS_SPEC= [
 
     {
         "name": "route_call",
-        "description": "Handle other requests that are not related to querying or updating sales forecast data",
+        "description": "Handle request that is not about querying or updating sales forecast data",
         "parameters": {
             "type": "object",
             "properties": {
@@ -269,18 +284,13 @@ SALES_FORECAST_FUNCTIONS_SPEC= [
 
 
 ]  
-INVENTORY_FORECAST_FUNCTIONS_SPEC= [  
+COST_FORECAST_FUNCTIONS_SPEC= [  
     {
-        "name": "update_information",
-        "description": "Update information in the data entity",
+        "name": "update_cost",
+        "description": "Update cost forecast data only, not other data entities",
         "parameters": {
             "type": "object",
             "properties": {
-                "entity": {
-                    "type": "string",
-                    "description": "name of the data entity to update, as one of the follow values 'sales_forecast', 'inventory_forecast'"
-                },
-
                 "filter": {
                     "type": "string",
                     "description": "attribute name and value pairs to filter the data to update, for example {'date':'01/01/2021','business_unit':'commercial'}"
@@ -291,27 +301,22 @@ INVENTORY_FORECAST_FUNCTIONS_SPEC= [
                 }
 
             },
-            "required": ["entity","filter","update"],
+            "required": ["filter","update"],
         },
 
     },
     {
-        "name": "query_information",
-        "description": "Query information",
+        "name": "query_cost",
+        "description": "Query tool for cost forecast only, not for sales forecast",
         "parameters": {
             "type": "object",
             "properties": {
-                "entity": {
-                    "type": "string",
-                    "description": "name of the data entity to query, as one of the follow values 'sales_forecast', 'inventory_forecast'"
-                },
-
                 "filter": {
                     "type": "string",
                     "description": "attribute name and value pairs to filter the data, for example {'date':'2021-01=01','business_unit':'commercial'}"
                 }
             },
-            "required": ["entity","filter"],
+            "required": ["filter"],
         },
 
     },
@@ -319,7 +324,7 @@ INVENTORY_FORECAST_FUNCTIONS_SPEC= [
 
     {
         "name": "route_call",
-        "description": "Handle other requests that are not related to querying or updating inventory forecast data",
+        "description": "Handle  request that is not about querying or updating cost forecast data",
         "parameters": {
             "type": "object",
             "properties": {
@@ -347,7 +352,7 @@ class Agent_Runner():
             if starting_agent_name == agent.name:
                 self.active_agent = agent
                 break
-        evaluator_persona ="Jenny: a general customer support agent, handling everyting except sales forecast\n\n Lucy: a specialist agent in sales forecast update\n\n Betty: a specialist agent helping with querying sales forecast data\n\n"        
+        evaluator_persona ="Jenny: a general customer support agent, handling everyting except sales forecast or cost forecast\n\n Lucy: a specialist agent responsible for sales forecast\n\n Betty: a specialist agent responsible for cost forecast\n\n"        
         self.evaluator = Agent(engine="turbo-0613", persona="As a customer support manager, you need to assign call transfer requests to the right agent with the right skills. You have following agents with the description of their persona: \n\n"+evaluator_persona)
         
     def revaluate_agent_assignment(self,function_description):
@@ -388,9 +393,8 @@ class Agent_Runner():
             
             #adding relevant content from the old agent to the new agent
             for message in conversation:
-                if message.get("role") != "system" and message.get("name") is  None:
+                if message.get("role") != "system" and message.get("name") is  None: #only add user & assistant messages
                     new_conversation.append({"role":message.get("role"), "content":message.get("content")})
-
             stream_out, _,_,conversation, assistant_response= self.active_agent.run(conversation=new_conversation, stream = False, api_version = api_version)
         return stream_out, request_agent_change, conversation, assistant_response
 
