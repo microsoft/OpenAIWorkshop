@@ -5,8 +5,13 @@ import os
 from pathlib import Path  
 import json
 import time
+from azure.search.documents.models import Vector  
+import uuid
+from tenacity import retry, wait_random_exponential, stop_after_attempt  
+
 from dotenv import load_dotenv
-import concurrent.futures
+from azure.core.credentials import AzureKeyCredential  
+from azure.search.documents import SearchClient  
 from openai.embeddings_utils import get_embedding, cosine_similarity
 import inspect
 env_path = Path('.') / 'secrets.env'
@@ -20,7 +25,6 @@ class Search_Client():
             self.chunks_emb = json.load(file)
 
     def find_article(self,question, topk=3):  
-        openai.api_version = "2022-12-01"
         """  
         Given an input vector and a dictionary of label vectors,  
         returns the label with the highest cosine similarity to the input vector.  
@@ -40,111 +44,86 @@ class Search_Client():
         text_content = ""
         for chunk_id, content in zip(best_chunks, contents):
             text_content += f"{chunk_id}\n{content}\n"
+
         return text_content
 
-HR_PERSONA = """
-You are Lucy, an HR support specialist responsible for answering questions about HR & Payroll from employees and handling personal information updates.
-You start the conversation by validating the identity of the employee. Do not proceed until you have validated the identity of the employee.
-When you are asked with a question, use the search tool to find relavent knowlege articles to create the answer.
-Answer ONLY with the facts from the search tool. If there isn't enough information, say you don't know. Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.
-Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brakets to reference the source, e.g. [info1.txt]. Don't combine sources, list each source separately, e.g. [info1.txt][info2.pdf].
-When employee request updating their address, use the tool provided to update in the system.
-For all other information update requests, log a ticket to the HR team to update the information.
-If the employee is asking for information that is not related to HR or Payroll, say it's not your area of expertise.
-"""
+
+#azcs implementation
+if os.getenv("USE_AZCS") == "True":
+    service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT") 
+    index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 
+    key = os.getenv("AZURE_SEARCH_ADMIN_KEY") 
+    @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
+    # Function to generate embeddings for title and content fields, also used for query embeddings
+    def generate_embeddings(text):
+        response = openai.Embedding.create(
+            input=text, engine="text-embedding-ada-002")
+        embeddings = response['data'][0]['embedding']
+        return embeddings
+
+    credential = AzureKeyCredential(key)
+    azcs_search_client = SearchClient(service_endpoint, index_name, credential=credential)
+else:
+    faiss_search_client = Search_Client("../data/chunk_emb_map.json")
+
+def search_knowledgebase_acs(search_query):
+    vector = Vector(value=generate_embeddings(search_query), k=3, fields="contentVector")
+  
+    results = azcs_search_client.search(  
+        search_text=None,  
+        vectors= [vector],
+        select=["id", "content"],
+    )  
+    text_content =""
+    for result in results:  
+        text_content += f"{result['id']}\n{result['content']}\n"
+    return text_content
+
+def search_knowledgebase_faiss(search_query):
+    return faiss_search_client.find_article(search_query)
+
 def search_knowledgebase(search_query):
-    return search_client.find_article(search_query)
-def validate_identity(employee_id):
-    if employee_id in ["1234","5678"]:
-        return "valid employee"
+    if os.getenv("USE_AZCS") == "True":
+        print("using azcs")
+        return search_knowledgebase_acs(search_query)
     else:
-        return "This employee id is not valid"
-def update_address(employee_id, new_address):
-    return f"Address of employee {employee_id} address has been updated to {new_address}"
-def create_ticket(employee_id, updates):
-    return f"A ticket number 1233445 has been created for employee {employee_id} with the following updates: {updates} "
+        print("using faiss")
+        return search_knowledgebase_faiss(search_query)
 
-HR_AVAILABLE_FUNCTIONS = {
-            "search_knowledgebase": search_knowledgebase,
-            "validate_identity": validate_identity,
-            "update_address": update_address,
-            "create_ticket": create_ticket,
 
-        } 
-search_client = Search_Client("data/chunk_emb_map.json")
 
-HR_FUNCTIONS_SPEC= [  
-    {
-        "name": "search_knowledgebase",
-        "description": "Searches the knowledge base for an answer to the HR/Payroll question",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "search_query": {
-                    "type": "string",
-                    "description": "The search query to use to search the knowledge base"
-                }
-            },
-            "required": ["search_query"],
-        },
-    },
-    {
-        "name": "validate_identity",
-        "description": "validates the identity of the employee",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "employee_id": {
-                    "type": "string",
-                    "description": "The employee id to validate"
-                }
-            },
-            "required": ["employee_id"],
-        },
+###Sematic caching implementation
+if os.getenv("USE_SEMANTIC_CACHE") == "True":
+    cache_index_name = os.getenv("CACHE_INDEX_NAME")
+    azcs_semantic_cache_search_client = SearchClient(service_endpoint, cache_index_name, credential=credential)
 
-    },
-    {
-        "name": "update_address",
-        "description": "Update the address of the employee",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "employee_id": {
-                    "type": "string",
-                    "description": "The employee id to validate"
-                },
-                "new_address": {
-                    "type": "string",
-                    "description": "The new address to update"
-                }
+def add_to_cache(search_query, gpt_response):
+    search_doc = {
+                 "id" : str(uuid.uuid4()),
+                 "search_query" : search_query,
+                 "search_query_vector" : generate_embeddings(search_query),
+                "gpt_response" : gpt_response
+              }
+    azcs_semantic_cache_search_client.upload_documents(documents = [search_doc])
 
-            },
-            "required": ["employee_id","new_address"],
-        },
+def get_cache(search_query):
+    vector = Vector(value=generate_embeddings(search_query), k=3, fields="search_query_vector")
+  
+    results = azcs_semantic_cache_search_client.search(  
+        search_text=None,  
+        vectors= [vector],
+        select=["gpt_response"],
+    )  
+    try:
+        result =next(results)
+        print("threshold ", result['@search.score'])
+        if result['@search.score']>= float(os.getenv("SEMANTIC_HIT_THRESHOLD")):
+            return result['gpt_response']
+    except StopIteration:
+        pass
 
-    },
-    {
-        "name": "create_ticket",
-        "description": "Create a support ticket for the employee to update personal information other than address",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "employee_id": {
-                    "type": "string",
-                    "description": "The employee id to validate"
-                },
-                "updates": {
-                    "type": "string",
-                    "description": "The new/changed information to update"
-                }
+    return None
 
-            },
-            "required": ["employee_id","updates"],
-        },
-
-    },
-
-]  
 
 def gpt_stream_wrapper(response):
     for chunk in response:
@@ -239,6 +218,8 @@ class Smart_Agent(Agent):
             conversation = self.init_history.copy()
         conversation.append({"role": "user", "content": user_input})
         i=0
+        query_used = None
+
         while True:
             try:
                 i+=1
@@ -264,17 +245,36 @@ class Smart_Agent(Agent):
                     
                     # verify function exists
                     if function_name not in self.functions_list:
+                        print("function list:", self.functions_list)
                         raise Exception("Function " + function_name + " does not exist")
                     function_to_call = self.functions_list[function_name]  
                     
                     # verify function has correct number of arguments
                     function_args = json.loads(response_message["function_call"]["arguments"])
+
                     if check_args(function_to_call, function_args) is False:
                         raise Exception("Invalid number of arguments for function: " + function_name)
+                    
+
+                    # check if there's an opprotunity to use semantic cache
+                    if function_name =="search_knowledgebase":
+                        if os.getenv("USE_SEMANTIC_CACHE") == "True":
+                            search_query = function_args["search_query"]
+                            cache_output = get_cache(search_query)
+                            if cache_output is not None:
+                                print("semantic cache hit")
+                                conversation.append({"role": "assistant", "content": cache_output})
+                                return False, query_used,conversation, cache_output
+                            else:
+                                print("semantic cache missed")
+                                query_used = search_query
+
+
                     function_response = function_to_call(**function_args)
                     print("Output of function call:")
                     print(function_response)
                     print()
+
                     
                     # Step 4: send the info on the function call and function response to GPT
                     
@@ -302,7 +302,7 @@ class Smart_Agent(Agent):
                         deployment_id=self.engine,
                         stream=stream,
                     )  # get a new response from GPT where it can see the function response
-                    
+
                     if not stream:
                         assistant_response = second_response["choices"][0]["message"]["content"]
                         conversation.append({"role": "assistant", "content": assistant_response})
@@ -310,7 +310,7 @@ class Smart_Agent(Agent):
                     else:
                         assistant_response = second_response
 
-                    return stream,conversation, assistant_response
+                    return stream,query_used, conversation, assistant_response
                 else:
                     assistant_response = response_message["content"]
                     conversation.append({"role": "assistant", "content": assistant_response})
@@ -320,6 +320,6 @@ class Smart_Agent(Agent):
                     assistant_response="Haizz, my memory is having some trouble, can you repeat what you just said?"
                     break
                 print("Exception as below, will retry\n", str(e))
-                time.sleep(8)
+                time.sleep(5)
 
-        return False, conversation, assistant_response
+        return False,query_used, conversation, assistant_response

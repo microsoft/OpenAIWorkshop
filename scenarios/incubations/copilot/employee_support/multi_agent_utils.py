@@ -14,9 +14,12 @@ load_dotenv(dotenv_path=env_path)
 openai.api_key =  os.environ.get("AZURE_OPENAI_API_KEY")
 openai.api_base =  os.environ.get("AZURE_OPENAI_ENDPOINT")
 openai.api_type = "azure"
-from utils import Agent, Smart_Agent, check_args, Search_Client, update_address, create_ticket, search_knowledgebase
-
+import sys
+sys.path.append("..")
+from utils import Agent, Smart_Agent, check_args, search_knowledgebase
+from hr_copilot_utils import update_address, create_ticket
  
+
 def route_call(next_agent):
     return f"Request transfering to {next_agent}"
 
@@ -25,6 +28,7 @@ def validate_identity(employee_id, employee_name):
         return f"Employee {employee_name} with id {employee_id} is validated in this conversation"
     else:
         return "This employee id is not valid"
+
 ROUTE_CALL_FUNCTION_NAME = "route_call" #default function name for routing call used by all agents
 VALIDATE_IDENTIFY_FUNCTION_NAME = "validate_identity" #default function name for validating identity used by all agents
 GENERALIST_PERSONA = """
@@ -43,7 +47,7 @@ You are Lucy, an HR support specialist responsible for answering questions about
 When you are asked with a question, always use the search tool to find relavent knowlege articles to create the answer.
 Answer ONLY with the facts from the search tool. If there isn't enough information, say you don't know. Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.
 Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brakets to reference the source, e.g. [info1.txt]. Don't combine sources, list each source separately, e.g. [info1.txt][info2.pdf].
-When employee request updating their address, use the tool provided to update in the system.
+When employee request updating their address, interact with them to get their new country, new state, new city and zipcode. If they don't provide new country, check if it's still United States. Make sure you have all information then use update address tool provided to update in the system. 
 For all other information update requests, log a ticket to the HR team to update the information.
 If the employee is asking for information that is not related to HR or Payroll, inform that you will route the call to the right specialist.
 """
@@ -150,13 +154,25 @@ HR_FUNCTIONS_SPEC= [
                     "type": "string",
                     "description": "The employee id to validate"
                 },
-                "new_address": {
+                "city": {
                     "type": "string",
-                    "description": "The new address to update"
+                    "description": "The new city to update"
+                },
+                "state": {
+                    "type": "string",
+                    "description": "The new state to update"
+                },
+                "zipcode": {
+                    "type": "integer",
+                    "description": "The new zipcode to update"
+                },
+                "country": {
+                    "type": "string",
+                    "description": "The new country to update"
                 }
 
             },
-            "required": ["employee_id","new_address"],
+            "required": ["employee_id","city", "state", "zipcode", "country"],
         },
 
     },
@@ -308,7 +324,7 @@ class Smart_Coordinating_Agent(Smart_Agent):
                     messages=conversation,
                 functions=self.functions_spec,
                 function_call="auto", 
-                request_timeout=15,
+                request_timeout=20,
                 )
                 response_message = response["choices"][0]["message"]
 

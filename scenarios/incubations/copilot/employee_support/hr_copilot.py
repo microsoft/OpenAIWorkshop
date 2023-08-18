@@ -1,11 +1,15 @@
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
-from utils import Smart_Agent, HR_PERSONA, HR_AVAILABLE_FUNCTIONS, HR_FUNCTIONS_SPEC
+from hr_copilot_utils import HR_PERSONA, HR_AVAILABLE_FUNCTIONS, HR_FUNCTIONS_SPEC
+import sys
+sys.path.append("..")
+from utils import Smart_Agent,add_to_cache
 import time
 import random
 import os
 from pathlib import Path  
 import json
+print("HR_AVAILABLE_FUNCTIONS", HR_AVAILABLE_FUNCTIONS)
 hr_agent = Smart_Agent(persona=HR_PERSONA,functions_list=HR_AVAILABLE_FUNCTIONS, functions_spec=HR_FUNCTIONS_SPEC, init_message="Hi there, this is Lucy, HR specialist helping with answering questions about HR & Payroll and handle personal information updates, may I have your name and employee ID?")
 
 st.set_page_config(layout="wide",page_title="Enterprise Copilot- A demo of Copilot application using GPT")
@@ -72,7 +76,7 @@ else:
 if user_input:
     with st.chat_message("user"):
         st.markdown(user_input)
-    stream_out, history, agent_response = hr_agent.run(user_input=user_input, conversation=history, stream=True)
+    stream_out, query_used, history, agent_response = hr_agent.run(user_input=user_input, conversation=history, stream=True)
     with st.chat_message("assistant"):
         if stream_out:
             message_placeholder = st.empty()
@@ -82,8 +86,10 @@ if user_input:
                     full_response += response.choices[0].delta.get("content", "")
                     message_placeholder.markdown(full_response + "▌")
             message_placeholder.markdown(full_response)
+            if query_used: #add to cache
+                add_to_cache(query_used, full_response)
+                print(f"query {query_used} added to cache")
             history.append({"role": "assistant", "content": full_response})
-            print("append ", full_response)      
         else:
             st.markdown(agent_response)
 
