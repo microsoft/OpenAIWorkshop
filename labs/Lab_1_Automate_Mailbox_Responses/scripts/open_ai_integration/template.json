@@ -329,7 +329,7 @@
                                         "HideHTMLMessage": false,
                                         "Importance": "Normal",
                                         "Options": "Useful, Not Useful",
-                                        "ShowHTMLConfirmationDialog": false,
+                                        "ShowHTMLConfirmationDialog": true,
                                         "Subject": "Automated response from your Helpdesk AI bot",
                                         "To": "@variables('emailto')"
                                     },
