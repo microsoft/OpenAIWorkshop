@@ -14,9 +14,8 @@ Logic App 1 (read-mailbox-techsupport): reads incoming email from an Outlook mai
 
 Logic App 2 (email-techsupport-integration): Calls Azure OpenAI for answers to the user support question and emails back a response.
 
-### Note:
-
-We will deploy the second logic app first because we will need its URL when provisioning the first logic app.
+> [!NOTE]
+> We will deploy the second logic app (email-techsupport-integration) first, as we will need its URL when provisioning the first logic app (read-mailbox-techsupport).
 
 <img src="../../documents/images/lab-1-architecture.png" height=30%>
 
@@ -79,7 +78,8 @@ Scroll down to the condition option and expand it, then expand the true option. 
 
 ![](../../documents/images/lab-1-logicapp-6.png)
 
-> IMPORTANT: **Save the logic app**
+> [!IMPORTANT]
+> Save the logic app
 
 ### Step 3. Deploy Logic App 1 (read-mailbox-techsupport)
 
@@ -109,7 +109,8 @@ Select the top box titled connection and select the appropiate connection to Off
 
 Send an email to the mailbox configured in your second logic app
 
-> **Don't forget the email subject**
+> [!IMPORTANT]
+> Don't forget the email subject
 
 **"Helpdesk bot"**
 
