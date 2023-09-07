@@ -141,7 +141,12 @@
                             "inputs": {
                                 "body": {
                                     "max_tokens": 400,
-                                    "prompt": "@variables('finalprompt')",
+                                          "messages": [
+                                                {
+                                                "content": "@variables('finalprompt')",
+                                                "role": "user"
+                                                }
+                                            ],
                                     "temperature": 0.2
                                 },
                                 "headers": {
