@@ -60,7 +60,10 @@ Expand the first box "When an HTTP request is received" and copy the URL to your
 
 Scroll down to the HTTP box and enter your OpenAI api key and the OpenAI endpoint with the following format:
 
-**"https://<YOUR_AZURE_OPENAI_RESOURCENAME>.openai.azure.com/openai/deployments/<DEPLOYMENT_NAME>/completions?api-version=2022-12-01"**
+**"https://<YOUR_AZURE_OPENAI_RESOURCENAME>.openai.azure.com/openai/deployments/<DEPLOYMENT_NAME>/chat/completions?api-version=2023-05-15"**
+
+> [!NOTE]
+> Ensure the ?api-version for chat completions is recent, as new updates may have caused the api schema to change
 
 You can find the <DEPLOYMENT_NAME> in the Azure OpenAI Studio Deployments blade as shown below:
 
