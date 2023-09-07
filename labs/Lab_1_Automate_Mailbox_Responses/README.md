@@ -87,7 +87,7 @@ This logic app scans a mail box every X minutes for new emails with the subject:
 
 ![](../../documents/images/lab-1-logicapp-9.png)
 
-> [!NOTE]
+> [!IMPORTANT]
 > When you click the 'Deploy to Azure' button below, you will need to provide the URL to your second logic app (email-techsupport-integration) in the 'Email_integration_url' parameter field.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2FVishal%2FLabsUpdate0905%2Flabs%2FLab_1_Automate_Mailbox_Responses%2Fscripts%2Freadmailbox%2Ftemplate.json)
