@@ -120,7 +120,7 @@
                                     "type": "AppendToStringVariable",
                                     "inputs": {
                                         "name": "finalanswer",
-                                        "value": "@items('For_each')?['text']"
+                                        "value": "@item()?['message']['content']"
                                     }
                                 }
                             },
@@ -251,16 +251,16 @@
                                                     "index": {
                                                         "type": "integer"
                                                     },
-                                                    "logprobs": {},
-                                                    "text": {
+                                                    "message": {
+                                                        "content": {
                                                         "type": "string"
+                                                        }
                                                     }
                                                 },
                                                 "required": [
-                                                    "text",
+                                                    "message",
                                                     "index",
-                                                    "finish_reason",
-                                                    "logprobs"
+                                                    "finish_reason"
                                                 ],
                                                 "type": "object"
                                             },
