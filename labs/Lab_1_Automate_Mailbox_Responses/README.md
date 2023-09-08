@@ -14,9 +14,8 @@ Logic App 1 (read-mailbox-techsupport): reads incoming email from an Outlook mai
 
 Logic App 2 (email-techsupport-integration): Calls Azure OpenAI for answers to the user support question and emails back a response.
 
-### Note:
-
-We will deploy the second logic app first because we will need its URL when provisioning the first logic app.
+> [!NOTE]
+> We will deploy the second logic app (email-techsupport-integration) first, as we will need its URL when provisioning the first logic app (read-mailbox-techsupport).
 
 <img src="../../documents/images/lab-1-architecture.png" height=30%>
 
@@ -60,7 +59,10 @@ Expand the first box "When an HTTP request is received" and copy the URL to your
 
 Scroll down to the HTTP box and enter your OpenAI api key and the OpenAI endpoint with the following format:
 
-**"https://<YOUR_AZURE_OPENAI_RESOURCENAME>.openai.azure.com/openai/deployments/<DEPLOYMENT_NAME>/completions?api-version=2022-12-01"**
+**"https://<YOUR_AZURE_OPENAI_RESOURCENAME>.openai.azure.com/openai/deployments/<DEPLOYMENT_NAME>/chat/completions?api-version=2023-05-15"**
+
+> [!NOTE]
+> Ensure the ?api-version for chat completions is recent, as new updates may have caused the api schema to change
 
 You can find the <DEPLOYMENT_NAME> in the Azure OpenAI Studio Deployments blade as shown below:
 
@@ -76,7 +78,8 @@ Scroll down to the condition option and expand it, then expand the true option. 
 
 ![](../../documents/images/lab-1-logicapp-6.png)
 
-> IMPORTANT: **Save the logic app**
+> [!IMPORTANT]
+> Save the logic app
 
 ### Step 3. Deploy Logic App 1 (read-mailbox-techsupport)
 
@@ -84,7 +87,8 @@ This logic app scans a mail box every X minutes for new emails with the subject:
 
 ![](../../documents/images/lab-1-logicapp-9.png)
 
-Note: When you click the 'Deploy to Azure' button below, you will need to provide the URL to your second logic app (email-techsupport-integration) in the 'Email_integration_url' parameter field.
+> [!IMPORTANT]
+> When you click the 'Deploy to Azure' button below, you will need to provide the URL to your second logic app (email-techsupport-integration) in the 'Email_integration_url' parameter field.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2FVishal%2FLabsUpdate0905%2Flabs%2FLab_1_Automate_Mailbox_Responses%2Fscripts%2Freadmailbox%2Ftemplate.json)
 
@@ -105,7 +109,8 @@ Select the top box titled connection and select the appropiate connection to Off
 
 Send an email to the mailbox configured in your second logic app
 
-> **Don't forget the email subject**
+> [!IMPORTANT]
+> Don't forget the email subject
 
 **"Helpdesk bot"**
 
