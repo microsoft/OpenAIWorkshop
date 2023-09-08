@@ -2,6 +2,15 @@
 
 In this workshop, you will learn how to use Azure OpenAI On Your Data to chat with the NIH’s 321 page PDF for preparing and submitting grant applications to Grants.gov. You will be able to ask questions and get answers from the guidelines using natural language, as well as analyze and summarize the content using powerful language models such as GPT-35-Turbo and GPT-4.
 
+
+1. [Create Storage Account Resource](#create-storage-account-resource)
+1. [Create a Cognitive Search Resource](#create-a-cognitive-search-resource)
+1. [Deploy a GPT-35-turbo-16k model](#deploy-a-gpt-35-turbo-16k-model)
+1. [Set the System Message](#set-the-system-message)
+1. [Add your data](#add-your-data)
+1. [Deploy to Web App](#deploy-to-web-app)
+
+
 ## Create Storage Account Resource
 To chat with and analyze your own data, you need to create a storage account in Azure to host the data. A storage account is where you store and manage your data source, such as a PDF document, a web page, or a database
 
@@ -108,4 +117,14 @@ Now that that we've confirmed that GPT is grounded on your data, we can deploy t
 
   
 The deployment will take a few minutes to complete. After it is done, there'll be an additional wait of approximiately 10 minutes for Entra ID to secure the web app. Once it is complete, you'll be able to click the **Launch Web App** icon on the top right of the screen to take you to your new chat bot.  
-    ![Add your data](media/deploy-app-03.png)
+
+
+![Add your data](media/deploy-app-03.png)
+![Add your data](media/web-app.png)
+
+
+---
+
+**Warning:** The resources deployed in this lab are not free and will incur charges if you do not delete them after completing the lab. To avoid unwanted charges, please follow the instructions in the [cleanup section](cleanup.md) to delete the resources when you are done.
+
+--- 
