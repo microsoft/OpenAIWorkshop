@@ -17,7 +17,7 @@ To chat with and analyze your own data, you need to create a storage account in 
 
     ![Create storage account](media/create-storage-03.png)
 
-1. Once the resoruce is created click the **Go To Resource** button. From your storage account's page, select **Containers** from the left-hand navigation pane and create a new container called *nih-documents**
+1. Once the resoruce is created click the **Go To Resource** button. From your storage account's page, select **Containers** from the left-hand navigation pane and create a new container called *nih-documents*
 
     ![Create storage account](media/create-storage-04.png)
 
@@ -28,7 +28,7 @@ To chat with and analyze your own data, you need to create a storage account in 
 ## Create a Cognitive Search Resource
 A Cognitive Search service in Azure is another requirement for models to chat with and analyze your own data. A Cognitive Search service is where you index and enrich your data source, such as a PDF document, a web page, or a database. A Cognitive Search service also provides retrieval and augmentation benefits, such as natural language processing, semantic ranking, and faceted navigation.
 
-1. From the Azure Portal, search for *Searc* in the **Global Search Bar** and select **Cognitive Search**. Next, click **+ Create** at the top of the Cognitive Search section.
+1. From the Azure Portal, search for *Search* in the **Global Search Bar** and select **Cognitive Search**. Next, click **+ Create** at the top of the Cognitive Search section.
 
     ![Create search](media/create-search-01.png)
 
@@ -91,7 +91,7 @@ Your data will take a few minutes to processed into "*chunks*." This is done bec
 Once the system is done processing the data, you can interact with the chat session to test it.
 
 
-![Add your data](media/add-your-data-03.png) 
+![Add your data](media/test-chat.png) 
 
 
 ## Deploy to Web App
@@ -106,6 +106,6 @@ Now that that we've confirmed that GPT is grounded on your data, we can deploy t
 
     ![Add your data](media/deploy-app-02.png)
 
-The deployment will take a few minutes to complete. After it is done, there'll be an additional wait of approximiately 10 minutes for Entra ID to secure the web app. Once it is complete, you'll be able to click the **Launch Web App** icon on the top right of the screen to take you to your new chat bot.
-
+  
+The deployment will take a few minutes to complete. After it is done, there'll be an additional wait of approximiately 10 minutes for Entra ID to secure the web app. Once it is complete, you'll be able to click the **Launch Web App** icon on the top right of the screen to take you to your new chat bot.  
     ![Add your data](media/deploy-app-03.png)
