@@ -45,41 +45,54 @@ In this step you are going to perform the following actions to deploy and config
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2FVishal%2FLabsUpdate0905%2Flabs%2FLab_1_Automate_Mailbox_Responses%2Fscripts%2Fopen_ai_integration%2Ftemplate.json)
 
+
 After the deployment you should see two new items in your resource group
 
 ![](../../documents/images/lab-1-logicapp-1.png)
+
 
 Click on the logic app and click on the edit button
 
 ![](../../documents/images/lab-1-logicapp-2.png)
 
-Expand the first box "When an HTTP request is received" and copy the URL to your text editor
+
+Expand the first Logic App Step named "When an HTTP request is received" and copy the URL to your text editor
 
 ![](../../documents/images/lab-1-logicapp-3.png)
 
-Scroll down to the HTTP box and enter your OpenAI api key and the OpenAI endpoint with the following format:
+
+Scroll down to locate the Logic App Step named "HTTP". If the box is not already open, click the Title bar to open it.
+
+In the **URI** field, enter the URI of your Azure OpenAI Deployment endpoint, with the following format:
 
 **"https://<YOUR_AZURE_OPENAI_RESOURCENAME>.openai.azure.com/openai/deployments/<DEPLOYMENT_NAME>/chat/completions?api-version=2023-05-15"**
-
-> [!NOTE]
-> Ensure the ?api-version for chat completions is recent, as new updates may have caused the api schema to change
 
 You can find the <DEPLOYMENT_NAME> in the Azure OpenAI Studio Deployments blade as shown below:
 
 ![](../../documents/images/lab-1-ModelName.png)
 
+
+In the **api-key** field, enter your Azure OpenAI API key. 
+
+> [!NOTE]
+> Ensure the ?api-version for chat completions is recent, as new updates may have caused the api schema to change. See the **Supported versions** subsection, under **Completions** in [this article](https://learn.microsoft.com/en-us/azure/ai-services/openai/reference#completions).
+
 ![](../../documents/images/lab-1-logicapp-4.png)
 
-Scroll down to the action box with the outlook logo and expand it to enter new authorizaion credentials for your mailbox:
+
+Scroll down to the Logic App Step named **"Connections"**, the one with the Outlook logo, and expand it to enter new authorizaion credentials for your mailbox:
 
 ![](../../documents/images/lab-1-logicapp-5.png)
 
-Scroll down to the condition option and expand it, then expand the true option. Select the valid connection to send the final notification in this logic app.
+
+Scroll down to the Logic App Step named **"Condition"** and expand it, then expand the **True** box. Select the valid connection to send the final notification in this logic app.
 
 ![](../../documents/images/lab-1-logicapp-6.png)
 
-> [!IMPORTANT]
-> Save the logic app
+
+Save the logic app.
+
+![](../../documents/images/lab-1-savelogicapp.png)
 
 ### Step 3. Deploy Logic App 1 (read-mailbox-techsupport)
 
@@ -97,11 +110,17 @@ In this step you are going to perform the following actions to deploy and config
 - Deploy the logic app that reads an Outlook mailbox and calls a logic app to send the user question to Azure OpenAI
 - Configure your connection to Outlook
 
-After the deployment you should see the new logic app your resource group, open the logic app and click the edit button
+After the deployment you should see the new logic app in your resource group. 
 
 ![](../../documents/images/lab-1-logicapp-7.png)
 
-Select the top box titled connection and select the appropiate connection to Office 365 outlook
+
+Click he new Logic App, then click the **Edit** button
+
+![](../../documents/images/lab-1-logicapp-readmailbox-clickedit.png)
+
+
+Select the top box titled **When a new email arrives (V3)** and select the appropiate connection to Office 365 outlook
 
 ![](../../documents/images/lab-1-logicapp-8.png)
 
