@@ -126,17 +126,13 @@ Select the top box titled **When a new email arrives (V3)** and select the appro
 
 ### Step 4. Test
 
-Send an email to the mailbox configured in your second logic app
-
-> [!IMPORTANT]
-> Don't forget the email subject
-
-**"Helpdesk bot"**
-
-You can use this test:
+Send an email, as follows, to the mailbox configured in your second logic app
 
 ---
+**Email Subject:**  
+Helpdesk bot
 
+**Email body:**  
 Hello,
 
 I can't login into my account, I need to reset my password. Also my keyboard is not working.
@@ -145,4 +141,10 @@ Thank you
 
 Your Name
 
----
+---  
+  
+
+Monitor your Inbox for the automated email response. As soon as you receive it, open the email and **click one of the options provided**:  
+
+![](../../documents/images/Lab-1-screenshot-automatedemailresponsewithoptions.png)  
+  
