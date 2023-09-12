@@ -28,9 +28,8 @@ The following prerequisites must be completed before you start these labs
 
 - Required Resource Providers [How to Register Azure Services](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types)
 
-  - Azure OpenAI
   - Microsoft.Search
-  - Microssoft.Functions
+  - Microssoft.Web
   - Microsoft.Authorization
   - Microsoft.CognitiveServices
   - Microsoft.ManagedIdentity
@@ -38,7 +37,7 @@ The following prerequisites must be completed before you start these labs
   - Microsoft.Storage
   - Microsoft.Insights
   - Microsoft.Application
-  - Microsoft.LogicApps
+  - Microsoft.Logic
   - Microsoft.BotService
 
 - [VS Code](https://code.visualstudio.com/download) installed on your computer.

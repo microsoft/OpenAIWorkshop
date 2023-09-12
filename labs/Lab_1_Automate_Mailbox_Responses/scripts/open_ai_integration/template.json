@@ -120,7 +120,7 @@
                                     "type": "AppendToStringVariable",
                                     "inputs": {
                                         "name": "finalanswer",
-                                        "value": "@items('For_each')?['text']"
+                                        "value": "@item()?['message']['content']"
                                     }
                                 }
                             },
@@ -141,7 +141,12 @@
                             "inputs": {
                                 "body": {
                                     "max_tokens": 400,
-                                    "prompt": "@variables('finalprompt')",
+                                          "messages": [
+                                                {
+                                                "content": "@variables('finalprompt')",
+                                                "role": "user"
+                                                }
+                                            ],
                                     "temperature": 0.2
                                 },
                                 "headers": {
@@ -251,16 +256,16 @@
                                                     "index": {
                                                         "type": "integer"
                                                     },
-                                                    "logprobs": {},
-                                                    "text": {
+                                                    "message": {
+                                                        "content": {
                                                         "type": "string"
+                                                        }
                                                     }
                                                 },
                                                 "required": [
-                                                    "text",
+                                                    "message",
                                                     "index",
-                                                    "finish_reason",
-                                                    "logprobs"
+                                                    "finish_reason"
                                                 ],
                                                 "type": "object"
                                             },
@@ -324,7 +329,7 @@
                                         "HideHTMLMessage": false,
                                         "Importance": "Normal",
                                         "Options": "Useful, Not Useful",
-                                        "ShowHTMLConfirmationDialog": false,
+                                        "ShowHTMLConfirmationDialog": true,
                                         "Subject": "Automated response from your Helpdesk AI bot",
                                         "To": "@variables('emailto')"
                                     },
