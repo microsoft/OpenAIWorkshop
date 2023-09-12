@@ -44,7 +44,7 @@ Here are the SKUs that are needed for the Azure Resources:
 
 Right Click on **_Deploy to Azure button_** and Open in a new tab.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2FVishal%2FLabsUpdate0905%2Flabs%2FLab_2_chatWithDocuments%2Fdeploy%2Fazure-deploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmain%2Flabs%2FLab_2_chatWithDocuments%2Fdeploy%2Fazure-deploy.json)
 
 - Wait for the deployment to complete. The deployment can take upto 10 minutes.
 

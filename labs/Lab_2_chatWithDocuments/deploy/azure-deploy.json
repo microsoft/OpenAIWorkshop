@@ -61,7 +61,7 @@
     },
     "packageUri": {
       "type": "string",
-      "defaultValue": "https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/Vishal/LabsUpdate0905/labs/Lab_2_chatWithDocuments/orchestrator/orchestrator.zip",
+      "defaultValue": "https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/labs/Lab_2_chatWithDocuments/orchestrator/orchestrator-func-app/orchestrator.zip",
       "metadata": {
         "description": "The zip content url."
       }

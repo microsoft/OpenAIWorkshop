@@ -43,7 +43,7 @@ In this step you are going to perform the following actions to deploy and config
 - Enter Azure OpenAI authentication credentials
 - Configure your connection to Outlook
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2FVishal%2FLabsUpdate0905%2Flabs%2FLab_1_Automate_Mailbox_Responses%2Fscripts%2Fopen_ai_integration%2Ftemplate.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmain%2Flabs%2FLab_1_Automate_Mailbox_Responses%2Fscripts%2Fopen_ai_integration%2Ftemplate.json)
 
 
 After the deployment you should see two new items in your resource group
@@ -72,7 +72,7 @@ You can find the <DEPLOYMENT_NAME> in the Azure OpenAI Studio Deployments blade 
 ![](../../documents/images/lab-1-ModelName.png)
 
 
-In the **api-key** field, enter your Azure OpenAI API key. 
+In the **api-key** field, enter your Azure OpenAI API key.
 
 > [!NOTE]
 > Ensure the ?api-version for chat completions is recent, as new updates may have caused the api schema to change. See the **Supported versions** subsection, under **Completions** in [this article](https://learn.microsoft.com/en-us/azure/ai-services/openai/reference#completions).
@@ -103,14 +103,14 @@ This logic app scans a mail box every X minutes for new emails with the subject:
 > [!IMPORTANT]
 > When you click the 'Deploy to Azure' button below, you will need to provide the URL to your second logic app (email-techsupport-integration) in the 'Email_integration_url' parameter field.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2FVishal%2FLabsUpdate0905%2Flabs%2FLab_1_Automate_Mailbox_Responses%2Fscripts%2Freadmailbox%2Ftemplate.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmain%2Flabs%2FLab_1_Automate_Mailbox_Responses%2Fscripts%2Freadmailbox%2Ftemplate.json)
 
 In this step you are going to perform the following actions to deploy and configure the logic app:
 
 - Deploy the logic app that reads an Outlook mailbox and calls a logic app to send the user question to Azure OpenAI
 - Configure your connection to Outlook
 
-After the deployment you should see the new logic app in your resource group. 
+After the deployment you should see the new logic app in your resource group.
 
 ![](../../documents/images/lab-1-logicapp-7.png)
 
@@ -129,10 +129,10 @@ Select the top box titled **When a new email arrives (V3)** and select the appro
 Send an email, as follows, to the mailbox configured in your second logic app
 
 ---
-**Email Subject:**  
+**Email Subject:**
 Helpdesk bot
 
-**Email body:**  
+**Email body:**
 Hello,
 
 I can't login into my account, I need to reset my password. Also my keyboard is not working.
@@ -141,10 +141,10 @@ Thank you
 
 Your Name
 
----  
-  
+---
 
-Monitor your Inbox for the automated email response. As soon as you receive it, open the email and **click one of the options provided**:  
 
-![](../../documents/images/Lab-1-screenshot-automatedemailresponsewithoptions.png)  
-  
+Monitor your Inbox for the automated email response. As soon as you receive it, open the email and **click one of the options provided**:
+
+![](../../documents/images/Lab-1-screenshot-automatedemailresponsewithoptions.png)
+
