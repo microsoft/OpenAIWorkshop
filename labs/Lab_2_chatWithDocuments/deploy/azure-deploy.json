@@ -54,7 +54,7 @@
     },
     "linuxFxVersion": {
       "type": "string",
-      "defaultValue": "Python|3.9",
+      "defaultValue": "Python|3.10",
       "metadata": {
         "description": "Required for Linux app to represent runtime stack in the format of 'runtime|runtimeVersion'. For example: 'python|3.9'"
       }

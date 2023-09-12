@@ -7,30 +7,29 @@
 - Azure Cloud Shell is recommended as it comes with preinstalled dependencies.
 - Azure Open AI already provisioned and `gpt-35-turbo` model is deployed. The model deployment name is required in the Azure Deployment step below.
 
-- Right Click and Open ***[.Net Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1)*** in a new tab to Install .Net Core 3.1.
+- Right Click and Open **_[.Net Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1)_** in a new tab to Install .Net Core 3.1.
 
-- Right Click and Open ***[Node.js](https://nodejs.org/en/download)*** in a new tab to Install Node.js.
+- Right Click and Open **_[Node.js](https://nodejs.org/en/download)_** in a new tab to Install Node.js.
 
-- Right Click and Open ***[Azure Bot Framework Composer](https://learn.microsoft.com/en-us/composer/install-composer?tabs=windows#install-and-run-composer)*** in a new tab to Install Azure Bot Framework Composer.
+- Right Click and Open **_[Azure Bot Framework Composer](https://learn.microsoft.com/en-us/composer/install-composer?tabs=windows#install-and-run-composer)_** in a new tab to Install Azure Bot Framework Composer.
 
 Before deploying the Azure resources, you will need **_Azure OpenAI API endpoint, API key, and the model deployment name_**.
 
 Follow the steps below to get the Azure OpenAI endpoint and API key. Save the endpoint and API key in a notepad for later use.
 
-- Right Click and Open ***[Azure Open AI Studio](https://oai.azure.com/portal)*** in a new tab.
+- Right Click and Open **_[Azure Open AI Studio](https://oai.azure.com/portal)_** in a new tab.
 
 - Click on the the Gear icon on Top right corner.
 
-   ![Alt text](Images/lab2_image18_gearicon.png)
+  ![Alt text](Images/lab2_image18_gearicon.png)
 
 - Navigate to Resource Tab and copy the endpoint and key in a notepad.
 
-   ![Alt text](Images/lab2_image19_endpointandkey.png)
+  ![Alt text](Images/lab2_image19_endpointandkey.png)
 
 - To get the Azure OpenAI Model deployment name, click on the deployment under Management, and copy the model deploment name.
 
-    ![Alt text](Images/lab2_image17_gpt_3_turbo.png)
-
+  ![Alt text](Images/lab2_image17_gpt_3_turbo.png)
 
 ## 1. Azure Services deployment
 
@@ -43,18 +42,17 @@ Here are the SKUs that are needed for the Azure Resources:
 - Azure Forms Recognizer (AFR) - Standard (To support analyzing 500 page document)
 - Azure Storage - general purpose V1 (Needed for Azure Function App and uploading sample documents)
 
-Right Click on ***Deploy to Azure button*** and Open in a new tab.
+Right Click on **_Deploy to Azure button_** and Open in a new tab.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmain%2Flabs%2FLab_2_chatWithDocuments%2Fdeploy%2Fazure-deploy.json)
 
 - Wait for the deployment to complete. The deployment can take upto 10 minutes.
 
-   ![Alt text](Images/lab-2-deployment-completed.png)
+  ![Alt text](Images/lab-2-deployment-completed.png)
 
 - Once deployment is successfully completed, navigate to Outputs Section as shown below and Click on `Copy to Clipboard` to copy the output values along with the output keys in a notepad file. Please copy all the output values, we will be using these values in the next steps:
 
-   ![Alt text](Images/lab-2-copy-output-values.png)
-
+  ![Alt text](Images/lab-2-copy-output-values.png)
 
 ## 2. Setup Azure Cognitive Search and prepare data
 
@@ -62,7 +60,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
 - Create Search Index, Semantic Configuration and Index a few documents using automated script. The script can be run multiple times without any side effects.
 
-- Right Click and Open ***[Azure Cloud Shell](https://portal.azure.com/#cloudshell/)*** in a new tab and select `PowerShell`. If this is first time you are starting Cloud Shell, you will be prompted to create an Azure Storage account for the Azure file share.
+- Right Click and Open **_[Azure Cloud Shell](https://portal.azure.com/#cloudshell/)_** in a new tab and select `PowerShell`. If this is first time you are starting Cloud Shell, you will be prompted to create an Azure Storage account for the Azure file share.
 
   Run the below commands from cloud shell to configure python environment.
 
@@ -93,27 +91,26 @@ As part of the data preparation step, the documents are chunked into smaller sec
       FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/labs/Lab_2_chatWithDocuments/Data/azure-machine-learning-2-500.pdf"
       LOCAL_FOLDER_PATH=""
 
-*   The document processing, chunking, indexing can all be scripted using any preferred language.
-    This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc.
-    The search indexer chunks a sample pdf document(500 pages) and chunks each page into 20 lines. Each chunk is created as a new search doc in the index. The pdf document processing is achieved using the Azure Form Recognizer service.
+* The document processing, chunking, indexing can all be scripted using any preferred language.
+  This repo uses Python. Run the below script to create search index, add semantic configuration and populate few sample documents from Azure doc.
+  The search indexer chunks a sample pdf document(500 pages) and chunks each page into 20 lines. Each chunk is created as a new search doc in the index. The pdf document processing is achieved using the Azure Form Recognizer service.
 
-        python search-indexer.py
-
+      python search-indexer.py
 
 # 3. Test Azure Function App Service deployment
+
 Choose your preferred method to test and confirm Azure Function App before continuing to Step 4.
 
 ## Option A: Test from Azure Portal (Recommended)
 
-  - Right Click and Open ***[Azure Portal](https://portal.azure.com/)*** in a new tab and navigate to the Resource Group deployed for Lab 2:
--
-  - Select Function App:
+- Right Click and Open **_[Azure Portal](https://portal.azure.com/)_** in a new tab and navigate to the Resource Group deployed for Lab 2:
+- - Select Function App:
 
     ![Alt text](Images/lab-2-navigate-to-rg-for-function.png)
 
   - Select `Functions` in the left navigation pane and click on `orchestrator` function:
 
-     ![Alt text](Images/lab-2-select-function.png)
+    ![Alt text](Images/lab-2-select-function.png)
 
   - Select `Code + Test` under Developer and click on `Test/Run`:
 
@@ -130,24 +127,26 @@ Choose your preferred method to test and confirm Azure Function App before conti
     ![Alt text](Images/lab-2-function-test-success-portal.png)
 
 ## Option B: Visual Studio/VS Code
-  > :information_source: This method requires the [REST Client extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) when using VS Code.
 
-  - Update [test.http](./orchestrator/test.http) with your function URL and key
+> :information_source: This method requires the [REST Client extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) when using VS Code.
 
-  - Click `Send Request`
+- Update [test.http](./orchestrator/test.http) with your function URL and key
 
-    ![HTTP File Test](Images/http-file-test.PNG)
+- Click `Send Request`
+
+  ![HTTP File Test](Images/http-file-test.PNG)
 
 ## Option C: Launch Postman
-> :information_source: This method requires Postman client to be installed locally in your system. If its not installed already, Right Click and Open ***[Postman Client](https://www.postman.com/downloads/)*** in a new tab to download and install Postman.
 
-  - Open Postman in your system and click on **New** as shown in the below screenshot and then select `HTTP`:
+> :information_source: This method requires Postman client to be installed locally in your system. If its not installed already, Right Click and Open **_[Postman Client](https://www.postman.com/downloads/)_** in a new tab to download and install Postman.
 
-    ![Alt text](Images/lab2_image4_postman.png)
+- Open Postman in your system and click on **New** as shown in the below screenshot and then select `HTTP`:
 
-  - Select method to `POST`:
+  ![Alt text](Images/lab2_image4_postman.png)
 
-    ![Alt text](Images/lab2_image25_postmethod.png)
+- Select method to `POST`:
+
+  ![Alt text](Images/lab2_image25_postmethod.png)
 
 - Enter the URL of the Function app that you have copied in the notepad:
 
@@ -158,7 +157,6 @@ Choose your preferred method to test and confirm Azure Function App before conti
         {"prompt" : "Is GPU supported in AML"}
 
   ![Alt text](Images/lab2_image28_prompt.png)
-
 
 ## 4. Build Chatbot
 
@@ -214,7 +212,6 @@ Create a bot in Azure Bot Composer:
 
 Azure bot is now complete. In the next step, the bot is published on the Azure Cloud.
 
-
 ## 5. Publish the Chatbot
 
 1. On the left most menu pane, select publish.
@@ -238,7 +235,6 @@ Azure bot is now complete. In the next step, the bot is published on the Azure C
 6. Clik on Publish tab and select the bot to be published. Select the profile provisioned in the above step. Click on 'Publish selected bots'. Click on 'Okay' in the next window. Wait for the bot to be published on the Azure Cloud.
 
    ![Alt text](Images/lab2_image16_publishbot.png)
-
 
 ## 6. Test
 

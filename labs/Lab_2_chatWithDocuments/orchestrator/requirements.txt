@@ -2,13 +2,8 @@
 # The Python Worker is managed by Azure Functions platform
 # Manually managing azure-functions-worker may cause unexpected issues
 
-azure-core
-azure-functions
-openai==0.27.2
-azure-kusto-data==4.0.2
-pandas
-pyodbc
-azure-search-documents==11.4.0b3
-azure-ai-formrecognizer
+azure-core==1.29.3
+azure-functions==1.17.0
+azure-search-documents==11.3.0
+openai==0.27.9
 python-dotenv
-numpy==1.24.3
