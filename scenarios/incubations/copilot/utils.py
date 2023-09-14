@@ -19,6 +19,8 @@ load_dotenv(dotenv_path=env_path)
 openai.api_key =  os.environ.get("AZURE_OPENAI_API_KEY")
 openai.api_base =  os.environ.get("AZURE_OPENAI_ENDPOINT")
 openai.api_type = "azure"
+emb_engine = os.getenv("AZURE_OPENAI_EMB_DEPLOYMENT")
+emb_engine = emb_engine.strip('"')
 class Search_Client():
     def __init__(self,emb_map_file_path):
         with open(emb_map_file_path) as file:
@@ -29,7 +31,7 @@ class Search_Client():
         Given an input vector and a dictionary of label vectors,  
         returns the label with the highest cosine similarity to the input vector.  
         """  
-        input_vector = get_embedding(question, engine = 'text-embedding-ada-002')        
+        input_vector = get_embedding(question, engine = emb_engine)        
         # Compute cosine similarity between input vector and each label vector
         cosine_list=[]  
         for chunk_id,chunk_content, vector in self.chunks_emb:  
@@ -52,31 +54,36 @@ class Search_Client():
 if os.getenv("USE_AZCS") == "True":
     service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT") 
     index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 
+    index_name = index_name.strip('"')
     key = os.getenv("AZURE_SEARCH_ADMIN_KEY") 
-    @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
+    key = key.strip('"')
+    # @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
     # Function to generate embeddings for title and content fields, also used for query embeddings
     def generate_embeddings(text):
+        print("emb_engine", emb_engine)
+        openai.api_version = "2023-05-15"
         response = openai.Embedding.create(
-            input=text, engine="text-embedding-ada-002")
+            input=text, engine=emb_engine)
         embeddings = response['data'][0]['embedding']
         return embeddings
-
     credential = AzureKeyCredential(key)
-    azcs_search_client = SearchClient(service_endpoint, index_name, credential=credential)
+    azcs_search_client = SearchClient(service_endpoint, index_name =index_name , credential=credential)
 else:
     faiss_search_client = Search_Client("../data/chunk_emb_map.json")
 
 def search_knowledgebase_acs(search_query):
-    vector = Vector(value=generate_embeddings(search_query), k=3, fields="contentVector")
-  
+    vector = Vector(value=generate_embeddings(search_query), k=3, fields="embedding")
+    print("search query: ", search_query)
     results = azcs_search_client.search(  
-        search_text=None,  
+        search_text=search_query,  
         vectors= [vector],
-        select=["id", "content"],
+        select=["sourcepage","content"],
+        top=5
     )  
     text_content =""
     for result in results:  
-        text_content += f"{result['id']}\n{result['content']}\n"
+        text_content += f"{result['sourcepage']}\n{result['content']}\n"
+    print("text_content", text_content)
     return text_content
 
 def search_knowledgebase_faiss(search_query):
@@ -95,6 +102,7 @@ def search_knowledgebase(search_query):
 ###Sematic caching implementation
 if os.getenv("USE_SEMANTIC_CACHE") == "True":
     cache_index_name = os.getenv("CACHE_INDEX_NAME")
+    cache_index_name= cache_index_name.strip('"')
     azcs_semantic_cache_search_client = SearchClient(service_endpoint, cache_index_name, credential=credential)
 
 def add_to_cache(search_query, gpt_response):
@@ -205,7 +213,7 @@ class Smart_Agent(Agent):
         engine (str): The name of the GPT engine to use.
     """
 
-    def __init__(self, persona,functions_spec, functions_list, name=None, init_message=None, engine ="gpt-4"):
+    def __init__(self, persona,functions_spec, functions_list, name=None, init_message=None, engine =os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT")):
         super().__init__(engine=engine,persona=persona, init_message=init_message, name=name)
         self.functions_spec = functions_spec
         self.functions_list= functions_list
@@ -220,106 +228,106 @@ class Smart_Agent(Agent):
         i=0
         query_used = None
 
-        while True:
-            try:
-                i+=1
-                response = openai.ChatCompletion.create(
-                    deployment_id=self.engine, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
-                    messages=conversation,
-                functions=self.functions_spec,
-                function_call="auto", 
-                )
-                response_message = response["choices"][0]["message"]
+        # while True:
+        #     try:
+        #         i+=1
+        response = openai.ChatCompletion.create(
+            deployment_id=self.engine, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
+            messages=conversation,
+        functions=self.functions_spec,
+        function_call="auto", 
+        )
+        response_message = response["choices"][0]["message"]
 
 
-                    # Step 2: check if GPT wanted to call a function
-                if  response_message.get("function_call"):
-                    print("Recommended Function call:")
-                    print(response_message.get("function_call"))
-                    print()
-                    
-                    # Step 3: call the function
-                    # Note: the JSON response may not always be valid; be sure to handle errors
-                    
-                    function_name = response_message["function_call"]["name"]
-                    
-                    # verify function exists
-                    if function_name not in self.functions_list:
-                        print("function list:", self.functions_list)
-                        raise Exception("Function " + function_name + " does not exist")
-                    function_to_call = self.functions_list[function_name]  
-                    
-                    # verify function has correct number of arguments
-                    function_args = json.loads(response_message["function_call"]["arguments"])
+            # Step 2: check if GPT wanted to call a function
+        if  response_message.get("function_call"):
+            print("Recommended Function call:")
+            print(response_message.get("function_call"))
+            print()
+            
+            # Step 3: call the function
+            # Note: the JSON response may not always be valid; be sure to handle errors
+            
+            function_name = response_message["function_call"]["name"]
+            
+            # verify function exists
+            if function_name not in self.functions_list:
+                print("function list:", self.functions_list)
+                raise Exception("Function " + function_name + " does not exist")
+            function_to_call = self.functions_list[function_name]  
+            
+            # verify function has correct number of arguments
+            function_args = json.loads(response_message["function_call"]["arguments"])
 
-                    if check_args(function_to_call, function_args) is False:
-                        raise Exception("Invalid number of arguments for function: " + function_name)
-                    
+            if check_args(function_to_call, function_args) is False:
+                raise Exception("Invalid number of arguments for function: " + function_name)
+            
 
-                    # check if there's an opprotunity to use semantic cache
-                    if function_name =="search_knowledgebase":
-                        if os.getenv("USE_SEMANTIC_CACHE") == "True":
-                            search_query = function_args["search_query"]
-                            cache_output = get_cache(search_query)
-                            if cache_output is not None:
-                                print("semantic cache hit")
-                                conversation.append({"role": "assistant", "content": cache_output})
-                                return False, query_used,conversation, cache_output
-                            else:
-                                print("semantic cache missed")
-                                query_used = search_query
-
-
-                    function_response = function_to_call(**function_args)
-                    print("Output of function call:")
-                    print(function_response)
-                    print()
-
-                    
-                    # Step 4: send the info on the function call and function response to GPT
-                    
-                    # adding assistant response to messages
-                    conversation.append(
-                        {
-                            "role": response_message["role"],
-                            "name": response_message["function_call"]["name"],
-                            "content": response_message["function_call"]["arguments"],
-                        }
-                    )
-
-                    # adding function response to messages
-                    conversation.append(
-                        {
-                            "role": "function",
-                            "name": function_name,
-                            "content": function_response,
-                        }
-                    )  # extend conversation with function response
-                    openai.api_version = api_version
-                
-                    second_response = openai.ChatCompletion.create(
-                        messages=conversation,
-                        deployment_id=self.engine,
-                        stream=stream,
-                    )  # get a new response from GPT where it can see the function response
-
-                    if not stream:
-                        assistant_response = second_response["choices"][0]["message"]["content"]
-                        conversation.append({"role": "assistant", "content": assistant_response})
-
+            # check if there's an opprotunity to use semantic cache
+            if function_name =="search_knowledgebase":
+                if os.getenv("USE_SEMANTIC_CACHE") == "True":
+                    search_query = function_args["search_query"]
+                    cache_output = get_cache(search_query)
+                    if cache_output is not None:
+                        print("semantic cache hit")
+                        conversation.append({"role": "assistant", "content": cache_output})
+                        return False, query_used,conversation, cache_output
                     else:
-                        assistant_response = second_response
+                        print("semantic cache missed")
+                        query_used = search_query
 
-                    return stream,query_used, conversation, assistant_response
-                else:
-                    assistant_response = response_message["content"]
-                    conversation.append({"role": "assistant", "content": assistant_response})
-                break
-            except Exception as e:
-                if i>3: 
-                    assistant_response="Haizz, my memory is having some trouble, can you repeat what you just said?"
-                    break
-                print("Exception as below, will retry\n", str(e))
-                time.sleep(5)
+
+            function_response = function_to_call(**function_args)
+            print("Output of function call:")
+            print(function_response)
+            print()
+
+            
+            # Step 4: send the info on the function call and function response to GPT
+            
+            # adding assistant response to messages
+            conversation.append(
+                {
+                    "role": response_message["role"],
+                    "name": response_message["function_call"]["name"],
+                    "content": response_message["function_call"]["arguments"],
+                }
+            )
+
+            # adding function response to messages
+            conversation.append(
+                {
+                    "role": "function",
+                    "name": function_name,
+                    "content": function_response,
+                }
+            )  # extend conversation with function response
+            openai.api_version = api_version
+        
+            second_response = openai.ChatCompletion.create(
+                messages=conversation,
+                deployment_id=self.engine,
+                stream=stream,
+            )  # get a new response from GPT where it can see the function response
+
+            if not stream:
+                assistant_response = second_response["choices"][0]["message"]["content"]
+                conversation.append({"role": "assistant", "content": assistant_response})
+
+            else:
+                assistant_response = second_response
+
+            return stream,query_used, conversation, assistant_response
+        else:
+            assistant_response = response_message["content"]
+            conversation.append({"role": "assistant", "content": assistant_response})
+            #     break
+            # except Exception as e:
+            #     if i>3: 
+            #         assistant_response="Haizz, my memory is having some trouble, can you repeat what you just said?"
+            #         break
+            #     print("Exception as below, will retry\n", str(e))
+            #     time.sleep(5)
 
         return False,query_used, conversation, assistant_response

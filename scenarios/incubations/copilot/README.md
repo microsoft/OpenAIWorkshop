@@ -113,8 +113,9 @@ Create an Azure OpenAI deployment in an Azure subscription with a GPT-4-0603 dep
 2. Create a `secrets.env` file under copilot folder
     AZURE_OPENAI_API_KEY="OPEN_AI_KEY"
     AZURE_OPENAI_ENDPOINT="https://YOUR_OPEN_AI_SERVICE.openai.azure.com/"
-    AZURE_OPENAI_API_KEY="YOUR_OPEN_AI_KEY"
-    USE_AZCS="False"
+    AZURE_OPENAI_EMB_DEPLOYMENT #name of your embedding model deployment
+    AZURE_OPENAI_CHAT_DEPLOYMENT #name of your Open AI Chat Deployment
+    USE_AZCS="False" #if false, it will use the Faiss library for search
     AZURE_SEARCH_SERVICE_ENDPOINT="https://YOUR_SEARCH_SERVICE.search.windows.net"
     AZURE_SEARCH_INDEX_NAME=YOUR_SEARCH_INDEX_NAME
     CACHE_INDEX_NAME="YOUR_SEARCH_INDEX_NAME" #optional, required when USE_SEMANTIC_CACHE="True"
