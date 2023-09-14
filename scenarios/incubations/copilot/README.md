@@ -107,13 +107,21 @@ Copilot also can help update information.
 
 # Installation 
 ## Open AI setup
-Create an Azure OpenAI deployment in an Azure subscription with a GPT-4-0603 deployment .
+Create an Azure OpenAI deployment in an Azure subscription with a GPT-4-0603 deployment and a ada-text-embedding-002 deloyment
 ## Run the application locally
 1. Clone the repo (e.g. ```git clone https://github.com/microsoft/OpenAIWorkshop.git``` or download). Then navigate to ```cd scenarios/incubations/copilot```
-2. Create a `secrets.env` file in the root of streamlit folder
-    AZURE_OPENAI_ENDPOINT="YOUR_OPEN_AI_ENDPOINT"
+2. Create a `secrets.env` file under copilot folder
     AZURE_OPENAI_API_KEY="OPEN_AI_KEY"
-
+    AZURE_OPENAI_ENDPOINT="https://YOUR_OPEN_AI_SERVICE.openai.azure.com/"
+    AZURE_OPENAI_API_KEY="YOUR_OPEN_AI_KEY"
+    USE_AZCS="False"
+    AZURE_SEARCH_SERVICE_ENDPOINT="https://YOUR_SEARCH_SERVICE.search.windows.net"
+    AZURE_SEARCH_INDEX_NAME=YOUR_SEARCH_INDEX_NAME
+    CACHE_INDEX_NAME="YOUR_SEARCH_INDEX_NAME" #optional, required when USE_SEMANTIC_CACHE="True"
+    AZURE_SEARCH_ADMIN_KEY=YOUR_SEARCH_INDEX_NAME_KEY
+    AZURE_OPENAI_API_VERSION="2023-07-01-preview"
+    USE_SEMANTIC_CACHE="False" #set to True if use semantic Cache.
+    SEMANTIC_HIT_THRESHOLD=0.9 #set to True if use semantic Cache.
 3. Create a python environment with version from 3.7 and 3.10
     - [Python 3+](https://www.python.org/downloads/)
         - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
