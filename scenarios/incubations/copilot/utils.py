@@ -73,11 +73,12 @@ else:
 
 def search_knowledgebase_acs(search_query):
     vector = Vector(value=generate_embeddings(search_query), k=3, fields="embedding")
-  
+    print("search query: ", search_query)
     results = azcs_search_client.search(  
-        search_text=None,  
+        search_text=search_query,  
         vectors= [vector],
         select=["sourcepage","content"],
+        top=5
     )  
     text_content =""
     for result in results:  
