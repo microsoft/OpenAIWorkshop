@@ -1,6 +1,6 @@
 ## Exercise 4b: Build Open AI application with Python
 
-1. Search and select **Azure Synapse Analytics** in the azure portal.
+1. Search and select **Azure Synapse Analytics** in the Azure portal.
 
       ![](images/p2.png)
 
@@ -20,11 +20,11 @@
 
     ![](images/openai-sparkpool.png)
 
-1. Run the notebook it step by step to complete this exercise. Click on **Run** button next to the cell. 
+1. Run the notebook step by step to complete this exercise. Click on the **Run** button next to the cell. 
 
      ![](images/run.png)
 
-1. In **2. Import helper libraries and instantiate credentials** replace the **AZURE_OPENAI_API_KEY** and **AZURE_OPENAI_ENDPOINT** with your API key and End point URL.
+1. In **2. Import helper libraries and instantiate credentials** replace the **AZURE_OPENAI_API_KEY** and **AZURE_OPENAI_ENDPOINT** with your API key and Endpoint URL.
 
   
     ![](images/key-endpoint.png)
