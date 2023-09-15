@@ -100,7 +100,7 @@ From the terminal, navigate to ```cd labs/Lab_Data_Analytics```
 
 ### Step 3.1 Navigate to the root directory of this lab
 
-Navigate to ```cd labs/Lab_Data_Analytics```
+Navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
 
 ### Step 3.2 Create a python environment with version from 3.7 and 3.10
 
