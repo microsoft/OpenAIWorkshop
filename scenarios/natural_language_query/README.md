@@ -14,11 +14,11 @@ Step 2: Azure Open AI engine converts the user context prompt to SQL query and p
 
 Step 3: Azure function passes the context information to Open AI Engine to convert the user context information prompt to SQL Query.
 
-Step 4: The Azure function passes the generated SQL query text and executes the query on Azure SQL database. 
+Step 4: The Azure function passes the generated SQL query text and executes the query on the Azure SQL database. 
 
-Step 5: The query is executed on SQL database and results are returned to Azure function.
+Step 5: The query is executed on the SQL database and results are returned to the Azure function.
 
-Step 6: Azure function returns the results to end user.
+Step 6: The Azure function returns the results to the end user.
 ### Azure services deployment
    
 ## Task 1: Deploy Azure OpenAI Model and Configure Azure Function App.
@@ -31,7 +31,7 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai9.png)
 
-1. In the Azure OpenAI resource pane, click on **Go to Azure OpenAI Studio** it will navaigate to **Azure AI Studio**.
+1. In the Azure OpenAI resource pane, click on **Go to Azure OpenAI Studio** it will navigate to **Azure AI Studio**.
 
    ![](images/openai11-1.png)
 
@@ -41,7 +41,7 @@ Step 6: Azure function returns the results to end user.
 
 1. Naviagte back to [Azure portal](http://portal.azure.com/), search and select **Azure OpenAI**, from the **Cognitive Services | Azure OpenAI pane**, select the **OpenAI-<inject key="Deployment ID" enableCopy="false"/>**.
 
-1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Keys and Endpoint (1)** under **Resource Management**. Copy **Key 1 (2)** and the **Endpoint (3)** by clicking on copy to clipboard paste it in a text editor such as notepad for later use. 
+1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Keys and Endpoint (1)** under **Resource Management**. Copy **Key 1 (2)** and the **Endpoint (3)** by clicking on copy to clipboard and paste it into a text editor such as Notepad for later use. 
 
    ![](images/img-3.png)
 
@@ -49,7 +49,7 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/database.png)
 
-1. Now, copy the database name paste it in a text editor such as notepad for later use. 
+1. Now, copy the database name and paste it into a text editor such as Notepad for later use. 
 
    ![](images/copydb.png)
 
@@ -57,11 +57,11 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/server.png)
 
-1. Now, copy the **Server name** and paste it in a text editor such as notepad for later use. 
+1. Now, copy the **Server name** and paste it into a text editor such as Notepad for later use. 
 
    ![](images/img-1.png)
 
-1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the **Open AI engine**, **Open AI rest end point**, **SQL server** and **SQL database** name in the file and copy the content.
+1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the **Open AI engine**, **Open AI rest endpoint**, **SQL server** and **SQL database** name in the file and copy the content.
 
       >**Note:** Provide the Model name as **demomodel**.
 
@@ -147,7 +147,7 @@ Step 6: Azure function returns the results to end user.
 
     ![](./images/img-5.png)
  
-9. Edit the Power Automate Flow and update **Azure Function Url (1)** with the URL you copied earlier and append `prompt=` at the end. Your URL should look like following. Click **Save (2)**.
+9. Edit the Power Automate Flow and update **Azure Function Url (1)** with the URL you copied earlier and append `prompt=` at the end. Your URL should look like the following. Click **Save (2)**.
 
     ```
     https://openaifunappXXXXXX.azurewebsites.net/api/NLQuery?prompt=
@@ -193,7 +193,7 @@ Step 6: Azure function returns the results to end user.
 
       ![](images/get-prompt-edit-1.png)
   
-   >**Note:** host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account
+   >**Note:** host and paths are extracted from your function URL and can be retrieved from the below screen. The host should not have "Https", please note that operationid needs to be unique per powerapps account
  
       
      ![](images/code-test-getfuncurl.png)
@@ -207,7 +207,7 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/swagger-editor.png)
    
-8. Navigate to https://make.powerapps.com and click on **Flows** and select the flow which you imported in the previous task and click **Edit**.
+8. Navigate to https://make.powerapps.com. click on **Flows**, select the flow which you imported in the previous task and click **Edit**.
 
    ![](./images/promptin-flow-1.png)
 
@@ -223,7 +223,7 @@ Step 6: Azure function returns the results to end user.
   
      ![](images/top-5.png)
   
-12. You need to delete the third step which in your case will be **HTTTP** flow, click on `...` **(1)** next to **HTTP** and click **Delete (2)**.
+12. You need to delete the third step which in your case will be **HTTP** flow, click on `...` **(1)** next to **HTTP** and click **Delete (2)**.
 
      ![](images/delete.png)
 
@@ -231,7 +231,7 @@ Step 6: Azure function returns the results to end user.
   
      ![](images/content-body-1.png)
   
-14. The Control should like the below. Click **Save**.
+14. The Control should be like the below. Click **Save**.
 
      ![](images/save.png)
  
