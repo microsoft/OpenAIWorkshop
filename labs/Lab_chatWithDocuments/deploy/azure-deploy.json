@@ -19,11 +19,7 @@
     "storageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
-      "allowedValues": [
-        "Standard_LRS",
-        "Standard_GRS",
-        "Standard_RAGRS"
-      ],
+      "allowedValues": ["Standard_LRS", "Standard_GRS", "Standard_RAGRS"],
       "metadata": {
         "description": "Storage Account type"
       }
@@ -45,9 +41,7 @@
     "functionWorkerRuntime": {
       "type": "string",
       "defaultValue": "python",
-      "allowedValues": [
-        "python"
-      ],
+      "allowedValues": ["python"],
       "metadata": {
         "description": "The language worker runtime to load in the function app."
       }
@@ -61,24 +55,24 @@
     },
     "packageUri": {
       "type": "string",
-      "defaultValue": "https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/labs/Lab_2_chatWithDocuments/orchestrator/orchestrator-func-app/orchestrator.zip",
+      "defaultValue": "https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/labs/Lab_chatWithDocuments/orchestrator/orchestrator-func-app/orchestrator.zip",
       "metadata": {
         "description": "The zip content url."
       }
     },
-    "OPENAI_RESOURCE_ENDPOINT" : {
+    "OPENAI_RESOURCE_ENDPOINT": {
       "type": "string",
       "metadata": {
         "description": "OpenAI resource endpoint. https://<openai-endpoint-name>.openai.azure.com/"
       }
     },
-    "OPENAI_API_KEY" : {
+    "OPENAI_API_KEY": {
       "type": "string",
       "metadata": {
         "description": "OpenAI API key."
       }
     },
-    "OPENAI_Model_Deployment_Name" : {
+    "OPENAI_Model_Deployment_Name": {
       "type": "string",
       "metadata": {
         "description": "Deployment name of the OpenAI model."
@@ -167,8 +161,8 @@
               "value": "[parameters('functionWorkerRuntime')]"
             },
             {
-                "name": "WEBSITE_RUN_FROM_PACKAGE",
-                "value": "[parameters('packageUri')]"
+              "name": "WEBSITE_RUN_FROM_PACKAGE",
+              "value": "[parameters('packageUri')]"
             },
             {
               "name": "OPENAI_API_KEY",
@@ -187,21 +181,17 @@
               "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', concat(format('search-{0}', uniqueString(resourceGroup().id)))), '2020-08-01').primaryKey]"
             },
             {
-                "name": "INDEX_NAME",
-                "value": "azure-ml-docs"
-
+              "name": "INDEX_NAME",
+              "value": "azure-ml-docs"
             },
             {
-                "name": "SEMANTIC_CONFIG",
-                "value": "semantic-config"
-
+              "name": "SEMANTIC_CONFIG",
+              "value": "semantic-config"
             },
             {
               "name": "GPT_ENGINE",
               "value": "[parameters('OPENAI_Model_Deployment_Name')]"
             }
-
-
           ]
         }
       },
@@ -213,16 +203,16 @@
       ]
     },
     {
-        "type": "Microsoft.Search/searchServices",
-        "apiVersion": "2021-04-01-preview",
-        "name": "[format('search-{0}', uniqueString(resourceGroup().id))]",
-        "location": "[resourceGroup().location]",
-        "sku": {
-          "name": "standard"
-        },
-        "properties": {
-          "semanticSearch": "free"
-        }
+      "type": "Microsoft.Search/searchServices",
+      "apiVersion": "2021-04-01-preview",
+      "name": "[format('search-{0}', uniqueString(resourceGroup().id))]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "standard"
+      },
+      "properties": {
+        "semanticSearch": "free"
+      }
     },
     {
       "type": "Microsoft.CognitiveServices/accounts",

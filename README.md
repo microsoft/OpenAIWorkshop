@@ -36,7 +36,7 @@ The following prerequisites must be completed before you start these labs
   - Microsoft.KeyVault
   - Microsoft.Storage
   - Microsoft.Insights
-  - Microsoft.Application
+  - Microsoft.App
   - Microsoft.Logic
   - Microsoft.BotService
 
