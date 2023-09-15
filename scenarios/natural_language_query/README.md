@@ -14,24 +14,24 @@ Step 2: Azure Open AI engine converts the user context prompt to SQL query and p
 
 Step 3: Azure function passes the context information to Open AI Engine to convert the user context information prompt to SQL Query.
 
-Step 4: The Azure function passes the generated SQL query text and executes the query on Azure SQL database. 
+Step 4: The Azure function passes the generated SQL query text and executes the query on the Azure SQL database. 
 
-Step 5: The query is executed on SQL database and results are returned to Azure function.
+Step 5: The query is executed on the SQL database and results are returned to the Azure function.
 
-Step 6: Azure function returns the results to end user.
+Step 6: The Azure function returns the results to the end user.
 ### Azure services deployment
    
 ## Task 1: Deploy Azure OpenAI Model and Configure Azure Function App.
 
 1. In the **Azure portal**, search for **OpenAI** and select **Azure OpenAI**.
 
-   ![](images/openai8.png)
+   ![](images/p3.png)
 
 1. On **Cognitive Services | Azure OpenAI** blade, select **openai-<inject key="DeploymentID" enableCopy="false"/>**
 
    ![](images/openai9.png)
 
-1. In the Azure OpenAI resource pane, click on **Go to Azure OpenAI Studio** it will navaigate to **Azure AI Studio**.
+1. In the Azure OpenAI resource pane, click on **Go to Azure OpenAI Studio** it will navigate to **Azure AI Studio**.
 
    ![](images/openai11-1.png)
 
@@ -41,7 +41,7 @@ Step 6: Azure function returns the results to end user.
 
 1. Naviagte back to [Azure portal](http://portal.azure.com/), search and select **Azure OpenAI**, from the **Cognitive Services | Azure OpenAI pane**, select the **OpenAI-<inject key="Deployment ID" enableCopy="false"/>**.
 
-1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Keys and Endpoint (1)** under **Resource Management**. Copy **Key 1 (2)** and the **Endpoint (3)** by clicking on copy to clipboard paste it in a text editor such as notepad for later use. 
+1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Keys and Endpoint (1)** under **Resource Management**. Copy **Key 1 (2)** and the **Endpoint (3)** by clicking on copy to clipboard and paste it into a text editor such as Notepad for later use. 
 
    ![](images/img-3.png)
 
@@ -49,7 +49,7 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/database.png)
 
-1. Now, copy the database name paste it in a text editor such as notepad for later use. 
+1. Now, copy the database name and paste it into a text editor such as Notepad for later use. 
 
    ![](images/copydb.png)
 
@@ -57,11 +57,11 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/server.png)
 
-1. Now, copy the **Server name** and paste it in a text editor such as notepad for later use. 
+1. Now, copy the **Server name** and paste it into a text editor such as Notepad for later use. 
 
    ![](images/img-1.png)
 
-1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the **Open AI engine**, **Open AI rest end point**, **SQL server** and **SQL database** name in the file and copy the content.
+1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the **Open AI engine**, **Open AI rest endpoint**, **SQL server** and **SQL database** name in the file and copy the content.
 
       >**Note:** Provide the Model name as **demomodel**.
 
@@ -81,11 +81,14 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai5.png)
 
-1. Go to SQL server **openaiserver-<inject key="DeploymentID" enableCopy="false" /></inject>** under the same resource group, under **settings**, click **Azure Active Directory** and click **Set admin**, on right side provide the name of function app **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>**. Add the name and click  **Select** and **Save**.
+1. Go to SQL server **openaiserver-<inject key="DeploymentID" enableCopy="false" /></inject>** under the same resource group, under **settings**, click **Azure Active Directory** and click **Set admin**.
 
-   ![](images/openai6.png)
+   ![](images/p4.png)
 
+1. On the Azure Active Directory pane, In the search box enter the name of the function app **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>**. Add the name and click **Select** and **Save**.
 
+   ![](images/p5.png)
+   
 ## Task 2. Test the function App
 
 1. Go to **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group and open **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject> (2)** function app.
@@ -131,9 +134,9 @@ Step 6: Azure function returns the results to end user.
 
    ![](images/openai3.png)
 
-6. Then click on **Functions (1)** and click deployed function **NLQuery (2)**.
+6. On the **Overview (1)** blade of function app, click on **Functions (2)** and click deployed function **NLQuery (3)**.
 
-   ![](images/openai7.png)
+   ![](images/p6.png)
 
 7. On the **NLQuery** function click on **Get Function Url (1)**, from the drop-down menu select **default (function key) (2)** then **Copy (3)** the URL, Click **OK (4)**. Paste the URL in a text editor such as _Notepad_ for later use.
 
@@ -143,11 +146,11 @@ Step 6: Azure function returns the results to end user.
 
     ![](./images/img-4.png)
 
-1. Next, click on **Edit** for **PromptlnputFlow**.
+9. Next, select the **PromptInputFlow (1)** and click on **Edit (3)** for **PromptlnputFlow**.
 
-    ![](./images/img-5.png)
+    ![](./images/p7.png)
  
-9. Edit the Power Automate Flow and update **Azure Function Url (1)** with the URL you copied earlier and append `prompt=` at the end. Your URL should look like following. Click **Save (2)**.
+10. Edit the Power Automate Flow and update **Azure Function Url (1)** with the URL you copied earlier and append `prompt=` at the end. Your URL should look like the following. Click **Save (2)**.
 
     ```
     https://openaifunappXXXXXX.azurewebsites.net/api/NLQuery?prompt=
@@ -155,7 +158,7 @@ Step 6: Azure function returns the results to end user.
   
       ![](images/openai-1.png)
 
-10. Got to **Apps** and select the app with the name **NLP Query**. Run the App by clicking on the App.
+11. Got to **Apps** and select the app with the name **NLP Query**. Run the App by clicking on the App.
 
       ![](images/powerapps8-1.png)
 
@@ -168,22 +171,29 @@ Step 6: Azure function returns the results to end user.
 
      ![](images/app-launcher.png)
 
+1. On the **Power Automate** page, click on **More (1)** and select **Discover all (2)**.
 
-2.  Click on **Data (1)** and select **Custom Connectors (2)**, click on **+ New custom connector (3)** then click on **Create from blank (4)**. Just keep the screen as it is and move to the next step.
+   ![](images/p8.png)
 
-    ![](images/power-automate.png)
+1. Click on **Custom Connectors** under the Data.
+
+   ![](images/p9.png)
+
+1. Select **Custom Connectors (1)**, click on **+ New custom connector (2)** then click on **Create from blank (3)**. Just keep the screen as it is and move to the next step.
+
+    ![](images/p10.png)
    
-3. Enter the **Connector name** as `Openai-custom-connector` **(1)** and click on **Continue (2)**. Just keep the screen as is and move to the next step.
+4. Enter the **Connector name** as `Openai-custom-connector` **(1)** and click on **Continue (2)**. Just keep the screen as is and move to the next step.
 
       ![](images/openai-custom-connector-1.png)
    
    >**Note:** Please click on **Start Trial** if you get any pop-up to register.
    
-4.  From the file explorer navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query` and open **get-prompt.txt**.
+5.  From the file explorer navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query` and open **get-prompt.txt**.
 
      ![](images/get-prompt.png)
 
-5. We need to update the below values in the file 
+6. We need to update the below values in the file 
 
       - **host**: **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>.azurewebsites.net (1)**
   
@@ -193,45 +203,45 @@ Step 6: Azure function returns the results to end user.
 
       ![](images/get-prompt-edit-1.png)
   
-   >**Note:** host and paths are extracted from your function url and can be retrieved from  below screen. Host should not have "Https", please note operationid needs to be unique per powerapps account
+   >**Note:** host and paths are extracted from your function URL and can be retrieved from the below screen. The host should not have "Https", please note that operationid needs to be unique per powerapps account
  
       
      ![](images/code-test-getfuncurl.png)
 
 
-6. In the Custom Connector app browser tab, click on **Start trial**. 
+7. In the Custom Connector app browser tab, click on **Start trial**. 
    
    ![](images/start-trail-90days.png)
    
-7. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** **(2)** and replace with the content in the **Swagger editor(2)**. Click **Create Connector (3)**.
+8. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** **(2)** and replace with the content in the **Swagger editor(2)**. Click **Create Connector (3)**.
 
    ![](images/swagger-editor.png)
    
-8. Navigate to https://make.powerapps.com and click on **Flows** and select the flow which you imported in the previous task and click **Edit**.
+9. Navigate to https://make.powerapps.com. click on **Flows**, select the flow which you imported in the previous task and click **Edit**.
 
    ![](./images/promptin-flow-1.png)
 
-9. We will update the power automate flow second step after **PowerApps(V2)**, click on **+ (1)** and select **Add an action (2)**.
+11. We will update the power automate flow second step after **PowerApps(V2)**, click on **+ (1)** and select **Add an action (2)**.
   
    ![](images/add-action-1.png)
   
-10. Select **Custom (1)** and type `Openai-custom-connector` **(2)** in search and select the custom connector which you created previously **(3)**.
+11. Select **Custom (1)** and type `Openai-custom-connector` **(2)** in search and select the custom connector which you created previously **(3)**.
   
     ![](images/choose-operation-1.png)
 
-11. The flow will look like the image provided below.
+12. The flow will look like the image provided below.
   
      ![](images/top-5.png)
   
-12. You need to delete the third step which in your case will be **HTTTP** flow, click on `...` **(1)** next to **HTTP** and click **Delete (2)**.
+13. You need to delete the third step which in your case will be **HTTP** flow, click on `...` **(1)** next to **HTTP** and click **Delete (2)**.
 
      ![](images/delete.png)
 
-13. Click the **Parse JSON** step , click inside the **Content (1)** field, click on right side, and select **body (2)**. 
+14. Click the **Parse JSON** step , click inside the **Content (1)** field, click on right side, and select **body (2)**. 
   
      ![](images/content-body-1.png)
   
-14. The Control should like the below. Click **Save**.
+15. The Control should be like the below. Click **Save**.
 
      ![](images/save.png)
  

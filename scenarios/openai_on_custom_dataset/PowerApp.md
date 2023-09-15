@@ -1,13 +1,13 @@
-# Exercise 3: Using Azure OpenAI on custom dataset
+# Exercise 3: Using Azure OpenAI on a custom dataset
 ### Scenario summary:
 This scenario allows use cases to use Open AI as an intelligent agent to answer questions from end users or assist them using knowledge of a proprietary corpus and domain.
 Applications can be: 
-- Giving a direct answer to questions about specific products, services and processes based on a knowledge corpus that can be updated frequently. This is an alternative to classic search where the result just documents with relevant information to the question. Think of this as Bing Chat on proprietary data.
-- Giving recommendations & assistance: based on information that can be implicitly gathered about the user, formulate useful content for the user's purpose. For example, a travel website may utilize users' personal information, past posts, and transaction history to personalize recommendations when users need to be helped with creating next trip idea/itinerary.
+- Giving a direct answer to questions about specific products, services and processes based on a knowledge corpus that can be updated frequently. This is an alternative to classic search where the result is just documents with relevant information to the question. Think of this as Bing Chat on proprietary data.
+- Giving recommendations & assistance: based on information that can be implicitly gathered about the user, formulate useful content for the user's purpose. For example, a travel website may utilize users' personal information, past posts, and transaction history to personalize recommendations when users need to be helped with creating the next trip idea/itinerary.
 
 Regardless of the application scenario, the solution flow is:
-- Step 1 Prepare the context information: context information can be retrieved from proprietary knowledge corpus and other systems based on the user's query and user's information. The retrieval mechanism can be a semantic search engine to retrieve right content for an unstructured data corpus or SQL query in case of the structured dataset.
-- Step 2 Formulate prompt to Open AI: from the context and depending on the goal of user, formulate GPT prompt to get the final response to the end user. For example, if it's knowledge retrieval vs recommendation
+- Step 1 Prepare the context information: context information can be retrieved from proprietary knowledge corpus and other systems based on the user's query and user's information. The retrieval mechanism can be a semantic search engine to retrieve the right content for an unstructured data corpus or SQL query in the case of the structured dataset.
+- Step 2 Formulate prompt to Open AI: from the context and depending on the goal of the user, formulate a GPT prompt to get the final response to the end user. For example, if it's knowledge retrieval vs. recommendation
 
 This implementation scenario focuses on building a knowledge retrieval chatbot application on top of an unstructured data corpus, but the same design can be used for the recommendation & generative scenarios.
 
@@ -19,9 +19,9 @@ From the user's query, the solution uses two-stage information retrieval to retr
 In stage 1, full-text search in Azure Cognitive Search is used to retrieve several relevant documents. In stage 2, the search result is applied with a pre-trained NLP model and embedding search to further narrow down the most relevant content. The content is used by the orchestrator service to form a prompt for the OpenAI deployment of LLM. The OpenAI service returns the result which is then sent to the Power App client application.
 
 # Task 1: Setup Azure Cognitive Search and prepare data.
-   As part of data preperation step, to work in Open AI, the documents are chunked into smaller units(20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with a python script below. To make it easy for the labs, the sample document has already been chunked and provided in the repo.
+   As part of the data preparation step, to work in Open AI, the documents are chunked into smaller units(20 lines) and stored as individual documents in the search index. The chunking steps can be achieved with a Python script below. To make it easy for the labs, the sample document has already been chunked and provided in the repo.
    
-1. Login to Azure portal if you are not already logged in.
+1. Login to the Azure portal if you are not already logged in.
 
 1. Navigate to **openaicustom-<inject key="DeploymentID" enableCopy="false"/>** resource group and select search service with the name **search-<inject key="DeploymentID" enableCopy="false"/>**.
 
@@ -29,7 +29,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
    
     ![](./images/addsementic.png)
    
-1. Now, navigate to `C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest` in windows explore and you will see a file names as secerts.env, Make sure the value is updated as expected. However we have already updated the values for you.
+1. Now, navigate to `C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest` in Windows Explore and you will see file names as secerts.env, Make sure the value is updated as expected. However, we have already updated the values for you.
 
 
 1. Now you need to open the CMD and run the below command to change to directory to the ingest folder.
@@ -38,7 +38,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
    cd C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest
    ```
 
-1. Once you are in the ingest directory, run the below command to start the ingestion process. Please make sure to have the correct value in secrets.env file before running the below command. The search indexer chunks a sample pdf document(500 pages) which is downloaded from azure docs and chunks each page into 20 lines. Each chunk is created as a new seach doc in the index. The pdf document processing is achieved using Azure Form Recognizer service.
+1. Once you are in the ingest directory, run the below command to start the ingestion process. Please make sure to have the correct value in the secrets.env file before running the below command. The search indexer chunks a sample PDF document(500 pages) which is downloaded from Azure docs and chunks each page into 20 lines. Each chunk is created as a new search doc in the index. The PDF document processing is achieved using Azure Form Recognizer service.
 
      ```
      python search-indexer.py
@@ -62,7 +62,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
     ![](./images/get-func-url.png)
 
-4. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region (1)** click **Get Started (2)**. 
+4. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region (1)** and click **Get Started (2)**. 
 
    ![](./images/welcome-1.png)
     
@@ -91,14 +91,14 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
     ![](./images/semanti-search-flow-1.png)
 
-11. To navigate back click on **Back**, if you get a option to leave or Don't leave, click on **leave**.
+11. To navigate back click on **Back**, if you get an option to leave or do not leave, click on **leave**.
 
 
 12.  On the **Flows (1)** Pane, select **Semantic-Search-Flow (2)** then click on `...` **(3)** and **Turn on (4)** your flow.
 
       ![](./images/turn-on-flow.png)
 
-13. Next, click on **Edit** for **Semantic-Search-Flow**. PowerAutomate Flow needs to be enabled. At this point, the powerapp can be run as is. It connects to a pre-built Azure Function App. 
+13. Next, click on **Edit** for **Semantic-Search-Flow**. PowerAutomate Flow needs to be enabled. At this point, the power app can be run as is. It connects to a pre-built Azure Function App. 
 
     ![](./images/edit.png)
 
@@ -116,6 +116,6 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
  
 16. On the app enter any phrase and hit search to view the result.
    
-      - For example here we are searching for `Is GPU supported by AML?`. 
+      - For example, here we are searching for `Is GPU supported by AML?`. 
    
     ![](./images/latquery.png)
