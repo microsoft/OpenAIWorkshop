@@ -18,6 +18,23 @@ This implementation scenario focuses on building a knowledge retrieval chatbot a
 
 From the user's query, the solution uses two-stage information retrieval to retrieve the content that best matches the user query.
 In stage 1, full text search in Azure Cognitive Search is used to retrieve a number of relevant documents. In stage 2, these documents are then used by orchestrator service to form a prompt and sent to OpenAI deployment endpoint of LLM. The OpenAI service returns result which is then sent to Power App client application.
+
+### Pre-reqs:
+
+- Microsoft.Search and Microsoft.BotService Resource provider needs to be [registered](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types#register-resource-provider) in the Azure Subscription.​
+
+- [PostMan Client](https://www.postman.com/downloads/)  installed on your laptop. ​
+
+- [Azure Cloud Shell](https://shell.azure.com/)​
+
+- [.Net Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1) or later​
+
+- Install [Node.js](https://nodejs.org/en/download)
+
+- [Azure Bot Framework Composer​](https://learn.microsoft.com/en-us/composer/install-composer?tabs=windows)
+
+- [Bot Framework Emulator​](https://github.com/Microsoft/BotFramework-Emulator/releases/tag/v4.14.1)
+
 ### Deployment
 
 
