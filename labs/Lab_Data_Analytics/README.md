@@ -49,6 +49,13 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 
 ![](../Images/da_assistant4.png)
 
+## Pre-reqs:
+- [Git](https://git-scm.com/downloads)​
+
+- [Python](https://www.python.org/downloads/) v3.7-v3.10​
+
+- (Optional): [Azure Developer CLI​](https://aka.ms/azure-dev/install)
+
 ## Step 1. Clone this repository
 
 Open VS Code and Clone this repository:
