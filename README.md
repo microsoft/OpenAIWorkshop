@@ -43,35 +43,6 @@ The following prerequisites must be completed before you start these labs
 - [VS Code](https://code.visualstudio.com/download) installed on your computer.
 
 
-## Lab-specific pre-reqs:
-
-**Lab 1:​**
-
-- No additional pre-reqs
-
-**Lab 2:​**
-
-- Microsoft.Search and Microsoft.BotService Resource provider needs to be [registered](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types#register-resource-provider) in the Azure Subscription.​
-
-- [PostMan Client](https://www.postman.com/downloads/)  installed on your laptop. ​
-
-- [Azure Cloud Shell](https://shell.azure.com/)​
-
-- [.Net Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1) or later​
-
-- Install [Node.js](https://nodejs.org/en/download)
-
-- [Azure Bot Framework Composer​](https://learn.microsoft.com/en-us/composer/install-composer?tabs=windows)
-
-- [Bot Framework Emulator​](https://github.com/Microsoft/BotFramework-Emulator/releases/tag/v4.14.1)
-
-**Lab 3:​**
-
-- [Git](https://git-scm.com/downloads)​
-
-- [Python](https://www.python.org/downloads/) v3.7-v3.10​
-
-- (Optional): [Azure Developer CLI​](https://aka.ms/azure-dev/install)
 
 ## Before you begin
 
