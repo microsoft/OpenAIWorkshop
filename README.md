@@ -73,18 +73,19 @@ The following prerequisites must be completed before you start these labs
 
 - (Optional): [Azure Developer CLI​](https://aka.ms/azure-dev/install)
 
+## Before you begin
+
+  [Retrieve your Azure OpenAI endpoint and keys](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?tabs=command-line&pivots=programming-language-python#retrieve-key-and-endpoint) and copy them to notepad for future reference as you will be using them throughout the labs.
 
 ## Agenda
 
 | Activity | Duration |
 | --- | --- |
-| [Lab 1: Automate Mailbox Responses](/labs/Lab_1_Automate_Mailbox_Responses/README.md) | 45 min |
-| [Lab 2: Chat with your documents](/labs/Lab_2_chatWithDocuments/README.md) | 60 min |
-| [Lab 3: Chat with your database](/labs/Lab_3_Data_Analytics/README.md) | 45 min |
+| [Lab 1: Automate Mailbox Responses](/labs/Lab_Automate_Mailbox_Responses/README.md) | 45 min |
+| [Lab 2: Azure OpenAI on your data](/labs/Lab_On_Your_Data/README.md) | 60 min |
+| [Lab 3: Chat with your database](/labs/Lab_Data_Analytics/README.md) | 45 min |
+| [Lab 4: Chat with your documents](/labs/Lab_chatWithDocuments/README.md) | 60 min |
 
-## Before you begin
-
-  [Retrieve your Azure OpenAI endpoint and keys](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?tabs=command-line&pivots=programming-language-python#retrieve-key-and-endpoint) and copy them to notepad for future reference as you will be using them throughout the labs.
 
 ## Format
 

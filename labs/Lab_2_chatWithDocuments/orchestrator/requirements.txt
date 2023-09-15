@@ -1,9 +1,0 @@
-# DO NOT include azure-functions-worker in this file
-# The Python Worker is managed by Azure Functions platform
-# Manually managing azure-functions-worker may cause unexpected issues
-
-azure-core==1.29.3
-azure-functions==1.17.0
-azure-search-documents==11.3.0
-openai==0.27.9
-python-dotenv
