@@ -1,7 +1,7 @@
 
 ## Exercise 4a: Build Open AI application with Power App 
 
-1. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region (1)** click **Get Started (2)**. 
+1. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region (1)** and click **Get Started (2)**. 
 
    ![](./images/welcome-1.png)
     
@@ -17,7 +17,7 @@
 
      ![](./images/openai-play.png)
 
-6. Once the zip file is uploaded, in the **Review Package Content** for **OpenAI Playground** click on setup icon under **Actions**. 
+6. Once the zip file is uploaded, in the **Review Package Content** for **OpenAI Playground** click on the setup icon under **Actions**. 
 
      ![](./images/review-package-content.png)
 
@@ -50,7 +50,7 @@
 
       ![](./images/open-ai-flows-1.png)
 
-14. Edit the Power Automate Flow HTTP step by entering your own Azure OpenAI API  **Endpoint (1)** ensure to replace **deployment-id** with `demomodel` and **Key (2)** and click on **Save**.
+14. Edit the Power Automate Flow HTTP step by entering your own Azure OpenAI API  **Endpoint (1)** Ensure to replace **deployment-id** with `demomodel` and **Key (2)** and click on **Save**.
 
       ![](./images/endpoint-key-1.png)
    
