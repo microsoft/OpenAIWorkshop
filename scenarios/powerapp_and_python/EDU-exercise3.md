@@ -12,7 +12,7 @@
 
     ![](images/import-note.png)
 
-1. Navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\powerapp_and_python\python` location and select `OpenAI_notebook.ipynb` then click on **Open**.
+1. Navigate to `C:\labfile\OpenAIWorkshop-main\OpenAIWorkshop-main\scenarios\powerapp_and_python\python` location and select `OpenAI_notebook.ipynb` then click on **Open**.
 
      ![](images/notebook.png)
 
