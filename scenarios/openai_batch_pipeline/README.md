@@ -2,7 +2,7 @@
 
 ### Summary
 
-This scenario allows the use of OpenAI to summarize and analyze customer service call logs for the fictitious company, Contoso. The data is ingested into a blob storage account, and then processed by an Azure Function. The Azure Function will return the customer sentiment, the product offering the conversation was about, the topic of the call, as well as a summary of the call. These results are written into a separate designated location in the Blob Storage. From there, Synapse Analytics is utilized to pull in the newly cleansed data to create a table that can be queried to derive further insights.
+This scenario allows using OpenAI to summarize and analyze customer service call logs for the ficticious company, Contoso. The data is ingested into a blob storage account, and then processed by an Azure Function. The Azure Function will return the customer sentiment, product offering the conversation was about, the topic of the call, as well as a summary of the call. These results are written into a separate designated location in the Blob Storage. From there, Synapse Analytics is utilized to pull in the newly cleansed data to create a table that can be queried to derive further insights.
 
 ---
 # Table of Contents
@@ -41,14 +41,15 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
     ![](images/E2T1S2.png)
     
-1. Now that you have no storage mounted dialog box click on **Show advanced settings**.
+1. Now on you have no storage mounted dialog box click on **Show advanced settings**.
 
    ![](images/scenario2-02.png)
    
 1. Follow the below-mentioned instructions and click on **Create Storage (5)**.
 
     - Subscription: Select the subscription **(1)**
-    - Resource group: Select **Use existing (2)** and select the resource group.
+    - Cloud Shell region: Make sure you are in **East US** region.
+    - Resource group: Select **Use existing (2)** and select the **openai-XXXXX resource group.
     - Storage account: Select **openaistorage<inject key="DeploymentID" enableCopy="false"/> (3)**
     - File Share: Enter **blob (4)**
 
@@ -72,7 +73,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
      ```
     > **Note:** The following commands are issued in Bash; please ensure you are using **Bash** in the Cloud Shell.
     
-    > **Note:** Press the down arrow key to read/skip the license agreement. 
+    > **Note:** Press down arrow key to read/skip the license agreement. 
 
 1. Type **yes** and hit **enter** to accept the agreement and then hit enter to install on the default path:
 
@@ -87,7 +88,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     ```bash 
     export PATH=~/miniconda3/bin:$PATH
     ```
-1. Run the below commands to create and activate the conda environment in Cloudshell.
+1. Run the below commands to create and activate the conda environment in cloudshell.
 
     ```bash 
     git clone https://github.com/microsoft/OpenAIWorkshop.git
@@ -98,7 +99,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     ```
 1. Type **`y`** and hit enter to proceed.
 
-1. In the [Azure portal](https://portal.azure.com), navigate to your Storage Account with the suffix `functions` resource by selecting the **openai-<inject key="DeploymentID" enableCopy="false"/>** resource group, and selecting the Storage Account from the list of resources.
+1. In the [Azure portal](https://portal.azure.com), navigate to your Storage Account with suffix `functions` resource by selecting the **openai-<inject key="DeploymentID" enableCopy="false"/>** resource group, and selecting the Storage Account from the list of resources.
 
     ![](images/storage-functions.png)
     
@@ -174,7 +175,7 @@ We'll next need to create two linked services: One for our Source (the JSON file
 
     ![](images/synapse-1.png)
 
-1. Once you have created the two Linked Services, be certain to press the **Publish all** button at the top to publish our work finalize the creation of the linked services and click **Publish**.
+1. Once you have created the two Linked Services, be certain to press the **Publish all** button at the top to publish our work and finalize the creation of the linked services and click **Publish**.
 
    ![](images/publish-linked.png)
    
@@ -249,7 +250,7 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
     ![](images/publish-dataflow.png)
 
-15. Your completed and saved Data flow will look like the following:
+15. Yours completed and saved Data flow will look like the following:
 
     ![](images/completed-dataflow.png)
 
@@ -272,7 +273,7 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
 
 ### **E. Trigger Synapse Pipeline**
 
-1. Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the Studio, there is a *lightning bolt* icon that says **Add trigger (1)**. Click to add a trigger and select **Trigger now (2)** to begin a pipeline run.
+1. Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the Studio, there is a *lightning bolt* icon that says **Add trigger (1)**. Click to add trigger and select **Trigger now (2)** to begin a pipeline run.
 
     ![](images/trigger-1.png)
     
