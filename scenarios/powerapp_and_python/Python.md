@@ -20,7 +20,7 @@
 
     ![](images/openai-sparkpool.png)
 
-1. Run the notebook it step by step to complete this exercise. Click on **Run** button next to the cell. 
+1. Run the notebook step by step to complete this exercise. Click on **Run** button next to the cell. 
 
      ![](images/run.png)
 
