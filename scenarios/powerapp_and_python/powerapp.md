@@ -1,6 +1,6 @@
 ## Exercise 4a: Build Open AI application with Power App 
 
-1. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region (1)** click **Get Started (2)**. 
+1. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps**, select your **Country/Region (1)** and click **Get Started (2)**. 
 
    ![](./images/welcome-1.png)
     
