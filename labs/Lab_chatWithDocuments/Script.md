@@ -44,7 +44,7 @@ Here are the SKUs that are needed for the Azure Resources:
 
 Right Click on **_Deploy to Azure button_** and Open in a new tab.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmain%2Flabs%2FLab_2_chatWithDocuments%2Fdeploy%2Fazure-deploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmain%2Flabs%2FLab_chatWithDocuments%2Fdeploy%2Fazure-deploy.json)
 
 - Wait for the deployment to complete. The deployment can take upto 10 minutes.
 
@@ -66,7 +66,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
 
       git clone https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
 
-      cd OpenAIWorkshop/labs/Lab_2_chatWithDocuments
+      cd OpenAIWorkshop/labs/Lab_chatWithDocuments
 
       pip install -r ./orchestrator/requirements.txt
 
@@ -88,7 +88,7 @@ As part of the data preparation step, the documents are chunked into smaller sec
       AFR_ENDPOINT="<YOUR Azure Form Recognizer Service API EndPoint>"
       AFR_API_KEY="<YOUR Azure Form Recognizer API Key>"
       INDEX_NAME="azure-ml-docs"
-      FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/labs/Lab_2_chatWithDocuments/Data/azure-machine-learning-2-500.pdf"
+      FILE_URL="https://github.com/Microsoft-USEduAzure/OpenAIWorkshop/raw/main/labs/Lab_chatWithDocuments/Data/azure-machine-learning-2-500.pdf"
       LOCAL_FOLDER_PATH=""
 
 * The document processing, chunking, indexing can all be scripted using any preferred language.

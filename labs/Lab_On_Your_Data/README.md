@@ -44,7 +44,7 @@ Power Virtual Agents is a platform that allows you to create powerful chatbots f
 
 ## Prerequisites
 1. An Azure Subscription with Owner or Contributor access
-1. An Azure OpenAI resource deployed in **East US**
+1. An Azure OpenAI resource deployed in **North Central US or East US**
 
 
 ---

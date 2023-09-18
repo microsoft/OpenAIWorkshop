@@ -64,11 +64,11 @@ URL: https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
 
 ![](../Images/lab-3-data-2.png)
 
-From the terminal, navigate to ```cd labs/Lab_3_Data_Analytics```
+From the terminal, navigate to ```cd labs/Lab_Data_Analytics```
 
 ## Step 2. Set up enviromental variables
 
- Provide settings for Open AI and Database.You can either create a file named `secrets.env` file in the root of this folder (labs/lab_3_data_analytics) as below or do it using the app's UI later on (*easier*).
+ Provide settings for Open AI and Database.You can either create a file named `secrets.env` file in the root of this folder (labs/lab_data_analytics) as below or do it using the app's UI later on (*easier*).
 
     - Option 1: use built-in SQLITE (*recommended*). Then you don't need to install SQL Server.
 
@@ -98,9 +98,9 @@ From the terminal, navigate to ```cd labs/Lab_3_Data_Analytics```
 
 > **NOTE** all activities in this step will performed using the command line in VS Code terminal
 
-### Step 3.1 Navigate to the root directory of this lab
+### Step 3.1 Navigate to the Lab_Data_Analytics directory of this lab
 
-Navigate to ```cd labs/Lab_3_Data_Analytics```
+To Navigate ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
 
 ### Step 3.2 Create a python environment with version from 3.7 and 3.10
 
