@@ -74,7 +74,7 @@ def query_flights(from_, to, departure_time):
         new_arrival_time = new_ar_dt.strftime("%Y-%m-%dT%H:%M:%S")
         return new_departure_time, new_arrival_time
     flights = ""
-    for flight_num, delta in [("DL123", -1), ("DL312",-2), ("DL313",-3)]:
+    for flight_num, delta in [("AA479", -1), ("AA490",-2), ("AA423",-3)]:
         new_departure_time, new_arrival_time = get_new_times(departure_time, delta)
         flights= flights +f"flight number {flight_num}, from: {from_}, to: {to}, departure_time: {new_departure_time}, arrival_time: {new_arrival_time}, flight_status: on time \n"
     return flights
@@ -109,8 +109,8 @@ def confirm_flight_change(current_ticket_number, new_flight_num, new_departure_t
     cosmos_container_client.upsert_item(old_flight)
     print("updated old flight status to cancelled")
     #create a new flight
-    #generate a new ticket number
-    new_ticket_num = str(uuid.uuid4())
+    #generate a new ticket number which is a 10 digit random number
+    new_ticket_num = str(random.randint(1000000000, 9999999999))
     new_flight=old_flight.copy()
     new_flight["id"] = new_ticket_num
     new_flight['flight_num'] = new_flight_num
@@ -158,7 +158,7 @@ PERSONA = """
 You are Maya, an airline customer agent helping customers with questions and requests about their flight.
 You are currently serving {customer_name} with id {customer_id}.
 First, you need to look up their flight information and confirm with the customer about their flight information including flight number, from and to, departure and arrival time.
-When you are asked with a question knowlege question such as about their baggage limit, use the search tool to find relavent knowlege articles to create the answer.
+When you are asked with a general airline policy question such as baggage limit, use the search_knowledgebase function to find relavent knowlege articles to create the answer.
 Answer ONLY with the facts from the search tool. If there isn't enough information, say you don't know. Do not generate answers that don't use the information from the search. If asking a clarifying question to the user would help, ask the question.
 When the user asks for a flight status, use check_flight_status function to check the flight status.
 When the user asks to change their flight, first check the feasibility and cost of the change with check_change_flight function. If customer agrees with the change, execute the change with confirm_flight_change function.
