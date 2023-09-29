@@ -59,7 +59,7 @@ Step 6: The Azure function returns the results to the end user.
 
 1. Now, copy the **Server name** and paste it into a text editor such as Notepad for later use. 
 
-   ![](images/img-1.png)
+   ![](images/EX1-T1-S10.png)
 
 1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the **Open AI engine**, **Open AI rest endpoint**, **SQL server** and **SQL database** name in the file and copy the content.
 
@@ -81,13 +81,13 @@ Step 6: The Azure function returns the results to the end user.
 
    ![](images/openai5.png)
 
-1. Go to SQL server **openaiserver-<inject key="DeploymentID" enableCopy="false" /></inject>** under the same resource group, under **settings**, click **Azure Active Directory** and click **Set admin**.
+1. Go to SQL server **openaiserver-<inject key="DeploymentID" enableCopy="false" /></inject>** under the same resource group, under **settings**, click **Microsoft Entra ID** and click **Set admin**.
 
-   ![](images/p4.png)
+   ![](images/EX1-T1-S15.png)
 
-1. On the Azure Active Directory pane, In the search box enter the name of the function app **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>**. Add the name and click **Select** and **Save**.
+1. On the Microsoft Entra ID pane, In the search box enter the name of the function app **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>**. Add the name and click **Select** and **Save**.
 
-   ![](images/p5.png)
+   ![](images/EX1-T1-S16.png)
    
 ## Task 2. Test the function App
 
