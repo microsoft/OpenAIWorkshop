@@ -4,7 +4,6 @@ import subprocess
 import venv
 
 import platform
-print(platform.system())
 
 def check_python():
     try:
@@ -31,8 +30,10 @@ def manage_environment(command):
     check_python()
     check_pip()
     
-    if platform.system() == 'Windows':
-        
+    osplatform = platform.system()
+    
+    if osplatform.lower() == 'windows':
+        #print('windows activation')
         if command == "new":
             venv.create(env_dir, with_pip=True)
             activate_script = ".\\aoai_lab\\Scripts\\activate"
@@ -45,6 +46,7 @@ def manage_environment(command):
             deactivate_script = ".\\{env_dir}\\Scripts\\deactivate.bat"
             os.system(f"cmd /k {deactivate_script}")
     else:
+        #print('non-windows activation')
         if command == "new":
             venv.create(env_dir, with_pip=True)
             activate_script = ".//{env_dir}//bin//activate"
