@@ -54,7 +54,7 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 
 - [Python](https://www.python.org/downloads/) v3.11.5.
 
-> :information_source: This lab is tested with python version 3.11.5 only so please make sure that you have downloaded and installed v3.11.5. 
+> :information_source: Please note that this lab has only been tested with Python version 3.11.5. Therefore, ensure that you have downloaded and installed version 3.11.5 before proceeding.. 
 
 - (Optional): [Azure Developer CLI​](https://aka.ms/azure-dev/install)
 
