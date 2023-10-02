@@ -26,7 +26,7 @@ def check_pip():
         # Add the steps to install pip here
 
 def manage_environment(command):
-    env_dir = "aoaiLab2"
+    env_dir = "aoaivenv"
     check_python()
     check_pip()
     
@@ -36,27 +36,28 @@ def manage_environment(command):
         #print('windows activation')
         if command == "new":
             venv.create(env_dir, with_pip=True)
-            activate_script = ".\\aoai_lab\\Scripts\\activate"
+            activate_script = f".\\{env_dir}\\Scripts\\activate"
+            print(activate_script)
             os.system(f"cmd /k {activate_script}")
             subprocess.run([f"{env_dir}/Scripts/python", "-m", "pip", "install", "-r", "requirements.txt"], check=True)
         elif command == "activate":
-            activate_script = ".\\{env_dir}\\Scripts\\activate"
+            activate_script = f".\\{env_dir}\\Scripts\\activate"
             os.system(f"cmd /k {activate_script}")
         elif command == "deactivate":
-            deactivate_script = ".\\{env_dir}\\Scripts\\deactivate.bat"
+            deactivate_script = f".\\{env_dir}\\Scripts\\deactivate.bat"
             os.system(f"cmd /k {deactivate_script}")
     else:
         #print('non-windows activation')
         if command == "new":
             venv.create(env_dir, with_pip=True)
-            activate_script = ".//{env_dir}//bin//activate"
+            activate_script = f".//{env_dir}//bin//activate"
             os.system(f"cmd /k {activate_script}")
             subprocess.run([f"{env_dir}/bin/python", "-m", "pip", "install", "-r", "requirements.txt"], check=True)
         elif command == "activate":
-            activate_script = ".//{env_dir}//bin//activate"
+            activate_script = f".//{env_dir}//bin//activate"
             os.system(f"cmd /k {activate_script}")
         elif command == "deactivate":
-            deactivate_script = ".//{env_dir}//bin//deactivate.bat"
+            deactivate_script = f".//{env_dir}//bin//deactivate.bat"
             os.system(f"cmd /k {deactivate_script}")
 
 if __name__ == "__main__":
