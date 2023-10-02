@@ -52,7 +52,9 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 ## Pre-reqs:
 - [Git](https://git-scm.com/downloads)​
 
-- [Python](https://www.python.org/downloads/) v3.7-v3.10​
+- [Python](https://www.python.org/downloads/) v3.11.
+
+> :information_source: This lab is tested with python version 3.11.5. 
 
 - (Optional): [Azure Developer CLI​](https://aka.ms/azure-dev/install)
 

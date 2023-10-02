@@ -11,6 +11,7 @@ In this workshop, you will learn how to leverage the Azure OpenAI service to cre
 The following prerequisites must be completed before you start these labs
 
 - WI-FI enabled Laptop
+- A Microsoft 365 hosted mailbox
 - You must be connected to the internet
 - Use either Edge or Chrome when executing the labs.
 - Access to an Azure Subscription with Owner or [Contributor Access](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-steps)
