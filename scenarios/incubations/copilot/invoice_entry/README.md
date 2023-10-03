@@ -2,7 +2,7 @@
 This scenario demonstrate the use of voice transcription service by Azure Open AI Whisper together with GPT-4 0613 to create a 
 copilot for accountant.
 
-- [Watch the demo video](./invoice_voice_copilot.webm)
+- [Watch the demo video](./invoice_voice_copilot.mp4)
 
 - You can ask the copilot to create the invoice for you. You need to provide invoice header information and one or multiple line items.
 - You can also ask the copilot to query invoices with filter conditions such as due date, amount, vendor etc..
