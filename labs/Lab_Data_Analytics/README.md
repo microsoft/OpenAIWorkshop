@@ -127,8 +127,8 @@ From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
    - ```python3 manage.py new```
 
 > [!NOTE]
-> You can verify whether ```python``` or ```python3``` is the correct shortcut by executing
-    - ```python --version``` or ```python3 --versions```
+> You can verify whether ```python``` or ```python3``` is the correct shortcut by executing <br>
+>   - ```python --version``` or ```python3 --versions```
 
 ### Step 3.2 Install required libraries
 **This step will install the required libraries in your virtual environment**
@@ -139,9 +139,10 @@ From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
 
 > [!IMPORTANT]
 > Ensure you're running pip install from the context of your virtual environment.
-> To do so run the following from the `Lab_Data_Analytics` folder:
-> Windows: `.\aoaivenv\Scripts\activate`
-> MacOS: `source aoaivenv/bin/activate`
+> To do so run the following from the `Lab_Data_Analytics` folder: <br>
+> Windows: `.\aoaivenv\Scripts\activate` <br>
+> MacOS: `source aoaivenv/bin/activate` <br>
+
 ### Step 3.4 Run the application locally
 
 To run the application from the command line: `streamlit run app.py`
