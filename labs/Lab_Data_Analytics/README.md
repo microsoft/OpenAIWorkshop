@@ -64,9 +64,9 @@ Open VS Code and Clone this repository:
 
 URL: https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
 
-![](../Images/lab-3-data-2.png)
+![](../Lab_Data_Analytics/Images/lab-3-data-2.png)
 
-From the terminal, navigate to ```cd labs/Lab_Data_Analytics```
+From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
 
 ## Step 2. Set up enviromental variables
 
