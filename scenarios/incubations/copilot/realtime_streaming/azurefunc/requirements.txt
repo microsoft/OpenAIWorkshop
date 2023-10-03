@@ -1,0 +1,12 @@
+# DO NOT include azure-functions-worker in this file
+# The Python Worker is managed by Azure Functions platform
+# Manually managing azure-functions-worker may cause unexpected issues
+azure-functions
+azure-search-documents==11.4.0b9
+openai
+pandas
+plotly
+scipy
+scikit-learn
+matplotlib
+faiss-cpu
