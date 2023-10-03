@@ -50,11 +50,22 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 ![](../Images/da_assistant4.png)
 
 ## Pre-reqs:
+
+> :information_source: Please note that this lab has only been tested with Python version 3.11.5. Therefore, ensure that you have downloaded and installed version 3.11.5 before proceeding 
+ 
 - [Git](https://git-scm.com/downloads)​
 
-- [Python](https://www.python.org/downloads/) v3.11.5.
+- [Python](https://www.python.org/ftp/python/3.11.5/python-3.11.5-amd64.exe).
 
-> :information_source: Please note that this lab has only been tested with Python version 3.11.5. Therefore, ensure that you have downloaded and installed version 3.11.5 before proceeding.. 
+**Important**: Python and the pip package manager must be in the path in ``Windows`` for the setup scripts to work.
+
+- ***While installating `Python 3.11.5`, please make sure to select `Add python.exe to PATH`***
+
+    ![](./Images/python3.11_add_to_path.png)
+
+- ***If you have `Python 3.11.5` already installed, please rerun the python Setup -> click `Next` on `Modify` page -> click `Next` on `Optional` Page -> select `Add Python to enviorment variable` under `Advanced` Option.***
+
+    ![](./Images//python3.11_fix.png)
 
 - (Optional): [Azure Developer CLI​](https://aka.ms/azure-dev/install)
 
@@ -64,7 +75,7 @@ Open VS Code and Clone this repository:
 
 URL: https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
 
-![](../Lab_Data_Analytics/Images/lab-3-data-2.png)
+![](./Images/lab-3-data-2.png)
 
 From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
 
@@ -80,7 +91,6 @@ From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
         AZURE_OPENAI_ENDPOINT=https://openairesourcename.openai.azure.com/
         SQL_ENGINE = "sqlite"
 
-
     - Option 2: use your own SQL Server
 
         AZURE_OPENAI_API_KEY="9999999999999999999999999"
@@ -92,29 +102,20 @@ From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
         SQL_DATABASE="WideWorldImportersDW"
         SQL_SERVER="sqlservername.database.windows.net"
 
-
-
 > **IMPORTANT** If you are a Mac user, please follow [this](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos?view=sql-server-ver16) to install ODBC for PYODBC
 
 ## Step 3. Configure development environment
 
 > **NOTE** all activities in this step will performed using the command line in VS Code terminal
+    
+### Step 3.1 Create a python environment
 
-### Step 3.1 Navigate to the Lab_Data_Analytics directory of this lab
+**This step will create a python enviorment in your workstation**
 
-To Navigate ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
-
-### Step 3.2 Create a python environment with version from 3.7 and 3.10
-
-This step is required **ONLY if did not perform this earlier as part of the pre-requisites**
-
-    - [Python 3+](https://www.python.org/downloads/)
-        - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
-        - **Important**: Ensure you can run `python --version` from console. On Ubuntu, you might need to run `sudo apt install python-is-python3` to link `python` to `python3`.
-
-### Step 3.3  Import the requirements.txt
-
-run the command: `pip install -r requirements.txt`
+- For Windows, execute the following command: 
+   - ```python manage.py new```
+- For Windows, execute the following command:
+   - ```python3 manage.py new```
 
 ### Step 3.4 Run the application locally
 
