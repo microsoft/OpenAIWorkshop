@@ -24,7 +24,7 @@ You will need [VS Code](https://code.visualstudio.com/download) to run this lab 
 
 You can use an existing SQL database or the default SQLlite embedded database (*recommended*) provided in the lab.
 
-## Appplication Overview
+## Application Overview
 
 - **SQL Query Writing Assistant**: Translates business question into SQL query language, then executes and displays the result.
 
@@ -57,7 +57,8 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 
 - [Python](https://www.python.org/ftp/python/3.11.5/python-3.11.5-amd64.exe).
 
-**Important**: Python and the pip package manager must be in the path in ``Windows`` for the setup scripts to work.
+> [!IMPORTANT]
+>  Python and the pip package manager must be in the path in ``Windows`` for the setup scripts to work.
 
 - **While installating Python 3.11.5, please make sure to select ```Add python.exe to PATH```**
 
@@ -105,11 +106,13 @@ From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
         SQL_DATABASE="WideWorldImportersDW"
         SQL_SERVER="sqlservername.database.windows.net"
 
-> **IMPORTANT** If you are a Mac user, please follow [this](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos?view=sql-server-ver16) to install ODBC for PYODBC
+> [!IMPORTANT] 
+> If you are a Mac user, please follow [this](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos?view=sql-server-ver16) to install ODBC for PYODBC
 
 ## Step 3. Configure development environment
 
-> **NOTE** all activities in this step will performed using the command line in VS Code terminal
+> [!NOTE]
+> All activities in this step will performed using the command line in VS Code terminal
     
 ### Step 3.1 Create a python environment
 
