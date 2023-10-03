@@ -57,7 +57,7 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 
 - [Python](https://www.python.org/ftp/python/3.11.5/python-3.11.5-amd64.exe).
 
-- [Python-MacOS] (https://www.python.org/ftp/python/3.11.5/python-3.11.5-macos11.pkg)
+- [Python-MacOS](https://www.python.org/ftp/python/3.11.5/python-3.11.5-macos11.pkg)
 
 > [!IMPORTANT]
 >  Python and the pip package manager must be in the path in ``Windows`` for the setup scripts to work.
@@ -128,7 +128,7 @@ From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
 
 > [!NOTE]
 > You can verify whether ```python``` or ```python3``` is the correct shortcut by executing
-    - ```python --version``` or ```python3 --version`s``
+    - ```python --version``` or ```python3 --versions```
 
 ### Step 3.4 Run the application locally
 
