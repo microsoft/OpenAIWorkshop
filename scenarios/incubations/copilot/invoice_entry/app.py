@@ -4,6 +4,25 @@ import datetime
 import streamlit as st
 from utils import *
 
+transcript_text=None
+with st.sidebar:
+    st.title("Whisper Transcription")
+
+
+    audio_bytes = audio_recorder("click to record", "stop")
+    if audio_bytes:
+        st.audio(audio_bytes, format="audio/wav")
+        save_audio_file(audio_bytes, "mp3")
+    
+        # Find the newest audio file
+        audio_file_path = max(
+            ["files/"+f for f in os.listdir("./files") if f.startswith("audio")],
+            key=os.path.getctime,
+        )
+
+        # Transcribe the audio file
+        transcript_text = transcribe_audio(audio_file_path)
+
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = chat_deployment
 
