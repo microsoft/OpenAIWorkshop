@@ -57,8 +57,11 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 
 - [Python](https://www.python.org/ftp/python/3.11.5/python-3.11.5-amd64.exe).
 
+- [Python-MacOS] (https://www.python.org/ftp/python/3.11.5/python-3.11.5-macos11.pkg)
+
 > [!IMPORTANT]
 >  Python and the pip package manager must be in the path in ``Windows`` for the setup scripts to work.
+> If installing on MacOS using the link above, use `python3` command on terminal instead of `python`
 
 - **While installating Python 3.11.5, please make sure to select ```Add python.exe to PATH```**
 
@@ -120,8 +123,12 @@ From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
 
 - For Windows, execute the following command: 
    - ```python manage.py new```
-- For Windows, execute the following command:
+- For Windows or MacOS, execute the following command:
    - ```python3 manage.py new```
+
+> [!NOTE]
+> You can verify whether ```python``` or ```python3``` is the correct shortcut by executing
+    -```python --version``` or ```python3 --version`s``
 
 ### Step 3.4 Run the application locally
 
