@@ -63,7 +63,7 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 
     ![](./Images/python3.11_add_to_path.png)
 
-- **If you have Python 3.11.5 already installed. However not added to the enviorment variables, please rerun the python Setup**:
+- **If you have Python 3.11.5 already installed. However, python is not added to the enviorment variables, please rerun the python Setup**:
     - click Next on Modify page
     - click Next on Optional Page
     - select ```Add Python to enviorment variable``` under Advanced Option
