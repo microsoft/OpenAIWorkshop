@@ -47,7 +47,7 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 - Click on submit to execute and see result.
 - For advanced questions such as forecasting, you can use GPT-4 (if available) as the engine.
 
-![](../Images/da_assistant4.png)
+![](./Images/da_assistant4.png)
 
 ## Pre-reqs:
 
@@ -59,11 +59,11 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 
 **Important**: Python and the pip package manager must be in the path in ``Windows`` for the setup scripts to work.
 
-- ***While installating `Python 3.11.5`, please make sure to select `Add python.exe to PATH`***
+- **While installating Python 3.11.5, please make sure to select ```Add python.exe to PATH```**
 
     ![](./Images/python3.11_add_to_path.png)
 
-- ***If you have `Python 3.11.5` already installed, please rerun the python Setup -> click `Next` on `Modify` page -> click `Next` on `Optional` Page -> select `Add Python to enviorment variable` under `Advanced` Option.***
+- **If you have Python 3.11.5 already installed, please rerun the python Setup -> click Next on Modify page -> click Next on Optional Page -> select ```Add Python to enviorment variable``` under Advanced Option.**
 
     ![](./Images//python3.11_fix.png)
 
