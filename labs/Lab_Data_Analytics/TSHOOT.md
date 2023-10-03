@@ -46,3 +46,10 @@ This is similar to the scenario above, in that the `PATH` needs to be adjusted t
 * Confirm the fix by displaying streamlit help:
 
     ![Streamlit Help](./Images/streamlit-verify.PNG)
+
+## MacOS Virtual Environment not activating
+If you are not seeing `(aoaivenv) ➜  Lab_Data_Analytics` or simillar after running `python manage.py new` or `python manage.py activate`, the virtual environment is not being activated and running `streamlit` will result in the command not being found.
+
+### Workaround
+From within the `Lab_Data_Analytics` folder, ensure the `aoaivenv` has been created by `python manage.py new` and run:
+* `source aoaivenv/bin/activate`
