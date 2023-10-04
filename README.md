@@ -24,7 +24,7 @@ The following prerequisites must be completed before you start these labs
     - Authorization can take up to 10 business days.
 
 
-- [Azure Open AI](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal) already provisioned and **gpt-35-turbo** model deployed.
+- [Azure Open AI](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal) already provisioned and **GPT-35-turbo-16k** model deployed.
   For this lab, we recommend **North Central US or East US** region for your Azure Open AI deployment.
 
 - Required Resource Providers [How to Register Azure Services](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types)
