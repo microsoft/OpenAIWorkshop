@@ -130,7 +130,10 @@ From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
 > You can verify whether ```python``` or ```python3``` is the correct shortcut by executing <br>
 >   - ```python --version``` or ```python3 --versions```
 
-### Step 3.2 Install required libraries
+### OPTIONAL - Step 3.2 Install required libraries
+> [!WARNING]
+> Only run this step if you don't see the packages being downloaded/installed on the terminal. <br>
+> `Installing collected packages: pytz, zipp, ...`
 **This step will install the required libraries in your virtual environment**
 - For Windows, execute the following command, within the context of your virtual environment
     - `pip install -r requirements.txt`
