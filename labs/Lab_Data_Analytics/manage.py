@@ -21,6 +21,7 @@ def check_python(osplatform):
             
         except subprocess.CalledProcessError:
             print("Python is not installed. Please download and install Python version 3.11.5 from the internet.")
+            return False
             # Add the steps to install Python here
         return True
     else:
@@ -64,19 +65,16 @@ def manage_environment(command):
     check_pip(osplatform.lower())
     
     if osplatform.lower() == 'windows':
-        print('windows activation')
         if command == "new":
-            venv.create(env_dir, with_pip=True)
+            os.system(f"python -m venv {env_dir}")
             activate_script = f".\\{env_dir}\\Scripts\\activate"
-            print(activate_script)
-            os.system(f"cmd /k {activate_script}")
-            subprocess.run([f"{env_dir}/Scripts/python", "-m", "pip", "install", "-r", "requirements.txt"], check=True)
+            os.system(f'cmd /k "{activate_script} && pip install -r requirements.txt"')
         elif command == "activate":
             activate_script = f".\\{env_dir}\\Scripts\\activate"
-            os.system(f"cmd /k {activate_script}")
+            os.system(f'cmd /k "{activate_script}"')
         elif command == "deactivate":
             deactivate_script = f".\\{env_dir}\\Scripts\\deactivate.bat"
-            os.system(f"cmd /k {deactivate_script}")
+            os.system(f'cmd /k "{deactivate_script}"')
     else:
         print('non-windows activation')
         if command == "new":

@@ -123,7 +123,7 @@ From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
 
 - For Windows, execute the following command: 
    - ```python manage.py new```
-- For Windows or MacOS, execute the following command:
+- For MacOS or Ubuntu, execute the following command:
    - ```python3 manage.py new```
 
 > [!NOTE]

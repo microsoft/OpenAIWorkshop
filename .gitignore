@@ -4,3 +4,4 @@ __pycache__/
 .tmp/
 .vscode/
 .azure
+labs/Lab_Data_Analytics/aoaivenv/

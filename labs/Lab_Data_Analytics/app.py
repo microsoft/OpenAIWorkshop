@@ -123,6 +123,7 @@ with st.sidebar:
         ```python
         #Import neccessary libraries here
         import numpy as np
+         
         #Query some data 
         sql_query = "SOME SQL QUERY"
         step1_df = execute_sql(sql_query)
