@@ -57,8 +57,11 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 
 - [Python](https://www.python.org/ftp/python/3.11.5/python-3.11.5-amd64.exe).
 
+- [Python-MacOS](https://www.python.org/ftp/python/3.11.5/python-3.11.5-macos11.pkg)
+
 > [!IMPORTANT]
->  Python and the pip package manager must be in the path in ``Windows`` for the setup scripts to work.
+> Python and the pip package manager must be in the path in ``Windows`` for the setup scripts to work.
+> If installing on MacOS using the link above, use ``python3`` command on terminal instead of ``python``
 
 - **While installating Python 3.11.5, please make sure to select ```Add python.exe to PATH```**
 
@@ -116,12 +119,33 @@ From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
     
 ### Step 3.1 Create a python environment
 
-**This step will create a python enviorment in your workstation**
+**This step will create a python enviroment in your workstation**
 
 - For Windows, execute the following command: 
    - ```python manage.py new```
-- For Mac or Ubuntu, execute the following command:
+- For MacOS or Ubuntu, execute the following command:
    - ```python3 manage.py new```
+
+> [!NOTE]
+> You can verify whether ```python``` or ```python3``` is the correct shortcut by executing <br>
+>   - ```python --version``` or ```python3 --versions```
+
+### OPTIONAL - Step 3.2 Install required libraries
+> [!WARNING]
+> Only run this step if you don't see the packages being downloaded/installed on the terminal. <br>
+> `Installing collected packages: pytz, zipp, ...`
+
+**This step will install the required libraries in your virtual environment**
+- For Windows, execute the following command, within the context of your virtual environment
+    - `pip install -r requirements.txt`
+- For MacOS, execute the following command, within the context of your virtual environment
+    - `pip3 install -r requirements.txt`
+
+> [!IMPORTANT]
+> Ensure you're running pip install from the context of your virtual environment.
+> To do so run the following from the `Lab_Data_Analytics` folder: <br>
+> Windows: `.\aoaivenv\Scripts\activate` <br>
+> MacOS: `source aoaivenv/bin/activate` <br>
 
 ### Step 3.4 Run the application locally
 
