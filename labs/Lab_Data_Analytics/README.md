@@ -120,7 +120,7 @@ From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
 
 - For Windows, execute the following command: 
    - ```python manage.py new```
-- For Windows, execute the following command:
+- For Mac or Ubuntu, execute the following command:
    - ```python3 manage.py new```
 
 ### Step 3.4 Run the application locally

@@ -21,6 +21,7 @@ def check_python(osplatform):
             
         except subprocess.CalledProcessError:
             print("Python is not installed. Please download and install Python version 3.11.5 from the internet.")
+            return False
             # Add the steps to install Python here
         return True
     else:
