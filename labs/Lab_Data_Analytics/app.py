@@ -55,7 +55,7 @@ def toggleSettings():
     st.session_state['show_settings'] = not st.session_state['show_settings']
 
 openai.api_type = "azure"
-openai.api_version = "2023-03-15-preview" 
+openai.api_version = "2023-05-15"
 openai.api_key = st.session_state.apikey
 openai.api_base = st.session_state.endpoint
 max_response_tokens = 1250
@@ -123,6 +123,7 @@ with st.sidebar:
         ```python
         #Import neccessary libraries here
         import numpy as np
+         
         #Query some data 
         sql_query = "SOME SQL QUERY"
         step1_df = execute_sql(sql_query)
