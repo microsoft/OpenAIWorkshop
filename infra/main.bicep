@@ -54,13 +54,10 @@ module web './core/host/appservice.bicep' = {
     runtimeName: 'python'
     runtimeVersion: '3.10'
     scmDoBuildDuringDeployment: true
-    appCommandLine: 'python -m streamlit run app.py --server.port 8000 --server.address 0.0.0.0'
+    appCommandLine: 'python -m streamlit run multi_agent_copilot.py --server.port 8000 --server.address 0.0.0.0'
     appSettings: {
       AZURE_OPENAI_API_KEY: ''
-      AZURE_OPENAI_ENDPOINT: 'https://.openai.azure.com/'
-      AZURE_OPENAI_CHATGPT_DEPLOYMENT: 'gpt-35-turbo'
-      AZURE_OPENAI_GPT4_DEPLOYMENT: ''
-      SQLITE_DB_PATH: 'data/northwind.db'
+      AZURE_OPENAI_ENDPOINT: ''
     }  
   }
 }
