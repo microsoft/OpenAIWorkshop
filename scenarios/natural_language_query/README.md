@@ -245,13 +245,13 @@ Step 6: The Azure function returns the results to the end user.
 
      ![](images/save.png)
  
-16. Click on **Flows** and select the flow which you imported in the previous task and click **Edit** then on **Test**.
+16. Click on **Flows** and select the flow that you imported in the previous task and click **Edit** then on **Test**.
     
     ![](images/test-flow.png)
     
-17. Select **Manually (1)** and **Save & Test (2)**. 
+17. Select **Manually (1)** and **Test (2)**. 
 
-    ![](images/manually-test-1.png)
+    ![](images/test1.png)
 
 18. Click on **Continue** for **Run flow**.
 
