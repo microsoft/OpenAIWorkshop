@@ -212,6 +212,7 @@ def before_retry_sleep(retry_state):
 
 @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(15), before_sleep=before_retry_sleep)
 def compute_embedding(text):
+    # print("args.openaideployment", args.openaideployment)
     return openai.Embedding.create(engine=args.openaideployment, input=text)["data"][0]["embedding"]
 
 def create_search_index():
@@ -355,6 +356,7 @@ if __name__ == "__main__":
             create_search_index()
         
         print(f"Processing files...")
+        print(args.files)
         for filename in glob.glob(args.files):
             if args.verbose: print(f"Processing '{filename}'")
             if args.remove:

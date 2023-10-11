@@ -5,3 +5,5 @@ python-dotenv
 plotly
 scipy
 scikit-learn
+azure-search-documents==11.4.0b10
+faiss-cpu
