@@ -95,6 +95,7 @@ def search_knowledgebase(search_query):
         return search_knowledgebase_acs(search_query)
     else:
         print("using faiss")
+        print(os.getenv("USE_AZCS"))
         return search_knowledgebase_faiss(search_query)
 
 
@@ -217,7 +218,8 @@ class Smart_Agent(Agent):
         super().__init__(engine=engine,persona=persona, init_message=init_message, name=name)
         self.functions_spec = functions_spec
         self.functions_list= functions_list
-
+        
+    @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
     def run(self, user_input, conversation=None, stream = False, api_version = "2023-07-01-preview"):
         openai.api_version = api_version
         if user_input is None: #if no input return init message
