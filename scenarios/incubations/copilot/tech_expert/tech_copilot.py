@@ -10,7 +10,7 @@ import os
 from pathlib import Path  
 import json
 print("AVAILABLE_FUNCTIONS", AVAILABLE_FUNCTIONS)
-agent = Smart_Agent(persona=PERSONA,functions_list=AVAILABLE_FUNCTIONS, functions_spec=FUNCTIONS_SPEC, init_message="Hi there, this is Maya, Computer science specialist helping with answering technical questions about Computer Science and System, what can I do for you?")
+agent = Smart_Agent(persona=PERSONA,functions_list=AVAILABLE_FUNCTIONS, functions_spec=FUNCTIONS_SPEC, init_message="Hi there, this is Maya, Computer science specialist helping with answering technical questions about enterprise networking  and System, what can I do for you?")
 
 st.set_page_config(layout="wide",page_title="Enterprise Copilot- A demo of Copilot application using GPT")
 styl = f"""
@@ -29,7 +29,7 @@ MAX_HIST= 5
 with st.sidebar:
     st.title('Tech Copilot')
     st.markdown('''
-    This is a demo of Copilot Concept for Computer Science.
+    This is a demo of Copilot Concept for Enterprise Networking Technical Support.
 
     ''')
     add_vertical_space(5)
