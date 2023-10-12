@@ -2,7 +2,6 @@ import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 from tech_copilot_utils import PERSONA, AVAILABLE_FUNCTIONS, FUNCTIONS_SPEC
 import sys
-sys.path.append("..")
 from utils import Smart_Agent,add_to_cache
 import time
 import random
@@ -10,7 +9,7 @@ import os
 from pathlib import Path  
 import json
 print("AVAILABLE_FUNCTIONS", AVAILABLE_FUNCTIONS)
-agent = Smart_Agent(persona=PERSONA,functions_list=AVAILABLE_FUNCTIONS, functions_spec=FUNCTIONS_SPEC, init_message="Hi there, this is Maya, Computer science specialist helping with answering technical questions about enterprise networking  and System, what can I do for you?")
+agent = Smart_Agent(persona=PERSONA,functions_list=AVAILABLE_FUNCTIONS, functions_spec=FUNCTIONS_SPEC, init_message="Hi there, this is Maya, technical specialist helping with questions about networking and system, what can I do for you?")
 
 st.set_page_config(layout="wide",page_title="Enterprise Copilot- A demo of Copilot application using GPT")
 styl = f"""

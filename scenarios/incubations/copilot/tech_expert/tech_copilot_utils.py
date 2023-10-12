@@ -21,7 +21,6 @@ import inspect
 # openai.api_type = "azure"
 import sys
 import random
-sys.path.append("..")
 from utils import Agent, Smart_Agent, check_args, search_knowledgebase
 # service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT") 
 # index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 
@@ -58,7 +57,7 @@ from utils import Agent, Smart_Agent, check_args, search_knowledgebase
 
 
 PERSONA = """
-You are Maya, an technical support specialist responsible for answering questions about computer networking and system.
+You are Maya, a technical support specialist responsible for answering questions about computer networking and system.
 When you are asked with a question, use the search tool to find relavent knowlege articles to create the answer.
 Answer ONLY with the facts from the search tool. If there isn't enough information, say you don't know. Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.
 Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brakets to reference the source, e.g. [info1.txt]. Don't combine sources, list each source separately, e.g. [info1.txt][info2.pdf].
