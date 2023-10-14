@@ -1,15 +1,18 @@
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
-from tech_copilot_utils import PERSONA, AVAILABLE_FUNCTIONS, FUNCTIONS_SPEC
+from tech_copilot_utils import PERSONA, AVAILABLE_FUNCTIONS, FUNCTIONS_SPEC, Smart_Agent, add_to_cache
 import sys
-from utils import Smart_Agent,add_to_cache
 import time
 import random
 import os
 from pathlib import Path  
 import json
-print("AVAILABLE_FUNCTIONS", AVAILABLE_FUNCTIONS)
-agent = Smart_Agent(persona=PERSONA,functions_list=AVAILABLE_FUNCTIONS, functions_spec=FUNCTIONS_SPEC, init_message="Hi there, this is Maya, technical specialist helping with questions about networking and system, what can I do for you?")
+with open('./user_profile.json') as f:
+    user_profile = json.load(f)
+functions = FUNCTIONS_SPEC.copy()
+functions[0]["parameters"]["properties"]["products"]["description"] = functions[0]["parameters"]["properties"]["products"]["description"].format(products=user_profile['products'])
+
+agent = Smart_Agent(persona=PERSONA.format(username=user_profile['username'],products=user_profile['products'] ),functions_list=AVAILABLE_FUNCTIONS, functions_spec=functions, init_message=f"Hi {user_profile['username']}, this is Maya, technical specialist helping with questions about networking and system, what can I do for you?")
 
 st.set_page_config(layout="wide",page_title="Enterprise Copilot- A demo of Copilot application using GPT")
 styl = f"""
