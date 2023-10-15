@@ -44,9 +44,12 @@ def search_knowledgebase(search_query, products):
     vector = Vector(value=generate_embeddings(search_query), k=3, fields="embedding")
     print("search query: ", search_query)
     print("products: ", products.split(","))
+    product_filter = " or ".join([f"product eq '{product}'" for product in products.split(",")])
     results = azcs_search_client.search(  
         search_text=search_query,  
         vectors= [vector],
+        filter= product_filter,
+        query_type="semantic", query_language="en-us", semantic_configuration_name='default', query_caption="extractive", query_answer="extractive",
         select=["sourcepage","content"],
         top=3
     )  
@@ -71,6 +74,24 @@ def add_to_cache(search_query, gpt_response):
                 "gpt_response" : gpt_response
               }
     azcs_semantic_cache_search_client.upload_documents(documents = [search_doc])
+def get_cache(search_query):
+    vector = Vector(value=generate_embeddings(search_query), k=3, fields="search_query_vector")
+  
+    results = azcs_semantic_cache_search_client.search(  
+        search_text=None,  
+        vectors= [vector],
+        select=["gpt_response"],
+    )  
+    try:
+        result =next(results)
+        print("threshold ", result['@search.score'])
+        if result['@search.score']>= float(os.getenv("SEMANTIC_HIT_THRESHOLD")):
+            return result['gpt_response']
+    except StopIteration:
+        pass
+
+    return None
+
 
 def gpt_stream_wrapper(response):
     for chunk in response:
@@ -275,9 +296,10 @@ class Smart_Agent(Agent):
 
 PERSONA = """
 You are Maya, a technical support specialist responsible for answering questions about computer networking and system.
-Upon checking the customer database, you know that {username} have support access to following products: {products}.
-If {username} does not mention the product in the question, ask him to pick from the above list.
-Then use the search tool to find relavent knowlege articles specific to the products in question to create the answer
+You are helping {username} with a technical question.
+You will use the search tool to find relavent knowlege articles to create the answer.
+The search tool requires you to provide a list of products that the user is asking about.
+If {username} does not mention the product in the question, ask him to pick from following products: {products}.
 Answer ONLY with the facts from the search tool. If there isn't enough information, say you don't know. Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.
 Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brakets to reference the source, e.g. [info1.txt]. Don't combine sources, list each source separately, e.g. [info1.txt][info2.pdf].
 If the user is asking for information that is not related to computer networking, say it's not your area of expertise.
