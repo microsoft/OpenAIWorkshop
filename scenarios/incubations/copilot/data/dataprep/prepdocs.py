@@ -17,10 +17,13 @@ from azure.search.documents.indexes.models import *
 from azure.storage.blob import BlobServiceClient
 from pypdf import PdfReader, PdfWriter
 from tenacity import retry, stop_after_attempt, wait_random_exponential
-MAX_SECTION_LENGTH = 1000
+import json
+MAX_SECTION_LENGTH = 3000
 SENTENCE_SEARCH_LIMIT = 100
-SECTION_OVERLAP = 100
-
+SECTION_OVERLAP = 300
+with open("../EVA_documents/file_name_product_map.json", "r") as f:
+    product_file_map = json.load(f)
+product_file_map = eval(product_file_map)
 def blob_name_from_file_page(filename, page = 0):
     if os.path.splitext(filename)[1].lower() == ".pdf":
         return os.path.splitext(os.path.basename(filename))[0] + f"-{page}" + ".pdf"
@@ -194,12 +197,14 @@ def filename_to_id(filename):
     return f"file-{filename_ascii}-{filename_hash}"
 
 def create_sections(filename, page_map, use_vectors):
+    product = product_file_map[filename]
+    
     file_id = filename_to_id(filename)
     for i, (content, pagenum) in enumerate(split_text(page_map)):
         section = {
             "id": f"{file_id}-page-{i}",
             "content": content,
-            "category": args.category,
+            "product": product,
             "sourcepage": blob_name_from_file_page(filename, pagenum),
             "sourcefile": filename
         }
@@ -228,7 +233,7 @@ def create_search_index():
                 SearchField(name="embedding", type=SearchFieldDataType.Collection(SearchFieldDataType.Single), 
                             hidden=False, searchable=True, filterable=False, sortable=False, facetable=False,
                             vector_search_dimensions=1536, vector_search_configuration="default"),
-                SimpleField(name="category", type="Edm.String", filterable=True, facetable=True),
+                SimpleField(name="product", type="Edm.String", filterable=True, facetable=True),
                 SimpleField(name="sourcepage", type="Edm.String", filterable=True, facetable=True),
                 SimpleField(name="sourcefile", type="Edm.String", filterable=True, facetable=True)
             ],
@@ -301,7 +306,7 @@ if __name__ == "__main__":
         epilog="Example: prepdocs.py '..\data\*' --storageaccount myaccount --container mycontainer --searchservice mysearch --index myindex -v"
         )
     parser.add_argument("files", help="Files to be processed")
-    parser.add_argument("--category", help="Value for the category field in the search index for all sections indexed in this run")
+    parser.add_argument("--product", help="Value for the product field in the search index for all sections indexed in this run")
     parser.add_argument("--skipblobs", action="store_true", help="Skip uploading individual pages to Azure Blob Storage")
     parser.add_argument("--storageaccount", help="Azure Blob Storage account name")
     parser.add_argument("--container", help="Azure Blob Storage container name")
