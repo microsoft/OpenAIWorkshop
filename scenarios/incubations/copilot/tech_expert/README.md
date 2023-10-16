@@ -35,7 +35,7 @@ SEMANTIC_HIT_THRESHOLD=0.9
         - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
         - **Important**: Ensure you can run `python --version` from console. On Ubuntu, you might need to run `sudo apt install python-is-python3` to link `python` to `python3`. 
 4. Import the requirements.txt `pip install -r requirements.txt`
-5. To run the multi-agent copilot from the command line: `streamlit run tech_expert.py`
+5. To run the multi-agent copilot from the command line: `streamlit run tech_copilot.py`
 
 ## Deploy the application to Azure 
 ##To be added
