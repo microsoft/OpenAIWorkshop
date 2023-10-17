@@ -24,7 +24,7 @@ You will need [VS Code](https://code.visualstudio.com/download) to run this lab 
 
 You can use an existing SQL database or the default SQLlite embedded database (*recommended*) provided in the lab.
 
-## Appplication Overview
+## Application Overview
 
 - **SQL Query Writing Assistant**: Translates business question into SQL query language, then executes and displays the result.
 
@@ -47,12 +47,32 @@ You can use an existing SQL database or the default SQLlite embedded database (*
 - Click on submit to execute and see result.
 - For advanced questions such as forecasting, you can use GPT-4 (if available) as the engine.
 
-![](../Images/da_assistant4.png)
+![](./Images/da_assistant4.png)
 
 ## Pre-reqs:
+
+> :information_source: Please note that this lab has only been tested with Python version 3.11.5. Therefore, ensure that you have downloaded and installed version 3.11.5 before proceeding 
+ 
 - [Git](https://git-scm.com/downloads)​
 
-- [Python](https://www.python.org/downloads/) v3.7-v3.10​
+- [Python](https://www.python.org/ftp/python/3.11.5/python-3.11.5-amd64.exe).
+
+- [Python-MacOS](https://www.python.org/ftp/python/3.11.5/python-3.11.5-macos11.pkg)
+
+> [!IMPORTANT]
+> Python and the pip package manager must be in the path in ``Windows`` for the setup scripts to work.
+> If installing on MacOS using the link above, use ``python3`` command on terminal instead of ``python``
+
+- **While installating Python 3.11.5, please make sure to select ```Add python.exe to PATH```**
+
+    ![](./Images/python3.11_add_to_path.png)
+
+- **If you have Python 3.11.5 already installed. However, python is not added to the enviorment variables, please rerun the python Setup**:
+    - click Next on Modify page
+    - click Next on Optional Page
+    - select ```Add Python to enviorment variable``` under Advanced Option
+
+    ![](./Images//python3.11_fix.png)
 
 - (Optional): [Azure Developer CLI​](https://aka.ms/azure-dev/install)
 
@@ -62,9 +82,9 @@ Open VS Code and Clone this repository:
 
 URL: https://github.com/Microsoft-USEduAzure/OpenAIWorkshop.git
 
-![](../Images/lab-3-data-2.png)
+![](./Images/lab-3-data-2.png)
 
-From the terminal, navigate to ```cd labs/Lab_Data_Analytics```
+From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
 
 ## Step 2. Set up enviromental variables
 
@@ -78,7 +98,6 @@ From the terminal, navigate to ```cd labs/Lab_Data_Analytics```
         AZURE_OPENAI_ENDPOINT=https://openairesourcename.openai.azure.com/
         SQL_ENGINE = "sqlite"
 
-
     - Option 2: use your own SQL Server
 
         AZURE_OPENAI_API_KEY="9999999999999999999999999"
@@ -90,29 +109,43 @@ From the terminal, navigate to ```cd labs/Lab_Data_Analytics```
         SQL_DATABASE="WideWorldImportersDW"
         SQL_SERVER="sqlservername.database.windows.net"
 
-
-
-> **IMPORTANT** If you are a Mac user, please follow [this](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos?view=sql-server-ver16) to install ODBC for PYODBC
+> [!IMPORTANT] 
+> If you are a Mac user, please follow [this](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos?view=sql-server-ver16) to install ODBC for PYODBC
 
 ## Step 3. Configure development environment
 
-> **NOTE** all activities in this step will performed using the command line in VS Code terminal
+> [!NOTE]
+> All activities in this step will performed using the command line in VS Code terminal
+    
+### Step 3.1 Create a python environment
 
-### Step 3.1 Navigate to the Lab_Data_Analytics directory of this lab
+**This step will create a python enviroment in your workstation**
 
-To Navigate ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
+- For Windows, execute the following command: 
+   - ```python manage.py new```
+- For MacOS or Ubuntu, execute the following command:
+   - ```python3 manage.py new```
 
-### Step 3.2 Create a python environment with version from 3.7 and 3.10
+> [!NOTE]
+> You can verify whether ```python``` or ```python3``` is the correct shortcut by executing <br>
+>   - ```python --version``` or ```python3 --versions```
 
-This step is required **ONLY if did not perform this earlier as part of the pre-requisites**
+### OPTIONAL - Step 3.2 Install required libraries
+> [!WARNING]
+> Only run this step if you don't see the packages being downloaded/installed on the terminal. <br>
+> `Installing collected packages: pytz, zipp, ...`
 
-    - [Python 3+](https://www.python.org/downloads/)
-        - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
-        - **Important**: Ensure you can run `python --version` from console. On Ubuntu, you might need to run `sudo apt install python-is-python3` to link `python` to `python3`.
+**This step will install the required libraries in your virtual environment**
+- For Windows, execute the following command, within the context of your virtual environment
+    - `pip install -r requirements.txt`
+- For MacOS, execute the following command, within the context of your virtual environment
+    - `pip3 install -r requirements.txt`
 
-### Step 3.3  Import the requirements.txt
-
-run the command: `pip install -r requirements.txt`
+> [!IMPORTANT]
+> Ensure you're running pip install from the context of your virtual environment.
+> To do so run the following from the `Lab_Data_Analytics` folder: <br>
+> Windows: `.\aoaivenv\Scripts\activate` <br>
+> MacOS: `source aoaivenv/bin/activate` <br>
 
 ### Step 3.4 Run the application locally
 

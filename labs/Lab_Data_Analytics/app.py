@@ -55,7 +55,7 @@ def toggleSettings():
     st.session_state['show_settings'] = not st.session_state['show_settings']
 
 openai.api_type = "azure"
-openai.api_version = "2023-03-15-preview" 
+openai.api_version = "2023-05-15"
 openai.api_key = st.session_state.apikey
 openai.api_base = st.session_state.endpoint
 max_response_tokens = 1250
@@ -123,6 +123,7 @@ with st.sidebar:
         ```python
         #Import neccessary libraries here
         import numpy as np
+         
         #Query some data 
         sql_query = "SOME SQL QUERY"
         step1_df = execute_sql(sql_query)
@@ -163,11 +164,11 @@ with st.sidebar:
                 "Which products have most seasonality in sales quantity in 2016?",  
                 "Which customers are most likely to churn?", 
                 "What is the impact of discount on sales? What's optimal discount rate?",
-                "Predict monthly revenue for next 6 months starting from June-2018. Do not use Prophet. Show the prediction in a chart together with historical data for comparison."
+                "Predict monthly revenue for next 6 months starting from 06-2018. Do not use Prophet. Show the prediction in a chart together with historical data for comparison."
 
             ],  
             "GPT-4": [  
-                "Predict monthly revenue for next 6 months starting from June-2018. Do not use Prophet. Show the prediction in a chart together with historical data for comparison.",  
+                "Predict monthly revenue for next 6 months starting from 06-2018. Do not use Prophet. Show the prediction in a chart together with historical data for comparison.",  
                 "What is the impact of discount on sales? What's optimal discount rate?" ,  
             ]  
         }  
