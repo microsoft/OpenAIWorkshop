@@ -80,7 +80,7 @@ In the **api-key** field, enter your Azure OpenAI API key.
 ![](../../documents/images/lab-1-logicapp-4.png)
 
 
-Scroll down to the Logic App Step named **"Send email with oprions"**, the one with the Outlook logo, and expand it to enter new authorizaion credentials for your mailbox:
+Scroll down to the Logic App Step named **"Connections"**, the one with the Outlook logo, and expand it to enter new authorizaion credentials for your mailbox:
 
 ![](../../documents/images/lab-1-logicapp-5.png)
 
