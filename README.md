@@ -33,6 +33,7 @@ The following prerequisites must be completed before you start these labs
   - Microsoft.Web
   - Microsoft.Authorization
   - Microsoft.CognitiveServices
+  - Microsoft.CognitiveSearch
   - Microsoft.ManagedIdentity
   - Microsoft.KeyVault
   - Microsoft.Storage
