@@ -30,7 +30,7 @@ The following prerequisites must be completed before you start these labs
 - Required Resource Providers [How to Register Azure Services](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types)
 
   - Microsoft.Search
-  - Microssoft.Web
+  - Microsoft.Web
   - Microsoft.Authorization
   - Microsoft.CognitiveServices
   - Microsoft.ManagedIdentity
