@@ -1,0 +1,5 @@
+streamlit
+audio-recorder-streamlit
+openai
+python-dotenv
+fuzzywuzzy
