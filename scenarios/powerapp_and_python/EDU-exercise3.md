@@ -12,7 +12,7 @@
 
     ![](images/import-note.png)
 
-1. Navigate to `C:\labfile\OpenAIWorkshop-main\OpenAIWorkshop-main\scenarios\powerapp_and_python\python` location and select `OpenAI_notebook.ipynb` then click on **Open**.
+1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\powerapp_and_python\python` location and select `OpenAI_notebook.ipynb`, then click on **Open**.
 
      ![](images/notebook.png)
 
@@ -20,15 +20,21 @@
 
     ![](images/openai-sparkpool.png)
 
-1. Run the notebook it step by step to complete this exercise. Click on **Run** button next to the cell. 
+1. Run the notebook step by step to complete this exercise. Click on **Run** button next to the cell. 
 
      ![](images/run.png)
 
-1. In **2. Import helper libraries and instantiate credentials** replace the **AZURE_OPENAI_API_KEY** and **AZURE_OPENAI_ENDPOINT** with your API key and End point URL.
+1. In **2. Import helper libraries and instantiate credentials** replace the **AZURE_OPENAI_API_KEY** and **AZURE_OPENAI_ENDPOINT** with your API key and Endpoint URL.
 
-  
     ![](images/key-endpoint.png)
+   
+   From Azure Portal, navigate to **openaicustom-XXXXXX** Resource group, and Select Azure OpenAI resource.
+    ![](images/Ex4b-S7.1.png)
 
+   Under Resource Management, select **Keys and Endpoint (1)**, and click **Show Keys (2)** Copy **Key 1 (3)** and the **Language APIs (4)** and replace the **AZURE_OPENAI_API_KEY** and **AZURE_OPENAI_ENDPOINT** with your API key and Endpoint URL in the script.
+
+    ![](images/openaikeys1.png)
+     
     > **Note:** If you encounter an error "Openai module not found", enter `%` in before the **pip install** in the Install OpenAI cell and re-run the notebook again.
 
 1. For **2. Choose a Model**, replace **model** value from **text-curie-001** to **demomodel**.
@@ -55,6 +61,6 @@
 
      ![](images/publish.png)
 
-1. Then click **Publish**. 
+1. Then click on **Publish** to save the changes. 
 
     ![](images/publish-1.png)
