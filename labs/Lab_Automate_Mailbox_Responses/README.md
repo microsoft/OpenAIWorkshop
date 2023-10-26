@@ -22,7 +22,7 @@ Logic App 2 (email-techsupport-integration): Calls Azure OpenAI for answers to t
 ## Step 1. Signin to Azure Portal
 
 > [!IMPORTANT]
-> Use Edge or Chrome browser when making changes to the logic apps to prevent authorization issues when setting the **Connections** steps to your outlook mailbox
+> Use Edge or Chrome browser when making changes to the logic apps to prevent authorization issues when setting the **Connections** steps to your Microsoft 365 hosted mailbox
 
 Go to https://portal.azure.com and enter your credentials
 
