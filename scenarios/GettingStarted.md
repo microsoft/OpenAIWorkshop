@@ -11,11 +11,11 @@
 
    ![](media/openai(2).png "Lab Environment")
 
-   ![](media/openai(3).png "Lab Environment")
+   ![](media/OPENAI(3).png "Lab Environment")
 
     > You will see the SUFFIX value on the **Environment Details** tab, use it wherever you see SUFFIX or Deployment ID in lab steps.
 
-1. Please note if you are starting with the lab from any purticular steps then below is the details on the same with mentioning of exercise along with the lab.
+1. Please note if you are starting with the lab from any particular steps then below is the details on the same with mentioning of exercise along with the lab.
 
    * OpenAI Natural Language Query lab start from **Exercise 1: Build an Open AI Application on Power App to allow users to use natural language questions on top of SQL data**
    * OpenAI Batch Pipeline starts from **Exercise 2: Build an Open AI Pipeline to Ingest Batch Data, Perform Intelligent Operations, and Analyze in Synapse**
