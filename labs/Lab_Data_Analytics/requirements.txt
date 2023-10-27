@@ -1,5 +1,5 @@
 numpy==1.26
-pandas==1.4.3
+pandas==1.5.3
 plotly==5.9.0
 pyodbc==4.0.35
 streamlit==1.20.0
