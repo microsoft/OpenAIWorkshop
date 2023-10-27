@@ -15,6 +15,10 @@
 
     > You will see the SUFFIX value on the **Environment Details** tab, use it wherever you see SUFFIX or Deployment ID in lab steps.
 
+1. 1. You can also open the Lab Guide in a separate and full window by selecting the **Split Window** from the top right corner.
+
+    ![](media/split1.png)
+
 1. Please note if you are starting with the lab from any particular steps then below is the details on the same with mentioning of exercise along with the lab.
 
    * OpenAI Natural Language Query lab start from **Exercise 1: Build an Open AI Application on Power App to allow users to use natural language questions on top of SQL data**
