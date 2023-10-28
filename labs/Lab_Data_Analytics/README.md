@@ -95,7 +95,7 @@ From the terminal, navigate to ```cd OpenAIWorkshop/labs/Lab_Data_Analytics```
         AZURE_OPENAI_API_KEY="9999999999999999999999999"
         AZURE_OPENAI_GPT4_DEPLOYMENT="NAME_OF_GPT_4_DEPLOYMENT"
         AZURE_OPENAI_CHATGPT_DEPLOYMENT="NAME_OF_CHATGPT_4_DEPLOYMENT"
-        AZURE_OPENAI_ENDPOINT=https://openairesourcename.openai.azure.com/
+        AZURE_OPENAI_ENDPOINT="https://openairesourcename.openai.azure.com/"
         SQL_ENGINE = "sqlite"
 
     - Option 2: use your own SQL Server
