@@ -28,7 +28,7 @@ For convenience, you can open the lab guide in a separate window by selecting th
  
 Feel free to start, stop, or restart your virtual machine as needed from the **Resources** tab. Your experience is in your hands!
  
-![Manage Your Virtual Machine](../Images/res.png)
+  ![](media/res.png)
  
 ## **Let's Get Started with Azure Portal**
 
