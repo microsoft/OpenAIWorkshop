@@ -109,5 +109,5 @@ if prompt:
             assistant_response = assistant_response["choices"][0]["message"]["content"]
         else:
             assistant_response = response_message["content"]
-            st.session_state.messages.append({"role": "assistant", "content": assistant_response})
+        st.session_state.messages.append({"role": "assistant", "content": assistant_response})
         st.markdown(assistant_response)

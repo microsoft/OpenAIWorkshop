@@ -79,8 +79,6 @@ def validate(**kwargs):
     elif resolved_vm_sku == "Not found":
         return f"vm sku \"{vm_sku}\" not found."
     return "Entered information is valid"
-def create_invoice(**kwargs):
-    return f"Invoice {kwargs['invoice_number']} created successfully"
 PERSONA = """
 You an AI assistant helping a developer writing teraform code.
 When user ask you to help with writing terraform code, you will need to retrieve the standard procedure specific to the user request using get_sp function.
