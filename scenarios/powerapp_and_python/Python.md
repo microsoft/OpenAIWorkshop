@@ -1,6 +1,6 @@
 ## Exercise 4b: Build Open AI application with Python
 
-1. Search and select **Azure Synapse Analytics** in the azure portal.
+1. Search and select **Azure Synapse Analytics** in the Azure portal.
 
       ![](images/p2.png)
 
@@ -24,11 +24,24 @@
 
      ![](images/run.png)
 
+1. In **1. Install OpenAI**, click on the **Run** button next to the first cells, and click on the **stop session** please wait till **Apache Spark pools** turn to stop state. 
+
+     ![](images/run-python1.png)
+
+      > **Note**: you may need to restart the kernel to use updated packages
+
+1. In **1. Install OpenAI**, click on the **Run** button next to the second cells, and click on the **stop session** please wait till **Apache Spark pools** turn to stop state. 
+
+     ![](images/run-python.png)
+
+      > **Note**: you may need to restart the kernel to use updated packages
+
 1. In **2. Import helper libraries and instantiate credentials** replace the **AZURE_OPENAI_API_KEY** and **AZURE_OPENAI_ENDPOINT** with your API key and Endpoint URL.
 
     ![](images/key-endpoint.png)
    
    From Azure Portal, navigate to **openaicustom-XXXXXX** Resource group, and Select Azure OpenAI resource.
+
     ![](images/Ex4b-S7.1.png)
 
    Under Resource Management, select **Keys and Endpoint (1)**, and click **Show Keys (2)** Copy **Key 1 (3)** and the **Endpoint (4)** and replace the **AZURE_OPENAI_API_KEY** and **AZURE_OPENAI_ENDPOINT** with your API key and Endpoint URL in the script.
