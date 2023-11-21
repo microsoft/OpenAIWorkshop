@@ -174,7 +174,7 @@ Not all the components are required for a prompt and the format depends on the t
 ---
 ## General Tips for Designing Prompts
 
-> **Note:** We are not examing hyperparameters in this section, however, here's a quick link to some pointers on hyperparameters: [Basic Overview of Azure OpenAI Service Hyperparameters](./prompt_engineering/98_hyperparameters.md)
+> **Note:** We are not examining hyperparameters in this section, however, here's a quick link to some pointers on hyperparameters: [Basic Overview of Azure OpenAI Service Hyperparameters](./prompt_engineering/98_hyperparameters.md)
 
 Here are some tips to keep in mind while you are designing your prompts:
 
