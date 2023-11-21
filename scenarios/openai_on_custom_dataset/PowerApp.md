@@ -110,7 +110,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
     
     ![](./images/flow-img-1.1.png)
 
-15. Next, click on **Apps** and select **Semantic-Search-Template** to naviagte to the app.
+15. Next, click on **Apps** and select **Semantic-Search-Template** to navigate to the app.
 
     ![](./images/navigate.png)
  
