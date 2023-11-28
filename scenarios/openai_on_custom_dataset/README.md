@@ -7,14 +7,14 @@ Applications can be:
 
 Regardless of the application scenario, the solution flow is:
 - Step 1 prepare the context information: context information can be retrieved from proprietary knowledge corpus and other systems based on the user's query and user's information. The retrieval mechanism can be a semantic search engine to retrieve right content for unstructured data corpus or SQL query in case of structured dataset.
-- Step 2 fomulate prompt to Open AI: from the context and depending on the goal of user, formulate GPT prompt to get the final response to end user. For example, if it's knowlege retrieval vs. recommendation
+- Step 2 formulate prompt to Open AI: from the context and depending on the goal of user, formulate GPT prompt to get the final response to end user. For example, if it's knowledge retrieval vs. recommendation
 
 This implementation scenario focuses on building a knowledge retrieval chatbot application on top of unstructured data corpus but the same design can be used for recommendation & generative scenarios.
 
 ### Architecture Diagram
 ![OpenAI on custom dataset](../../documents/media/AzureCognitiveSearchOpenAIArchitecture.png)
 From the user's query, the solution uses two-stage information retrieval to retrieve the content that best matches the user query. 
-In stage 1, full text search in Azure Cognitive Search is used to retrieve a number of relevant documents. In stage 2, the search result is applied with pretrained NLP model and embedding search to further narrow down the the most relavant content. The content is used by orchestrator service to form a prompt to OpenAI deployment of LLM. The OpenAI service returns result which is then sent to Power App client application.
+In stage 1, full text search in Azure Cognitive Search is used to retrieve a number of relevant documents. In stage 2, the search result is applied with pretrained NLP model and embedding search to further narrow down the most relevant content. The content is used by orchestrator service to form a prompt to OpenAI deployment of LLM. The OpenAI service returns result which is then sent to Power App client application.
 ### Deployment
 
 
@@ -22,16 +22,16 @@ This scenario can be deployed in 2 different ways depending on your preference.
 
 ### 1. Fully automated script. 
 
-In this approach, a single script is run to create Azure Resources, configure the Azure Function App and create the search index. No manual configuration is required. This has the least number of prerequisites and can be run from Azure Cloud Shell. 
+In this approach, a single script is run to create Azure Resources, configure the Azure Function App, and create the search index. No manual configuration is required. This has the least number of prerequisites and can be run from Azure Cloud Shell. 
 Once the automated script is run, the power app can be configured as the next step. 
 
 To proceed with this approach, please click here. [Automated Script](Automated.md)
 
 
-### 2. Semi automated script. 
+### 2. Semi-automated script. 
 
 In this approach, the steps are broken into 3 key steps with a few manual steps.
-- In the first step, provision Azure Resourcs using Azure Portal UI.
+- In the first step, provision Azure Resources using Azure Portal UI.
 - In the second step, the search-index is configured and executed to create the search index.
 - The search index can be also be created using Azure Portal UI.
 - powerapp can be configured as the next step. 
