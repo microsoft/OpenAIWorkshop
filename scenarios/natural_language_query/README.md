@@ -101,7 +101,7 @@ Step 6: The Azure function returns the results to the end user.
 
 3. From NLQuery go to **Code + Test (1)**, then click **Test/Run (2)** select **GET (3)** in **HTTP method** dropdown, click **+ Add parameter** under **Query** and enter **prompt (4)** in the **Name** field and enter **show top 10 products (5)** in the **Value** field. Click **Run (6)**.
 
-   ![](images/code+test.png)
+   ![](images/nlp.png)
 
 4. The **Output** tab will have the query results and click on **Close** to close the output results.
 
@@ -223,7 +223,7 @@ Step 6: The Azure function returns the results to the end user.
 
 11. We will update the power automate flow second step after **PowerApps(V2)**, click on **+ (1)** and select **Add an action (2)**.
   
-   ![](images/add-action-1.png)
+    ![](images/add-action-1.png)
   
 11. Select **Custom (1)** and type `Openai-custom-connector` **(2)** in search and select the custom connector which you created previously **(3)**.
   
@@ -231,7 +231,7 @@ Step 6: The Azure function returns the results to the end user.
 
 12. The flow will look like the image provided below.
   
-     ![](images/top-5.png)
+    ![](images/top-5.png)
   
 13. You need to delete the third step which in your case will be **HTTP** flow, click on `...` **(1)** next to **HTTP** and click **Delete (2)**.
 
