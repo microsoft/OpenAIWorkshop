@@ -25,9 +25,9 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
 1. Navigate to **openaicustom-<inject key="DeploymentID" enableCopy="false"/>** resource group and select search service with the name **search-<inject key="DeploymentID" enableCopy="false"/>**.
 
-1. Now select the **Semantic Search** option from the left side menu and make sure that **Free Plan** is selected
+1. Now select the **Semantic Ranker** option from the left side menu and make sure that **Free Plan** is selected
    
-    ![](./images/addsementic.png)
+    ![](./images/E3T1S3.png)
    
 1. Now, navigate to `C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest` in Windows Explore and you will see file names as `secerts.env`, Make sure the value is updated as expected. However, we have already updated the values for you.
 
