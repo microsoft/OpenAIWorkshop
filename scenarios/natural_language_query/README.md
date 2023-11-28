@@ -101,7 +101,7 @@ Step 6: The Azure function returns the results to the end user.
 
 3. From NLQuery go to **Code + Test (1)**, then click **Test/Run (2)** select **GET (3)** in **HTTP method** dropdown, click **+ Add parameter** under **Query** and enter **prompt (4)** in the **Name** field and enter **show top 10 products (5)** in the **Value** field. Click **Run (6)**.
 
-   ![](images/code+test.png)
+   ![](images/nlp.png)
 
 4. The **Output** tab will have the query results and click on **Close** to close the output results.
 
