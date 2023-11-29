@@ -111,8 +111,7 @@ Step 6: The Azure function returns the results to the end user.
 
    ![](images/output.png)
   
-   >**Note:** Please press the Run again if the output tab does not print the records
-
+   >**Note:** It might take a while for the output to fetch the logs. Please proceed with the next task.
 
 ## Task 3. Deploy client Power App
 
