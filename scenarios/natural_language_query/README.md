@@ -103,12 +103,15 @@ Step 6: The Azure function returns the results to the end user.
 
    ![](images/nlp.png)
 
+   >**Note:** Please click on this notification pop up if this comes up.
+
+      ![](images/pop.png)
+
 4. The **Output** tab will have the query results and click on **Close** to close the output results.
 
    ![](images/output.png)
   
-   >**Note:** Please press the Run again if the output tab does not print the records
-
+   >**Note:** It might take a while for the output to fetch the logs. Please proceed with the next task.
 
 ## Task 3. Deploy client Power App
 
