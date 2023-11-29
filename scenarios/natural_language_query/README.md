@@ -103,6 +103,10 @@ Step 6: The Azure function returns the results to the end user.
 
    ![](images/nlp.png)
 
+   >**Note:** Please click on this notification pop up if this comes up.
+
+      ![](images/pop.png)
+
 4. The **Output** tab will have the query results and click on **Close** to close the output results.
 
    ![](images/output.png)
