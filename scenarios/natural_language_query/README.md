@@ -27,19 +27,19 @@ Step 6: The Azure function returns the results to the end user.
 
    ![](images/p3.png)
 
-1. On **Cognitive Services | Azure OpenAI** blade, select **openai-<inject key="DeploymentID" enableCopy="false"/>**
+1. On **Azure AI services | Azure OpenAI** blade, select **openai-<inject key="DeploymentID" enableCopy="false"/>**
 
-   ![](images/openai9.png)
+   ![](images/image_1.png)
 
 1. In the Azure OpenAI resource pane, click on **Go to Azure OpenAI Studio** it will navigate to **Azure AI Studio**.
 
-   ![](images/openai11-1.png)
+   ![](images/image_2.png)
 
 1. In the **Azure AI Studio**, select **Deployments** under Management and verify that two models with the corresponding **Deployment names** of **gptmodel** and **demomodel** are present and the capacity of the model is set to **15K TPM**.
 
    ![](images/newai.png)
 
-1. Navigate back to [Azure portal](http://portal.azure.com/), search and select **Azure OpenAI**, from the **Cognitive Services | Azure OpenAI pane**, select the **OpenAI-<inject key="Deployment ID" enableCopy="false"/>**.
+1. Navigate back to [Azure portal](http://portal.azure.com/), search and select **Azure OpenAI**, from the **Azure AI services | Azure OpenAI pane**, select the **OpenAI-<inject key="Deployment ID" enableCopy="false"/>**.
 
 1. On **openai-<inject key="DeploymentID" enableCopy="false"/>** blade, select **Keys and Endpoint (1)** under **Resource Management**. Select **Show Keys (2)** Copy **Key 1 (3)** and the **Endpoint (4)** by clicking on copy to clipboard and paste it into a text editor such as Notepad for later use. 
 
@@ -62,6 +62,8 @@ Step 6: The Azure function returns the results to the end user.
    ![](images/EX1-T1-S10.png)
 
 1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the **Open AI engine**, **Open AI rest endpoint**, **SQL server** and **SQL database** name in the file and copy the content.
+   ![](images/image_3.png)
+
 
       >**Note:** Provide the Model name as **demomodel**.
 
@@ -72,7 +74,9 @@ Step 6: The Azure function returns the results to the end user.
    ![](images/openai3.png)
 
 1. Go to deployed function and click **Configuration** -> **Application Settings** and click on **Advance edit** and copy the **func-config.txt** values in the editor. Do not delete the existing contents in **Advance edit**, add **`,`** after last '}' before ']' and just update **config-func.txt** values following. After updating the values click **OK** and **Save**.
-   
+
+   ![](images/image_4.png)
+
    ![](images/openai2.png)
    
    ![](images/openai4.png)
@@ -93,7 +97,7 @@ Step 6: The Azure function returns the results to the end user.
 
 1. Go to **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group and open **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject> (2)** function app.
 
-   ![](images/openai3.png)
+   ![](images/image_5.png)
 
 2. In the **Overview (1)** page, under **Functions (2)** tab  select **NLQuery (3)**.
 
@@ -135,7 +139,7 @@ Step 6: The Azure function returns the results to the end user.
 
 5. Navigate back to **openai-<inject key="DeploymentID" enableCopy="false" /></inject> (1)** resource group and open **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject> (2)** function app.
 
-   ![](images/openai3.png)
+   ![](images/image_5.png)
 
 6. On the **Overview (1)** blade of function app, click on **Functions (2)** and click deployed function **NLQuery (3)**.
 
@@ -171,6 +175,7 @@ Step 6: The Azure function returns the results to the end user.
 ## Task 4. Build the Connector App
 
 1. Navigate to https://make.powerapps.com/ and click on **App launcher** on the top left corner and select **Power Automate**.
+   >**Note:** Close any pop-ups that appear.
 
      ![](images/app-launcher.png)
 
@@ -204,7 +209,7 @@ Step 6: The Azure function returns the results to the end user.
   
       - **operationId**: **Get-Prompt (3)**
 
-      ![](images/get-prompt-edit-1.png)
+      ![](images/image_6.png)
   
    >**Note:** host and paths are extracted from your function URL and can be retrieved from the below screen. The host should not have "Https", please note that operationid needs to be unique per powerapps account
  
@@ -230,27 +235,25 @@ Step 6: The Azure function returns the results to the end user.
   
 11. Select **Custom (1)** and type `Openai-custom-connector` **(2)** in search and select the custom connector which you created previously **(3)**.
   
-    ![](images/choose-operation-1.png)
+    ![](images/image_7.png)
 
 12. The flow will look like the image provided below.
   
-    ![](images/top-5.png)
+    ![](images/image_8.png)
   
 13. You need to delete the third step which in your case will be **HTTP** flow, click on `...` **(1)** next to **HTTP** and click **Delete (2)**.
 
-     ![](images/delete.png)
+     ![](images/image_9.png)
 
 14. Click the **Parse JSON** step , click inside the **Content (1)** field, click on right side, and select **body (2)**. 
   
-     ![](images/content-body-1.png)
+     ![](images/image_10.png)
   
 15. The Control should be like the below. Click **Save**.
-
-     ![](images/save.png)
  
-16. Click on **Flows** and select the flow that you imported in the previous task and click **Edit** then on **Test**.
+16. Click on **Flows** and select the flow that you imported in the previous task and click on **Test**.
     
-    ![](images/test-flow.png)
+    ![](images/image_12.png)
     
 17. Select **Manually (1)** and **Test (2)**. 
 
@@ -267,10 +270,6 @@ Step 6: The Azure function returns the results to the end user.
 20. Once you receive **Your flow run successfully started**, click on **Done**. 
    
     ![](images/successfully-run.png)
-
-21. To monitor the run, go to the **Flows** Page and view the recent run history.
-   
-    ![](images/monitor.png)
    
 22. From the **Apps (1)** tab, select the **NLP Query** click `...` **(2)**  then click **Edit (3)**.
    
@@ -278,7 +277,7 @@ Step 6: The Azure function returns the results to the end user.
      
 23. Click on **Power Automate**, then click on `...` next to **Logic flows** and click on **Remove from app**.
 
-      ![](images/nlplogic.png)
+      ![](images/image_13.png)
 
 24. Next, click on **+ Add flow** and select **Promptinputflow**.
   
