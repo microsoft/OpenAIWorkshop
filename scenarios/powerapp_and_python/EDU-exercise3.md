@@ -20,7 +20,7 @@
 
     ![](images/openai-sparkpool.png)
 
-1. In **1. Install OpenAI**, click on the **Run** button next to the two cells, and click on the **stop session** please wait till **Apache Spark pools** turn to stop state. 
+1. In **1. Install OpenAI**, click on the **Run** button next to the two cells, and please wait till **Apache Spark pools** turn to stop state. 
 
      ![](images/run-python12.png)
 
