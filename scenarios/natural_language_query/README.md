@@ -234,7 +234,7 @@ Step 6: The Azure function returns the results to the end user.
   
     ![](images/add-action-1.png)
   
-11. Select **Custom (1)** and type `Openai-custom-connector` **(2)** in search and select the custom connector which you created previously **(3)**.
+11. Type `Openai-custom-connector` **(1)** in the search box, select **Custom (2)** as Runtime, select **Actions (3)** as Action Type and select **Get-Prompt** **(4)**.
   
     ![](images/image_7.png)
 
@@ -242,7 +242,7 @@ Step 6: The Azure function returns the results to the end user.
   
     ![](images/image_8.png)
   
-13. You need to delete the third step which in your case will be **HTTP** flow, click on `...` **(1)** next to **HTTP** and click **Delete (2)**.
+13. You need to delete the third step which in your case will be **HTTP** flow, Right click to **HTTP** and click **Delete**.
 
      ![](images/image_9.png)
 
@@ -260,7 +260,7 @@ Step 6: The Azure function returns the results to the end user.
 
     ![](images/run-flow.png)
  
-19.  Under **txtPrompt** enter **Run connector App (1)** and click **Run flow (2)**.
+19.  Under **txtPrompt** enter `Run connector App` **(1)** and click **Run flow (2)**.
 
      ![](images/txtprompt-1.png)
 
