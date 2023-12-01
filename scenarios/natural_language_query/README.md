@@ -61,11 +61,11 @@ Step 6: The Azure function returns the results to the end user.
 
    ![](images/EX1-T1-S10.png)
 
-1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc` folder and open `func-config.txt` file. Provide the **Open AI engine**, **Open AI rest endpoint**, **SQL server** and **SQL database** name in the file and copy the content.
+1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\natural_language_query/azurefunc`**(1)** folder and open `func-config.txt` **(2)** file. Provide the **Open AI engine**, **Open AI rest endpoint**, **SQL server** and **SQL database** name in the file and copy the content.
    ![](images/image_3.png)
 
 
-      >**Note:** Provide the Model name as **demomodel**.
+   >**Note:** Provide the Model name as **demomodel**.
 
    ![](images/img-2.png)
 
@@ -85,11 +85,11 @@ Step 6: The Azure function returns the results to the end user.
 
    ![](images/openai5.png)
 
-1. Go to SQL server **openaiserver-<inject key="DeploymentID" enableCopy="false" /></inject>** under the same resource group, under **settings**, click **Microsoft Entra ID** and click **Set admin**.
+1. Go to SQL server **openaiserver-<inject key="DeploymentID" enableCopy="false" /></inject>** under the same resource group, under **Settings**, click **Microsoft Entra ID** and click **Set admin**.
 
    ![](images/EX1-T1-S15.png)
 
-1. On the Microsoft Entra ID pane, In the search box enter the name of the function app **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>**. Add the name and click **Select** and **Save**.
+1. On the Microsoft Entra ID pane, In the search box enter the name of the function app **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject> (1)**. Add the name and click **Select** and **Save**.
 
    ![](images/EX1-T1-S16.png)
    
@@ -121,9 +121,9 @@ Step 6: The Azure function returns the results to the end user.
 
 1. Navigate to https://make.powerapps.com/. Select **Apps (1)** on the left navigation and click on **Import Canvas App (2)**. 
 
-    ![](./images/import-canvas-1.png)
+    ![](./images/p14.png)
     
-  >**Note:** Please click on **Start a free Trial** if you get any pop-up stating **You need a Power Apps Plan**.
+   >**Note:** Please click on **Start a free Trial** if you get any pop-up stating **You need a Power Apps Plan**.
 
 2. On the **Import package** page click on **Upload**.
 
@@ -167,7 +167,7 @@ Step 6: The Azure function returns the results to the end user.
 
 11. Got to **Apps** and select the app with the name **NLP Query**. Run the App by clicking on the App.
 
-      ![](images/powerapps8-1.png)
+      ![](images/p15.png)
 
       ![](images/powerapps9-1.png)
 
@@ -175,9 +175,10 @@ Step 6: The Azure function returns the results to the end user.
 ## Task 4. Build the Connector App
 
 1. Navigate to https://make.powerapps.com/ and click on **App launcher** on the top left corner and select **Power Automate**.
+
    >**Note:** Close any pop-ups that appear.
 
-     ![](images/app-launcher.png)
+     ![](images/p16.png)
 
 1. On the **Power Automate** page, click on **More (1)** and select **Discover all (2)**.
 
@@ -203,13 +204,13 @@ Step 6: The Azure function returns the results to the end user.
 
 6. We need to update the below values in the file 
 
-      - **host**: **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>.azurewebsites.net (1)**
+      - **host:** **openaifunapp<inject key="DeploymentID" enableCopy="false" /></inject>.azurewebsites.net (1)**
   
-      - **paths**:  **/api/NLQuery (2)**
+      - **paths:**  **/api/NLQuery (2)**
   
-      - **operationId**: **Get-Prompt (3)**
+      - **operationId:** **Get-Prompt (3)**
 
-      ![](images/image_6.png)
+         ![](images/image_6.png)
   
    >**Note:** host and paths are extracted from your function URL and can be retrieved from the below screen. The host should not have "Https", please note that operationid needs to be unique per powerapps account
  
@@ -221,7 +222,7 @@ Step 6: The Azure function returns the results to the end user.
    
    ![](images/start-trail-90days.png)
    
-8. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** **(2)** and replace with the content in the **Swagger editor(2)**. Click **Create Connector (3)**.
+8. Click on **Swagger Editor (1)** and copy the updated file contents from **get-prompt.txt** and replace with the content in the **Swagger editor (2)**. Click **Create Connector (3)**.
 
    ![](images/swagger-editor.png)
    
@@ -229,7 +230,7 @@ Step 6: The Azure function returns the results to the end user.
 
    ![](./images/promptin-flow-1.png)
 
-11. We will update the power automate flow second step after **PowerApps(V2)**, click on **+ (1)** and select **Add an action (2)**.
+11. We will update the power automate flow second step after **PowerApps (V2)**, click on **+ (1)** and select **Add an action (2)**.
   
     ![](images/add-action-1.png)
   
@@ -249,11 +250,7 @@ Step 6: The Azure function returns the results to the end user.
   
      ![](images/image_10.png)
   
-15. The Control should be like the below. Click **Save**.
- 
-16. Click on **Flows** and select the flow that you imported in the previous task and click on **Test**.
-    
-    ![](images/image_12.png)
+15. The Control should be like the below. Click **Save** and click on **Test**.
     
 17. Select **Manually (1)** and **Test (2)**. 
 
@@ -271,15 +268,15 @@ Step 6: The Azure function returns the results to the end user.
    
     ![](images/successfully-run.png)
    
-22. From the **Apps (1)** tab, select the **NLP Query** click `...` **(2)**  then click **Edit (3)**.
+22. From the **Apps (1)** tab, select the **NLP Query** click `...` **(3)**  then click **Edit (4)**.
    
-     ![](images/apps-nlq-1.png)
+     ![](images/p17.png)
      
-23. Click on **Power Automate**, then click on `...` next to **Logic flows** and click on **Remove from app**.
+23. Click on **Power Automate (1)**, then click on `...` **(2)** next to **Logic flows** and click on **Remove from app (3)**.
 
       ![](images/image_13.png)
 
-24. Next, click on **+ Add flow** and select **Promptinputflow**.
+24. Next, click on **+ Add flow** and select **PromptInputflow**.
   
       ![](images/openai-8.png)
  
@@ -292,7 +289,7 @@ Step 6: The Azure function returns the results to the end user.
 
 1. Navigate to https://make.powerapps.com/ and click on Apps on the left navigation. Open the **NLP Query** App.
 
-    ![](images/openai-3.png)
+    ![](images/p15.png)
     
 1. Click on **Submit** to see the products.
 
