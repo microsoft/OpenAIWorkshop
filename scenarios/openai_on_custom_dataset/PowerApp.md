@@ -25,7 +25,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
 1. Navigate to **openaicustom-<inject key="DeploymentID" enableCopy="false"/>** resource group and select search service with the name **search-<inject key="DeploymentID" enableCopy="false"/>**.
 
-1. Now select the **Semantic Ranker** option from the left side menu and make sure that **Free Plan** is selected
+1. Now select the **Semantic ranker** option from the left side menu and make sure that **Free Plan** is selected
    
     ![](./images/E3T1S3.png)
    
@@ -38,17 +38,19 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
    cd C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest
    ```
 
-1. Once you are in the ingest directory, run the below command to start the ingestion process. Please make sure to have the correct value in the secrets.env file before running the below command. The search indexer chunks a sample PDF document(500 pages) which is downloaded from Azure docs and chunks each page into 20 lines. Each chunk is created as a new search doc in the index. The PDF document processing is achieved using Azure Form Recognizer service.
+1. Once you are in the ingest directory, run the below command to start the ingestion process. Please make sure to have the correct value in the secrets.env file before running the below command. The search indexer chunks a sample PDF document (500 pages) which is downloaded from Azure docs and chunks each page into 20 lines. Each chunk is created as a new search doc in the index. The PDF document processing is achieved using Azure Form Recognizer service.
 
      ```
      python search-indexer.py
      ```
      
      ![](./images/cmd.png)
-  The above script will ingest the data into the services and you will be able to continue with the lab from here. 
-  
-# Task 2: Import PowerApp and try out the App.
 
+  > **Note**: The above script will ingest the data into the services and you will be able to continue with the lab from here. 
+  
+  > **Note**: Scripts will take 10 minutes to complete.
+
+# Task 2: Import PowerApp and try out the App.
 
 1. In the [Azure portal](https://portal.azure.com), navigate to the **func-search-<inject key="DeploymentID" enableCopy="false"/>** function app from the **openaicustom-<inject key="DeploymentID" enableCopy="false"/>** resource group.
 
@@ -62,13 +64,13 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
     ![](./images/get-func-url.png)
 
-4. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region (1)** and click **Get Started (2)**. 
+4. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region** and click **Get Started**. 
 
    ![](./images/welcome-1.png)
     
 5. Select **Apps (1)** on the left navigation and click **Import Canvas App (2)**. 
 
-    ![](./images/import-canvas-1.png)
+    ![](./images/p14.png)
 
 6. On the **Import package** page click on **Upload**.
 
@@ -82,12 +84,11 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
     ![](./images/package-import.png)
 
-9. Once the import is completed, click on **Apps (1)** then click on **... (2)** next to **Semantic-Search-Template** and click on **Edit (3)**.
+9. Once the import is completed, click on **Apps (1)** then click on **... (3)** next to **Semantic-Search-Template** and click on **Edit (4)**.
 
-    ![](./images/semantic-search-temp-edit-1.1.png)
+    ![](./images/p20.png)
      
-
-10. Click on **Power Automate (1)** this will import the **_Power App_** canvas and **Semantic-Search-Flow (2)** **_Power Automate Flow_** into the workspace. 
+10. Click on **Power Automate (1)** this will import the **_Power App_** canvas and **Semantic-Search-Flow (2)** into the workspace. 
 
     ![](./images/semanti-search-flow-1.png)
 
@@ -112,10 +113,10 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
 
 15. Next, click on **Apps** and select **Semantic-Search-Template** to navigate to the app.
 
-    ![](./images/navigate.png)
+    ![](./images/p21.png)
  
 16. On the app enter any phrase and hit search to view the result.
    
-      - For example, here we are searching for `Is GPU supported by AML?`. 
+      - For example, here we are searching for `Is GPU supported by AML?`
    
-    ![](./images/latquery.png)
+        ![](./images/latquery.png)
