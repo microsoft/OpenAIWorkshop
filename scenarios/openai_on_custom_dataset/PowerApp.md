@@ -43,7 +43,7 @@ In stage 1, full-text search in Azure Cognitive Search is used to retrieve sever
      ```
      python search-indexer.py
      ```
-     
+
      ![](./images/cmd.png)
 
   > **Note**: The above script will ingest the data into the services and you will be able to continue with the lab from here. 
