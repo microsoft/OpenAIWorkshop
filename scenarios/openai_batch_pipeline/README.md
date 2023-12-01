@@ -49,11 +49,11 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
     - Subscription: Select the subscription **(1)**
     - Cloud Shell region: Make sure you are in **East US** region.
-    - Resource group: Select **Use existing (2)** and select the **openai-XXXXX resource group.
+    - Resource group: Select **Use existing (2)** and select the **openai-<inject key="DeploymentID" enableCopy="false"/>** resource group.
     - Storage account: Select **openaistorage<inject key="DeploymentID" enableCopy="false"/> (3)**
     - File Share: Enter **blob (4)**
 
-    ![](images/openai4-new.png)
+        ![](images/openai4-new.png)
 
 1.  Once the storage account is created, you will be prompted with the Bash window as shown in the below screenshot.
     
@@ -71,11 +71,12 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
      ```bash 
      sh Miniconda3-py39_23.1.0-1-Linux-x86_64.sh 
      ```
+    
     > **Note:** The following commands are issued in Bash; please ensure you are using **Bash** in the Cloud Shell.
     
     > **Note:** Press down arrow key to read/skip the license agreement. 
 
-1. Type **yes** and hit **enter** to accept the agreement and then hit enter to install on the default path:
+1. Type **yes** and hit **enter** to accept the agreement and then hit enter to install on the default path.
 
    ![](images/cloudshell-accept.png)
 
@@ -97,7 +98,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     conda activate document-creation
     pip install -r reqs.txt
     ```
-1. Type **`y`** and hit enter to proceed.
+1. Type **y** and hit enter to proceed.
 
 1. In the [Azure portal](https://portal.azure.com), navigate to your Storage Account with suffix `functions` resource by selecting the **openai-<inject key="DeploymentID" enableCopy="false"/>** resource group, and selecting the Storage Account from the list of resources.
 
@@ -128,7 +129,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
     ![](images/openai-5.png)
 
-1. Click into the **Develop (1)** section of the Synapse Studio, click the "**+ (2)**" sign in the top left, and select **SQL script (3)**. This will open a new window with a SQL script editor. 
+1. Click into the **Develop (1)** section of the Synapse Studio, click the **+ (2)** sign in the top left, and select **SQL script (3)**. This will open a new window with a SQL script editor. 
 
    ![](images/synapse3.png)
 
@@ -147,7 +148,7 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
     
     ![](images/openai-6.png)
     
-1. Next click on Publish to publish the **SQL Script**.
+1. Next click on **Publish** to publish the SQL Script.
 
     ![](images/publish-sqlscript.png)
 
@@ -155,11 +156,11 @@ Call logs are uploaded to a designated location in Blob Storage. This upload wil
 
 We'll next need to create two linked services: One for our Source (the JSON files in the Data Lake) and another for the Synapse SQL Database that houses the table we created in the previous step.
 
-1. Click back into the **Manage (1)** section of the Synapse Studio, and click the **Linked services (2)** option under the **External connections** section. Then click **New (3)** in the top-left.
+1. Click back into the **Manage (1)** section of the Synapse Studio, and click the **Linked services (2)** option under the **External connections** section. Then click **+ New (3)** in the top-left.
 
    ![](images/synapse5.png)
    
-1. Start by creating the Linked Services for the source of our data, the JSON files housed in the ADLS Gen2 storage we created with our initial template. In the search bar that opens after you click **New**, search for **blob (1)** and select **Azure Blob Storage (2)** as depicted below and click on **Continue (3)**
+1. Start by creating the Linked Services for the source of our data, the JSON files housed in the ADLS Gen2 storage we created with our initial template. In the search bar that opens after you click New, search for **blob (1)** and select **Azure Blob Storage (2)** as depicted below and click on **Continue (3)**.
 
    ![](images/synapse6.png)
 
@@ -167,7 +168,7 @@ We'll next need to create two linked services: One for our Source (the JSON file
 
    ![](images/img-6.png)
 
-1.  Click **New (3)** in the top-left. Search for **Synapse (1)**, select **Azure Synapse Analytics (2)** and click on **Continue (3)**.
+1.  Click **+ New** in the top-left. Search for **Synapse (1)**, select **Azure Synapse Analytics (2)** and click on **Continue (3)**.
 
      ![](images/synapse8.png)
 
@@ -187,11 +188,11 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
    ![](images/synapse11.png)
    
-2. Once the data flow editor opens, click **Add Source**. A new window will open at the bottom of the screen, select **New** on the **Dataset** row while leaving the other options as default:
+2. Once the data flow editor opens, click **Add Source**. A new window will open at the bottom of the screen, select **+ New** on the **Dataset** row while leaving the other options as default.
 
    ![](images/synapse12.png)
 
-3. A new window should open on the right side of your screen. Next, search  for **Azure Blob Storage (1)** select **Azure Blob Storage (2)**, and then press **Continue (3)**. 
+3. A new window should open on the right side of your screen. Next, search  for **Azure Blob Storage (1)** select **Azure Blob Storage (2)**, and then click on **Continue (3)**. 
    
    ![](images/synapse13-1.png)
 
@@ -203,7 +204,7 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
    ![](images/synapse15.png)
    
-5. Next, we'll need to move to the **Source options (1)** panel and drop down the **JSON settings (2)** options. We need to change the **Document form** option to the **Array of documents (3)** setting. This allows our flow to read each .JSON file as a separate entry into our database:
+5. Next, we'll need to move to the **Source options (1)** panel and drop down the **JSON settings (2)** options. We need to change the **Document form** option to the **Array of documents (3)** setting. This allows our flow to read each .JSON file as a separate entry into our database.
 
    ![](images/synapse16.png)
 
@@ -211,15 +212,15 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
     >**Note:** It will take a minute or two for the **data flow debug** session to get enabled.
 
-7. Now head to the **Data preview** tab and run a preview to check your work thus far:
+7. Now head to the **Data preview** tab and run a preview to check your work thus far.
     
     ![](images/dataflow-datapreview.png)
    
-7. Next, we can add in our **Select** tile and do our minor alterations before writing the data out to the Synapse SQL table. To begin, click the small **+ (1)** sign next to our ingestion tile, and choose the **Select (2)** option:
+7. Next, we can add in our **Select** tile and do our minor alterations before writing the data out to the Synapse SQL table. To begin, click the small **+ (1)** sign next to our ingestion tile, and choose the **Select (2)** option.
 
    ![](images/synapse17.png)
 
-8. We can leave all the settings as default. Next, we'll add in our **Sink** tile. This is the step that will write our data out to our Synapse SQL database. Click on the small **+ (1)** sign next to our **Select** tile. Scroll all the way to the bottom of the options menu and select the **Sink (2)** option:
+8. We can leave all the settings as default. Next, we'll add in our **Sink** tile. This is the step that will write our data out to our Synapse SQL database. Click on the small **+ (1)** sign next to our **Select** tile. Scroll all the way to the bottom of the options menu and select the **Sink (2)** option.
 
    ![](images/synapse18.png)
 
@@ -227,7 +228,18 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
    ![](images/sink-1.png)
 
-10. We will then need to head over to the **Settings** tab and adjust the **Schema name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo** and the Table name is **cs_detail**.
+   > **Note**: If test connection takes more then 3-4 mins follow the below steps.
+
+   - Click on **Edit**.
+
+     ![](images/p18.png)    
+
+   - In the Edit linked service window that opens, select the Azure selection method as **From Azure subscription** **(1)**. Select the **Azure subscription (2)** in which you have been working. Select the **asaworkspace<inject key="DeploymentID" enableCopy="false"/> (3)** for **Server name** and **openaisql (4)** as the **Database name** and then click on **Test connection (5)** and click  **Save (6)**.
+
+        ![](images/p19.png)
+
+
+10. We will then need to head over to the **Settings (1)** tab and adjust the **Schema name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo (1)** and the Table name is **cs_detail (2)**.
 
     ![](images/synapse20.png)
 
@@ -240,7 +252,7 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
      - **Summary**: `interaction_summary` **(2)**
      - **CustomerSentiment**: `sentiment` **(3)**
 
-     ![](images/select-1.png)
+        ![](images/select-1.png)
     
 13. If we return to our **Sink (1)** tile and under **Data preview (2)** click **Refresh (3)**, we will now see our expected 5 columns of output.
 
@@ -265,7 +277,7 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
    ![](images/data-drag-1.png)
 
 3. Under the **Settings (1)** tab of the **Data flow**, select the **Data flow (2)** drop-down menu and select the name of the data flow you created in the previous step. 
-Then expand the **Staging (3)** section at the bottom of the settings and utilize the drop-down menu for the **Staging linked service**. Choose the linked service you created **openailinkedservice (4)** ensure to the **Test connection (5)**. Next, set a **Staging storage folder** at the very bottom and enter `workshop-data/Staging` **(6)**.
+Then expand the **Staging (3)** section at the bottom of the settings and utilize the drop-down menu for the **Staging linked service**. Choose the linked service you created **openailinkedservice (4)** ensure to the **Test connection (5)**. Next, set a **Staging storage folder** at the very bottom and enter **workshop-data/Staging** **(6)**.
 
    ![](images/staging-1.png)
 
@@ -303,5 +315,5 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
    - Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar **Results (6)** to those below.
 
   
-   ![](images/lastpic.png)
+        ![](images/lastpic.png)
 
