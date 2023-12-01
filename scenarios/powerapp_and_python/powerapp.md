@@ -1,10 +1,10 @@
-# Exercise 2: Build Open AI application with Power App 
+# Exercise 4a: Build Open AI application with Power App 
 
 1. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region (1)** click **Get Started (2)**. 
 
    ![](./images/welcome-1.png)
     
-2. Select **Apps (1)** on the left navigation and click **Import Canvas App (2)**. 
+2. Select **Apps** on the left navigation and click **Import canvas app**. 
 
     ![](./images/powerapps-import.png)
 
@@ -46,7 +46,7 @@
 
       ![](./images/flow-on.png)
 
-13. Click on **Edit (2)** for **Openaisummarization**.
+13. Click on **Edit** for Openaisummarization.
 
       ![](./images/flow-edit.png)
 
