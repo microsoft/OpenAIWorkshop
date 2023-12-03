@@ -20,8 +20,8 @@ from utils import Agent, Smart_Agent, check_args, search_knowledgebase
 from hr_copilot_utils import update_address, create_ticket
  
 
-def route_call(next_agent):
-    return f"Request transfering to {next_agent}"
+def get_help(user_request):
+    return f"{user_request}"
 
 def validate_identity(employee_id, employee_name):
     if employee_id in ["1234","5678"]:
@@ -29,17 +29,17 @@ def validate_identity(employee_id, employee_name):
     else:
         return "This employee id is not valid"
 
-ROUTE_CALL_FUNCTION_NAME = "route_call" #default function name for routing call used by all agents
+GET_HELP_FUNCTION_NAME = "get_help" #default function name for routing call used by all agents
 VALIDATE_IDENTIFY_FUNCTION_NAME = "validate_identity" #default function name for validating identity used by all agents
 GENERALIST_PERSONA = """
 You are Jenny, a helpful general assistant that can answer general questions about everything except HR and Payroll and IT.
 You start the conversation by validating the identity of the employee. Do not proceed until you have validated the identity of the employee.
-If the employee is asking for information in the HR & Payroll, inform that you will route the call to the right specialist.
-If the employee is asking for information in the IT, inform that you will route the call to the right specialist.
+If the employee is asking for information in the HR & Payroll or IT, call function get_help. Do not try to answer the question.
+Otherwise, use your knowledge to answer the question.
 """
 IT_PERSONA = """
 You are Paul, a helpful IT specialist that help employees about everything in IT.
-If the employee is asking for information that is not related to IT, inform employee that you will route the call to the right specialist.
+If the employee is asking for information that is not related to IT, call function get_help.
 """
 
 HR_PERSONA = """
@@ -49,40 +49,40 @@ Answer ONLY with the facts from the search tool. If there isn't enough informati
 Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brakets to reference the source, e.g. [info1.txt]. Don't combine sources, list each source separately, e.g. [info1.txt][info2.pdf].
 When employee request updating their address, interact with them to get their new country, new state, new city and zipcode. If they don't provide new country, check if it's still United States. Make sure you have all information then use update address tool provided to update in the system. 
 For all other information update requests, log a ticket to the HR team to update the information.
-If the employee is asking for information that is not related to HR or Payroll, inform that you will route the call to the right specialist.
+If the employee is asking for information that is not related to HR or Payroll, call function get_help.
 """
 
 HR_AVAILABLE_FUNCTIONS = {
             "search_knowledgebase": search_knowledgebase,
             "update_address": update_address,
             "create_ticket": create_ticket,
-            "route_call": route_call
+            "get_help": get_help
 
         } 
 IT_AVAILABLE_FUNCTIONS = {
-            "route_call": route_call,
+            "get_help": get_help,
 
         } 
 
 GENERAL_AVAILABLE_FUNCTIONS = {
-            "route_call": route_call,
+            "get_help": get_help,
             "validate_identity": validate_identity,
 
         } 
 GENERAL_FUNCTIONS_SPEC= [  
     {
-        "name": "route_call",
-        "description": "When the employee wants to talk about a topic that is not in your area of expertise, call this function to route request the transfer",
+        "name": "get_help",
+        "description": "Get help when you the question is out of your expertise",
         "parameters": {
             "type": "object",
             "properties": {
-                "next_agent": {
+                "user_request": {
                     "type": "string",
-                    "description": "description of the agent you think the call route the call should be routed to"
+                    "description": "summary user's request"
                 },
 
             },
-            "required": ["department"],
+            "required": ["user_request"],
         },
     },
     {
@@ -110,21 +110,21 @@ GENERAL_FUNCTIONS_SPEC= [
 ]  
 IT_FUNCTIONS_SPEC= [  
     {
-        "name": "route_call",
-        "description": "When the employee wants to talk about a topic that is not in your area of expertise, call this function to route request the transfer",
+        "name": "get_help",
+        "description": "Get help when you the question is out of your expertise",
         "parameters": {
             "type": "object",
             "properties": {
-                "next_agent": {
+                "user_request": {
                     "type": "string",
-                    "description": "description of the agent you think the call route the call should be routed to"
+                    "description": "summary user's request"
                 },
 
             },
-            "required": ["department"],
+            "required": ["user_request"],
         },
-
     },
+
 
 ]  
 
@@ -197,20 +197,19 @@ HR_FUNCTIONS_SPEC= [
 
     },
     {
-        "name": "route_call",
-        "description": "When the employee wants to talk about a topic that is not in your area of expertise, call this function to route request the transfer",
+        "name": "get_help",
+        "description": "Get help when you the question is out of your expertise",
         "parameters": {
             "type": "object",
             "properties": {
-                "next_agent": {
+                "user_request": {
                     "type": "string",
-                    "description": "description of the agent you think the call route the call should be routed to"
+                    "description": "summary user's request"
                 },
 
             },
-            "required": ["department"],
+            "required": ["user_request"],
         },
-
     },
 
 
@@ -223,7 +222,7 @@ class Agent_Runner():
         self.session_state = session_state
         self.active_agent = None
         for agent in agents:
-            print("agent name",agent.name, "starting agent name", starting_agent_name)
+            # print("agent name",agent.name, "starting agent name", starting_agent_name)
             if starting_agent_name == agent.name:
                 self.active_agent = agent
                 break
@@ -338,7 +337,7 @@ class Smart_Coordinating_Agent(Smart_Agent):
                     # Note: the JSON response may not always be valid; be sure to handle errors
                     
                     function_name = response_message["function_call"]["name"]
-                    if function_name == ROUTE_CALL_FUNCTION_NAME:
+                    if function_name == GET_HELP_FUNCTION_NAME:
                         request_agent_change = True
                         
                         
