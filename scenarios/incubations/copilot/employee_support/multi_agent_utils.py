@@ -7,19 +7,14 @@ from pathlib import Path
 import json
 import random
 from dotenv import load_dotenv
-from openai.embeddings_utils import get_embedding, cosine_similarity
-import inspect
-env_path = Path('..') / 'secrets.env'
+# from openai.embeddings_utils import get_embedding, cosine_similarity
+# import inspect
+env_path = Path('.') / 'secrets.env'
 load_dotenv(dotenv_path=env_path)
-openai.api_key =  os.environ.get("AZURE_OPENAI_API_KEY")
-openai.api_base =  os.environ.get("AZURE_OPENAI_ENDPOINT")
-openai.api_type = "azure"
-import sys
-sys.path.append("..")
-from utils import Agent, Smart_Agent, check_args, search_knowledgebase
-from hr_copilot_utils import update_address, create_ticket
+evaluator_engine =  os.environ.get("AZURE_OPENAI_EVALUATOR_DEPLOYMENT")
+evaluator_engine = evaluator_engine.strip('"')
+from hr_copilot_utils import Agent,Smart_Agent, check_args, search_knowledgebase,update_address, create_ticket
  
-
 def get_help(user_request):
     return f"{user_request}"
 
@@ -227,7 +222,7 @@ class Agent_Runner():
                 self.active_agent = agent
                 break
         agent_descriptions ="Jenny: a general customer support agent, handling everyting except HR, Payroll and IT\n\n Lucy: a specialist support agent in HR and Payroll\n\n Paul: a specialist support agent in IT\n\n"        
-        self.evaluator = Agent(engine="turbo-0613", persona="As a customer support manager, you need to assign call transfer requests to the right agent with the right skills. You have following agents with the description of their persona: \n\n"+agent_descriptions)
+        self.evaluator = Agent(engine=evaluator_engine, persona="As a customer support manager, you need to assign call transfer requests to the right agent with the right skills. You have following agents with the description of their persona: \n\n"+agent_descriptions)
         
     def revaluate_agent_assignment(self,function_description):
         #TODO: revaluate agent assignment based on the state
