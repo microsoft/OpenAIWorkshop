@@ -1,4 +1,4 @@
-# Exercise 5C: Fine Tuning (Read-Only)
+# Exercise 4C: Fine Tuning (Read-Only)
 
 ## Topics
 
@@ -10,9 +10,9 @@
 ---
 ## What is Fine Tuning?
 
-Fine-tuning is a process of customizing an existing AI model for a specific task or domain by using additional data. OpenAI offers fine-tuning for its language models such as GPT-3, which can generate natural language texts for various purposes.
+Fine-tuning is the process of customizing an existing AI model for a specific task or domain by using additional data. OpenAI offers fine-tuning for its language models, such as GPT-3, which can generate natural language texts for various purposes.
 
-Fine-tuning allows users to create customized models that can produce more accurate and relevant outputs than the general models.
+Fine-tuning allows users to create customized models that can produce more accurate and relevant outputs than general models.
 
 To fine-tune an OpenAI model, users need to prepare their own training and validation data, select a base model, and use the OpenAI CLI or Studio to start the fine-tuning job.
 
@@ -29,10 +29,10 @@ Training data for fine-tuning OpenAI models are pairs of input prompts and desir
 {"prompt": "Review: This is a scam. The product never arrived and the seller did not respond.", "completion": "Rating: 1 star"}
 ```
 
-You can use the OpenAI CLI or Studio to prepare, validate, and format your training data into a JSONL file that can be used for fine-tuning.
+You can use the OpenAI CLI or Studio to prepare, validate, and format your training data into a JSON file that can be used for fine-tuning.
 
 **IMPORTANT NOTE**:
-It is important to note that to expect better results than using Prompt Engineering, you will need to have a large and high-quality dataset that is relevant to your task or domain, usually a few hundreds high quality examples.
+It is important to note that to expect better results than using prompt engineering, you will need to have a large and high-quality dataset that is relevant to your task or domain, usually a few hundred high-quality examples.
 
 ---
 ## When would you consider Fine Tuning vs Prompt Engineering?
@@ -45,11 +45,11 @@ Fine-tuning involves retraining an existing model on new data, while prompt engi
 
 ### Fine Tuning
 
-You might consider fine-tuning when you have a large and high-quality dataset that is relevant to your task or domain, and you want to create a customized model that can produce more accurate and consistent outputs than the general model.
+You might consider fine-tuning when you have a large and high-quality dataset that is relevant to your task or domain and you want to create a customized model that can produce more accurate and consistent outputs than the general model.
 
 ### Prompt Engineering
 
-You might consider prompt engineering when you have a limited or no dataset, and you want to leverage the existing knowledge and capabilities of a general model by asking the right questions or providing the right context.
+You might consider prompt engineering when you have a limited or no dataset and you want to leverage the existing knowledge and capabilities of a general model by asking the right questions or providing the right context.
 
 **IMPORTANT NOTE**: Both methods require some trial and error, but fine-tuning usually takes more time and resources than prompt engineering, and it is not always necessary to fine-tune a model to get the desired results. It is therefore preferable to start with prompt engineering and only consider fine-tuning if you are unable to get the desired results.
 
@@ -57,9 +57,9 @@ You might consider prompt engineering when you have a limited or no dataset, and
 
 ## Operation Cost Considerations
 
-Prompt engineering could be less cost effective if you need to provide a large amount of instructions to accomplish something similar than what you would get with a Fine Tuned model as you'd consume tokens with every request sent.
+Prompt engineering could be less cost-effective if you need to provide a large number of instructions to accomplish something similar to what you would get with a Fine Tuned model as you'd consume tokens with every request sent.
 
-Hosting a Fine Tune model also has its cost but on medium to high volume that cost would be mostly irrelevant, so operational cost efficiency could be a driver for Fine Tuning.
+Hosting a Fine Tune model also has its cost, but on medium to high volumes, that cost would be mostly irrelevant, so operational cost efficiency could be a driver for Fine Tuning.
 
 ---
 ## References
