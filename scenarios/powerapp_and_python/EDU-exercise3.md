@@ -4,7 +4,7 @@
 
       ![](images/p2.png)
 
-1.  On the **Overview** blade under **Getting started** section, click **Open** to open Synapse Studio.
+1. On the **Overview** blade under **Getting started** section, click **Open** to open Synapse Studio.
      
     ![](images/open-workspace.png)
     
@@ -24,7 +24,7 @@
 
      ![](images/run-python12.png)
 
-1. In **2. Import helper libraries and instantiate credentials** replace the **AZURE_OPENAI_API_KEY** with **<inject key="OpenAIKey" enableCopy="true"/>** and **AZURE_OPENAI_ENDPOINT** **<inject key="OpenAIEndpoint" enableCopy="true"/>**  with your API key and Endpoint URL.
+1. In **2. Import helper libraries and instantiate credentials** replace the **AZURE_OPENAI_API_KEY** with **<inject key="OpenAIKey" enableCopy="true"/>** and **AZURE_OPENAI_ENDPOINT** with **<inject key="OpenAIEndpoint" enableCopy="true"/>**.
 
     ![](images/key-endpoint.png)
    
