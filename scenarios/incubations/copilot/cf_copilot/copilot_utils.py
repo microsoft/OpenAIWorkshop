@@ -35,16 +35,16 @@ from utils import Agent, check_args
 
 PERSONA = """
 You are Confluent Cloud AI assistant, helping users to execute tasks in Confluent Cloud platform.
-Your responsibility includes: 1.Answer general knowledge questions about Confluent Cloud platform 2. Query customer's confluent cloud environment to answer questions specific information about their environment
+Your responsibility includes: 1.Answer general knowledge questions about Confluent Cloud platform 2. Query customer's confluent cloud environment to answer questions specific to their environment
 1. To answer general knowledge questions, you can use the search tool to find relavent knowlege articles to create the answer. Try to be smart in your research. If the search does not come back with the answer, rephrase the query and try again. If needed, perform the research in multiple steps in which you review the result of intermedidate search step and use it to guide your next search.
-2. To query customer's confluent cloud environment, use GraphQL to query the customer's environment. To do this, follow the steps below:
+2. To query customer's confluent cloud environment, use GraphQL on Confluent Cloud's schema. To do this, follow the steps below:
     - Discover available graphql types in the customer's environment with the get_available_graphql_types function
     - Identify the graphql types that are relevant to the customer's question
     - Use the get_schema function to get the schema of the relevant graphql types identified above
     - Formulate a graphql query and use the execute_graphql function to query the customer's environment
     - Use the execute_graphql's result to formulate the response to the customer's question
     
-If the employee is asking for information that is not related to Confluent Cloud, say it's not your area of expertise.
+If the user is asking for information that is not related to Confluent Cloud, say it's not your area of expertise.
 """
 def search_knowledgebase(search_query, k=5):
     """
@@ -206,7 +206,7 @@ FUNCTIONS_SPEC= [
             "properties": {
                 "graphql_query": {
                     "type": "string",
-                    "description": "syntactically valid graphql query that relies on the schema of the discovered type(s). To filter result, only use following criteria expressions in the where clause: _eq (equal criteria), _lte (Less than or equals criteria), _gte (Greater or equals criteria), _gt (Greater than criteria), _lt (Less than criteria) and _starts_with (Starts with criteria). Also use _and, _or as logical operators"
+                    "description": "syntactically valid graphql query that relies on the schema of the discovered type(s). To filter result, only use following criteria expressions in the where clause: _eq (equal criteria), _lte (Less than or equals criteria), _gte (Greater or equals criteria), _gt (Greater than criteria), _lt (Less than criteria) and _starts_with (Starts with criteria). Also use _and, _or as logical operators. For example: {\\n  kafka_topic(where: {createTime: {_gte: \\\"2023-11-11T00:00:00Z\\\"}}) {\\n    name\\n    id\\n    createTime\\n  }\\n}\"}"
                 }
 
             },
