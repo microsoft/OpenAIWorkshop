@@ -27,7 +27,7 @@ st.markdown(styl, unsafe_allow_html=True)
 MAX_HIST= 5
 # Sidebar contents
 with st.sidebar:
-    st.title('HR/Payroll Copilot')
+    st.title('Confluent Platform AI Copilot')
     st.markdown('''
     This is a demo of Copilot Concept for Confluent AI
     ''')
