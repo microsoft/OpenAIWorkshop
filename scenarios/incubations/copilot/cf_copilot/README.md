@@ -1,7 +1,7 @@
 
 # Installation 
 ## Open AI setup
-Create an Azure OpenAI deployment in an Azure subscription with a GPT-4-0603 deployment and a ada-text-embedding-002 deloyment
+Create an Azure OpenAI deployment in an Azure subscription with a GPT-4-1106 deployment and a ada-text-embedding-002 deloyment
 ## Run the application locally
 1. Clone the repo (e.g. ```git clone https://github.com/microsoft/OpenAIWorkshop.git``` or download). Then navigate to ```cd scenarios/incubations/copilot/cf_copilot```
 2. Create a `secrets.env` file under copilot folder
