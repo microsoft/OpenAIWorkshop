@@ -1,5 +1,7 @@
 # Exercise 4: Build Open AI application with Python
 
+In this exercise, You'll be using Python to develop applications powered by OpenAI. This session is perfect for enhancing your programming skills and understanding how OpenAI can be utilized through Python.
+
 1. Search and select **Azure Synapse Analytics** in the Azure portal.
 
       ![](images/p2.png)
@@ -57,3 +59,5 @@
 1. Then click on **Publish** to save the changes. 
 
     ![](images/publish-1.png)
+
+**Summary:** With the help of this exercise, you were able to improve your programming abilities and gain an understanding of how to use OpenAI with Python to create apps.
