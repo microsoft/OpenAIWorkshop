@@ -1,23 +1,29 @@
 # Lab context
+Welcome to our Hands-On Workshop on Building Applications with OpenAI! This workshop is tailored to give you a hands-on experience in harnessing the power of OpenAI for application development. Each exercise is designed to build upon your knowledge and skills, guiding you through the exciting world of AI integration.
 
-## Exercise 1: Getting Started with Azure OpenAI 
+## Exercise 1: Getting Started with Azure OpenAI
+- **Description**: In this first exercise, you'll dive into Azure OpenAI resource deployment & management. You'll learn how to set up an Azure OpenAI deployment and model, which will be the foundation for further exercises in this workshop. 
+- **Key Activities**:
+  - Azure OpenAI resource within Azure Portal
+  - Deploying OpenAI Models within Azure OpenAI Studio.
 
-Azure OpenAI Service brings the generative AI models developed by OpenAI to the Azure platform, enabling you to develop powerful AI solutions that benefit from the security, scalability, and integration of services provided by the Azure cloud platform. In this exercise, you'll learn how to get started with Azure OpenAI by provisioning the service as an Azure resource and using Azure OpenAI Studio to deploy and explore OpenAI models. 
+## Exercise 2: Introduction to Prompt Engineering & Azure OpenAI Studio
+- **Description**: Master the art of Prompt Engineering with Azure OpenAI Studio. In this exercise, you'll explore the concept of prompt engineering, learning how to craft effective prompts for AI models. You'll get hands-on experience with Azure OpenAI Playground, experimenting with different types of prompts and understanding their elements and design tips.
+- **Key Activities**:
+  - Understanding what prompts are and the principles of prompt engineering.
+  - Experimenting with Azure OpenAI Playground to try out different prompts.
+  - Learning about the elements of a prompt and general tips for designing effective prompts.
 
-## Exercise 2: Introduction to Prompt Engineering & Azure OpenAI Studio 
 
-In this exercise, you will get insights into prompt engineering for language models, particularly with a focus on Azure OpenAI Studio's Playground. The labs cover the fundamentals of prompts, their elements, and the emerging discipline of prompt engineering. By providing hands-on examples and scenarios, participants learn to refine prompts to achieve desired outputs from language models. The objective is to impart skills in effectively instructing models, optimizing for specific tasks, and understanding the nuances of generating contextually relevant responses. Through experimentation and iterative learning, participants develop proficiency in leveraging language models for diverse business applications.
+## Exercise 3: Build OpenAI Application with PowerApps
+- **Description**: Here, you'll explore how to integrate OpenAI with PowerApps. This exercise is all about combining the simplicity of PowerApp's low-code platform with the advanced capabilities of OpenAI. You'll see firsthand how these technologies can come together to create powerful applications.
+- **Key Activities**:
+  - Learning the basics of Power App and its integration with OpenAI.
+  - Building a simple application using PowerApps and OpenAI.
 
-## Exercise 3: Build Open AI application with the Power App
-
-This scenario allows use cases to use Open AI from Power App applications via OpenAI Python SDK.
-
-Integrate the capabilities of Azure OpenAI into their Power Apps. The specific use case or task that the Power App accomplishes will depend on the design and functionality of the imported Power App and associated Power Automate Flow. The integration with Azure OpenAI suggests that the Power App may involve natural language processing or other AI-related tasks powered by OpenAI services.
-
-The integration of OpenAI with Power Apps enables users to seamlessly enhance their applications with advanced language processing and natural language understanding, unlocking the potential for more intelligent and responsive solutions within the Power Apps environment.
-
-## Exercise 4: Build Open AI application with Python
-
-This scenario allows use cases to use Open AI from Python applications via OpenAI Python SDK.
-
-Provide a hands-on experience in interacting with the Azure OpenAI Service, experiment with the OpenAI Python SDK, and explore the customization options available through various parameters. Users gain practical insights into how to configure and use the service for their natural language processing tasks, such as generating text based on prompts and adjusting model behaviour through parameters.
+## Exercise 4: Build OpenAI Application with Python
+- **Description**: For those of you keen on Python, this exercise is for you. You'll be using Python to develop applications powered by OpenAI. This session is perfect for enhancing your programming skills and understanding how OpenAI can be utilized through Python.
+- **Key Activities**:
+  - Getting familiar with Python programming for OpenAI integration.
+  - Developing a Python-based application with OpenAI's AI models.
+We're excited to have you join us on this immersive journey into the world of OpenAI and application development. Let's get started!
