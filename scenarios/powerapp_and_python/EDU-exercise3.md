@@ -1,4 +1,4 @@
-# Exercise 3: Build Open AI application with Python
+# Exercise 4: Build Open AI application with Python
 
 1. Search and select **Azure Synapse Analytics** in the Azure portal.
 
