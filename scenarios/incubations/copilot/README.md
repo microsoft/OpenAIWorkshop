@@ -109,13 +109,14 @@ Copilot also can help update information.
 ## Open AI setup
 Create an Azure OpenAI deployment in an Azure subscription with a GPT-4-0603 deployment and a ada-text-embedding-002 deloyment
 ## Run the application locally
-1. Clone the repo (e.g. ```git clone https://github.com/microsoft/OpenAIWorkshop.git``` or download). Then navigate to ```cd scenarios/incubations/copilot```
-2. Create a `secrets.env` file under copilot folder
+1. Clone the repo (e.g. ```git clone https://github.com/microsoft/OpenAIWorkshop.git``` or download). Then navigate to ```cd scenarios/incubations/copilot/employee_support```
+2. Create a `secrets.env` file
 ```
     AZURE_OPENAI_API_KEY="OPEN_AI_KEY"
     AZURE_OPENAI_ENDPOINT="https://YOUR_OPEN_AI_SERVICE.openai.azure.com/"
     AZURE_OPENAI_EMB_DEPLOYMENT #name of your embedding model deployment
     AZURE_OPENAI_CHAT_DEPLOYMENT #name of your Open AI Chat Deployment
+    AZURE_OPENAI_EVALUATOR_DEPLOYMENT #name of the Open AI Chat Deployment that is used for coordinator agent. Normally a gpt-35-turbo
     USE_AZCS="False" #if false, it will use the Faiss library for search
     AZURE_SEARCH_SERVICE_ENDPOINT="https://YOUR_SEARCH_SERVICE.search.windows.net"
     AZURE_SEARCH_INDEX_NAME=YOUR_SEARCH_INDEX_NAME
@@ -135,8 +136,7 @@ Create an Azure OpenAI deployment in an Azure subscription with a GPT-4-0603 dep
 5. To run the multi-agent copilot from the command line: `streamlit run multi_agent_copilot.py`
 
 ## Deploy the application to Azure 
-##To be added
-
+Review and customize the bicep template under ```https://github.com/microsoft/OpenAIWorkshop/tree/main/infra``` and use ```azd``` to deploy to Azure
 
 
 

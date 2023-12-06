@@ -27,14 +27,14 @@ if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = chat_deployment
 
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role":"system", "content":PERSONA}]
+    st.session_state["messages"] = [{"role":"system", "content":PERSONA},{"role":"assistant", "content":"Hi John, you are currentkly logged-in Azure tenant 0fbe7234-45ea-498b-b7e4-1a8b2d3be4d9 and subscription 840b5c5c-3f4a-459a-94fc-6bad2a969f9d. What can I do for you?"}]
 
 for message in st.session_state.messages:
+    # if message.get("role") != "system" and message.get("name") is  None:
     if message.get("role") != "system" and message.get("name") is  None:
         with st.chat_message(message["role"]):
                 st.markdown(message["content"])
-
-prompt = st.chat_input("What is up?")
+prompt = st.chat_input("Can you provision a linux VM machine at West US3?")
 if transcript_text is not None:
     prompt = transcript_text
 

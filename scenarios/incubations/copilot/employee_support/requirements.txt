@@ -1,5 +1,5 @@
 streamlit
-openai
+openai==0.28.0
 streamlit-extras
 python-dotenv 
 plotly
@@ -7,4 +7,3 @@ scipy
 scikit-learn
 azure-search-documents==11.4.0b9
 faiss-cpu
-azure-cosmos==4.5.1
