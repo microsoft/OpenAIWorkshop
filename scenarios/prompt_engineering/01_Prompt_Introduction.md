@@ -1,13 +1,13 @@
-## Exercise 4: Introduction to Prompt Engineering (Read-Only)
+## Exercise 2: Introduction to Prompt Engineering & Azure OpenAI Studio
 ## Topics
 
 - [What is a prompt?](#what-is-a-prompt)
 - [What is prompt engineering?](#what-is-prompt-engineering)
+- [Trying out Prompt Engineering with Azure OpenAI Playground](#Trying-out-Prompt-Engineering-with-Azure-OpenAI-Playground)
 - [Basic Prompt Examples](#basic-prompt-examples)
 - [Elements of a Prompt](#elements-of-a-prompt)
 - [General Tips for Designing Prompts](#general-tips-for-designing-prompts)
 
-**Note:** This link leads to another file, but it is a [Glossary of Terms](./prompt_engineering/99_glossary.md) covering many of the technical terms used in the following guides.
 
 ## What is a prompt?
 ![image](https://www.closerscopy.com/img/blinking-cursor-v2.gif)
@@ -21,9 +21,18 @@ Prompt engineering is a relatively [new discipline](https://www.businessinsider.
 
 This guide covers the basics of standard prompts to provide a rough idea of how to interact with and instruct the LLMs found on [Azure OpenAI Studio's Playground](https://oai.azure.com/portal/playground). 
 
-### Note about example prompts
-> **Note:** All examples are tested with the `text-davinci-003` model unless otherwise specified. Each of the `Examples` scenarios (shown in the red box labeled as '1' in the picture below) has pre-set `Parameters` (e.g., `temperature=0.7` and `top_p=1` as shown in the red box labeled as '2'). The examples will use those pre-sets unless otherwise noted in a specific prompt scenario.
+### Trying out Prompt Engineering with Azure OpenAI Playground
+Azure OpenAI Studio provides access to model management, deployment, experimentation, customization, and learning resources. The Chat playground within Azure OpenAI Studio is based on a conversation-in, message-out interface. You can initialize the session with a system message to set up the chat context.
 
+In the Chat playground, you're able to add few-shot examples. The term few-shot refers to providing a few of examples to help the model learn what it needs to do. You can think of it in contrast to zero-shot, which refers to providing no examples.
+
+In the Assistant setup, you can provide few-shot examples of what the user input may be, and what the assistant response should be. The assistant tries to mimic the responses you include here in tone, rules, and format you've defined in your system message.
+Let's go ahead and launch the Azure OpenAI playground to learn about prompt engineering. 
+
+1. In your Lab VM, navigate to to https://oai.azure.com and login with your lab Azure credentials.
+2. Navigate to Chat Playground section.
+3. Try out prompt examples shared in this guide or try our your own prompts :)
+   
 <img width="900" alt="Screenshot 2023-03-02 121725" src="https://user-images.githubusercontent.com/106187595/222518636-237fc5dc-8288-4498-9818-82a44af33f16.png">
 
 ---
@@ -155,6 +164,8 @@ Logistics, Delivery, and Shipping
 Few-shot prompts enable in-context learning, which is the ability of language models to learn tasks given only a few examples. We will see more of this in action in the upcoming advanced prompt engineering sections.
 
 ---
+
+
 ## Elements of a Prompt
 
 As we cover more and more examples and applications that are possible with prompt engineering, you will notice that there are certain elements that make up a prompt. 
@@ -172,9 +183,19 @@ A prompt can contain any of the following components:
 Not all the components are required for a prompt, and the format depends on the task at hand. We will touch on more concrete examples in our upcoming guides.
 
 ---
+
+## Elements of a Prompt
+
+The Chat playground, like the Completions playground, also includes the Temperature parameter. The Chat playground also supports other parameters not available in the Completions playground. These include:
+
+**Max response** - Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly four characters for typical English text.
+**Top P** -  Similar to temperature, this controls randomness but uses a different method. Lowering Top P narrows the model’s token selection to likelier tokens. Increasing Top P lets the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.
+**Past messages included** -  Select the number of past messages to include in each new API request. Including past messages helps give the model context for new user queries. Setting this number to 10 will include five user queries and five system responses.
+
+The Current token count is viewable from the Chat playground. Since the API calls are priced by token and it's possible to set a max response token limit, you'll want to keep an eye out for the current token count to make sure the conversation-in doesn't exceed the max response token count.
+
 ## General Tips for Designing Prompts
 
-> **Note:** We are not examining hyperparameters in this section; however, here's a quick link to some pointers on hyperparameters: [Basic Overview of Azure OpenAI Service Hyperparameters](./prompt_engineering/98_hyperparameters.md)
 
 Here are some tips to keep in mind while you are designing your prompts:
 
