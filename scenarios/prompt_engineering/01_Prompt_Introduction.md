@@ -1,13 +1,14 @@
-## Exercise 4: Introduction to Prompt Engineering (Read-Only)
+## Exercise 2: Introduction to Prompt Engineering & Azure OpenAI Studio
 ## Topics
 
 - [What is a prompt?](#what-is-a-prompt)
 - [What is prompt engineering?](#what-is-prompt-engineering)
+- [Trying out Prompt Engineering with Azure OpenAI Playground](#Trying-out-Prompt-Engineering-with-Azure-OpenAI-Playground)
 - [Basic Prompt Examples](#basic-prompt-examples)
 - [Elements of a Prompt](#elements-of-a-prompt)
+- [Chat playground parameters](#Chat-playground-parameters)
 - [General Tips for Designing Prompts](#general-tips-for-designing-prompts)
 
-**Note:** This link leads to another file, but it is a [Glossary of Terms](./prompt_engineering/99_glossary.md) covering many of the technical terms used in the following guides.
 
 ## What is a prompt?
 ![image](https://www.closerscopy.com/img/blinking-cursor-v2.gif)
@@ -21,13 +22,37 @@ Prompt engineering is a relatively [new discipline](https://www.businessinsider.
 
 This guide covers the basics of standard prompts to provide a rough idea of how to interact with and instruct the LLMs found on [Azure OpenAI Studio's Playground](https://oai.azure.com/portal/playground). 
 
-### Note about example prompts
-> **Note:** All examples are tested with the `text-davinci-003` model unless otherwise specified. Each of the `Examples` scenarios (shown in the red box labeled as '1' in the picture below) has pre-set `Parameters` (e.g., `temperature=0.7` and `top_p=1` as shown in the red box labeled as '2'). The examples will use those pre-sets unless otherwise noted in a specific prompt scenario.
+###  Trying out Prompt Engineering with Azure OpenAI Playground
+Azure OpenAI Studio provides access to model management, deployment, experimentation, customization, and learning resources. The Chat playground within Azure OpenAI Studio is based on a conversation-in, message-out interface. You can initialize the session with a system message to set up the chat context.
 
-<img width="900" alt="Screenshot 2023-03-02 121725" src="https://user-images.githubusercontent.com/106187595/222518636-237fc5dc-8288-4498-9818-82a44af33f16.png">
+In the Chat playground, you're able to add few-shot examples. The term few-shot refers to providing a few of examples to help the model learn what it needs to do. You can think of it in contrast to zero-shot, which refers to providing no examples.
+
+In the Assistant setup, you can provide few-shot examples of what the user input may be, and what the assistant response should be. The assistant tries to mimic the responses you include here in tone, rules, and format you've defined in your system message.
+Let's go ahead and launch the Azure OpenAI playground to learn about prompt engineering. 
+
+1. In the **Azure portal**, search for **OpenAI** and select **Azure OpenAI**.
+
+   ![](../natural_language_query/images/openai8.png)
+
+1. On **Cognitive Services | Azure OpenAI** blade, select **openai-<inject key="DeploymentID" enableCopy="false"/>**
+
+   ![](../natural_language_query/images/openai9.png)
+
+1. In the Azure OpenAI resource pane, click on **Go to Azure OpenAI Studio** it will navigate to **Azure AI Studio**.
+
+   ![](../natural_language_query/images/openai11-1.png)
+
+1. In the **Azure AI Stuido**, click on **Completions** under play **Playground** from the left menu.
+
+1. In the **Completions playground**, choose **demomodel** **(1)** from the drop-down menu under Deployments. Then, choose any **query** **(2)** from the examples drop-down menu. This will open the pre-existing question in the **text box** **(3)**. After that, click **Generate** **(4)** to see the result in the **Text box** **(5)**.
+
+   > **Note**: Chat may not respond with the exact output as shown in the screenshots. Following are the examples of what you'll most likely see in this exercise, but the response may vary.
+ 
+    ![](../powerapp_and_python/images/image1a.png)
 
 ---
 ## Basic Prompt Examples
+
 > **Note:** Please feel free to enter anything listed in the `Prompt:` box into a `text-davinci-003` model in the [Azure OpenAI Studio's Playground](https://oai.azure.com/portal/playground) to follow along with these prompt examples. Be aware that you may receive different outputs than what is listed in the `Output:` box, given the nature of generative models
 
 You can achieve a lot with prompts, but the quality of results depends on how much information you provide in the prompt without being overly descriptive. A prompt can contain information like instructions or questions. As we will learn later with more advanced prompts, we can also supply examples of required outputs as well as context for our instructions.
@@ -155,26 +180,52 @@ Logistics, Delivery, and Shipping
 Few-shot prompts enable in-context learning, which is the ability of language models to learn tasks given only a few examples. We will see more of this in action in the upcoming advanced prompt engineering sections.
 
 ---
+
+
 ## Elements of a Prompt
 
 As we cover more and more examples and applications that are possible with prompt engineering, you will notice that there are certain elements that make up a prompt. 
 
 A prompt can contain any of the following components:
 
-**Instruction** - a specific task or instruction you want the model to perform
+- **Instruction** - a specific task or instruction you want the model to perform
 
-**Context** - can involve external information or additional context that can steer the model to better responses
+- **Context** - can involve external information or additional context that can steer the model to better responses
 
-**Input Data** - is the input or question that we are interested in finding a response for
+- **Input Data** - is the input or question that we are interested in finding a response for
 
-**Output Indicator** - indicates the type or format of output.
+- **Output Indicator** - indicates the type or format of output.
 
 Not all the components are required for a prompt, and the format depends on the task at hand. We will touch on more concrete examples in our upcoming guides.
 
 ---
+
+## Chat playground parameters
+
+There are many parameters that you can adjust to change the performance of your model:
+
+- **Temperature** - Controls randomness. Lowering the temperature means that the model produces more repetitive and deterministic responses. Increasing the temperature results in more unexpected or creative responses. Try adjusting temperature or Top P but not both.
+
+- **Max length (tokens)e** - Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly four characters for typical English text.
+
+- **Stop sequencese** - Make responses stop at a desired point, such as the end of a sentence or list. Specify up to four sequences where the model will stop generating further tokens in a response. The returned text won't contain the stop sequence.
+
+- **Top probabilities (Top P)e** - Similar to temperature, this controls randomness but uses a different method. Lowering Top P narrows the model’s token selection to likelier tokens. Increasing Top P lets the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.
+
+- **Frequency penaltye** - Reduces the chance of repeating a token proportionally based on how often it has appeared in the text so far. This decreases the likelihood of repeating the exact same text in a response.
+
+- **Presence penaltye** - Reduce the chance of repeating any token that has appeared in the text at all so far. This increases the likelihood of introducing new topics in a response.
+
+- **Pre-response texte** - Insert text after the user’s input and before the model’s response. This can help prepare the model for a response.
+
+- **Post-response texte** - Insert text after the model’s generated response to encourage further user input, as when modeling a conversation.
+
+- **Max response** - Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly four characters for typical English text.
+
+The Current token count is viewable from the Chat playground. Since the API calls are priced by token and it's possible to set a max response token limit, you'll want to keep an eye out for the current token count to make sure the conversation-in doesn't exceed the max response token count.
+
 ## General Tips for Designing Prompts
 
-> **Note:** We are not examining hyperparameters in this section; however, here's a quick link to some pointers on hyperparameters: [Basic Overview of Azure OpenAI Service Hyperparameters](./prompt_engineering/98_hyperparameters.md)
 
 Here are some tips to keep in mind while you are designing your prompts:
 
@@ -300,5 +351,3 @@ I apologize that you are having difficulty accessing your account. Please click 
 Some of the examples above were adopted from the ["Best practices for prompt engineering with OpenAI API" article](https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-openai-api) and the 
 [Democratizing Artificial Intelligence Research, Education, and Technologies's Prompt Engineering Guide](https://github.com/dair-ai/Prompt-Engineering-Guide)
 
----
-[Next Section (Sample Scenarios)](./02_Sample_Scenarios/01_Text_Summarization.md)
