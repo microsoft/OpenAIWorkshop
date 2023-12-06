@@ -29,9 +29,9 @@ st.markdown(styl, unsafe_allow_html=True)
 MAX_HIST= 5
 # Sidebar contents
 with st.sidebar:
-    st.title('Tech Copilot')
+    st.title('Flight Copilot')
     st.markdown('''
-    This is a demo of Copilot Concept for Computer Science.
+    Real timeCopilot- A demo of Copilot application using GPT on top of real time data.
 
     ''')
     add_vertical_space(5)

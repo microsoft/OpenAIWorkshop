@@ -55,4 +55,3 @@ def check_args(function, args):
         if param.default is param.empty and name not in args:
             return False
 
-    return True
