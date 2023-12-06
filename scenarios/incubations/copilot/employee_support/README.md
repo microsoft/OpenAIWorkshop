@@ -1,6 +1,6 @@
 # Scenario Overview
 
-<img width="1159" alt="image" src="../../../documents/media/copilot_concept.png">
+<img width="1159" alt="image" src="../../../../documents/media/copilot_concept.png">
 
 
 # Developing Copilot Solution
@@ -11,7 +11,7 @@ In a copilot solution, the natural language input (prompt) can result in a outpu
 
 On top of this, copilot can perform multiple interactions with user or with other systems to achieve certain goal. For example, a shopping copilot may interact with the user to help them make a purchase decision by recommending products then execute order creation at the end.
 
-<img width="1159" alt="image" src="../../../documents/media/copilot_model.png">
+<img width="1159" alt="image" src="../../../../documents/media/copilot_model.png">
 
 ### 2. Understand function calling capability in GPT
 
@@ -44,7 +44,7 @@ Copilot also can help update information.
 
 #### Technical design
 
-<img width="1159" alt="image" src="../../../documents/media/hr_copilot_design.png">
+<img width="1159" alt="image" src="../../../../documents/media/hr_copilot_design.png">
 
 Application Platform:
 
@@ -57,7 +57,7 @@ Smart Agent:At the heart of the solution is the python object Smart_Agent.  The 
 - LLM: The agent is linked to a 0613 GPT-4 model to power its intelligence.
 
 ### 4. Multi-Agent Copilot
-<img width="1159" alt="image" src="../../../documents/media/multi-agent_model.png">
+<img width="1159" alt="image" src="../../../../documents/media/multi-agent_model.png">
 
 
 When scope for automation spans across multiple functional domains, like human, agent may perform better when it can specialize in a single area.
