@@ -186,13 +186,13 @@ As we cover more and more examples and applications that are possible with promp
 
 A prompt can contain any of the following components:
 
-**Instruction** - a specific task or instruction you want the model to perform
+- **Instruction** - a specific task or instruction you want the model to perform
 
-**Context** - can involve external information or additional context that can steer the model to better responses
+- **Context** - can involve external information or additional context that can steer the model to better responses
 
-**Input Data** - is the input or question that we are interested in finding a response for
+- **Input Data** - is the input or question that we are interested in finding a response for
 
-**Output Indicator** - indicates the type or format of output.
+- **Output Indicator** - indicates the type or format of output.
 
 Not all the components are required for a prompt, and the format depends on the task at hand. We will touch on more concrete examples in our upcoming guides.
 
@@ -202,16 +202,23 @@ Not all the components are required for a prompt, and the format depends on the 
 
 There are many parameters that you can adjust to change the performance of your model:
 
+- **Temperature** - Controls randomness. Lowering the temperature means that the model produces more repetitive and deterministic responses. Increasing the temperature results in more unexpected or creative responses. Try adjusting temperature or Top P but not both.
 
-**Temperaturee** - Controls randomness. Lowering the temperature means that the model produces more repetitive and deterministic responses. Increasing the temperature results in more unexpected or creative responses. Try adjusting temperature or Top P but not both.
-**Max length (tokens)e** - Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly four characters for typical English text.
-**Stop sequencese** - Make responses stop at a desired point, such as the end of a sentence or list. Specify up to four sequences where the model will stop generating further tokens in a response. The returned text won't contain the stop sequence.
-**Top probabilities (Top P)e** - Similar to temperature, this controls randomness but uses a different method. Lowering Top P narrows the model’s token selection to likelier tokens. Increasing Top P lets the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.
-**Frequency penaltye** - Reduce the chance of repeating a token proportionally based on how often it has appeared in the text so far. This decreases the likelihood of repeating the exact same text in a response.
-**Presence penaltye** - Reduce the chance of repeating any token that has appeared in the text at all so far. This increases the likelihood of introducing new topics in a response.
-**Pre-response texte** - Insert text after the user’s input and before the model’s response. This can help prepare the model for a response.
-**Post-response texte** - Insert text after the model’s generated response to encourage further user input, as when modeling a conversation.
-**Max response** - Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly four characters for typical English text.
+- **Max length (tokens)e** - Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly four characters for typical English text.
+
+- **Stop sequencese** - Make responses stop at a desired point, such as the end of a sentence or list. Specify up to four sequences where the model will stop generating further tokens in a response. The returned text won't contain the stop sequence.
+
+- **Top probabilities (Top P)e** - Similar to temperature, this controls randomness but uses a different method. Lowering Top P narrows the model’s token selection to likelier tokens. Increasing Top P lets the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.
+
+- **Frequency penaltye** - Reduces the chance of repeating a token proportionally based on how often it has appeared in the text so far. This decreases the likelihood of repeating the exact same text in a response.
+
+- **Presence penaltye** - Reduce the chance of repeating any token that has appeared in the text at all so far. This increases the likelihood of introducing new topics in a response.
+
+- **Pre-response texte** - Insert text after the user’s input and before the model’s response. This can help prepare the model for a response.
+
+- **Post-response texte** - Insert text after the model’s generated response to encourage further user input, as when modeling a conversation.
+
+- **Max response** - Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly four characters for typical English text.
 
 The Current token count is viewable from the Chat playground. Since the API calls are priced by token and it's possible to set a max response token limit, you'll want to keep an eye out for the current token count to make sure the conversation-in doesn't exceed the max response token count.
 
