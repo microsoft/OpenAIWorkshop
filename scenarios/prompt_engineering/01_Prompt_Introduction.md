@@ -356,3 +356,5 @@ I apologize that you are having difficulty accessing your account. Please click 
 Some of the examples above were adopted from the ["Best practices for prompt engineering with OpenAI API" article](https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-openai-api) and the 
 [Democratizing Artificial Intelligence Research, Education, and Technologies's Prompt Engineering Guide](https://github.com/dair-ai/Prompt-Engineering-Guide)
 
+
+**Summary:** In this exercise, You learned how to create powerful prompts for AI models by examining the idea of prompt engineering in this assignment. Using Azure OpenAI Playground, you gained practical experience by experimenting with various prompt types and comprehending their components and design advice.
