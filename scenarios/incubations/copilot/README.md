@@ -22,25 +22,7 @@ Follow this example to understand how function calling works
 
 https://github.com/Azure-Samples/openai/blob/main/Basic_Samples/Functions/working_with_functions.ipynb
 
-### 3. Build your own HR/Payroll copilot
-Having understood how function calling works, it's time to build an end to end HR/Payroll copilot solution. 
-
-####  Functional Flow
-This is a demo of Copilot Concept for HR/Payroll. The Copilot helps employees answer questions and update personal information.
-
-Copilot will first validate the identity of the employee before answering any questions or updating any information. Use ids such as 1234 or 5678 to test the demo.
-
-Example questions to ask:
-
-- When will I receive W2 form?
-- What are deducted from my paycheck?
-
-These questions are answered by the Copilot by searching a knowledge base and providing the answer.
-
-Copilot also can help update information.
-
-- For address update, the Copilot will update the information in the system.
-- For other information update requests, the Copilot will log a ticket to the HR team to update the information.
+### 3. Build your own copilot
 
 #### Technical design
 
@@ -80,66 +62,8 @@ There can be some persistent context that should be available across agent's ses
 Each specialist agent depending on the requirement for skill, can be powered by a gpt-35-turbo or gpt-4.
 
 Multi-agent solution has same application platform (streamlit) as the single HR Copilot. 
-#### Function flow
-
-This is a demo of Multi-Agent Copilot concept. The Copilot helps employees answer questions and update information.
-There are 3 agents in the Copilot: HR, IT and Generalist. Each agent has a different persona and skillset.
-Depending on the needs of the user, the Copilot will assign the right agent to answer the question.
-
-1. Generalist copilot help validate the user and answer general questions that are not related to HR and IT. Use ids such as 1234 or 5678 to test the demo. When the conversation enters any of the HR or IT area, generalist agent will request to transfer to the right specialist agent.
-
-2. For HR Copilot, the agent will answer questions about HR and Payroll and update personal information.
-
-Example questions to ask:
-
-- When will I receive W2 form?
-- What are deducted from my paycheck?
-
-These questions are answered by the Copilot by searching a knowledge base and providing the answer.
-
-Copilot also can help update information.
-
-- For address update, the Copilot will update the information in the system.
-- For other information update requests, the Copilot will log a ticket to the HR team to update the information.
-
-
-2. For IT copilot, it helps answer questions about IT
-
-# Installation 
-## Open AI setup
-Create an Azure OpenAI deployment in an Azure subscription with a GPT-4-0603 deployment and a ada-text-embedding-002 deloyment
-## Run the application locally
-1. Clone the repo (e.g. ```git clone https://github.com/microsoft/OpenAIWorkshop.git``` or download). Then navigate to ```cd scenarios/incubations/copilot/employee_support```
-2. Create a `secrets.env` file
-```
-    AZURE_OPENAI_API_KEY="OPEN_AI_KEY"
-    AZURE_OPENAI_ENDPOINT="https://YOUR_OPEN_AI_SERVICE.openai.azure.com/"
-    AZURE_OPENAI_EMB_DEPLOYMENT #name of your embedding model deployment
-    AZURE_OPENAI_CHAT_DEPLOYMENT #name of your Open AI Chat Deployment
-    AZURE_OPENAI_EVALUATOR_DEPLOYMENT #name of the Open AI Chat Deployment that is used for coordinator agent. Normally a gpt-35-turbo
-    USE_AZCS="False" #if false, it will use the Faiss library for search
-    AZURE_SEARCH_SERVICE_ENDPOINT="https://YOUR_SEARCH_SERVICE.search.windows.net"
-    AZURE_SEARCH_INDEX_NAME=YOUR_SEARCH_INDEX_NAME
-    CACHE_INDEX_NAME="YOUR_SEARCH_INDEX_NAME" #optional, required when USE_SEMANTIC_CACHE="True"
-    AZURE_SEARCH_ADMIN_KEY=YOUR_SEARCH_INDEX_NAME_KEY
-    AZURE_OPENAI_API_VERSION="2023-07-01-preview"
-    USE_SEMANTIC_CACHE="False" #set to True if use semantic Cache.
-    SEMANTIC_HIT_THRESHOLD=0.9 #Threshold in similarity score to determine if sematic cached will be used
-```
-3. Create a python environment with version from 3.7 and 3.10
-
-    - [Python 3+](https://www.python.org/downloads/)
-        - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
-        - **Important**: Ensure you can run `python --version` from console. On Ubuntu, you might need to run `sudo apt install python-is-python3` to link `python` to `python3`. 
-4. Import the requirements.txt `pip install -r requirements.txt`
-5. To run the HR/Payroll copilot from the command line: `streamlit run hr_copilot.py`
-5. To run the multi-agent copilot from the command line: `streamlit run multi_agent_copilot.py`
-
-## Deploy the application to Azure 
-Review and customize the bicep template under ```https://github.com/microsoft/OpenAIWorkshop/tree/main/infra``` and use ```azd``` to deploy to Azure
-
-
-
+# Scenarios
+Please go to individual folders to work with one of copilot scenarios
 
 
 
