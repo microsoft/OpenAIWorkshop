@@ -22,7 +22,7 @@ Prompt engineering is a relatively [new discipline](https://www.businessinsider.
 
 This guide covers the basics of standard prompts to provide a rough idea of how to interact with and instruct the LLMs found on [Azure OpenAI Studio's Playground](https://oai.azure.com/portal/playground). 
 
-### Trying out Prompt Engineering with Azure OpenAI Playground
+###  Trying out Prompt Engineering with Azure OpenAI Playground
 Azure OpenAI Studio provides access to model management, deployment, experimentation, customization, and learning resources. The Chat playground within Azure OpenAI Studio is based on a conversation-in, message-out interface. You can initialize the session with a system message to set up the chat context.
 
 In the Chat playground, you're able to add few-shot examples. The term few-shot refers to providing a few of examples to help the model learn what it needs to do. You can think of it in contrast to zero-shot, which refers to providing no examples.
@@ -30,15 +30,27 @@ In the Chat playground, you're able to add few-shot examples. The term few-shot 
 In the Assistant setup, you can provide few-shot examples of what the user input may be, and what the assistant response should be. The assistant tries to mimic the responses you include here in tone, rules, and format you've defined in your system message.
 Let's go ahead and launch the Azure OpenAI playground to learn about prompt engineering. 
 
-1. In your Lab VM, navigate to to https://oai.azure.com and login with your lab Azure credentials.
-2. Navigate to Chat Playground section.
-3. Try out prompt examples shared in this guide or try our your own prompts :)
+1. In the **Azure portal**, search for **OpenAI** and select **Azure OpenAI**.
 
-Check out the  [Chat playground parameters](#Chat-playground-parameters) section to learn more about tuning the parameters to improve model performance. 
+   ![](../natural_language_query/images/openai8.png)
+
+1. On **Cognitive Services | Azure OpenAI** blade, select **openai-<inject key="DeploymentID" enableCopy="false"/>**
+
+   ![](../natural_language_query/images/openai9.png)
+
+1. In the Azure OpenAI resource pane, click on **Go to Azure OpenAI Studio** it will navigate to **Azure AI Studio**.
+
+   ![](../natural_language_query/images/openai11-1.png)
+
+1. In the **Azure AI Stuido**, click on **Completions** under play **Playground** from the left menu.
+
+1. In the **Completions playground**, from Deployments select **gpt** 
+
 <img width="900" alt="Screenshot 2023-03-02 121725" src="https://user-images.githubusercontent.com/106187595/222518636-237fc5dc-8288-4498-9818-82a44af33f16.png">
 
 ---
 ## Basic Prompt Examples
+
 > **Note:** Please feel free to enter anything listed in the `Prompt:` box into a `text-davinci-003` model in the [Azure OpenAI Studio's Playground](https://oai.azure.com/portal/playground) to follow along with these prompt examples. Be aware that you may receive different outputs than what is listed in the `Output:` box, given the nature of generative models
 
 You can achieve a lot with prompts, but the quality of results depends on how much information you provide in the prompt without being overly descriptive. A prompt can contain information like instructions or questions. As we will learn later with more advanced prompts, we can also supply examples of required outputs as well as context for our instructions.
