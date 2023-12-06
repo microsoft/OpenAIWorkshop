@@ -45,13 +45,15 @@ Let's go ahead and launch the Azure OpenAI playground to learn about prompt engi
 
    ![](../natural_language_query/images/openai11-1.png)
 
-1. In the **Azure AI Stuido**, click on **Completions** under play **Playground** from the left menu.
+1. In the **Azure AI Stuido**, click on **Chat** under play **Playground** from the left menu.
 
-1. In the **Completions playground**, choose **demomodel** **(1)** from the drop-down menu under Deployments. Then, choose any **query** **(2)** from the examples drop-down menu. This will open the pre-existing question in the **text box** **(3)**. After that, click **Generate** **(4)** to see the result in the **Text box** **(5)**.
+   ![](../powerapp_and_python/images/)
+
+1. In the **Chat** section, choose **default** **(1)** under the use a system message template. Then, give any query from the chat session. 
 
    > **Note**: Chat may not respond with the exact output as shown in the screenshots. Following are the examples of what you'll most likely see in this exercise, but the response may vary.
  
-    ![](../powerapp_and_python/images/completions.png)
+    ![](../powerapp_and_python/images/)
 
 ---
 ## Basic Prompt Examples
