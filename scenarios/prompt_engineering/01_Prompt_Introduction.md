@@ -48,7 +48,7 @@ Let's go ahead and launch the Azure OpenAI playground to learn about prompt engi
 
    > **Note**: Chat may not respond with the exact output as shown in the screenshots. Following are the examples of what you'll most likely see in this exercise, but the response may vary.
  
-    ![](../natural_language_query/images/image1a.png)
+    ![](../powerapp_and_python/images/image1a.png)
 
 ---
 ## Basic Prompt Examples
