@@ -6,7 +6,7 @@ Azure OpenAI Service brings the generative AI models developed by OpenAI to the 
 
 ## Exercise 2: Introduction to Prompt Engineering & Azure OpenAI Studio 
 
-In this exercise, you will insights into prompt engineering for language models, particularly with a focus on Azure OpenAI Studio's Playground. The labs cover the fundamentals of prompts, their elements, and the emerging discipline of prompt engineering. By providing hands-on examples and scenarios, participants learn to refine prompts to achieve desired outputs from language models. The objective is to impart skills in effectively instructing models, optimizing for specific tasks, and understanding the nuances of generating contextually relevant responses. Through experimentation and iterative learning, participants develop proficiency in leveraging language models for diverse business applications.
+In this exercise, you will get insights into prompt engineering for language models, particularly with a focus on Azure OpenAI Studio's Playground. The labs cover the fundamentals of prompts, their elements, and the emerging discipline of prompt engineering. By providing hands-on examples and scenarios, participants learn to refine prompts to achieve desired outputs from language models. The objective is to impart skills in effectively instructing models, optimizing for specific tasks, and understanding the nuances of generating contextually relevant responses. Through experimentation and iterative learning, participants develop proficiency in leveraging language models for diverse business applications.
 
 ## Exercise 3: Build Open AI application with the Power App
 
