@@ -3,7 +3,7 @@
 # Manually managing azure-functions-worker may cause unexpected issues
 azure-functions
 azure-search-documents==11.4.0b9
-openai
+openai==0.28.1
 pandas
 plotly
 scipy

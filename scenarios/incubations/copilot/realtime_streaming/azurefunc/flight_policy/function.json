@@ -4,7 +4,7 @@
     {
       "type": "kafkaTrigger",
       "name": "kevent",
-      "topic": "flight_status",
+      "topic": "general",
       "brokerList": "%BootstrapServer%",
       "username": "%ConfluentCloudUserName%",
       "password": "%ConfluentCloudPassword%",

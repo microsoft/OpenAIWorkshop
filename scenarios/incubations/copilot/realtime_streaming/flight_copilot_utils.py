@@ -74,7 +74,7 @@ def query_flights(from_, to, departure_time):
         new_arrival_time = new_ar_dt.strftime("%Y-%m-%dT%H:%M:%S")
         return new_departure_time, new_arrival_time
     flights = ""
-    for flight_num, delta in [("AA479", -1), ("AA490",-2), ("AA423",-3)]:
+    for flight_num, delta in [("AA489", -1), ("AA490",-2), ("AA423",-3)]:
         new_departure_time, new_arrival_time = get_new_times(departure_time, delta)
         flights= flights +f"flight number {flight_num}, from: {from_}, to: {to}, departure_time: {new_departure_time}, arrival_time: {new_arrival_time}, flight_status: on time \n"
     return flights
