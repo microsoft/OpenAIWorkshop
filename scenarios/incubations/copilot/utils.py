@@ -77,8 +77,8 @@ def search_knowledgebase_acs(search_query):
     results = azcs_search_client.search(  
         search_text=search_query,  
         vectors= [vector],
-        select=["policy_type","policy"],
-        top=5
+        select=["airline", "policy_type","policy"],
+        top=3
     )  
     text_content =""
     for result in results:  
