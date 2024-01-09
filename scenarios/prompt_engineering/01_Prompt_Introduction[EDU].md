@@ -37,13 +37,13 @@ Let's go ahead and launch the Azure OpenAI playground to learn about prompt engi
 
    ![](../natural_language_query/images/openai8.png)
 
-1. On **Cognitive Services | Azure OpenAI** blade, select **openai-<inject key="DeploymentID" enableCopy="false"/>**
+1. On **Azure AI Services | Azure OpenAI** blade, select **openai-<inject key="DeploymentID" enableCopy="false"/>**
 
-   ![](../natural_language_query/images/openai9.png)
+   ![](../natural_language_query/images/E1T1S2.png)
 
 1. In the Azure OpenAI resource pane, click on **Go to Azure OpenAI Studio** it will navigate to **Azure AI Studio**.
 
-   ![](../natural_language_query/images/openai11-1.png)
+   ![](../natural_language_query/images/E1T1S3.png)
 
 1. In the **Azure AI Stuido**, click on **Chat** under play **Playground** from the left menu.
 
