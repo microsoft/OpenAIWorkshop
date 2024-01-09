@@ -9,25 +9,72 @@ from pprint import pprint
 import requests
 import base64
 
-from azure.search.documents.models import Vector  
+# from azure.search.documents.models import Vector  
 import uuid
 from tenacity import retry, wait_random_exponential, stop_after_attempt  
 from langchain.utilities import BingSearchAPIWrapper
 
 from dotenv import load_dotenv
-from azure.core.credentials import AzureKeyCredential  
-from azure.search.documents import SearchClient  
-from openai.embeddings_utils import get_embedding, cosine_similarity
+# from openai.embeddings_utils import get_embedding, cosine_similarity
 import inspect
 env_path = Path('.') / 'secrets.env'
 load_dotenv(dotenv_path=env_path)
+print(os.environ.get("AZURE_OPENAI_API_KEY"))
 openai.api_key =  os.environ.get("AZURE_OPENAI_API_KEY")
 openai.api_base =  os.environ.get("AZURE_OPENAI_ENDPOINT")
-emb_engine = os.getenv("AZURE_OPENAI_EMB_DEPLOYMENT")
-emb_engine = emb_engine.strip('"')
 import sys
-sys.path.append("..")
-from utils import Agent, check_args
+
+class Agent(): #Base class for Agent
+    def __init__(self, engine,persona, name=None, init_message=None):
+        if init_message is not None:
+            init_hist =[{"role":"system", "content":persona}, {"role":"assistant", "content":init_message}]
+        else:
+            init_hist =[{"role":"system", "content":persona}]
+
+        self.init_history =  init_hist
+        self.persona = persona
+        self.engine = engine
+        self.name= name
+    def generate_response(self, new_input,history=None, stream = False,request_timeout =20,api_version = "2023-05-15"):
+        openai.api_version = api_version
+        if new_input is None: # return init message 
+            return self.init_history[1]["content"]
+        messages = self.init_history.copy()
+        if history is not None:
+            for user_question, bot_response in history:
+                messages.append({"role":"user", "content":user_question})
+                messages.append({"role":"assistant", "content":bot_response})
+        messages.append({"role":"user", "content":new_input})
+        response = openai.ChatCompletion.create(
+            engine=self.engine,
+            messages=messages,
+            stream=stream,
+            request_timeout =request_timeout
+        )
+        if not stream:
+            return response['choices'][0]['message']['content']
+        else:
+            return gpt_stream_wrapper(response)
+    def run(self, **kwargs):
+        return self.generate_response(**kwargs)
+
+
+
+def check_args(function, args):
+    sig = inspect.signature(function)
+    params = sig.parameters
+
+    # Check if there are extra arguments
+    for name in args:
+        if name not in params:
+            return False
+    # Check if the required arguments are provided 
+    for name, param in params.items():
+        if param.default is param.empty and name not in args:
+            return False
+
+    return True
+
 
 
 
@@ -217,23 +264,6 @@ FUNCTIONS_SPEC= [
 
 ]  
 
-if os.getenv("USE_AZCS") == "True":
-    service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT") 
-    index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 
-    index_name = index_name.strip('"')
-    key = os.getenv("AZURE_SEARCH_ADMIN_KEY") 
-    key = key.strip('"')
-    # @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
-    # Function to generate embeddings for title and content fields, also used for query embeddings
-    credential = AzureKeyCredential(key)
-    azcs_search_client = SearchClient(service_endpoint, index_name =index_name , credential=credential)
-
-###Sematic caching implementation
-if os.getenv("USE_SEMANTIC_CACHE") == "True":
-    cache_index_name = os.getenv("CACHE_INDEX_NAME")
-    cache_index_name= cache_index_name.strip('"')
-    azcs_semantic_cache_search_client = SearchClient(service_endpoint, cache_index_name, credential=credential)
-
 def add_to_cache(search_query, gpt_response):
     search_doc = {
                  "id" : str(uuid.uuid4()),
@@ -291,7 +321,7 @@ class Smart_Agent(Agent):
         
     # @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
     def run(self, user_input, conversation=None, stream = False, api_version = "2023-07-01-preview"):
-        openai.api_version = api_version
+        # openai.api_version = api_version
         if user_input is None: #if no input return init message
             return self.init_history, self.init_history[1]["content"]
         if conversation is None: #if no history return init message
