@@ -6,6 +6,10 @@ In this exercise, You'll be using Python to develop applications powered by Open
 
       ![](images/p2.png)
 
+1. Click on **asaworkspace<inject key="DeploymentId"></inject>** to open
+
+    ![](images/E4S2.png)
+
 1. On the **Overview** blade under **Getting started** section, click **Open** to open Synapse Studio.
      
     ![](images/open-workspace.png)
