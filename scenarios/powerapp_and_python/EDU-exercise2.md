@@ -59,6 +59,7 @@ In this exercise, you will learn how to integrate OpenAI with PowerApps. This ex
 15. From the **Apps (1)** page click on the **OpenAI Playground** app to run the app by clicing on **Play (2)** button.
 
      ![](./images/canves-play.png)
+Note: If you get a popup asking to start a free trial, click on **Star a Free Trial**. (It might take 2-3 minutes to start the trial)
 
 16. In the **Canvas**, click on **Summary** **(1)** button and verify the **auto-filled text** **(2)**. Then click on **Submit** **(3)** button to get the desired **Summary** **(4)**. 
 

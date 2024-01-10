@@ -314,6 +314,4 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
 
    - Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar **Results (6)** to those below.
 
-  
-        ![](images/lastpic.png)
-
+      ![](images/lastpic.png)
