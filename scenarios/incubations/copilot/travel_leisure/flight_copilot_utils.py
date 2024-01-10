@@ -347,7 +347,7 @@ FLIGHT_FUNCTIONS_SPEC= [
         "type":"function",
         "function":{
 
-        "name": "check_change_flight",
+        "name": "check_change_booking",
         "description": "Check the feasibility and outcome of a presumed flight change by providing current flight information and new flight information",
         "parameters": {
             "type": "object",
