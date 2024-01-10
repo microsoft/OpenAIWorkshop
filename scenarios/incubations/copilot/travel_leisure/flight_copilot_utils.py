@@ -540,7 +540,11 @@ class Smart_Agent():
                     function_args = json.loads(tool_call.function.arguments)
 
                     if check_args(function_to_call, function_args) is False:
-                        raise Exception("Invalid number of arguments for function: " + function_name)
+                        # raise Exception("Invalid number of arguments for function: " + function_name)
+                        conversation.pop()
+                        continue
+
+                    
                     # print("beginning function call")
                     function_response = str(function_to_call(**function_args))
 
