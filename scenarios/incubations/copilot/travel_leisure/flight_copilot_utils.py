@@ -111,14 +111,14 @@ def get_embedding(text, model=emb_engine):
 
 # faiss_search_client = Search_Client("./data/policy_vector.json")
 SearchClient(service_endpoint, index_name =index_name , credential=credential)
-# def search_knowledgebase(question):
+# def search_airline_knowledgebase(question):
 #         """  
 #         Given an input vector and a dictionary of label vectors,  
 #         returns the label with the highest cosine similarity to the input vector.  
 #         """  
 #         print("question ", question)
 #         return faiss_search_client(question, topk=3)
-def search_knowledgebase(search_query):
+def search_airline_knowledgebase(search_query):
 
     vector = VectorizedQuery(vector=get_embedding(search_query, model=emb_engine), k=3, fields="contentVector")
     print("search query: ", search_query)
@@ -244,7 +244,7 @@ def confirm_flight_change(current_ticket_number, new_flight_num, new_departure_t
         return "Could not find the current ticket to change."  
   
 
-def test_change_flight(current_ticket_number, current_flight_num, new_flight_num, from_):
+def check_change_booking(current_ticket_number, current_flight_num, new_flight_num, from_):
     # based on the input flight number and from, to and departure time, generate a random seat number and a random gate number and random amount of refund or extra charge for the flight change
     # then write a information message to the user with all the information 
     charge = 80
@@ -278,34 +278,33 @@ def load_user_flight_info(user_id):
 
     return str(flights_info)
 
-PERSONA = """
+FLIGHT_PERSONA = """
 You are Maya, an airline customer agent helping customers with questions and requests about their flight.
 You are currently serving {customer_name} with id {customer_id}.
 First, you need to look up their flight information and confirm with the customer about their flight information including flight number, from and to, departure and arrival time.
-When you are asked with a general airline policy question such as baggage limit, use the search_knowledgebase function to find relavent knowlege articles to create the answer.
+When you are asked with a general airline policy question such as baggage limit, use the search_airline_knowledgebase function to find relavent knowlege articles to create the answer.
 Answer ONLY with the facts from the search tool. If there isn't enough information, say you don't know. Do not generate answers that don't use the information from the search. If asking a clarifying question to the user would help, ask the question.
 When the user asks for a flight status, use check_flight_status function to check the flight status.
-When the user asks to change their flight, first check the feasibility and cost of the change with check_change_flight function. If customer agrees with the change, execute the change with confirm_flight_change function.
-If the user is asking for information that is not related to flight and airline, say it's not your area of expertise.
+When the user asks to change their flight, first check the feasibility and cost of the change with check_change_booking function. If customer agrees with the change, execute the change with confirm_flight_change function.
 """
 
-AVAILABLE_FUNCTIONS = {
-            "search_knowledgebase": search_knowledgebase,
+FLIGHT_AVAILABLE_FUNCTIONS = {
+            "search_airline_knowledgebase": search_airline_knowledgebase,
             "query_flights": query_flights,
             "confirm_flight_change": confirm_flight_change,
-            "check_change_flight": test_change_flight,
+            "check_change_booking": check_change_booking,
             "check_flight_status": check_flight_status,
             "load_user_flight_info": load_user_flight_info
 
         } 
 
-FUNCTIONS_SPEC= [  
+FLIGHT_FUNCTIONS_SPEC= [  
     {
         "type":"function",
         "function":{
 
-        "name": "search_knowledgebase",
-        "description": "Searches the knowledge base for an answer to the question",
+        "name": "search_airline_knowledgebase",
+        "description": "Searches the airline knowledge base to answer airline policy questions",
         "parameters": {
             "type": "object",
             "properties": {
@@ -499,7 +498,7 @@ class Smart_Agent():
         if conversation is None: #if no history return init message
             conversation = self.init_history.copy()
         conversation.append({"role": "user", "content": user_input})
-        query_used = None
+        request_help = False
         while True:
             response = client.chat.completions.create(
                 model=self.engine, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
@@ -542,9 +541,17 @@ class Smart_Agent():
 
                     if check_args(function_to_call, function_args) is False:
                         raise Exception("Invalid number of arguments for function: " + function_name)
-
                     # print("beginning function call")
                     function_response = str(function_to_call(**function_args))
+
+                    if function_name=="get_help": #scenario where the agent asks for help
+                        summary_conversation = []
+                        for message in conversation:
+                            message = dict(message)
+                            if message.get("role") != "system" and message.get("role") != "tool" and len(message.get("content"))>0:
+                                summary_conversation.append({"role":message.get("role"), "content":message.get("content")})
+                        return True, summary_conversation, function_response
+
                     print("Output of function call:")
                     print(function_response)
                     print()
@@ -566,4 +573,4 @@ class Smart_Agent():
         conversation.append(response_message)
         assistant_response = response_message.content
 
-        return query_used, conversation, assistant_response
+        return request_help, conversation, assistant_response
