@@ -32,13 +32,6 @@ from dotenv import load_dotenv
 env_path = Path('.') / 'secrets.env'
 load_dotenv(dotenv_path=env_path)
 
-service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT") 
-index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 
-key = os.getenv("AZURE_SEARCH_ADMIN_KEY") 
-# @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
-# Function to generate embeddings for title and content fields, also used for query embeddings
-credential = AzureKeyCredential(key)
-azcs_search_client = SearchClient(service_endpoint, index_name =index_name , credential=credential)
 
 env_path = Path('.') / 'secrets.env'
 load_dotenv(dotenv_path=env_path)
@@ -53,17 +46,6 @@ client = AzureOpenAI(
 
 sqllite_db_path= os.environ.get("SQLITE_DB_PATH","data/flight_db.db")
 engine = create_engine(f'sqlite:///{sqllite_db_path}') 
-def execute_sql_query(sql_query, limit=100):  
-    result = pd.read_sql_query(sql_query, engine)
-    result = result.infer_objects()
-    for col in result.columns:  
-        if 'date' in col.lower():  
-            result[col] = pd.to_datetime(result[col], errors="ignore")  
-
-    if limit is not None:  
-        result = result.head(limit)  # limit to save memory  
-    # st.write(result)
-    return result
 class Search_Client():
     def __init__(self,emb_map_file_path):
         with open(emb_map_file_path) as file:
@@ -78,11 +60,11 @@ class Search_Client():
         input_vector = get_embedding(question, model = emb_engine)        
         # Compute cosine similarity between input vector and each label vector
         cosine_list=[]  
-        for chunk_id,_, chunk_content,_,_, vector in self.chunks_emb:  
+        for item in self.chunks_emb:  
             #by default, we use embedding for the entire content of the topic (plus topic descrition).
             # If you you want to use embedding on just topic name and description use this code cosine_sim = cosine_similarity(input_vector, vector[0])
-            cosine_sim = 1 - spatial.distance.cosine(input_vector, vector)
-            cosine_list.append((chunk_id,chunk_content,cosine_sim ))
+            cosine_sim = 1 - spatial.distance.cosine(input_vector, item['policy_text_embedding'])
+            cosine_list.append((item['id'],item['policy_text'],cosine_sim ))
         cosine_list.sort(key=lambda x:x[2],reverse=True)
         cosine_list= cosine_list[:topk]
         best_chunks =[chunk[0] for chunk in cosine_list]
@@ -109,31 +91,41 @@ def get_embedding(text, model=emb_engine):
    text = text.replace("\n", " ")
    return client.embeddings.create(input = [text], model=model).data[0].embedding
 
-# faiss_search_client = Search_Client("./data/policy_vector.json")
-SearchClient(service_endpoint, index_name =index_name , credential=credential)
-# def search_airline_knowledgebase(question):
-#         """  
-#         Given an input vector and a dictionary of label vectors,  
-#         returns the label with the highest cosine similarity to the input vector.  
-#         """  
-#         print("question ", question)
-#         return faiss_search_client(question, topk=3)
-def search_airline_knowledgebase(search_query):
+faiss_search_client = Search_Client("./data/flight_policy.json")
 
-    vector = VectorizedQuery(vector=get_embedding(search_query, model=emb_engine), k=3, fields="contentVector")
+def search_airline_knowledgebase(search_query):
     print("search query: ", search_query)
-    results = azcs_search_client.search(  
-        search_text=search_query,  
-        vector_queries= [vector],
-        # filter= product_filter,
-        select=["policy_type","policy"],
-        top=3
-    )  
-    text_content =""
-    for result in results:  
-        text_content += f"{result['policy_type']}\n{result['policy']}\n"
-    print("text_content", text_content)
-    return text_content
+    """  
+    Given an input vector and a dictionary of label vectors,  
+    returns the label with the highest cosine similarity to the input vector.  
+    """  
+    print("question ", search_query)
+    return faiss_search_client.find_article(search_query, topk=3)
+
+#uncomment to use Azure Cognitive Search
+
+# service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT") 
+# index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 
+# key = os.getenv("AZURE_SEARCH_ADMIN_KEY") 
+# credential = AzureKeyCredential(key)
+# azcs_search_client = SearchClient(service_endpoint, index_name =index_name , credential=credential)
+# SearchClient(service_endpoint, index_name =index_name , credential=credential)
+
+# def search_airline_knowledgebase(search_query):
+
+#     vector = VectorizedQuery(vector=get_embedding(search_query, model=emb_engine), k=3, fields="contentVector")
+#     print("search query: ", search_query)
+#     results = azcs_search_client.search(  
+#         search_text=search_query,  
+#         vector_queries= [vector],
+#         # filter= product_filter,
+#         select=["policy_type","policy"],
+#         top=3
+#     )  
+#     text_content =""
+#     for result in results:  
+#         text_content += f"{result['policy_type']}\n{result['policy']}\n"
+#     return text_content
 
 
 def check_flight_status(flight_num, from_):
@@ -554,6 +546,7 @@ class Smart_Agent():
                             message = dict(message)
                             if message.get("role") != "system" and message.get("role") != "tool" and len(message.get("content"))>0:
                                 summary_conversation.append({"role":message.get("role"), "content":message.get("content")})
+                        summary_conversation.pop() #remove the last message which is the agent asking for help
                         return True, summary_conversation, function_response
 
                     print("Output of function call:")
