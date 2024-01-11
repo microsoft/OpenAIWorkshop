@@ -7,3 +7,5 @@ scipy
 scikit-learn
 azure-search-documents==11.4.0
 faiss-cpu
+pyodbc==4.0.35
+SQLAlchemy==1.4.47
