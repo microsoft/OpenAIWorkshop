@@ -29,19 +29,27 @@ from azure.core.credentials import AzureKeyCredential
 import inspect
 from azure.search.documents import SearchClient  
 from dotenv import load_dotenv
-from flight_copilot_utils import Smart_Agent, service_endpoint, credential, client
+from flight_copilot_utils import Smart_Agent, Search_Client
 env_path = Path('.') / 'secrets.env'
 load_dotenv(dotenv_path=env_path)
 
 index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 
 # @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
 # Function to generate embeddings for title and content fields, also used for query embeddings
-azcs_search_client = SearchClient(service_endpoint, index_name =index_name , credential=credential)
+# azcs_search_client = SearchClient(service_endpoint, index_name =index_name , credential=credential)
 
 # This function should remain unchanged as it is context-neutral
+faiss_search_client = Search_Client("./data/hotel_policy.json")
+
 def search_hotel_knowledgebase(search_query):
-    pass
-    # ... (existing implementation) ...
+    print("search query: ", search_query)
+    """  
+    Given an input vector and a dictionary of label vectors,  
+    returns the label with the highest cosine similarity to the input vector.  
+    """  
+    print("question ", search_query)
+    return faiss_search_client.find_article(search_query, topk=3)
+
 from sqlalchemy import create_engine, Column, String, Integer, DateTime, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship

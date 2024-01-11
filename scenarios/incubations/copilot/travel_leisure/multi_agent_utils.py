@@ -40,14 +40,6 @@ from hotel_copilot_utils import  HOTEL_PERSONA, HOTEL_AVAILABLE_FUNCTIONS, HOTEL
 env_path = Path('.') / 'secrets.env'
 load_dotenv(dotenv_path=env_path)
 
-service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT") 
-index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 
-key = os.getenv("AZURE_SEARCH_ADMIN_KEY") 
-# @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
-# Function to generate embeddings for title and content fields, also used for query embeddings
-credential = AzureKeyCredential(key)
-azcs_search_client = SearchClient(service_endpoint, index_name =index_name , credential=credential)
-# Assume we have a database model for Customer, Reservation, and Room similar to the Flight model
 
 # Note: The above functions assume that you have a database with tables
 def get_help(user_request):
@@ -94,15 +86,15 @@ HOTEL_FUNCTIONS_SPEC.append(get_help_function_spec)
 FLIGHT_FUNCTIONS_SPEC.append(get_help_function_spec)
 def classify_intent(user_input, candidates):
     agent_descriptions ="Jenny: a general customer support agent, handling general questions\n\n Maya: a specialist support agent in Flight booking\n\n Anna: a specialist support agent in Hotel booking\n\n"       
-    prompt =f"Given the request [{user_input}], the most suitable agent's name among [{candidates}] to handle this request is"
-    messages = [{"role":"system", "content":"As a customer support manager, you need to assign call transfer requests to the right agent with the right skills. You have following agents with the description of their responsibilties: \n\n"+agent_descriptions}, {"role":"user", "content":prompt}]
+    prompt =f"Given the request [{user_input}], pick a name from [{candidates}]. Just output the name of the agent, no need to add any other text."
+    messages = [{"role":"system", "content":"You are helpful AI assistant to match request with agent. Here are agents with the description of their responsibilties: \n\n"+agent_descriptions}, {"role":"user", "content":prompt}]
     response = client.chat.completions.create(
         model=evaluator_engine, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
         messages=messages,
         max_tokens=20,
     )
     response_message = response.choices[0].message.content
-    print("assistant response: ", response_message)
+    print("classified as: ", response_message)
 
     return response_message.strip()
 
@@ -139,14 +131,12 @@ class Agent_Runner():
     def run(self,user_input, conversation=None):
         get_help, conversation, assistant_response = self.active_agent.run(user_input=user_input, conversation=conversation)
         
-        if get_help: #Agent signal to ask for help
+        if get_help: #Agent signal to ask for help. Conversation history is reduced
             print("get help!")
             self.revaluate_agent_assignment(assistant_response)
-            conversation= self.active_agent.init_history + conversation
-            print("conversation\n", conversation)
+            conversation=  conversation+self.active_agent.init_history
+            
             get_help, conversation, assistant_response = self.active_agent.run(user_input=user_input, conversation=conversation)
-        else:
-            print("normal flow")
         return  get_help, conversation, assistant_response
 
 
