@@ -1,6 +1,6 @@
 # Agent class
 ### responsbility definition: expertise, scope, conversation script, style 
-import openai
+from openai import AzureOpenAI
 import os
 from pathlib import Path  
 import json
@@ -9,54 +9,23 @@ from pprint import pprint
 import requests
 import base64
 
-# from azure.search.documents.models import Vector  
 import uuid
 from tenacity import retry, wait_random_exponential, stop_after_attempt  
 from langchain.utilities import BingSearchAPIWrapper
 
 from dotenv import load_dotenv
-# from openai.embeddings_utils import get_embedding, cosine_similarity
 import inspect
 env_path = Path('.') / 'secrets.env'
 load_dotenv(dotenv_path=env_path)
-print(os.environ.get("AZURE_OPENAI_API_KEY"))
-openai.api_key =  os.environ.get("AZURE_OPENAI_API_KEY")
-openai.api_base =  os.environ.get("AZURE_OPENAI_ENDPOINT")
+client = AzureOpenAI(
+  api_key=os.environ.get("AZURE_OPENAI_API_KEY"),  
+  api_version="2023-12-01-preview",
+  azure_endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
+)
+chat_engine =os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT")
+
+
 import sys
-
-class Agent(): #Base class for Agent
-    def __init__(self, engine,persona, name=None, init_message=None):
-        if init_message is not None:
-            init_hist =[{"role":"system", "content":persona}, {"role":"assistant", "content":init_message}]
-        else:
-            init_hist =[{"role":"system", "content":persona}]
-
-        self.init_history =  init_hist
-        self.persona = persona
-        self.engine = engine
-        self.name= name
-    def generate_response(self, new_input,history=None, stream = False,request_timeout =20,api_version = "2023-05-15"):
-        openai.api_version = api_version
-        if new_input is None: # return init message 
-            return self.init_history[1]["content"]
-        messages = self.init_history.copy()
-        if history is not None:
-            for user_question, bot_response in history:
-                messages.append({"role":"user", "content":user_question})
-                messages.append({"role":"assistant", "content":bot_response})
-        messages.append({"role":"user", "content":new_input})
-        response = openai.ChatCompletion.create(
-            engine=self.engine,
-            messages=messages,
-            stream=stream,
-            request_timeout =request_timeout
-        )
-        if not stream:
-            return response['choices'][0]['message']['content']
-        else:
-            return gpt_stream_wrapper(response)
-    def run(self, **kwargs):
-        return self.generate_response(**kwargs)
 
 
 
@@ -74,9 +43,6 @@ def check_args(function, args):
             return False
 
     return True
-
-
-
 
 
 
@@ -204,8 +170,13 @@ AVAILABLE_FUNCTIONS = {
 
         } 
 
-FUNCTIONS_SPEC= [  
+FUNCTIONS_SPEC= [ 
+
     {
+        
+        "type":"function",
+        "function":{
+
         "name": "search_knowledgebase",
         "description": "Searches the knowledge base",
         "parameters": {
@@ -217,9 +188,12 @@ FUNCTIONS_SPEC= [
                 }
             },
             "required": ["search_query"],
-        },
+        }},
     },
     {
+        "type":"function",
+        "function":{
+
         "name": "get_schema",
         "description": "Retrieve detail schema of a graphql type",
         "parameters": {
@@ -232,10 +206,13 @@ FUNCTIONS_SPEC= [
 
             },
             "required": ["graphql_type"],
-        },
+        }},
 
     },
     {
+            "type":"function",
+        "function":{
+
         "name": "get_available_graphql_types",
         "description": "Retrieve available graphql types in customer's environment",
         "parameters": {
@@ -244,8 +221,11 @@ FUNCTIONS_SPEC= [
             },
             "required": [],
         },
-    },
+    }},
     {
+                "type":"function",
+        "function":{
+
         "name": "execute_graphql",
         "description": "execute a graphql query on customer's environment",
         "parameters": {
@@ -258,39 +238,13 @@ FUNCTIONS_SPEC= [
 
             },
             "required": ["graphql_query"],
-        },
+        }},
 
     }
 
 ]  
 
-def add_to_cache(search_query, gpt_response):
-    search_doc = {
-                 "id" : str(uuid.uuid4()),
-                 "search_query" : search_query,
-                 "search_query_vector" : get_embedding(search_query, engine=emb_engine),
-                "gpt_response" : gpt_response
-              }
-    azcs_semantic_cache_search_client.upload_documents(documents = [search_doc])
-def get_cache(search_query):
-    vector = Vector(value=get_embedding(search_query, engine=emb_engine), k=3, fields="search_query_vector")
-  
-    results = azcs_semantic_cache_search_client.search(  
-        search_text=None,  
-        vectors= [vector],
-        select=["gpt_response"],
-    )  
-    try:
-        result =next(results)
-        print("threshold ", result['@search.score'])
-        if result['@search.score']>= float(os.getenv("SEMANTIC_HIT_THRESHOLD")):
-            return result['gpt_response']
-    except StopIteration:
-        pass
-
-    return None
-
-class Smart_Agent(Agent):
+class Smart_Agent():
     """
     Agent that can use other agents and tools to answer questions.
 
@@ -314,105 +268,97 @@ class Smart_Agent(Agent):
         engine (str): The name of the GPT engine to use.
     """
 
-    def __init__(self, persona,functions_spec, functions_list, name=None, init_message=None, engine =os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT")):
-        super().__init__(engine=engine,persona=persona, init_message=init_message, name=name)
+
+    def __init__(self, persona,functions_spec, functions_list, name=None, init_message=None, engine =chat_engine):
+        if init_message is not None:
+            init_hist =[{"role":"system", "content":persona}, {"role":"assistant", "content":init_message}]
+        else:
+            init_hist =[{"role":"system", "content":persona}]
+
+        self.init_history =  init_hist
+        self.persona = persona
+        self.engine = engine
+        self.name= name
+
         self.functions_spec = functions_spec
         self.functions_list= functions_list
         
     # @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
-    def run(self, user_input, conversation=None, stream = False, api_version = "2023-07-01-preview"):
-        # openai.api_version = api_version
+    def run(self, user_input, conversation=None):
         if user_input is None: #if no input return init message
             return self.init_history, self.init_history[1]["content"]
         if conversation is None: #if no history return init message
             conversation = self.init_history.copy()
         conversation.append({"role": "user", "content": user_input})
-        i=0
-        query_used = None
-
+        request_help = False
         while True:
-
-            response = openai.ChatCompletion.create(
-                deployment_id=self.engine, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
+            response = client.chat.completions.create(
+                model=self.engine, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
                 messages=conversation,
-            functions=self.functions_spec,
-            function_call="auto"
-            
+            tools=self.functions_spec,
+            tool_choice='auto',
+            max_tokens=200,
+
             )
-            response_message = response["choices"][0]["message"]
+            
+            response_message = response.choices[0].message
+            if response_message.content is None:
+                response_message.content = ""
 
+            tool_calls = response_message.tool_calls
+            
 
-                # Step 2: check if GPT wanted to call a function
-            if  response_message.get("function_call"):
-                print("Recommended Function call:")
-                print(response_message.get("function_call"))
-                print()
+            print("assistant response: ", response_message.content)
+            # Step 2: check if GPT wanted to call a function
+            if  tool_calls:
+                conversation.append(response_message)  # extend conversation with assistant's reply
+                for tool_call in tool_calls:
+                    function_name = tool_call.function.name
+                    print("Recommended Function call:")
+                    print(function_name)
+                    print()
                 
-                # Step 3: call the function
-                # Note: the JSON response may not always be valid; be sure to handle errors
+                    # Step 3: call the function
+                    # Note: the JSON response may not always be valid; be sure to handle errors
+                                    
+                    # verify function exists
+                    if function_name not in self.functions_list:
+                        # raise Exception("Function " + function_name + " does not exist")
+                        conversation.pop()
+                        continue
+                    function_to_call = self.functions_list[function_name]
+                    
+                    # verify function has correct number of arguments
+                    function_args = json.loads(tool_call.function.arguments)
+
+                    if check_args(function_to_call, function_args) is False:
+                        # raise Exception("Invalid number of arguments for function: " + function_name)
+                        conversation.pop()
+                        continue
+
+                    
+                    # print("beginning function call")
+                    function_response = str(function_to_call(**function_args))
+
+                    print("Output of function call:")
+                    print(function_response)
+                    print()
                 
-                function_name = response_message["function_call"]["name"]
-                
-                # verify function exists
-                if function_name not in self.functions_list:
-                    raise Exception("Function " + function_name + " does not exist")
-                function_to_call = self.functions_list[function_name]  
-                
-                # verify function has correct number of arguments
-                function_args = json.loads(response_message["function_call"]["arguments"])
+                    conversation.append(
+                        {
+                            "tool_call_id": tool_call.id,
+                            "role": "tool",
+                            "name": function_name,
+                            "content": function_response,
+                        }
+                    )  # extend conversation with function response
+                    
 
-                if check_args(function_to_call, function_args) is False:
-                    raise Exception("Invalid number of arguments for function: " + function_name)
-
-                # check if there's an opprotunity to use semantic cache
-                if function_name =="search_knowledgebase":
-                    search_query = function_args["search_query"]
-                    print("search_query", search_query)
-                    if os.getenv("USE_SEMANTIC_CACHE") == "True":
-                        
-                        cache_output = get_cache(search_query)
-                        if cache_output is not None:
-                            print("semantic cache hit")
-                            conversation.append({"role": "assistant", "content": cache_output})
-                            return False, query_used,conversation, cache_output
-                        else:
-                            print("semantic cache missed")
-                            query_used = search_query
-
-
-                function_response = str(function_to_call(**function_args))
-                print("Output of function call:")
-                print(function_response)
-                print()
-
-                
-                # Step 4: send the info on the function call and function response to GPT
-                
-                # adding assistant response to messages
-                conversation.append(
-                    {
-                        "role": response_message["role"],
-                        "name": response_message["function_call"]["name"],
-                        "content": response_message["function_call"]["arguments"],
-                    }
-                )
-
-                # adding function response to messages
-                conversation.append(
-                    {
-                        "role": "function",
-                        "name": function_name,
-                        "content": function_response,
-                    }
-                )  # extend conversation with function response
                 continue
             else:
                 break #if no function call break out of loop as this indicates that the agent finished the research and is ready to respond to the user
 
-        if not stream:
-            assistant_response = response_message["content"]
-            conversation.append({"role": "assistant", "content": assistant_response})
+        conversation.append(response_message)
+        assistant_response = response_message.content
 
-        else:
-            assistant_response = response_message
-        return stream,query_used, conversation, assistant_response
+        return request_help, conversation, assistant_response

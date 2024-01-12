@@ -1,9 +1,7 @@
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
-from copilot_utils import PERSONA, AVAILABLE_FUNCTIONS, FUNCTIONS_SPEC
+from copilot_utils import Smart_Agent, PERSONA, AVAILABLE_FUNCTIONS, FUNCTIONS_SPEC
 import sys
-sys.path.append("..")
-from copilot_utils import Smart_Agent,add_to_cache
 import time
 import random
 import os
@@ -51,7 +49,8 @@ history = st.session_state['history']
       
 if len(history) > 0:
     for message in history:
-        if message.get("role") != "system" and message.get("name") is  None:
+        message = dict(message)
+        if message.get("role") != "system" and message.get("role") != "tool" and message.get("name") is None and len(message.get("content")) > 0:
             with st.chat_message(message["role"]):
                     st.markdown(message["content"])
 else:
@@ -62,21 +61,8 @@ else:
 if user_input:
     with st.chat_message("user"):
         st.markdown(user_input)
-    stream_out, query_used, history, agent_response = agent.run(user_input=user_input, conversation=history, stream=False)
+    query_used, history, agent_response = agent.run(user_input=user_input, conversation=history)
     with st.chat_message("assistant"):
-        if stream_out:
-            message_placeholder = st.empty()
-            full_response = ""
-            for response in agent_response:
-                if len(response.choices)>0:
-                    full_response += response.choices[0].delta.get("content", "")
-                    message_placeholder.markdown(full_response + "▌")
-            message_placeholder.markdown(full_response)
-            if query_used: #add to cache
-                add_to_cache(query_used, full_response)
-                print(f"query {query_used} added to cache")
-            history.append({"role": "assistant", "content": full_response})
-        else:
-            st.markdown(agent_response)
+        st.markdown(agent_response)
 
 st.session_state['history'] = history
