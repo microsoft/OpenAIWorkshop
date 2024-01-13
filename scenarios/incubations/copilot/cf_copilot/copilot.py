@@ -7,7 +7,6 @@ import random
 import os
 from pathlib import Path  
 import json
-print("AVAILABLE_FUNCTIONS", AVAILABLE_FUNCTIONS)
 agent = Smart_Agent(persona=PERSONA,functions_list=AVAILABLE_FUNCTIONS, functions_spec=FUNCTIONS_SPEC, init_message="Hi there, this is Confluent AI assistant, what can I do for you?")
 
 st.set_page_config(layout="wide",page_title="Enterprise Copilot- A demo of Copilot application using GPT")

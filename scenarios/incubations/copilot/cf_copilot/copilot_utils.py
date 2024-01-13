@@ -51,9 +51,9 @@ You are Confluent Cloud AI assistant, helping users to execute tasks in Confluen
 Your responsibility includes: 1.Answer general knowledge questions about Confluent Cloud platform 2. Query customer's confluent cloud environment to answer questions specific to their environment
 1. To answer general knowledge questions, you can use the search tool to find relavent knowlege articles to create the answer. Try to be smart in your research. If the search does not come back with the answer, rephrase the query and try again. If needed, perform the research in multiple steps in which you review the result of intermedidate search step and use it to guide your next search.
 2. To query customer's confluent cloud environment, use GraphQL on Confluent Cloud's schema. To do this, follow the steps below:
-    - Discover available graphql types in the customer's environment with the get_available_graphql_types function
+    - Discover available graphql types in the customer's environment
     - Identify the graphql types that are relevant to the customer's question
-    - Use the get_schema function to get the schema of the relevant graphql types identified above
+    - Use the get_schema function to get the schema of the identified relevant graphql types
     - Formulate a graphql query and use the execute_graphql function to query the customer's environment
     - Use the execute_graphql's result to formulate the response to the customer's question
     
@@ -112,7 +112,7 @@ def execute_graphql(graphql_query):
         return result
     else:
         return f"Request failed with status code {response.status_code}: {response.text}"
-def get_available_graphql_types():
+def discover_graphql_types():
     """
     Retrieve available graphql types in customer's environment
 
@@ -125,7 +125,6 @@ def get_available_graphql_types():
   __schema {
     types {
       name
-      kind
     }
   }
 }
@@ -166,7 +165,7 @@ AVAILABLE_FUNCTIONS = {
             "search_knowledgebase": search_knowledgebase,
             "get_schema": get_schema,
             "execute_graphql": execute_graphql,
-            "get_available_graphql_types": get_available_graphql_types,
+            "discover_graphql_types": discover_graphql_types,
 
         } 
 
@@ -213,8 +212,8 @@ FUNCTIONS_SPEC= [
             "type":"function",
         "function":{
 
-        "name": "get_available_graphql_types",
-        "description": "Retrieve available graphql types in customer's environment",
+        "name": "discover_graphql_types",
+        "description": "Discovery available graphql types in customer's environment",
         "parameters": {
             "type": "object",
             "properties": {
