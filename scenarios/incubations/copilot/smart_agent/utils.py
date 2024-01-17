@@ -1,55 +1,63 @@
-import openai
+# Agent class
+### responsbility definition: expertise, scope, conversation script, style 
+from openai import AzureOpenAI
+from datetime import datetime  
 import os
 from pathlib import Path  
 import json
 import time
-from azure.search.documents.models import Vector  
-import uuid
-from tenacity import retry, wait_random_exponential, stop_after_attempt  
-
+from scipy import spatial  # for calculating vector similarities for search
+from datetime import datetime, timedelta
+from dateutil import parser
 from dotenv import load_dotenv
 from azure.core.credentials import AzureKeyCredential  
 from azure.search.documents import SearchClient  
-from openai.embeddings_utils import get_embedding, cosine_similarity
 import inspect
+
+from azure.search.documents.models import (
+
+    QueryAnswerType,
+    QueryCaptionType,
+    QueryType,
+    VectorizedQuery,
+)
+
 env_path = Path('.') / 'secrets.env'
 load_dotenv(dotenv_path=env_path)
-openai.api_key =  os.environ.get("AZURE_OPENAI_API_KEY")
-openai.api_base =  os.environ.get("AZURE_OPENAI_ENDPOINT")
-openai.api_type = "azure"
+emb_engine = os.getenv("AZURE_OPENAI_EMB_DEPLOYMENT")
+chat_engine =os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT")
+
+client = AzureOpenAI(
+  api_key=os.environ.get("AZURE_OPENAI_API_KEY"),  
+  api_version="2023-12-01-preview",
+  azure_endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
+)
 emb_engine = os.getenv("AZURE_OPENAI_EMB_DEPLOYMENT")
 emb_engine = emb_engine.strip('"')
 
 #azcs implementation
 service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT") 
 index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 
-index_name = index_name.strip('"')
 key = os.getenv("AZURE_SEARCH_ADMIN_KEY") 
-key = key.strip('"')
 # @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
 # Function to generate embeddings for title and content fields, also used for query embeddings
-def generate_embeddings(text):
-    print("emb_engine", emb_engine)
-    openai.api_version = "2023-05-15"
-    response = openai.Embedding.create(
-        input=text, engine=emb_engine)
-    embeddings = response['data'][0]['embedding']
-    return embeddings
+def get_embedding(text, model=emb_engine):
+   text = text.replace("\n", " ")
+   return client.embeddings.create(input = [text], model=model).data[0].embedding
+
 credential = AzureKeyCredential(key)
 azcs_search_client = SearchClient(service_endpoint, index_name =index_name , credential=credential)
 
 
 def search_knowledgebase(search_query):
 
-    vector = Vector(value=generate_embeddings(search_query), k=3, fields="embedding")
+    vector = VectorizedQuery(vector=get_embedding(search_query), k_nearest_neighbors=3, fields="embedding")
     print("search query: ", search_query)
-    # print("products: ", products.split(","))
-    # product_filter = " or ".join([f"product eq '{product}'" for product in products.split(",")])
     results = azcs_search_client.search(  
         search_text=search_query,  
-        vectors= [vector],
+        vector_queries= [vector],
         # filter= product_filter,
-        query_type="semantic", query_language="en-us", semantic_configuration_name='default', query_caption="extractive", query_answer="extractive",
+        query_type=QueryType.SEMANTIC, semantic_configuration_name='default', query_caption=QueryCaptionType.EXTRACTIVE, query_answer=QueryAnswerType.EXTRACTIVE,
         select=["sourcepage","content"],
         top=3
     )  
@@ -98,41 +106,6 @@ def gpt_stream_wrapper(response):
         chunk_msg= chunk['choices'][0]['delta']
         chunk_msg= chunk_msg.get('content',"")
         yield chunk_msg
-class Agent(): #Base class for Agent
-    def __init__(self, engine,persona, name=None, init_message=None):
-        if init_message is not None:
-            init_hist =[{"role":"system", "content":persona}, {"role":"assistant", "content":init_message}]
-        else:
-            init_hist =[{"role":"system", "content":persona}]
-
-        self.init_history =  init_hist
-        self.persona = persona
-        self.engine = engine
-        self.name= name
-    def generate_response(self, new_input,history=None, stream = False,request_timeout =20,api_version = "2023-05-15"):
-        openai.api_version = api_version
-        if new_input is None: # return init message 
-            return self.init_history[1]["content"]
-        messages = self.init_history.copy()
-        if history is not None:
-            for user_question, bot_response in history:
-                messages.append({"role":"user", "content":user_question})
-                messages.append({"role":"assistant", "content":bot_response})
-        messages.append({"role":"user", "content":new_input})
-        response = openai.ChatCompletion.create(
-            engine=self.engine,
-            messages=messages,
-            stream=stream,
-            request_timeout =request_timeout
-        )
-        if not stream:
-            return response['choices'][0]['message']['content']
-        else:
-            return gpt_stream_wrapper(response)
-    def run(self, **kwargs):
-        return self.generate_response(**kwargs)
-
-
 
 def check_args(function, args):
     sig = inspect.signature(function)
@@ -149,7 +122,7 @@ def check_args(function, args):
 
     return True
 
-class Smart_Agent(Agent):
+class Smart_Agent():
     """
     Agent that can use other agents and tools to answer questions.
 
@@ -173,111 +146,110 @@ class Smart_Agent(Agent):
         engine (str): The name of the GPT engine to use.
     """
 
-    def __init__(self, persona,functions_spec, functions_list, name=None, init_message=None, engine =os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT")):
-        super().__init__(engine=engine,persona=persona, init_message=init_message, name=name)
+
+    def __init__(self, persona,functions_spec, functions_list, name=None, init_message=None, engine =chat_engine):
+        if init_message is not None:
+            init_hist =[{"role":"system", "content":persona}, {"role":"assistant", "content":init_message}]
+        else:
+            init_hist =[{"role":"system", "content":persona}]
+
+        self.init_history =  init_hist
+        self.persona = persona
+        self.engine = engine
+        self.name= name
+
         self.functions_spec = functions_spec
         self.functions_list= functions_list
         
-    @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
-    def run(self, user_input, conversation=None, stream = False, api_version = "2023-07-01-preview"):
-        openai.api_version = api_version
+    # @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
+    def run(self, user_input, conversation=None):
         if user_input is None: #if no input return init message
             return self.init_history, self.init_history[1]["content"]
         if conversation is None: #if no history return init message
             conversation = self.init_history.copy()
         conversation.append({"role": "user", "content": user_input})
-        i=0
-        query_used = None
-
+        request_help = False
         while True:
-
-            response = openai.ChatCompletion.create(
-                deployment_id=self.engine, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
+            response = client.chat.completions.create(
+                model=self.engine, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
                 messages=conversation,
-            functions=self.functions_spec,
-            function_call="auto"
-            
+            tools=self.functions_spec,
+            tool_choice='auto',
+            max_tokens=200,
+
             )
-            response_message = response["choices"][0]["message"]
+            
+            response_message = response.choices[0].message
+            if response_message.content is None:
+                response_message.content = ""
 
+            tool_calls = response_message.tool_calls
+            
 
-                # Step 2: check if GPT wanted to call a function
-            if  response_message.get("function_call"):
-                print("Recommended Function call:")
-                print(response_message.get("function_call"))
-                print()
+            print("assistant response: ", response_message.content)
+            # Step 2: check if GPT wanted to call a function
+            if  tool_calls:
+                conversation.append(response_message)  # extend conversation with assistant's reply
+                for tool_call in tool_calls:
+                    function_name = tool_call.function.name
+                    print("Recommended Function call:")
+                    print(function_name)
+                    print()
                 
-                # Step 3: call the function
-                # Note: the JSON response may not always be valid; be sure to handle errors
+                    # Step 3: call the function
+                    # Note: the JSON response may not always be valid; be sure to handle errors
+                                    
+                    # verify function exists
+                    if function_name not in self.functions_list:
+                        # raise Exception("Function " + function_name + " does not exist")
+                        conversation.pop()
+                        continue
+                    function_to_call = self.functions_list[function_name]
+                    
+                    # verify function has correct number of arguments
+                    function_args = json.loads(tool_call.function.arguments)
+
+                    if check_args(function_to_call, function_args) is False:
+                        # raise Exception("Invalid number of arguments for function: " + function_name)
+                        conversation.pop()
+                        continue
+
+                    
+                    # print("beginning function call")
+                    function_response = str(function_to_call(**function_args))
+
+                    if function_name=="get_help": #scenario where the agent asks for help
+                        summary_conversation = []
+                        for message in conversation:
+                            message = dict(message)
+                            if message.get("role") != "system" and message.get("role") != "tool" and len(message.get("content"))>0:
+                                summary_conversation.append({"role":message.get("role"), "content":message.get("content")})
+                        summary_conversation.pop() #remove the last message which is the agent asking for help
+                        return True, summary_conversation, function_response
+
+                    print("Output of function call:")
+                    print(function_response)
+                    print()
                 
-                function_name = response_message["function_call"]["name"]
-                
-                # verify function exists
-                if function_name not in self.functions_list:
-                    raise Exception("Function " + function_name + " does not exist")
-                function_to_call = self.functions_list[function_name]  
-                
-                # verify function has correct number of arguments
-                function_args = json.loads(response_message["function_call"]["arguments"])
+                    conversation.append(
+                        {
+                            "tool_call_id": tool_call.id,
+                            "role": "tool",
+                            "name": function_name,
+                            "content": function_response,
+                        }
+                    )  # extend conversation with function response
+                    
 
-                if check_args(function_to_call, function_args) is False:
-                    raise Exception("Invalid number of arguments for function: " + function_name)
-                search_query = function_args["search_query"]
-                print("search_query", search_query)
-
-                # check if there's an opprotunity to use semantic cache
-                if function_name =="search_knowledgebase":
-                    if os.getenv("USE_SEMANTIC_CACHE") == "True":
-                        
-                        cache_output = get_cache(search_query)
-                        if cache_output is not None:
-                            print("semantic cache hit")
-                            conversation.append({"role": "assistant", "content": cache_output})
-                            return False, query_used,conversation, cache_output
-                        else:
-                            print("semantic cache missed")
-                            query_used = search_query
-
-
-                function_response = function_to_call(**function_args)
-                print("Output of function call:")
-                print(function_response)
-                print()
-
-                
-                # Step 4: send the info on the function call and function response to GPT
-                
-                # adding assistant response to messages
-                conversation.append(
-                    {
-                        "role": response_message["role"],
-                        "name": response_message["function_call"]["name"],
-                        "content": response_message["function_call"]["arguments"],
-                    }
-                )
-
-                # adding function response to messages
-                conversation.append(
-                    {
-                        "role": "function",
-                        "name": function_name,
-                        "content": function_response,
-                    }
-                )  # extend conversation with function response
                 continue
             else:
                 break #if no function call break out of loop as this indicates that the agent finished the research and is ready to respond to the user
 
-        if not stream:
-            assistant_response = response_message["content"]
-            conversation.append({"role": "assistant", "content": assistant_response})
+        conversation.append(response_message)
+        assistant_response = response_message.content
 
-        else:
-            assistant_response = response_message
-
-        return stream,query_used, conversation, assistant_response
-
-
+        return request_help, conversation, assistant_response
+                
 PERSONA = """
 You are Maya, a technical support specialist responsible for answering questions about computer networking and system.
 You are helping {username} with a technical question.
@@ -297,6 +269,9 @@ AVAILABLE_FUNCTIONS = {
 
 FUNCTIONS_SPEC= [  
     {
+                                "type":"function",
+        "function":{
+
         "name": "search_knowledgebase",
         "description": "Searches the knowledge base for an answer to the technical question",
         "parameters": {
@@ -310,7 +285,7 @@ FUNCTIONS_SPEC= [
             },
             "required": ["search_query"],
         },
-    },
+    }},
 
 ]  
 
