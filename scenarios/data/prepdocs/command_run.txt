@@ -1,0 +1,16 @@
+SET searchkey=""
+SET openaikey=""
+SET formrecognizerkey=""
+SET storagekey=""
+SET AZURE_STORAGE_ACCOUNT=""
+SET AZURE_STORAGE_CONTAINER=""
+SET AZURE_SEARCH_SERVICE=""
+SET AZURE_OPENAI_SERVICE=""
+SET AZURE_OPENAI_EMB_DEPLOYMENT="text-embedding-ada-002"
+SET AZURE_FORMRECOGNIZER_RESOURCE_GROUP=""
+SET AZURE_FORMRECOGNIZER_SERVICE=""
+SET AZURE_TENANT_ID=""
+SET AZURE_SEARCH_ADMIN_KEY=""
+SET AZURE_SEARCH_INDEX_NAME=""
+
+python prepdocs.py "./documents/*.pdf" --storageaccount "%AZURE_STORAGE_ACCOUNT%" --container "%AZURE_STORAGE_CONTAINER%" --searchservice "%AZURE_SEARCH_SERVICE%" --openaiservice "%AZURE_OPENAI_SERVICE%" --openaideployment "%AZURE_OPENAI_EMB_DEPLOYMENT%" --searchkey "%AZURE_SEARCH_ADMIN_KEY%" --index "%AZURE_SEARCH_INDEX_NAME%" --formrecognizerservice "%AZURE_FORMRECOGNIZER_SERVICE%" --tenantid "%AZURE_TENANT_ID%" --searchkey "%searchkey%" --openaikey "%openaikey%" --formrecognizerkey "%formrecognizerkey%" --storagekey "%storagekey%"  -v
