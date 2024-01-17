@@ -1,9 +1,9 @@
 streamlit
-openai
+openai==1.8.0
 streamlit-extras
 python-dotenv 
 plotly
 scipy
 scikit-learn
-azure-search-documents==11.4.0b9
+azure-search-documents==11.4.0
 faiss-cpu
