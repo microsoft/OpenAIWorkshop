@@ -1,0 +1,2 @@
+This is the implemnetation for the article: https://medium.com/@james-tn/forget-rag-embrace-agent-design-for-a-more-intelligent-grounded-chatgpt-6c562d903c61
+Follow the steps in ../../data/prepdocs to prepare data in Azure Search
