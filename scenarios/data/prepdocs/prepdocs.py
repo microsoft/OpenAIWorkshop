@@ -7,7 +7,7 @@ import os
 import re
 import time
 
-import openai
+from openai import AzureOpenAI
 from azure.ai.formrecognizer import DocumentAnalysisClient
 from azure.core.credentials import AzureKeyCredential
 from azure.identity import AzureDeveloperCliCredential
@@ -18,12 +18,9 @@ from azure.storage.blob import BlobServiceClient
 from pypdf import PdfReader, PdfWriter
 from tenacity import retry, stop_after_attempt, wait_random_exponential
 import json
-MAX_SECTION_LENGTH = 3000
+MAX_SECTION_LENGTH = 2000
 SENTENCE_SEARCH_LIMIT = 100
-SECTION_OVERLAP = 300
-#with open("../EVA_documents/file_name_product_map.json", "r") as f:
-#    product_file_map = json.load(f)
-#product_file_map = eval(product_file_map)
+SECTION_OVERLAP = 200
 def blob_name_from_file_page(filename, page = 0):
     if os.path.splitext(filename)[1].lower() == ".pdf":
         return os.path.splitext(os.path.basename(filename))[0] + f"-{page}" + ".pdf"
@@ -42,6 +39,7 @@ def upload_blobs(filename):
         pages = reader.pages
         for i in range(len(pages)):
             blob_name = blob_name_from_file_page(filename, i)
+            print("blob name is ", blob_name)
             if args.verbose: print(f"\tUploading blob for page {i} -> {blob_name}")
             f = io.BytesIO()
             writer = PdfWriter()
@@ -218,7 +216,8 @@ def before_retry_sleep(retry_state):
 @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(15), before_sleep=before_retry_sleep)
 def compute_embedding(text):
     # print("args.openaideployment", args.openaideployment)
-    return openai.Embedding.create(engine=args.openaideployment, input=text)["data"][0]["embedding"]
+   text = text.replace("\n", " ")
+   return client.embeddings.create(input = [text], model=args.openaideployment).data[0].embedding
 
 def create_search_index():
     if args.verbose: print(f"Ensuring search index {args.index} exists")
@@ -227,34 +226,57 @@ def create_search_index():
     if args.index not in index_client.list_index_names():
         index = SearchIndex(
             name=args.index,
+
             fields=[
-                SimpleField(name="id", type="Edm.String", key=True),
-                SearchableField(name="content", type="Edm.String", analyzer_name="en.microsoft"),
+                SimpleField(name="id", type=SearchFieldDataType.String, key=True),
+                SearchableField(name="content", type=SearchFieldDataType.String),
                 SearchField(name="embedding", type=SearchFieldDataType.Collection(SearchFieldDataType.Single), 
                             hidden=False, searchable=True, filterable=False, sortable=False, facetable=False,
-                            vector_search_dimensions=1536, vector_search_configuration="default"),
-                SimpleField(name="product", type="Edm.String", filterable=True, facetable=True),
-                SimpleField(name="sourcepage", type="Edm.String", filterable=True, facetable=True),
-                SimpleField(name="sourcefile", type="Edm.String", filterable=True, facetable=True)
+                            vector_search_dimensions=1536, vector_search_profile_name="myHnswProfile"),
+                SimpleField(name="product", type=SearchFieldDataType.String, filterable=True, facetable=True),
+                SimpleField(name="sourcepage", type=SearchFieldDataType.String, filterable=True, facetable=True),
+                SimpleField(name="sourcefile", type=SearchFieldDataType.String, filterable=True, facetable=True)
             ],
-            semantic_settings=SemanticSettings(
-                configurations=[SemanticConfiguration(
-                    name='default',
-                    prioritized_fields=PrioritizedFields(
-                        title_field=None, prioritized_content_fields=[SemanticField(field_name='content')]))]),
+
+            # Create the semantic settings with the configuration
+            semantic_search = SemanticSearch(configurations=[SemanticConfiguration(
+                name="default",
+                prioritized_fields=SemanticPrioritizedFields(
+                    title_field=None,
+                    content_fields=[SemanticField(field_name="content")]
+                )
+            )]),
                 vector_search=VectorSearch(
-                    algorithm_configurations=[
-                        HnswVectorSearchAlgorithmConfiguration(
-                            name="default",
-                            kind="hnsw",
-                            parameters={
-                                "m": 4,
-                                "efConstruction": 400,
-                                "efSearch": 500,
-                                "metric": "cosine"
-                            }
+                    algorithms=[
+                        HnswAlgorithmConfiguration(
+                            name="myHnsw",
+                            kind=VectorSearchAlgorithmKind.HNSW,
+                            parameters=HnswParameters(
+                                m=4,
+                                ef_construction=400,
+                                ef_search=500,
+                                metric=VectorSearchAlgorithmMetric.COSINE
+                            )
+                        ),
+                        ExhaustiveKnnAlgorithmConfiguration(
+                            name="myExhaustiveKnn",
+                            kind=VectorSearchAlgorithmKind.EXHAUSTIVE_KNN,
+                            parameters=ExhaustiveKnnParameters(
+                                metric=VectorSearchAlgorithmMetric.COSINE
+                            )
+                        )
+                    ],
+                    profiles=[
+                        VectorSearchProfile(
+                            name="myHnswProfile",
+                            algorithm_configuration_name="myHnsw",
+                        ),
+                        VectorSearchProfile(
+                            name="myExhaustiveKnnProfile",
+                            algorithm_configuration_name="myExhaustiveKnn",
                         )
                     ]
+
                 )        
             )
         if args.verbose: print(f"Creating {args.index} search index")
@@ -343,15 +365,12 @@ if __name__ == "__main__":
         formrecognizer_creds = default_creds if args.formrecognizerkey == None else AzureKeyCredential(args.formrecognizerkey)
 
     if use_vectors:
-        if args.openaikey == None:
-            openai.api_key = azd_credential.get_token("https://cognitiveservices.azure.com/.default").token
-            openai.api_type = "azure_ad"
-        else:
-            openai.api_type = "azure"
-            openai.api_key = args.openaikey
+        client = AzureOpenAI(
+        api_key=args.openaikey,  
+        api_version="2023-12-01-preview",
+        azure_endpoint = f"https://{args.openaiservice}.openai.azure.com"
+        )
 
-        openai.api_base = f"https://{args.openaiservice}.openai.azure.com"
-        openai.api_version = "2022-12-01"
 
     if args.removeall:
         remove_blobs(None)
