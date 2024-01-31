@@ -53,11 +53,8 @@ Once you are certain about what the customer is looking for, use get_help functi
 If user just ask generic questions not related to hotel or flight booking, feel free to help. No need to call other agents.
 """
 
-FLIGHT_PERSONA = FLIGHT_PERSONA + "\nIf the user is asking for information that is not related to flight booking, call get_help."
-
-
-
-HOTEL_PERSONA = HOTEL_PERSONA + "\nIf the user is asking for information that is not related to hotel booking, call get_help."
+FLIGHT_PERSONA = FLIGHT_PERSONA + "\nIf the user is asking for information that is not related to flight booking, just call for help and do not try to respond customer as it's violation of business policy."
+HOTEL_PERSONA = HOTEL_PERSONA + "\nIf the user is asking for information that you cannot provide, just call for help so that other agents may help and do not try to respond customer as it's violation of business policy."
 HOTEL_AVAILABLE_FUNCTIONS['get_help'] = get_help
 FLIGHT_AVAILABLE_FUNCTIONS['get_help'] = get_help
 get_help_function_spec ={        
@@ -65,7 +62,7 @@ get_help_function_spec ={
         "function":{
 
         "name": "get_help",
-        "description": "Get help when you the question is out of your expertise",
+        "description": "Get help from others when you the question is out of your expertise",
         "parameters": {
             "type": "object",
             "properties": {
