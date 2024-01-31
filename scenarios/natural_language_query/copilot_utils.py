@@ -390,7 +390,7 @@ BA_FUNCTIONS_SPEC= [
             "properties": {
                 "python_code": {
                     "type": "string",
-                    "description": "python code snippet that can be executed. You are provided with following utility functions \n 1. execute_sql_query(sql_query: str) a util function to execute SQL query against the SQLITE database with valid SQL syntax and data schema were discovered before this step. This execute_sql_query(sql_query: str) function returns a pandas dataframe that you can use to perform any data analysis and visualization.\n 2. display(data) an util function to display the data analysis and visualization result. This function can take a pandas dataframe, plotly figure or matplotlib figure as input. For example, to visualize a plotly figure, the code can be ```fig=px.line(some_df)\n display(fig)```Output can only be observed by display() util function which can accept a pandas dataframe, plotly figure or matplotlib figure as input. Do not use print() or figure.show() as they do not work in the remote environment."
+                    "description": "python code snippet that can be executed. You are provided with following utility functions \n 1. execute_sql_query(sql_query: str) a util function to execute SQL query against the SQLITE database with valid SQL syntax and data schema were discovered before this step. This execute_sql_query(sql_query: str) function returns a pandas dataframe that you can use to perform any data analysis and visualization.\n 2. display(data): a util function to display the data analysis and visualization result. This function can take a pandas dataframe or plotly figure as input. For example, to visualize a plotly figure, the code can be ```fig=px.line(some_df)\n display(fig)```. Output can only be observed by display() util, so do not use print() or figure.show() as they do not work in the remote environment.Use plotly only for graph visualization"
                 },
                 "goal": {
                     "type": "string",
@@ -540,21 +540,21 @@ class Smart_Agent(Agent):
                     function_to_call = self.functions_list[function_name]
                     
                     # verify function has correct number of arguments
-                    function_args = json.loads(tool_call.function.arguments)
+                    try:
+                        function_args = json.loads(tool_call.function.arguments)
+                    except:
+                        conversation.pop()
+                        continue
 
                     if check_args(function_to_call, function_args) is False:
-                        raise Exception("Invalid number of arguments for function: " + function_name)
+                        conversation.pop()
+                        continue
 
-                    # print("beginning function call")
                     function_response = str(function_to_call(**function_args))
                     if function_name == "execute_python_code":
                         if "data" in st.session_state:
-                            print("data added session state under ", tool_call.id)
                             data[tool_call.id] = st.session_state['data']
-                        else:
-                            print("data not added session state under ", tool_call.id)
-                                    
-                                    
+                                     
                     print("Output of function call:")
                     print(function_response)
                     print()
