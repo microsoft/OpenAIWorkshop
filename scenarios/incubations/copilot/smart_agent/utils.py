@@ -38,7 +38,11 @@ emb_engine = emb_engine.strip('"')
 #azcs implementation
 service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT") 
 index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 
+index_name = index_name.strip('"')
+
 key = os.getenv("AZURE_SEARCH_ADMIN_KEY") 
+key = key.strip('"')
+
 # @retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
 # Function to generate embeddings for title and content fields, also used for query embeddings
 def get_embedding(text, model=emb_engine):
@@ -251,7 +255,7 @@ class Smart_Agent():
         return request_help, conversation, assistant_response
                 
 PERSONA = """
-You are Maya, a technical support specialist responsible for answering questions about computer networking and system.
+You are Maya, a technical support specialist.
 You are helping {username} with a technical question.
 You will use the search tool to find relavent knowlege articles to create the answer.
 Being smart in your research. If the search does not come back with the answer, rephrase the question and try again.
@@ -259,7 +263,7 @@ Review the result of the search and use it to guide your next search if needed.
 If the question is complex, break down to smaller search steps and find the answer in multiple steps.
 Answer ONLY with the facts from the search tool. If there isn't enough information, say you don't know. Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.
 Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brakets to reference the source, e.g. [info1.txt]. Don't combine sources, list each source separately, e.g. [info1.txt][info2.pdf].
-If the user is asking for information that is not related to computer networking, say it's not your area of expertise.
+If the user is asking for information that is not related to technical domain, say it's not your area of expertise.
 """
 
 AVAILABLE_FUNCTIONS = {

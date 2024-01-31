@@ -12,7 +12,7 @@ with open('./user_profile.json') as f:
 functions = FUNCTIONS_SPEC.copy()
 # functions[0]["parameters"]["properties"]["products"]["description"] = functions[0]["parameters"]["properties"]["products"]["description"].format(products=user_profile['products'])
 
-agent = Smart_Agent(persona=PERSONA.format(username=user_profile['username']),functions_list=AVAILABLE_FUNCTIONS, functions_spec=functions, init_message=f"Hi {user_profile['username']}, this is Maya, technical specialist helping with questions about networking and system, what can I do for you?")
+agent = Smart_Agent(persona=PERSONA.format(username=user_profile['username']),functions_list=AVAILABLE_FUNCTIONS, functions_spec=functions, init_message=f"Hi {user_profile['username']}, this is Maya, technical specialist, what can I do for you?")
 
 st.set_page_config(layout="wide",page_title="Enterprise Copilot- A demo of Copilot application using GPT")
 styl = f"""
