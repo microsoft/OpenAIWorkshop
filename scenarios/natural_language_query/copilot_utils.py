@@ -363,7 +363,7 @@ BA_FUNCTIONS_SPEC= [
         "function":{
 
         "name": "find_similar_cases",
-        "description": "Return similiar questions from the answered questions pool and SQL queries used. You can then infer schema and business rules to apply for your question if the question is similiar to the answered questions. This should be used before attempting to retrieve full context as this is faster",
+        "description": "Return similiar questions from the answered questions pool and SQL queries used to infer schema and business rules to apply for your question. This should be used first before resorting get_scenarios and retrieve_context functions",
         "parameters": {
             "type": "object",
             "properties": {

@@ -1,0 +1,332 @@
+{
+    "analytic_scenarios": {
+        "Customer Sales Analysis": {
+            "rules": [
+                "Revenue recognized on ShippedDate"
+            ],
+            "description": "Analyzing sales data by customer."
+        },
+        "Inventory Management": {
+            "rules": [
+                "Restock when UnitsInStock less than ReorderLevel"
+            ],
+            "description": "Managing product stock levels."
+        },
+        "Shipping Efficiency": {
+            "rules": [
+                "Optimize routes based on ShipRegion and ShipCountry"
+            ],
+            "description": "Optimizing shipping routes for efficiency."
+        },
+        "Employee Performance Tracking": {
+            "rules": [
+                "Performance evaluated on number of orders processed"
+            ],
+            "description": "Tracking employee order processing performance."
+        },
+        "Product Profitability": {
+            "rules": [
+                "Profit calculated as UnitPrice minus Discount"
+            ],
+            "description": "Calculating profitability of products."
+        },
+        "Customer Retention": {
+            "rules": [
+                "Follow-up if no orders in the past 12 months"
+            ],
+            "description": "Strategies to retain customers."
+        },
+        "Supplier Relationship Management": {
+            "rules": [
+                "Assess supplier performance based on delivery times and product quality"
+            ],
+            "description": "Managing supplier relationships."
+        },
+        "Market Segmentation": {
+            "rules": [
+                "Segment customers based on CustomerDemographics"
+            ],
+            "description": "Segmenting the market based on customer demographics."
+        },
+        "Sales Territory Performance": {
+            "rules": [
+                "Sales targets set based on TerritoryDescription",
+                "Revenue recognized on ShippedDate"
+            ],
+            "description": "Evaluating sales performance by territory."
+        },
+        "Product Category Sales Trends": {
+            "rules": [
+                "Analyze sales trends by CategoryName",
+                "Revenue recognized on ShippedDate"
+            ],
+            "description": "Analyzing sales trends within product categories."
+        }
+    },
+    "tables": {
+        "orders": {
+            "columns": [
+                "OrderID INT",
+                "CustomerID VARCHAR",
+                "EmployeeID INT",
+                "OrderDate DATE",
+                "RequiredDate DATE",
+                "ShippedDate DATE",
+                "ShipVia INT",
+                "Freight DECIMAL",
+                "ShipName VARCHAR",
+                "ShipAddress VARCHAR",
+                "ShipCity VARCHAR",
+                "ShipRegion VARCHAR",
+                "ShipPostalCode VARCHAR",
+                "ShipCountry VARCHAR"
+            ],
+            "description": "Records of all orders placed."
+        },
+        "customers": {
+            "columns": [
+                "CustomerID VARCHAR",
+                "CompanyName VARCHAR",
+                "ContactName VARCHAR",
+                "ContactTitle VARCHAR",
+                "Address VARCHAR",
+                "City VARCHAR",
+                "Region VARCHAR",
+                "PostalCode VARCHAR",
+                "Country VARCHAR",
+                "Phone VARCHAR",
+                "Fax VARCHAR"
+            ],
+            "description": "Information about customers."
+        },
+        "[Order Details]": {
+            "columns": [
+                "OrderID INT",
+                "ProductID INT",
+                "UnitPrice DECIMAL",
+                "Quantity SMALLINT",
+                "Discount DOUBLE"
+            ],
+            "description": "Details of individual products within an order."
+        },
+        "products": {
+            "columns": [
+                "ProductID INT",
+                "ProductName VARCHAR",
+                "SupplierID INT",
+                "CategoryID INT",
+                "QuantityPerUnit VARCHAR",
+                "UnitPrice DECIMAL",
+                "UnitsInStock SMALLINT",
+                "UnitsOnOrder SMALLINT",
+                "ReorderLevel SMALLINT",
+                "Discontinued BIT"
+            ],
+            "description": "Information about products."
+        },
+        "employees": {
+            "columns": [
+                "EmployeeID INT",
+                "LastName VARCHAR",
+                "FirstName VARCHAR",
+                "Title VARCHAR",
+                "TitleOfCourtesy VARCHAR",
+                "BirthDate DATE",
+                "HireDate DATE",
+                "Address VARCHAR",
+                "City VARCHAR",
+                "Region VARCHAR",
+                "PostalCode VARCHAR",
+                "Country VARCHAR",
+                "HomePhone VARCHAR",
+                "Extension VARCHAR",
+                "Photo LONGBLOB",
+                "Notes MEDIUMTEXT",
+                "ReportsTo INT",
+                "PhotoPath VARCHAR",
+                "Salary FLOAT"
+            ],
+            "description": "Information about company employees."
+        },
+        "shippers": {
+            "columns": [
+                "ShipperID INT",
+                "CompanyName VARCHAR",
+                "Phone VARCHAR"
+            ],
+            "description": "Information about shipping companies."
+        },
+        "suppliers": {
+            "columns": [
+                "SupplierID INT",
+                "CompanyName VARCHAR",
+                "ContactName VARCHAR",
+                "ContactTitle VARCHAR",
+                "Address VARCHAR",
+                "City VARCHAR",
+                "Region VARCHAR",
+                "PostalCode VARCHAR",
+                "Country VARCHAR",
+                "Phone VARCHAR",
+                "Fax VARCHAR",
+                "HomePage MEDIUMTEXT"
+            ],
+            "description": "Information about product suppliers."
+        },
+        "categories": {
+            "columns": [
+                "CategoryID INT",
+                "CategoryName VARCHAR",
+                "Description MEDIUMTEXT",
+                "Picture LONGBLOB"
+            ],
+            "description": "Categories of products."
+        },
+        "territories": {
+            "columns": [
+                "TerritoryID VARCHAR",
+                "TerritoryDescription VARCHAR",
+                "RegionID INT"
+            ],
+            "description": "Sales territories."
+        },
+        "employeeTerritories": {
+            "columns": [
+                "EmployeeID INT",
+                "TerritoryID VARCHAR"
+            ],
+            "description": "Mapping of which employees cover which territories."
+        },
+        "region": {
+            "columns": [
+                "RegionID INT",
+                "RegionDescription VARCHAR"
+            ],
+            "description": "Different regions."
+        },
+        "customerDemographics": {
+            "columns": [
+                "CustomerTypeID VARCHAR",
+                "CustomerDesc MEDIUMTEXT"
+            ],
+            "description": "Types of customer demographics."
+        },
+        "customerCustomerDemo": {
+            "columns": [
+                "CustomerID VARCHAR",
+                "CustomerTypeID VARCHAR"
+            ],
+            "description": "Linking table for customers and their demographics."
+        }
+    },
+    "scenario_tables": {
+        "Customer Sales Analysis": [
+            "orders",
+            "customers",
+            "[Order Details]",
+            "products"
+        ],
+        "Inventory Management": [
+            "products",
+            "suppliers"
+        ],
+        "Shipping Efficiency": [
+            "orders",
+            "shippers"
+        ],
+        "Employee Performance Tracking": [
+            "employees",
+            "orders",
+            "[Order Details]"
+        ],
+        "Product Profitability": [
+            "products",
+            "[Order Details]",
+            "categories"
+        ],
+        "Customer Retention": [
+            "customers",
+            "orders"
+        ],
+        "Supplier Relationship Management": [
+            "suppliers",
+            "products",
+            "[Order Details]"
+        ],
+        "Market Segmentation": [
+            "customers",
+            "customerDemographics",
+            "customerCustomerDemo"
+        ],
+        "Sales Territory Performance": [
+            "employees",
+            "employeeTerritories",
+            "territories",
+            "orders",
+            "region",
+            "[Order Details]"
+        ],
+        "Product Category Sales Trends": [
+            "products",
+            "categories",
+            "[Order Details]"
+        ]
+    },
+    "table_relationships": [
+        [
+            "orders",
+            "customers",
+            "Orders are placed by customers using CustomerID."
+        ],
+        [
+            "orders",
+            "employees",
+            "Orders are processed by employees using EmployeeID."
+        ],
+        [
+            "orders",
+            "shippers",
+            "Orders are shipped by shippers using ShipVia as ShipperID."
+        ],
+        [
+            "[Order Details]",
+            "orders",
+            "Each order can have multiple [Order Details], linked by OrderID."
+        ],
+        [
+            "[Order Details]",
+            "products",
+            "Each order detail pertains to a single product, linked by ProductID."
+        ],
+        [
+            "products",
+            "suppliers",
+            "Products are supplied by suppliers using SupplierID."
+        ],
+        [
+            "products",
+            "categories",
+            "Products are categorized into categories using CategoryID."
+        ],
+        [
+            "employeeTerritories",
+            "employees",
+            "Employees are assigned to territories, linked by EmployeeID."
+        ],
+        [
+            "employeeTerritories",
+            "territories",
+            "Territories can have multiple employees, linked by TerritoryID."
+        ],
+        [
+            "customerCustomerDemo",
+            "customers",
+            "Customers can belong to multiple demographics, linked by CustomerID."
+        ],
+        [
+            "customerCustomerDemo",
+            "customerDemographics",
+            "Demographics can include multiple customers, linked by CustomerTypeID."
+        ]
+    ]
+}
