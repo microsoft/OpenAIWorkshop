@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 from hotel_copilot_utils import Smart_Agent, HOTEL_PERSONA, HOTEL_AVAILABLE_FUNCTIONS, HOTEL_FUNCTIONS_SPEC
+print(HOTEL_PERSONA)
 import json
 with open('./data/user_profile.json') as f:
     user_profile = json.load(f)

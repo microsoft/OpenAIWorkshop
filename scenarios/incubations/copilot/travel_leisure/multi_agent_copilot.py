@@ -1,8 +1,6 @@
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
-from multi_agent_utils import Agent_Runner, GENERALIST_PERSONA, GENERALIST_FUNCTION_SPEC, GENERALIST_AVAILABLE_FUNCTIONS
-from flight_copilot_utils import Smart_Agent, FLIGHT_PERSONA, FLIGHT_AVAILABLE_FUNCTIONS, FLIGHT_FUNCTIONS_SPEC
-from hotel_copilot_utils import Smart_Agent, HOTEL_PERSONA, HOTEL_AVAILABLE_FUNCTIONS, HOTEL_FUNCTIONS_SPEC
+from multi_agent_utils import Agent_Runner,Smart_Agent, GENERALIST_PERSONA, GENERALIST_FUNCTION_SPEC, GENERALIST_AVAILABLE_FUNCTIONS, FLIGHT_PERSONA, HOTEL_PERSONA, FLIGHT_AVAILABLE_FUNCTIONS, FLIGHT_FUNCTIONS_SPEC, HOTEL_AVAILABLE_FUNCTIONS, HOTEL_FUNCTIONS_SPEC
 import json
 with open('./data/user_profile.json') as f:
     user_profile = json.load(f)
