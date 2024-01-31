@@ -34,7 +34,7 @@ with st.sidebar:
 
     ''')
     add_vertical_space(5)
-    st.write('Created by James N, 2023')
+    st.write('Created by James N, 2024')
     if st.button('Clear Chat'):
 
         if 'history' in st.session_state:
