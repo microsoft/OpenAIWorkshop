@@ -26,5 +26,5 @@ In this exercise, you will create a deployment and model in Azure OpenAI studio 
 
    ![](images/openaikeys1new.png)
 
-**Summary:** In this exercise, you created a model and deployment in OpenAI studio to get started with OpenAI resource. You will be using the copied Key and Endpoint to get hands-on experience with Azure OpenAI Playground in further exercises.
+**Summary:** In this exercise, you explored about a model and deployment in OpenAI studio to get started with OpenAI resource. You will be using the copied Key and Endpoint to get hands-on experience with Azure OpenAI Playground in further exercises.
 
