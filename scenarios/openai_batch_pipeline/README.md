@@ -192,43 +192,43 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
    ![](images/synapse11.png)
    
-2. Once the data flow editor opens, click **Add Source**. A new window will open at the bottom of the screen. Select **+ New** on the **Dataset** row while leaving the other options as default.
+1. Once the data flow editor opens, click **Add Source**. A new window will open at the bottom of the screen. Select **+ New** on the **Dataset** row while leaving the other options as default.
 
    ![](images/synapse12.png)
 
-3. A new window should open on the right side of your screen. Next, search for **Azure Blob Storage (1)**, select **Azure Blob Storage (2)**, and then click on **Continue (3)**.
+1. A new window should open on the right side of your screen. Next, search for **Azure Blob Storage (1)**, select **Azure Blob Storage (2)**, and then click on **Continue (3)**.
    
    ![](images/synapse13-1.png)
 
-4. Next, select the **JSON (1)** option as our incoming data is in JSON format and click **Continue (2)**.
+1. Next, select the **JSON (1)** option as our incoming data is in JSON format and click **Continue (2)**.
 
    ![](images/synapse14-1.png)
 
-4. Select the Linked Service with the name **openailinkedservice (1)** we just set up in the steps above. You will need to select the proper **File path** to select the directory where our JSON files are stored. It should be something to the effect of **workshop-data / cleansed_documents (2)**. Click on the **OK** button to close the window.
+1. Select the Linked Service with the name **openailinkedservice (1)** we just set up in the steps above. You will need to select the proper **File path** to select the directory where our JSON files are stored. It should be something to the effect of **workshop-data / cleansed_documents (2)**. Click on the **OK** button to close the window.
 
    ![](images/synapse15.png)
    
-5. Next, we'll need to move to the **Source options (1)** panel and drop down the **JSON settings (2)** options. We need to change the **Document form** option to the **Array of documents (3)** setting. This allows our flow to read each .JSON file as a separate entry into our database.
+1. Next, we'll need to move to the **Source options (1)** panel and drop down the **JSON settings (2)** options. We need to change the **Document form** option to the **Array of documents (3)** setting. This allows our flow to read each .JSON file as a separate entry into our database.
 
    ![](images/synapse16.png)   
 
-6. Enable the toggle **data flow debug** session located at the top menu bar adjacent to the validate button, and click on **OK** on the *Turn on data flow debug* pop-up window.
+1. Enable the toggle **data flow debug** session located at the top menu bar adjacent to the validate button, and click on **OK** on the *Turn on data flow debug* pop-up window.
 
     >**Note:** It will take a minute or two for the **data flow debug** session to get enabled.
 
-7. Now head to the **Data preview** tab and run a preview to check your work thus far.
+1. Now head to the **Data preview** tab and run a preview to check your work thus far.
     
     ![](images/dataflow-datapreview.png)
    
-7. Next, we can add in our **Select** tile and do our minor alterations before writing the data out to the Synapse SQL table. To begin, click the small **+ (1)** sign next to our ingestion tile and choose the **Select (2)** option.
+1. Next, we can add in our **Select** tile and do our minor alterations before writing the data out to the Synapse SQL table. To begin, click the small **+ (1)** sign next to our ingestion tile and choose the **Select (2)** option.
 
    ![](images/synapse17.png)
 
-8. We can leave all the settings as defaults. Next, we'll add in our **Sink** tile. This is the step that will write our data out to our Synapse SQL database. Click on the small **+ (1)** sign next to our **Select** tile. Scroll all the way to the bottom of the options menu and select the **Sink (2)** option.
+1. We can leave all the settings as defaults. Next, we'll add in our **Sink** tile. This is the step that will write our data out to our Synapse SQL database. Click on the small **+ (1)** sign next to our **Select** tile. Scroll all the way to the bottom of the options menu and select the **Sink (2)** option.
 
    ![](images/synapse18.png)
 
-9. Once the **Sink (1)** tile opens, choose **Inline (2)** for the *Sink type*. Then select **Azure Synapse Analytics (3)** for the *Inline dataset type*, and for the **Linked service**, select **Synapselinkedservice (4)**, which was created in the previous step. Ensure to run **Test connection (5)** for the linked service.
+1. Once the **Sink (1)** tile opens, choose **Inline (2)** for the *Sink type*. Then select **Azure Synapse Analytics (3)** for the *Inline dataset type*, and for the **Linked service**, select **Synapselinkedservice (4)**, which was created in the previous step. Ensure to run **Test connection (5)** for the linked service.
 
    ![](images/sink-1.png)
 
@@ -243,30 +243,30 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
         ![](images/p19.png)
 
 
-10. We will then need to head over to the **Settings (1)** tab and adjust the **Schema name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo (1)** and the Table name is **cs_detail (2)**.
+1. We will then need to head over to the **Settings (1)** tab and adjust the **Schema name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo (1)** and the Table name is **cs_detail (2)**.
 
     ![](images/synapse20.png)
 
-11. Before we finish our work on the data flow, we should preview our data. Previewing our data reveals we only have 3 columns when we are expecting a total of 5. We have lost our Summary and Sentiment columns.
+1. Before we finish our work on the data flow, we should preview our data. Previewing our data reveals we only have 3 columns when we are expecting a total of 5. We have lost our Summary and Sentiment columns.
 
     ![](images/data-preview.png)
 
-12.  To correct this, let's use our **Select (1)** tile to change the names as follows to get the expected output values:
+1.  To correct this, let's use our **Select (1)** tile to change the names as follows to get the expected output values:
 
      - **Summary**: `interaction_summary` **(2)**
      - **CustomerSentiment**: `sentiment` **(3)**
 
         ![](images/select-1.png)
     
-13. If we return to our **Sink (1)** tile and under **Data preview (2)** click **Refresh (3)**, we will now see our expected 5 columns of output.
+1. If we return to our **Sink (1)** tile and under **Data preview (2)** click **Refresh (3)**, we will now see our expected 5 columns of output.
 
     ![](images/refresh-sink-1.png)
 
-14. Once you have reviewed the data and are satisfied that all columns are mapped successfully (you should have 5 columns total, all showing data in a string format), we can press **Publish all** at the top to save our current configuration. A window will open on the right side of the screen; press the blue **Publish** button at the bottom left of it to save your changes.
+1. Once you have reviewed the data and are satisfied that all columns are mapped successfully (you should have 5 columns total, all showing data in a string format), we can press **Publish all** at the top to save our current configuration. A window will open on the right side of the screen; press the blue **Publish** button at the bottom left of it to save your changes.
 
     ![](images/publish-dataflow.png)
 
-15. Your completed and saved Data flow will look like the following:
+1. Your completed and saved Data flow will look like the following:
 
     ![](images/completed-dataflow.png)
 
