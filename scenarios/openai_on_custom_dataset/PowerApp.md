@@ -87,10 +87,14 @@ As part of the data preparation step, to work in Open AI, the documents are chun
 9. Once the import is completed, click on **Apps (1)**, then click on **... (3)** next to **Semantic-Search-Template** and click on **Edit (4)**.
 
     ![](./images/p20.png)
+
+   >**Note**: You are currently unable to see the option. Kindly refresh the page to access it.
      
 10. Click on **Power Automate (1)**; this will import the **_Power App_** canvas and **Semantic-Search-Flow (2)** into the workspace. 
 
     ![](./images/semanti-search-flow-1.png)
+    
+    >**Note**: When the **Welcome to Power Apps Studio** window appears, click on **Skip**.
 
 11. To navigate back, click on **Back**; if you get an option to leave or do not leave, click on **Leave**.
 
