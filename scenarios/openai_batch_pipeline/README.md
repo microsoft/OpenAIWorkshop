@@ -219,6 +219,8 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 1. Now head to the **Data preview** tab and run a preview to check your work thus far.
     
     ![](images/dataflow-datapreview.png)
+
+    >**Note**: If you're unable to view data under the Data Preview tab, please click on the Refresh button repeatedly until the data appears.
    
 1. Next, we can add in our **Select** tile and do our minor alterations before writing the data out to the Synapse SQL table. To begin, click the small **+ (1)** sign next to our ingestion tile and choose the **Select (2)** option.
 
