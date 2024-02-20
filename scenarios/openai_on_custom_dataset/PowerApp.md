@@ -72,42 +72,44 @@ As part of the data preparation step, to work in Open AI, the documents are chun
 
     ![](./images/p14.png)
 
-6. On the **Import package** page, click on **Upload**.
+   >**Note**: Please close any window that pops up for signing in.
+
+7. On the **Import package** page, click on **Upload**.
 
     ![](./images/upload-importpackage.png)
     
-7. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\powerapp` and select the `Semantic-Search-App-Template_20230303012916.zip` folder, then click **Open**.
+8. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\powerapp` and select the `Semantic-Search-App-Template_20230303012916.zip` folder, then click **Open**.
 
    ![](./images/upload-semantic-search.png)
    
-8. Click on **Import** to import the package into the PowerApps environment.
+9. Click on **Import** to import the package into the PowerApps environment.
 
     ![](./images/package-import.png)
 
-9. Once the import is completed, click on **Apps (1)**, then click on **... (3)** next to **Semantic-Search-Template** and click on **Edit (4)**.
+10. Once the import is completed, click on **Apps (1)**, then click on **... (3)** next to **Semantic-Search-Template** and click on **Edit (4)**.
 
     ![](./images/p20.png)
 
    >**Note**: You are currently unable to see the option. Kindly refresh the page to access it.
      
-10. Click on **Power Automate (1)**; this will import the **_Power App_** canvas and **Semantic-Search-Flow (2)** into the workspace. 
+11. Click on **Power Automate (1)**; this will import the **_Power App_** canvas and **Semantic-Search-Flow (2)** into the workspace. 
 
     ![](./images/semanti-search-flow-1.png)
     
     >**Note**: When the **Welcome to Power Apps Studio** window appears, click on **Skip**.
 
-11. To navigate back, click on **Back**; if you get an option to leave or do not leave, click on **Leave**.
+12. To navigate back, click on **Back**; if you get an option to leave or do not leave, click on **Leave**.
 
 
-12.  On the **Flows (1)** pane, select **Semantic-Search-Flow (2)**, then click on `...` **(3)**, and **Turn on (4)** your flow.
+13.  On the **Flows (1)** pane, select **Semantic-Search-Flow (2)**, then click on `...` **(3)**, and **Turn on (4)** your flow.
 
       ![](./images/turn-on-flow.png)
 
-13. Next, click on **Edit** for **Semantic-Search-Flow**. PowerAutomate Flow needs to be enabled. At this point, the Power app can be run as is. It connects to a pre-built Azure Function App.
+14. Next, click on **Edit** for **Semantic-Search-Flow**. PowerAutomate Flow needs to be enabled. At this point, the Power app can be run as is. It connects to a pre-built Azure Function App.
 
     ![](./images/edit.png)
 
-14. Edit the Power Automate Flow and update **Azure Function Url (1)** with the URL you copied earlier, and append `&num_search_result=5` at the end. Your URL should look like the following: Click **Save (2)**.
+15. Edit the Power Automate Flow and update **Azure Function Url (1)** with the URL you copied earlier, and append `&num_search_result=5` at the end. Your URL should look like the following: Click **Save (2)**.
 
     ```
     https://func-search-XXXXX.azurewebsites.net/api/orchestrator-func-app?code=aNXGfSoGqnCarlBquGQE4pNgO1n9ZmqheCd0SZPzAFCOAzFugFsV8g==&num_search_result=5
@@ -115,11 +117,11 @@ As part of the data preparation step, to work in Open AI, the documents are chun
     
     ![](./images/flow-img-1.1.png)
 
-15. Next, click on **Apps** and select **Semantic-Search-Template** to navigate to the app.
+16. Next, click on **Apps** and select **Semantic-Search-Template** to navigate to the app.
 
     ![](./images/p21.png)
  
-16. On the app, enter any phrase and hit search to view the result.
+17. On the app, enter any phrase and hit search to view the result.
    
       - For example, here we are searching for `Is GPU supported by AML?`
    
