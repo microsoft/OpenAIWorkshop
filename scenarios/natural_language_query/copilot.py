@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
-from copilot_utils_v2 import CODER, CODER_AVAILABLE_FUNCTIONS, CODER_FUNCTIONS_SPEC, add_to_cache, Smart_Agent
+from copilot_utils import CODER, CODER_AVAILABLE_FUNCTIONS, CODER_FUNCTIONS_SPEC, add_to_cache, Smart_Agent
 import sys
 sys.path.append("..")
 import time
