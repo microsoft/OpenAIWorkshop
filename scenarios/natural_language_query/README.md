@@ -22,7 +22,8 @@ We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI 
         AZURE_OPENAI_ENDPOINT="https://YOUR_OPENAI.openai.azure.com/"
         AZURE_OPENAI_API_KEY=""
         AZURE_OPENAI_EMB_DEPLOYMENT="text-embedding-ada-002"
-        AZURE_OPENAI_CHAT_DEPLOYMENT="gpt-4-1106"
+        AZURE_OPENAI_CHAT_DEPLOYMENT="gpt-4-1106" #this can be gpt-35-turbo
+        AZURE_OPENAI_GPT4_DEPLOYMENT="gpt-4-1106"
         AZURE_OPEN_AI_VISION_DEPLOYMENT=gpt-4-vision
         AZURE_SEARCH_SERVICE_ENDPOINT="https://.search.windows.net"
         AZURE_SEARCH_INDEX_NAME=sql_query_caches #name of the Azure search index that cache the SQL query
