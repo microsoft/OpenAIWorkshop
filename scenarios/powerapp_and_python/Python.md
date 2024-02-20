@@ -4,9 +4,11 @@
 
       ![](images/p2.png)
 
-1.  On the **Overview** blade under the **Getting started** section, click **Open** to open Synapse Studio.
+1. On **Azure Synapse Analytics** window select **asaworkspace<inject key="DeploymentID" enableCopy="false"/>**.   
+
+1. On the **Overview** blade under the **Getting started** section, click **Open** to open Synapse Studio.
      
-    ![](images/open-workspace.png)
+     ![](images/open-workspace.png)
     
 1. Click on **Develop (1)**, then click on **+ (2)**, and select **Import**.
 
@@ -32,13 +34,13 @@
 
 1. In **2. Import helper libraries and instantiate credentials**, and replace the **AZURE_OPENAI_API_KEY** and **AZURE_OPENAI_ENDPOINT** with your API key and endpoint URL.
 
-    ![](images/key-endpoint.png)
+     ![](images/key-endpoint.png)
    
-From Azure Portal, navigate to the **openaicustom-<inject key="openaimodulename" enableCopy="true"/>** resource group, and select the Azure OpenAI resource.
+1. From Azure Portal, navigate to the **openaicustom-<inject key="openaimodulename" enableCopy="true"/>** resource group, and select the Azure OpenAI resource.
 
     ![](images/Ex4b-S7.1.png)
 
-Under Resource Management, select **Keys and Endpoint (1)**, and click **Show Keys (2)**. Copy **Key 1 (3)** and **Endpoint (4)**, and replace the **AZURE_OPENAI_API_KEY** and **AZURE_OPENAI_ENDPOINT** with your API key and Endpoint URL in the script.
+1. Under Resource Management, select **Keys and Endpoint (1)**, and click **Show Keys (2)**. Copy **Key 1 (3)** and **Endpoint (4)**, and replace the **AZURE_OPENAI_API_KEY** and **AZURE_OPENAI_ENDPOINT** with your API key and Endpoint URL in the script.
 
    ![](images/p22.png)
      

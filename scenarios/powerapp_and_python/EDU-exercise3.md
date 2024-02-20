@@ -32,9 +32,9 @@ In this exercise, You'll be using Python to develop applications powered by Open
 
 1. In **2. Import helper libraries and instantiate credentials** replace the **AZURE_OPENAI_API_KEY** with **<inject key="OpenAIKey" enableCopy="true"/>** and **AZURE_OPENAI_ENDPOINT** with **<inject key="OpenAIEndpoint" enableCopy="true"/>**.
 
-    ![](images/key-endpoint.png)
+     ![](images/key-endpoint.png)
    
-    > **Note:** If you encounter an error "Openai module not found", enter `%` in before the **pip install** in the Install OpenAI cell and re-run the notebook again.
+     > **Note:** If you encounter an error "Openai module not found", enter `%` in before the **pip install** in the Install OpenAI cell and re-run the notebook again.
 
 1. For **2. Choose a Model**, replace **model** value from **text-curie-001** to **demomodel**.
 

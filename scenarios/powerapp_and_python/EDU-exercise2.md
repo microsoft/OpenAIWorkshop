@@ -36,6 +36,8 @@ In this exercise, you will learn how to integrate OpenAI with PowerApps. This ex
 
       ![](./images/powerapps-apps-edit.png)
 
+   >**Note**: If you're unable to see the **OpenAI Playground** option, please wait for 5 minutes, and in the meantime, try refreshing the page.
+
 10. You will observe that it has imported the Power App canvas app and the Power Automate Flow into the workspace.
 
       ![](./images/powerapps-apps-view.png)
@@ -59,9 +61,10 @@ In this exercise, you will learn how to integrate OpenAI with PowerApps. This ex
 15. From the **Apps (1)** page click on the **OpenAI Playground** app to run the app by clicing on **Play (2)** button.
 
      ![](./images/canves-play.png)
-Note: If you get a popup asking to start a free trial, click on **Star a Free Trial**. (It might take 2-3 minutes to start the trial)
 
-16. In the **Canvas**, click on **Summary** **(1)** button and verify the **auto-filled text** **(2)**. Then click on **Submit** **(3)** button to get the desired **Summary** **(4)**. 
+16. If you get a popup asking to start a free trial, click on **Star a Free Trial**, then on **You need a Power Apps license to use this app** window select **Start a 30-day trail**. choose your region from the drop down menu and click on **Get started** button wait for 2-3 minutes It might take to start the trial
+
+17. In the **Canvas**, click on **Summary** **(1)** button and verify the **auto-filled text** **(2)**. Then click on **Submit** **(3)** button to get the desired **Summary** **(4)**. 
 
      ![](./images/canves-output.png)
 

@@ -31,13 +31,12 @@ As part of the data preparation step, to work in Open AI, the documents are chun
    
 1. Now, navigate to `C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest` in Windows Explore and you will see file names as `secerts.env`, Make sure the value is updated as expected. However, we have already updated the values for you.
 
-
 1. Now you need to open the **CMD** and run the below command to change to directory to the ingest folder.
 
    ```
    cd C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest
    ```
-
+   
 1. Once you are in the ingest directory, run the below command to start the ingestion process. Please make sure to have the correct value in the secrets.env file before running the below command. The search indexer chunks a sample PDF document (500 pages), which is downloaded from Azure Docs, and chunks each page into 20 lines. Each chunk is created as a new search document in the index. The PDF document processing is achieved using the Azure Form Recognizer service.
 
      ```
@@ -72,6 +71,8 @@ As part of the data preparation step, to work in Open AI, the documents are chun
 
     ![](./images/p14.png)
 
+   >**Note**: Please close any window that pops up for signing in.
+
 6. On the **Import package** page, click on **Upload**.
 
     ![](./images/upload-importpackage.png)
@@ -87,10 +88,14 @@ As part of the data preparation step, to work in Open AI, the documents are chun
 9. Once the import is completed, click on **Apps (1)**, then click on **... (3)** next to **Semantic-Search-Template** and click on **Edit (4)**.
 
     ![](./images/p20.png)
+
+   >**Note**: You are currently unable to see the option. Kindly refresh the page to access it.
      
 10. Click on **Power Automate (1)**; this will import the **_Power App_** canvas and **Semantic-Search-Flow (2)** into the workspace. 
 
     ![](./images/semanti-search-flow-1.png)
+    
+    >**Note**: When the **Welcome to Power Apps Studio** window appears, click on **Skip**.
 
 11. To navigate back, click on **Back**; if you get an option to leave or do not leave, click on **Leave**.
 
