@@ -210,9 +210,9 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
    
 5. Next, we'll need to move to the **Source options (1)** panel and drop down the **JSON settings (2)** options. We need to change the **Document form** option to the **Array of documents (3)** setting. This allows our flow to read each .JSON file as a separate entry into our database.
 
-   ![](images/synapse16.png)
+   ![](images/synapse16.png)   
 
-6. Enable the **data flow debug** session and click on **OK** on the *Turn on data flow debug* pop-up window.
+6. Enable the toggle **data flow debug** session located at the top menu bar adjacent to the validate button, and click on **OK** on the *Turn on data flow debug* pop-up window.
 
     >**Note:** It will take a minute or two for the **data flow debug** session to get enabled.
 
@@ -289,7 +289,7 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
 
 ### **E. Trigger Synapse Pipeline**
 
-1. Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the studio, there is a *lightning bolt* icon that says **Add trigger (1)**. Click to add trigger and select **Trigger now (2)** to begin a pipeline run.
+1. Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the studio, there is a *lightning bolt* icon that says **Add trigger (1)**. Click to add trigger and select **Trigger now (2)** to begin a pipeline run then when window open ups click on **OK**.
 
     ![](images/trigger-1.png)
     
