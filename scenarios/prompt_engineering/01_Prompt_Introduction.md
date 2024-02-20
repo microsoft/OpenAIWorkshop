@@ -37,9 +37,7 @@ Let's go ahead and launch the Azure OpenAI playground to learn about prompt engi
 
    ![](../natural_language_query/images/openai8.png)
 
-1. On **Cognitive Services | Azure OpenAI** blade, select **openai-<inject key="DeploymentID" enableCopy="false"/>**
-
-   ![](../natural_language_query/images/openai9.png)
+1. On **Azure AI services | Azure OpenAI** blade, select **openai-<inject key="DeploymentID" enableCopy="false"/>**
 
 1. In the Azure OpenAI resource pane, click on **Go to Azure OpenAI Studio** it will navigate to **Azure AI Studio**.
 
