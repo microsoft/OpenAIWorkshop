@@ -47,6 +47,7 @@ env_path = Path('.') / 'secrets.env'
 load_dotenv(dotenv_path=env_path)
 emb_engine = os.getenv("AZURE_OPENAI_EMB_DEPLOYMENT")
 chat_engine =os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT")
+gpt_4_engine = os.getenv("AZURE_OPENAI_GPT4_DEPLOYMENT")
 sqllite_db_path= os.environ.get("SQLITE_DB_PATH","data/northwind.db")
 engine = create_engine(f'sqlite:///{sqllite_db_path}') 
 client = AzureOpenAI(
@@ -61,6 +62,16 @@ def load_data_from_json(file_path="data/metadata.json"):
     with open(file_path, "r") as file:
         data = json.load(file)
     return data
+def message_coder(context, business_question):
+    message= f"Hi coder, Please write a code to answer the following question: {business_question} \n\nContext: {context}"
+    print("message to coder: \n", message)
+    coder = Smart_Agent(persona=CODER,functions_list=CODER_AVAILABLE_FUNCTIONS, functions_spec=CODER_FUNCTIONS_SPEC, engine=gpt_4_engine)
+    return coder.run(message, stream=False)
+
+def message_team(message):
+    return f"This is internal team message from your coder: {message}"
+def message_user(message):
+    return f"{message}"
 
 def get_scenarios_md():
     data = load_data_from_json()
@@ -76,20 +87,41 @@ def get_scenarios_md():
     scenario_list_md = f"| Scenario | Description |\n| --- | --- |\n{scenario_list_md}"
     return scenario_list_md
 
-def get_scenario_names():
-    data = load_data_from_json()
-    # Extract values from the loaded data
-    analytic_scenarios = data.get("analytic_scenarios", {})
-    scenario_list = [scenario[0] for scenario in analytic_scenarios.items()]
-    return scenario_list
-def retrieve_context(scenario_names):
-    scenario_names = scenario_names.split(",")
+# def get_scenario_names(business_question):
+#     response = client.chat.completions.create(
+#         model=chat_engine, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
+#         messages=[{"role": "system", "content": CONTEXT_PREPARER}, {"role": "user", "content": business_question}],
+#     response_format={"type": "json_object"}
+    
+#     )
+    
+#     response_message = response.choices[0].message.content.strip()
+#     print("response_message: ", response_message)
+#     scenario_list = json.loads(response_message)["scenarios"]
+#     scenario_list = [scenario["scenario_name"] for scenario in scenario_list]
+
+#     return scenario_list
+@retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
+def retrieve_context(business_question):
+    response = client.chat.completions.create(
+        model=chat_engine, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
+        messages=[{"role": "system", "content": CONTEXT_PREPARER}, {"role": "user", "content": business_question}],
+    response_format={"type": "json_object"}
+    
+    )
+    
+    response_message = response.choices[0].message.content.strip()
+    print("response_message: ", response_message)
+    scenario_names = json.loads(response_message)["scenarios"]
+    scenario_names = [scenario["scenario_name"] for scenario in scenario_names]
+
+
     data = load_data_from_json()
     # Extract values from the loaded data
     analytic_scenarios = data.get("analytic_scenarios", {})
     scenario_list = [scenario[0] for scenario in analytic_scenarios.items()]
     if not set(scenario_names).issubset(set(scenario_list)):
-        return "You provided invalid scenario name(s), please check and try again"
+        raise Exception("You provided invalid scenario name(s), please check and try again")
     scenario_tables = data.get("scenario_tables", {})
     scenario_context = "Following tables might be relevant to the question: \n"
     all_tables = data.get("tables", {})
@@ -147,15 +179,42 @@ def comment_on_graph(question, image_path="plot.jpg"):
     )
 
     return response.choices[0].message.content
-BA_ASSISTANT_WORKFLOW = f"""
-As a creative AI assistant with expertise in data analysis,visualization, SQL and Python, you help users to answer their business questions based on the information from the database.
-You do not have knowlwege of the data schema, data content and business rules in the database but you can discover them by using the tools available to you.
-You are also able to use your creativity to solve complex problems in multiple steps.
-With that, start by interacting with the user to understand their business question then review the tools available to plan how to use them.
-Think carefully before you act. Be flexible and creative in your approach to solve the problem. If you need to change your approach based on the information you discovered, you can do so.
-If you need to clarify with the customer, you can ask them to rephrase their question or provide more information. Note that customer is not aware about technical details of the database nor they are interested in, avoid asking them technical questions.
-Be helpful with customer and show off your visualization talent where appropriate. When you think the answer can be best inlustated with a visualization, do so.
+CONTEXT_PREPARER = f"""
+You are an AI assistant that helps people find information. 
+You are given a business question and you need to identify which one or several business analytic scenario(s) below are relevant to the question.
+<<analytic_scenarios>>
+{get_scenarios_md()}
+<</analytic_scenarios>>
+Output your response in json format with the following structure:   
+{{
+    "scenarios": [
+        {{
+            "scenario_name": "...", # name of the scenario. 
+        }}
+    ]
+}}
+
 """
+# After you have discovered the information you need, forward it to the coder.
+# Only provide what you discover from the tools. Do not make up any information.
+
+#tools: get_scenarios, retrieve_context, find_similar_cases, resolve_entities, mess
+
+CODER = f"""
+You are a creative AI assistant with expertise in data analysis,visualization, SQL and Python to answer question from your business user.
+Data is stored in a SQLITE database. In order to answer the question, you need to query the data then apply business rules to compute business metrics which must all happen using the Python interface.
+You do not have knowlwege about database schema nor business rules in your mind but you can discover them by using the tools available to you.
+With that, start by interacting with the user to understand their business question then use your talent to find answer for the question.
+Clarify with the user if needed.
+Note that customer does not have knowlege about the database, avoid asking them technical questions. 
+If problem is complex, solve it in multiple steps.
+Show off your visualization talent when appropriate to best communicate your answer.
+
+"""
+# Provide feedback to your team when you think their inputs are not sufficient for you to create the solution.
+
+#function for coder: execute_python_code, message_to_team, message_to_user
+
 
 service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT") 
 index_name = os.getenv("AZURE_SEARCH_INDEX_NAME") 
@@ -212,7 +271,8 @@ def add_to_cache(question, sql_query):
 
 
 
-def execute_python_code(python_code, goal):
+def execute_python_code(python_code, goal, execution_context):
+    print("goal: ", goal)
 
     def execute_sql_query(sql_query, limit=100):  
         result = pd.read_sql_query(sql_query, engine)
@@ -236,40 +296,46 @@ def execute_python_code(python_code, goal):
             del st.session_state['comment_on_graph']  
         img_folder =  str(uuid.uuid4())
         os.makedirs(img_folder, exist_ok=True)
-
         image_path=os.path.join(img_folder,"plot.jpg")
-        if type(data) is PlotlyFigure:
-            st.plotly_chart(data)
+        try:
+            if type(data) is PlotlyFigure:
+                st.plotly_chart(data)
 
-            write_image(data, image_path)
-            comment = comment_on_graph(question, image_path)
-            comment = "the graph is displayed and this is what you see: \n" + comment + "\n"
-            # shutil.rmtree(img_folder)
-            st.session_state['comment_on_graph'] = comment
-            # print("comment_on_graph: ", comment)
+                write_image(data, image_path)
+                comment = comment_on_graph(question, image_path)
+                comment = "the graph is displayed and this is what you see: \n" + comment + "\n"
+                # shutil.rmtree(img_folder)
+                st.session_state['comment_on_graph'] = comment
+                # print("comment_on_graph: ", comment)
 
-        elif type(data) is MatplotFigure:
-            st.pyplot(data)
+            elif type(data) is MatplotFigure:
+                st.pyplot(data)
 
-            plt.savefig(image_path)
-            comment = comment_on_graph(question, image_path)
-            # shutil.rmtree(img_folder)
-            st.session_state['comment_on_graph'] = comment
-        elif type(data) is pd.DataFrame:
-            st.dataframe(data)
-            st.session_state['data_from_display'] = data.to_markdown(index=False)
-        else:
-            print("data type not known \n", data)
-    # st.write("Goal: "+goal)
+                plt.savefig(image_path)
+                comment = comment_on_graph(question, image_path)
+                
+                st.session_state['comment_on_graph'] = comment
+
+            elif type(data) is pd.DataFrame:
+                st.dataframe(data)
+                st.session_state['data_from_display'] = data.to_markdown(index=False)
+            else:
+                print("data type not known \n", data)
+        finally:
+            shutil.rmtree(img_folder)
+    if 'execute_sql_query' not in execution_context:
+        execution_context['execute_sql_query'] = execute_sql_query 
+    if 'display' not in execution_context: 
+        execution_context['display'] = display  
+
+    st.write("Goal: "+goal)
     # st.code(python_code)
     
-
-
     # old_stdout = sys.stdout
     # sys.stdout = mystdout = StringIO()
     new_input=""
     try:
-        exec(python_code, locals())
+        exec(python_code, execution_context)
         # sys.stdout = old_stdout
         # std_out = str(mystdout.getvalue())
         # if len(std_out)>0:
@@ -278,14 +344,14 @@ def execute_python_code(python_code, goal):
     except Exception as e:
         new_input +="\Encounter following error, please fix the bug and give updated code\n"+str(e)+"\n"
         # print(new_input)
-        return new_input
+        return execution_context, new_input
     if 'data_from_display' in st.session_state:
-        return st.session_state['data_from_display']
+        return execution_context, str(st.session_state['data_from_display'])
     elif 'comment_on_graph' in st.session_state:
         # print("comment returned from comment on graph ", st.session_state['comment_on_graph'])
-        return st.session_state['comment_on_graph']
+        return execution_context, str(st.session_state['comment_on_graph'])
     else:
-        return "No graph or data was displayed, did you forget to call display(data) function?"
+        return execution_context, "No graph or data was displayed, did you forget to call display(data) function?"
     
 
 
@@ -295,62 +361,36 @@ def resolve_entities(business_question):
         return business_question.replace("VINET", "VINET customer")
     return "Cannot resolve the entities in the question. Please clarify with the customer."
 
-BA_AVAILABLE_FUNCTIONS = {
+CONTEXT_PREPARER_AVAILABLE_FUNCTIONS = {
             "get_scenarios": get_scenarios_md,
+            # "execute_python_code": execute_python_code,
+            "retrieve_context": retrieve_context,
+            # "find_similar_cases":find_similar_cases ,
+            # "resolve_entities": resolve_entities,
+            # "message_coder":message_coder ,
+
+
+        } 
+CODER_AVAILABLE_FUNCTIONS = {
             "execute_python_code": execute_python_code,
             "retrieve_context": retrieve_context,
-            "find_similar_cases":find_similar_cases ,
-            "resolve_entities": resolve_entities
 
         } 
 
-BA_FUNCTIONS_SPEC= [  
-    {
-        "type":"function",
-        "function":{
-        "name": "resolve_entities",
-        "description": "When customer question contains values that are not clear which business entities they belong to, this function can be used to resolve the entities. For example, if the customer asks 'What is the total sales for Raclette?', the function will rephrase the question into 'What is the total sales for product Raclette?' as it understand Raclette is a product. This function should only be used if retrieve_context is used",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "business_question": {
-                    "type": "string",
-                    "description": "The complete question from the customer"
-                }
-            },
-            "required": ["business_question"],
-        },
-    }
-    },
 
-
-    {
-        "type":"function",
-        "function":{
-
-        "name": "get_scenarios",
-        "description": "retrieve standard analytic scenarios and description so that you can pick ones that are relevant to the customer's question. This function should only be used if retrieve_context is used as it provides input for retrieve_context function",
-        "parameters": {
-            "type": "object",
-            "properties": {
-            },
-            "required": [],
-        },
-    }
-    },
-
+CONTEXT_PREPARER_FUNCTIONS_SPEC= [  
     {
         "type":"function",
         "function":{
 
         "name": "retrieve_context",
-        "description": "retrieve business rules and table schemas that are relevant to the customer's question so that you can query data. This is expensive so only use if you are unable to write the SQL query using find_similar_cases function. This function should only be called after get_scenarios function is called to accquire neccessary input for this function",
+        "description": "Look up business rules and table schemas for one or more business analytic scenarios",
         "parameters": {
             "type": "object",
             "properties": {
                 "scenario_names": {
                     "type": "string",
-                    "description": "comma separated list of scenarios names, must be one or more of scenarios names returned by get_scenarios function" 
+                    "description": "comma separated list of valid scenarios names" 
                 }
 
             },
@@ -358,39 +398,87 @@ BA_FUNCTIONS_SPEC= [
         },
     }
     },
-    {
-        "type":"function",
-        "function":{
 
-        "name": "find_similar_cases",
-        "description": "Return similiar questions from the answered questions pool and SQL queries used to infer schema and business rules to apply for your question. This should be used first before resorting get_scenarios and retrieve_context functions",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "business_query": {
-                    "type": "string",
-                    "description": "Complete and clear business question" 
-                }
+    # {
+        # "type":"function",
+        # "function":{
+        # "name": "resolve_entities",
+        # "description": "When customer question contains values that are not clear which business entities they belong to, this function can be used to resolve the entities. For example, if the customer asks 'What is the total sales for Raclette?', the function will rephrase the question into 'What is the total sales for product Raclette?' as it understand Raclette is a product. This function should only be used if retrieve_context is used",
+        # "parameters": {
+        #     "type": "object",
+        #     "properties": {
+        #         "business_question": {
+        #             "type": "string",
+        #             "description": "Rephrased customer's question that is clear and concise"
+        #         }
+        #     },
+        #     "required": ["business_question"],
+        # },
+    # }
+    # },
 
-            },
-            "required": ["business_query"],
-        },
-    }
-    },
+    # {
+    #     "type":"function",
+    #     "function":{
+
+    #     "name": "find_similar_cases",
+    #     "description": "Return similiar questions from the answered questions pool and SQL queries used to infer schema and business rules to apply for your question. This should be used first before resorting get_scenarios and retrieve_context functions",
+    #     "parameters": {
+    #         "type": "object",
+    #         "properties": {
+    #             "business_query": {
+    #                 "type": "string",
+    #                 "description": "Complete and clear business question" 
+    #             }
+
+    #         },
+    #         "required": ["business_query"],
+    #     },
+    # }
+    # },
 
 
+    # {
+    #     "type":"function",
+    #     "function":{
+
+    #     "name": "message_coder",
+    #     "description": "Send a message to your coder with the context you prepared so that the coder can write code to answer business question",
+    #     "parameters": {
+    #         "type": "object",
+    #         "properties": {
+    #             "context": {
+    #                 "type": "string",
+    #                 "description": "Complete context about relevant tables, their columns, how to join the tables, business rules and any other information that coder needs to write SQL query and the code to answer the business question" 
+    #             },
+    #             "business_question": {
+    #                 "type": "string",
+    #                 "description": "Rephrased form of the customer's question to make it clear and concise" 
+    #             }
+
+
+    #         },
+    #         "required": ["context", "business_question"],
+    #     },
+    # }
+    # },
+    
+]  
+
+CODER_FUNCTIONS_SPEC= [  
+    
     {
         "type":"function",
         "function":{
 
         "name": "execute_python_code",
-        "description": "execute a python code for data analysis and visualization in a remote environment. Each call to execute_python_code() is isolated other executions",
+        "description": "A special python interface that can run data analytical python code against the SQL database and data visualization with plotly. Data and visualization object can only be observed using display() function inside your code. Python's print function will not work",
         "parameters": {
             "type": "object",
             "properties": {
                 "python_code": {
                     "type": "string",
-                    "description": "python code snippet that can be executed. You are provided with following utility functions \n 1. execute_sql_query(sql_query: str) a util function to execute SQL query against the SQLITE database with valid SQL syntax and data schema were discovered before this step. This execute_sql_query(sql_query: str) function returns a pandas dataframe that you can use to perform any data analysis and visualization.\n 2. display(data): a util function to display the data analysis and visualization result. This function can take a pandas dataframe or plotly figure as input. For example, to visualize a plotly figure, the code can be ```fig=px.line(some_df)\n display(fig)```. Output can only be observed by display() util, so do not use print() or figure.show() as they do not work in the remote environment.Use plotly only for graph visualization"
+                    "description": "Complete executable python code with display() function to display and observe output. You are provided with following utility python functions to use INSIDE your code \n 1. execute_sql_query(sql_query: str) a function to execute SQL query against the SQLITE database to retrieve data you need. This execute_sql_query(sql_query: str) function returns a pandas dataframe that you can use to perform any data analysis and visualization.\n 2. display(data): a util function to display the data analysis and visualization result from this environment. This function can take a pandas dataframe or plotly figure as input. For example, to visualize a plotly figure, the code can be ```fig=px.line(some_df)\n display(fig)```. Only use plotly for graph visualization"
                 },
                 "goal": {
                     "type": "string",
@@ -402,51 +490,49 @@ BA_FUNCTIONS_SPEC= [
         },
 
     }
+    },
+    # {
+    #     "type":"function",
+    #     "function":{
+
+    #     "name": "message_team",
+    #     "description": "Send a message to your team mate to provide more information or to clarify the question",
+    #     "parameters": {
+    #         "type": "object",
+    #         "properties": {
+    #             "message": {
+    #                 "type": "string",
+    #                 "description": "Message to send to your team mate" 
+    #             }
+
+    #         },
+    #         "required": ["message"],
+    #     },
+    # }
+    # },
+    {
+        "type":"function",
+        "function":{
+
+        "name": "retrieve_context",
+        "description": "retrieve business rules and table schemas that are relevant to the customer's question",
+
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "business_question": {
+                    "type": "string",
+                    "description": "Rephrased business question in clear and concise form" 
+                }
+
+
+            },
+            "required": ["business_question"],
+        },
     }
-    
+    },
+
 ]  
-
-
-
-def gpt_stream_wrapper(response):
-    for chunk in response:
-        chunk_msg= chunk['choices'][0]['delta']
-        chunk_msg= chunk_msg.get('content',"")
-        yield chunk_msg
-
-class Agent(): #Base class for Agent
-    def __init__(self, engine,persona, name=None, init_message=None):
-        if init_message is not None:
-            init_hist =[{"role":"system", "content":persona}, {"role":"assistant", "content":init_message}]
-        else:
-            init_hist =[{"role":"system", "content":persona}]
-
-        self.init_history =  init_hist
-        self.persona = persona
-        self.engine = engine
-        self.name= name
-    def generate_response(self, new_input,history=None, stream = False,request_timeout =20,api_version = "2023-05-15"):
-        openai.api_version = api_version
-        if new_input is None: # return init message 
-            return self.init_history[1]["content"]
-        messages = self.init_history.copy()
-        if history is not None:
-            for user_question, bot_response in history:
-                messages.append({"role":"user", "content":user_question})
-                messages.append({"role":"assistant", "content":bot_response})
-        messages.append({"role":"user", "content":new_input})
-        response = openai.ChatCompletion.create(
-            engine=self.engine,
-            messages=messages,
-            stream=stream,
-            request_timeout =request_timeout
-        )
-        if not stream:
-            return response['choices'][0]['message']['content']
-        else:
-            return gpt_stream_wrapper(response)
-    def run(self, **kwargs):
-        return self.generate_response(**kwargs)
 
 
 
@@ -463,32 +549,21 @@ def check_args(function, args):
         if param.default is param.empty and name not in args:
             return False
 
-class Smart_Agent(Agent):
+class Smart_Agent():
     """
-    Agent that can use other agents and tools to answer questions.
-
-    Args:
-        persona (str): The persona of the agent.
-        tools (list): A list of {"tool_name":tool} that the agent can use to answer questions. Tool must have a run method that takes a question and returns an answer.
-        stop (list): A list of strings that the agent will use to stop the conversation.
-        init_message (str): The initial message of the agent. Defaults to None.
-        engine (str): The name of the GPT engine to use. Defaults to "gpt-35-turbo".
-
-    Methods:
-        llm(new_input, stop, history=None, stream=False): Generates a response to the input using the LLM model.
-        _run(new_input, stop, history=None, stream=False): Runs the agent and generates a response to the input.
-        run(new_input, history=None, stream=False): Runs the agent and generates a response to the input.
-
-    Attributes:
-        persona (str): The persona of the agent.
-        tools (list): A list of {"tool_name":tool} that the agent can use to answer questions. Tool must have a run method that takes a question and returns an answer.
-        stop (list): A list of strings that the agent will use to stop the conversation.
-        init_message (str): The initial message of the agent.
-        engine (str): The name of the GPT engine to use.
     """
 
     def __init__(self, persona,functions_spec, functions_list, name=None, init_message=None, engine =chat_engine):
-        super().__init__(engine=engine,persona=persona, init_message=init_message, name=name)
+        if init_message is not None:
+            init_hist =[{"role":"system", "content":persona}, {"role":"assistant", "content":init_message}]
+        else:
+            init_hist =[{"role":"system", "content":persona}]
+
+        self.init_history =  init_hist
+        self.persona = persona
+        self.engine = engine
+        self.name= name
+
         self.functions_spec = functions_spec
         self.functions_list= functions_list
         
@@ -502,6 +577,7 @@ class Smart_Agent(Agent):
         i=0
         query_used = None
         data ={}
+        execution_context={}
         while True:
             response = client.chat.completions.create(
                 model=self.engine, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
@@ -535,29 +611,44 @@ class Smart_Agent(Agent):
                     # verify function exists
                     if function_name not in self.functions_list:
                         # raise Exception("Function " + function_name + " does not exist")
+                        print(("Function " + function_name + " does not exist, retrying"))
                         conversation.pop()
-                        continue
+                        break
                     function_to_call = self.functions_list[function_name]
                     
                     # verify function has correct number of arguments
                     try:
                         function_args = json.loads(tool_call.function.arguments)
-                    except:
+                    except json.JSONDecodeError as e:
+                        print(e)
                         conversation.pop()
-                        continue
+                        break
+                    if function_name == "execute_python_code":
+                        function_args["execution_context"] = execution_context
 
                     if check_args(function_to_call, function_args) is False:
                         conversation.pop()
-                        continue
-
-                    function_response = str(function_to_call(**function_args))
+                        break
                     if function_name == "execute_python_code":
+                        execution_context, function_response = function_to_call(**function_args)
                         if "data" in st.session_state:
                             data[tool_call.id] = st.session_state['data']
+                        if "fix the bug" in function_response:
+                            print(function_response)
+                            print("bug in the code, retrying")
+                            conversation.pop()
+                            break
+                            # continue
+
+                    else:
+                        function_response = str(function_to_call(**function_args))
                                      
                     print("Output of function call:")
                     print(function_response)
                     print()
+                    if function_name == "message_user" or function_name =="message_team": #special case when coder finished the code execution and ready to respond to user or the coder needs to clarify with context preparer
+                        return function_response
+
                 
                     conversation.append(
                         {

@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
-from copilot_utils import BA_ASSISTANT_WORKFLOW, BA_AVAILABLE_FUNCTIONS, BA_FUNCTIONS_SPEC, add_to_cache, Smart_Agent
+from copilot_utils_v2 import CODER, CODER_AVAILABLE_FUNCTIONS, CODER_FUNCTIONS_SPEC, add_to_cache, Smart_Agent
 import sys
 sys.path.append("..")
 import time
@@ -12,7 +12,7 @@ from plotly.graph_objects import Figure as PlotlyFigure
 from matplotlib.figure import Figure as MatplotFigure
 import pandas as pd
 # print("AVAILABLE_FUNCTIONS", AVAILABLE_FUNCTIONS)
-agent = Smart_Agent(persona=BA_ASSISTANT_WORKFLOW,functions_list=BA_AVAILABLE_FUNCTIONS, functions_spec=BA_FUNCTIONS_SPEC, init_message="Hello, I am your data analyst assistant, what can I do for you?")
+agent = Smart_Agent(persona=CODER,functions_list=CODER_AVAILABLE_FUNCTIONS, functions_spec=CODER_FUNCTIONS_SPEC, init_message="Hello, I am your data analyst assistant, what can I do for you?")
 
 st.set_page_config(layout="wide",page_title="Enterprise Copilot- A demo of Copilot application using GPT")
 styl = f"""
@@ -100,7 +100,7 @@ if user_input:
         else:
             st.markdown(agent_response)
     if data is not None:
-        print("adding data to session state, data is ", data)
+        # print("adding data to session state, data is ", data)
         st.session_state['display_data'] = data
 
 st.session_state['history'] = history
