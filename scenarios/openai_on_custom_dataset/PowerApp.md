@@ -31,13 +31,12 @@ As part of the data preparation step, to work in Open AI, the documents are chun
    
 1. Now, navigate to `C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest` in Windows Explore and you will see file names as `secerts.env`, Make sure the value is updated as expected. However, we have already updated the values for you.
 
-
 1. Now you need to open the **CMD** and run the below command to change to directory to the ingest folder.
 
    ```
    cd C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\ingest
    ```
-
+   
 1. Once you are in the ingest directory, run the below command to start the ingestion process. Please make sure to have the correct value in the secrets.env file before running the below command. The search indexer chunks a sample PDF document (500 pages), which is downloaded from Azure Docs, and chunks each page into 20 lines. Each chunk is created as a new search document in the index. The PDF document processing is achieved using the Azure Form Recognizer service.
 
      ```
@@ -74,42 +73,42 @@ As part of the data preparation step, to work in Open AI, the documents are chun
 
    >**Note**: Please close any window that pops up for signing in.
 
-7. On the **Import package** page, click on **Upload**.
+6. On the **Import package** page, click on **Upload**.
 
     ![](./images/upload-importpackage.png)
     
-8. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\powerapp` and select the `Semantic-Search-App-Template_20230303012916.zip` folder, then click **Open**.
+7. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\openai_on_custom_dataset\powerapp` and select the `Semantic-Search-App-Template_20230303012916.zip` folder, then click **Open**.
 
    ![](./images/upload-semantic-search.png)
    
-9. Click on **Import** to import the package into the PowerApps environment.
+8. Click on **Import** to import the package into the PowerApps environment.
 
     ![](./images/package-import.png)
 
-10. Once the import is completed, click on **Apps (1)**, then click on **... (3)** next to **Semantic-Search-Template** and click on **Edit (4)**.
+9. Once the import is completed, click on **Apps (1)**, then click on **... (3)** next to **Semantic-Search-Template** and click on **Edit (4)**.
 
     ![](./images/p20.png)
 
    >**Note**: You are currently unable to see the option. Kindly refresh the page to access it.
      
-11. Click on **Power Automate (1)**; this will import the **_Power App_** canvas and **Semantic-Search-Flow (2)** into the workspace. 
+10. Click on **Power Automate (1)**; this will import the **_Power App_** canvas and **Semantic-Search-Flow (2)** into the workspace. 
 
     ![](./images/semanti-search-flow-1.png)
     
     >**Note**: When the **Welcome to Power Apps Studio** window appears, click on **Skip**.
 
-12. To navigate back, click on **Back**; if you get an option to leave or do not leave, click on **Leave**.
+11. To navigate back, click on **Back**; if you get an option to leave or do not leave, click on **Leave**.
 
 
-13.  On the **Flows (1)** pane, select **Semantic-Search-Flow (2)**, then click on `...` **(3)**, and **Turn on (4)** your flow.
+12.  On the **Flows (1)** pane, select **Semantic-Search-Flow (2)**, then click on `...` **(3)**, and **Turn on (4)** your flow.
 
       ![](./images/turn-on-flow.png)
 
-14. Next, click on **Edit** for **Semantic-Search-Flow**. PowerAutomate Flow needs to be enabled. At this point, the Power app can be run as is. It connects to a pre-built Azure Function App.
+13. Next, click on **Edit** for **Semantic-Search-Flow**. PowerAutomate Flow needs to be enabled. At this point, the Power app can be run as is. It connects to a pre-built Azure Function App.
 
     ![](./images/edit.png)
 
-15. Edit the Power Automate Flow and update **Azure Function Url (1)** with the URL you copied earlier, and append `&num_search_result=5` at the end. Your URL should look like the following: Click **Save (2)**.
+14. Edit the Power Automate Flow and update **Azure Function Url (1)** with the URL you copied earlier, and append `&num_search_result=5` at the end. Your URL should look like the following: Click **Save (2)**.
 
     ```
     https://func-search-XXXXX.azurewebsites.net/api/orchestrator-func-app?code=aNXGfSoGqnCarlBquGQE4pNgO1n9ZmqheCd0SZPzAFCOAzFugFsV8g==&num_search_result=5
@@ -117,11 +116,11 @@ As part of the data preparation step, to work in Open AI, the documents are chun
     
     ![](./images/flow-img-1.1.png)
 
-16. Next, click on **Apps** and select **Semantic-Search-Template** to navigate to the app.
+15. Next, click on **Apps** and select **Semantic-Search-Template** to navigate to the app.
 
     ![](./images/p21.png)
  
-17. On the app, enter any phrase and hit search to view the result.
+16. On the app, enter any phrase and hit search to view the result.
    
       - For example, here we are searching for `Is GPU supported by AML?`
    
