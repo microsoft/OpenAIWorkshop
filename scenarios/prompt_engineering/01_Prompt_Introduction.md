@@ -258,7 +258,7 @@ Text: "hello!"
 
 *Output:*
 ```
-¡Hola!
+Texto:¡Hola!
 ```
 
 ### Specificity
