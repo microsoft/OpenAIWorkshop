@@ -36,32 +36,34 @@ In this exercise, you will learn how to integrate OpenAI with PowerApps. This ex
 
       ![](./images/powerapps-apps-edit.png)
 
-10. You will observe that it has imported the Power App canvas app and the Power Automate Flow into the workspace.
+   >**Note**: If you're unable to see the **OpenAI Playground** option, please wait for 5 minutes, and in the meantime, try refreshing the page.
+
+11. You will observe that it has imported the Power App canvas app and the Power Automate Flow into the workspace.
 
       ![](./images/powerapps-apps-view.png)
 
-11. To navigate back click on **Back (1)** then click **Leave (2)**.
+12. To navigate back click on **Back (1)** then click **Leave (2)**.
 
       ![](./images/powerapps-apps-exit.png)
 
-12. Next, on the **Flows (1)** tab, select **Openaisummarization (2)** then click on `...` **(3)** and **Turn on (4)** your flow.
+13. Next, on the **Flows (1)** tab, select **Openaisummarization (2)** then click on `...` **(3)** and **Turn on (4)** your flow.
 
       ![](./images/flow-on.png)
 
-13. Click on **Edit (2)** for **Openaisummarization**.
+14. Click on **Edit (2)** for **Openaisummarization**.
 
       ![](./images/flow-edit.png)
 
-14. Edit the Power Automate Flow HTTP step by update the **https://your-resource-name.openai.azure.com/** with **<inject key="OpenAIEndpoint" enableCopy="true"/>** **(1)**, **deployment-id** with **<inject key="openaimodulename" enableCopy="true"/>** **(2)**, **api-version** with **2023-09-15-preview** **(3)**, **YOUR_API_KEY** with **<inject key="OpenAIKey" enableCopy="true"/>** **(4)**, and click on **Save** **(5)**.
+15. Edit the Power Automate Flow HTTP step by update the **https://your-resource-name.openai.azure.com/** with **<inject key="OpenAIEndpoint" enableCopy="true"/>** **(1)**, **deployment-id** with **<inject key="openaimodulename" enableCopy="true"/>** **(2)**, **api-version** with **2023-09-15-preview** **(3)**, **YOUR_API_KEY** with **<inject key="OpenAIKey" enableCopy="true"/>** **(4)**, and click on **Save** **(5)**.
 
       ![](./images/update-values.png)
    
-15. From the **Apps (1)** page click on the **OpenAI Playground** app to run the app by clicing on **Play (2)** button.
+16. From the **Apps (1)** page click on the **OpenAI Playground** app to run the app by clicing on **Play (2)** button.
 
      ![](./images/canves-play.png)
 Note: If you get a popup asking to start a free trial, click on **Star a Free Trial**. (It might take 2-3 minutes to start the trial)
 
-16. In the **Canvas**, click on **Summary** **(1)** button and verify the **auto-filled text** **(2)**. Then click on **Submit** **(3)** button to get the desired **Summary** **(4)**. 
+17. In the **Canvas**, click on **Summary** **(1)** button and verify the **auto-filled text** **(2)**. Then click on **Submit** **(3)** button to get the desired **Summary** **(4)**. 
 
      ![](./images/canves-output.png)
 
