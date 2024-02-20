@@ -4,6 +4,8 @@
 
       ![](images/p2.png)
 
+1. On **Azure Synapse Analytics** window select **asaworkspace<inject key="DeploymentID" enableCopy="false"/>**.   
+
 1.  On the **Overview** blade under the **Getting started** section, click **Open** to open Synapse Studio.
      
     ![](images/open-workspace.png)
