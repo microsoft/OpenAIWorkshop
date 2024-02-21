@@ -16,7 +16,7 @@ The following prerequisites must be completed before you start these labs
 - Use either Edge or Chrome when executing the labs.
 - Access to an Azure Subscription with Owner or [Contributor Access](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-steps)
 
-- Approved access to Azure OpenAI service in your Azure subscription. You can request access [here](https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUOFA5Qk1UWDRBMjg0WFhPMkIzTzhKQ1dWNyQlQCN0PWcu)
+- Approved access to Azure OpenAI service in your Azure subscription. You can request access [here](https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUNTZBNzRKNlVQSFhZMU9aV09EVzYxWFdORCQlQCN0PWcu)
 
 
   **IMPORTANT**:
