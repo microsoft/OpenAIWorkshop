@@ -34,10 +34,10 @@ To chat with and analyze your own data, you need to create a storage account in 
 
     ![Create storage account](media/create-storage-05.png)
 
-## Create a Cognitive Search Resource
-A Cognitive Search service in Azure is another requirement for models to chat with and analyze your own data. A Cognitive Search service is where you index and enrich your data source, such as a PDF document, a web page, or a database. A Cognitive Search service also provides retrieval and augmentation benefits, such as natural language processing, semantic ranking, and faceted navigation.
+## Create an AI Search Resource
+An AI Search service in Azure is another requirement for models to chat with and analyze your own data. AI Cognitive Search service is where you index and enrich your data source, such as a PDF document, a web page, or a database. AI Search service also provides retrieval and augmentation benefits, such as natural language processing, semantic ranking, and faceted navigation.
 
-1. From the Azure Portal, search for *Search* in the **Global Search Bar** and select **Cognitive Search**. Next, click **+ Create** at the top of the Cognitive Search section.
+1. From the Azure Portal, search for *Search* in the **Global Search Bar** and select **AI Search**. Next, click **+ Create** at the top of the AI Search section.
 
     ![Create search](media/create-search-01.png)
 
@@ -45,7 +45,7 @@ A Cognitive Search service in Azure is another requirement for models to chat wi
 
     ![Create search](media/create-search-02.png)
 
-1. Once the resoruce is created click the **Go To Resource** button. From your Cognitive Search resource page, select **Semantic search** from the left-hand navigation blade and enable the *Free* tier. 
+1. Once the resoruce is created click the **Go To Resource** button. From your Cognitive Search resource page, select **Semantic Ranker** from the left-hand navigation blade and enable the *Free* tier. 
 
     ![Create search](media/create-search-03.png)
 
