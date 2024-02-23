@@ -51,14 +51,16 @@ def get_embedding(text, model=emb_engine):
 
 credential = AzureKeyCredential(key)
 azcs_search_client = SearchClient(service_endpoint, index_name =index_name , credential=credential)
+  
 
-
-def search_knowledgebase(search_query):
+def search_knowledgebase(search_query, key_words):
 
     vector = VectorizedQuery(vector=get_embedding(search_query), k_nearest_neighbors=3, fields="embedding")
     print("search query: ", search_query)
+    print("key words: ", key_words)
+
     results = azcs_search_client.search(  
-        search_text=search_query,  
+        search_text=key_words,  
         vector_queries= [vector],
         # filter= product_filter,
         query_type=QueryType.SEMANTIC, semantic_configuration_name='default', query_caption=QueryCaptionType.EXTRACTIVE, query_answer=QueryAnswerType.EXTRACTIVE,
@@ -179,7 +181,7 @@ class Smart_Agent():
                 messages=conversation,
             tools=self.functions_spec,
             tool_choice='auto',
-            max_tokens=200,
+            max_tokens=500,
 
             )
             
@@ -222,16 +224,12 @@ class Smart_Agent():
                     # print("beginning function call")
                     function_response = str(function_to_call(**function_args))
 
-                    if function_name=="get_help": #scenario where the agent asks for help
-                        summary_conversation = []
-                        for message in conversation:
-                            message = dict(message)
-                            if message.get("role") != "system" and message.get("role") != "tool" and len(message.get("content"))>0:
-                                summary_conversation.append({"role":message.get("role"), "content":message.get("content")})
-                        summary_conversation.pop() #remove the last message which is the agent asking for help
-                        return True, summary_conversation, function_response
-
-                    print("Output of function call:")
+                    if function_name=="create_or_update_plan": #scenario where the agent asks for help
+                        current_system_message = conversation[0]['content']
+                        new_system_message = update_notebook(current_system_message, function_response)
+                        # print("new system message: ", new_system_message)
+                        conversation[0]['content'] = new_system_message
+                    # print("Output of function call:")
                     print(function_response)
                     print()
                 
@@ -269,15 +267,16 @@ If the user is asking for information that is not related to technical domain, s
 AVAILABLE_FUNCTIONS = {
             "search_knowledgebase": search_knowledgebase,
 
+
         } 
 
 FUNCTIONS_SPEC= [  
     {
-                                "type":"function",
+        "type":"function",
         "function":{
 
         "name": "search_knowledgebase",
-        "description": "Searches the knowledge base for an answer to the technical question",
+        "description": "Searches the knowledge base for an answer to the technical question. Don't do this if you haven't got the action plan yet.",
         "parameters": {
             "type": "object",
             "properties": {
@@ -285,9 +284,13 @@ FUNCTIONS_SPEC= [
                     "type": "string",
                     "description": "The search query to use to search the knowledge base"
                 },
+                "key_words": {
+                    "type": "string",
+                    "description": "Key words to narrow down the search results"
+                },
 
             },
-            "required": ["search_query"],
+            "required": ["search_query", "key_words"],
         },
     }},
 
