@@ -175,7 +175,7 @@ def comment_on_graph(question, image_path="plot.jpg"):
         ],
         }
     ],
-    max_tokens=300,
+    max_tokens=500,
     )
 
     return response.choices[0].message.content
@@ -304,9 +304,7 @@ def execute_python_code(python_code, goal, execution_context):
                 write_image(data, image_path)
                 comment = comment_on_graph(question, image_path)
                 comment = "the graph is displayed and this is what you see: \n" + comment + "\n"
-                # shutil.rmtree(img_folder)
                 st.session_state['comment_on_graph'] = comment
-                # print("comment_on_graph: ", comment)
 
             elif type(data) is MatplotFigure:
                 st.pyplot(data)
@@ -363,11 +361,9 @@ def resolve_entities(business_question):
 
 CONTEXT_PREPARER_AVAILABLE_FUNCTIONS = {
             "get_scenarios": get_scenarios_md,
-            # "execute_python_code": execute_python_code,
             "retrieve_context": retrieve_context,
             # "find_similar_cases":find_similar_cases ,
             # "resolve_entities": resolve_entities,
-            # "message_coder":message_coder ,
 
 
         } 
@@ -438,30 +434,6 @@ CONTEXT_PREPARER_FUNCTIONS_SPEC= [
     # },
 
 
-    # {
-    #     "type":"function",
-    #     "function":{
-
-    #     "name": "message_coder",
-    #     "description": "Send a message to your coder with the context you prepared so that the coder can write code to answer business question",
-    #     "parameters": {
-    #         "type": "object",
-    #         "properties": {
-    #             "context": {
-    #                 "type": "string",
-    #                 "description": "Complete context about relevant tables, their columns, how to join the tables, business rules and any other information that coder needs to write SQL query and the code to answer the business question" 
-    #             },
-    #             "business_question": {
-    #                 "type": "string",
-    #                 "description": "Rephrased form of the customer's question to make it clear and concise" 
-    #             }
-
-
-    #         },
-    #         "required": ["context", "business_question"],
-    #     },
-    # }
-    # },
     
 ]  
 
@@ -491,25 +463,6 @@ CODER_FUNCTIONS_SPEC= [
 
     }
     },
-    # {
-    #     "type":"function",
-    #     "function":{
-
-    #     "name": "message_team",
-    #     "description": "Send a message to your team mate to provide more information or to clarify the question",
-    #     "parameters": {
-    #         "type": "object",
-    #         "properties": {
-    #             "message": {
-    #                 "type": "string",
-    #                 "description": "Message to send to your team mate" 
-    #             }
-
-    #         },
-    #         "required": ["message"],
-    #     },
-    # }
-    # },
     {
         "type":"function",
         "function":{
