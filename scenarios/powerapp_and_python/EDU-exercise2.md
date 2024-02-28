@@ -2,9 +2,9 @@
 
 In this exercise, you will learn how to integrate OpenAI with PowerApps. This exercise is all about combining the simplicity of PowerApp's low-code platform with the advanced capabilities of OpenAI. You'll see firsthand how these technologies can come together to create powerful applications.
 
-1. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps** select your **Country/Region (1)** click **Get Started (2)**. 
+1. Navigate to https://make.powerapps.com/. In the  **Contact Information** window give a random nine-digit number for **Phone number** and click on **Submit** . 
 
-   ![](./images/welcome-1.png)
+   ![](./images/openai1.png)
     
 2. Select **Apps (1)** on the left navigation and click **Import Canvas App (2)**. 
 
