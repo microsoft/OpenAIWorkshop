@@ -18,6 +18,7 @@ Add the following to the environment varaibles:
 - formrecognizerkey - Document intelligence key
 - storagekey - Azure storage account key
 - AZURE_STORAGE_ACCOUNT - Azure storage account. Example: "kirbyadlsgen2"
+- AZURE_STORAGE_CONTAINER_SOURCE - The name of the storage account container where you store the data.
 - AZURE_STORAGE_CONTAINER - The name of the storage account container to upload documents to.
 - AZURE_SEARCH_SERVICE - Name of your AI search service. Example: "myaisearch"
 - AZURE_OPENAI_SERVICE - The name of your Azure OpenAI service. Example: "aoaiwestus"
@@ -29,12 +30,11 @@ Add the following to the environment varaibles:
 - AZURE_SEARCH_INDEX_NAME - New or existing index name for AI Search. If it doesn't exist, one will be created. 
 
 ## Step Two
-Copy your PDF files into the directory ./documents.
-
-## Step Three
 In order to install all the requirements run the following
     `pip install -r requirements.txt`
 
-## Step Four
+## Step Three
 In VS Code open a Windows terminal 
 Copy and paste the entire contents of the command_run.txt file into the command terminal
+
+*** Note that the new version of the program prepdocs.py_mp.py supports parallel loading. You should use a machine with multiple cores to take advantage of multi-core processing. Good and easy options would be: a compute instance in Azure ML. The F series has 20-96 cores machine there. You can also use github workspace.
