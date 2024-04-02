@@ -20,7 +20,7 @@ In this exercise, You'll be using Python to develop applications powered by Open
 
 1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\powerapp_and_python\python` location and select `OpenAI_notebook.ipynb`, then click on **Open**.
 
-     ![](images/notebook.png)
+     ![](images/openai-4.png)
 
 1. Select **openaisparkpool** from the drop-down menu of **Attach to**.
 
