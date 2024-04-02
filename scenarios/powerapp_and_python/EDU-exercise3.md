@@ -2,9 +2,9 @@
 
 In this exercise, You'll be using Python to develop applications powered by OpenAI. This session is perfect for enhancing your programming skills and understanding how OpenAI can be utilized through Python.
 
-1. Search and select **Azure Synapse Analytics** in the Azure portal.
+1. Search for Synapse and select **Azure Synapse Analytics** in the Azure portal.
 
-      ![](images/p2.png)
+      ![](images/openai-3.png)
 
 1. Click on **asaworkspace<inject key="DeploymentId"></inject>** to open.
 
