@@ -4,7 +4,7 @@ In this exercise, You'll be using Python to develop applications powered by Open
 
 1. Search for Synapse and select **Azure Synapse Analytics** in the Azure portal.
 
-      ![](images/openai-3.png)
+   ![](images/openai-3.png)
 
 1. Click on **asaworkspace<inject key="DeploymentId"></inject>** to open.
 
