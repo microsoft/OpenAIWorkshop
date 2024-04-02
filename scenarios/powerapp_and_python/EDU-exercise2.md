@@ -40,6 +40,8 @@ In this exercise, you will learn how to integrate OpenAI with PowerApps. This ex
 
    >**Note**: If you're unable to see the **OpenAI Playground** option, please wait for 5 minutes, and in the meantime, try refreshing the page.
 
+   >**Note**: When prompted with **Welcome to Power Apps Studio** click on **Skip**.
+
 11. You will observe that it has imported the Power App canvas app and the Power Automate Flow into the workspace.
 
       ![](./images/powerapps-apps-view.png)
