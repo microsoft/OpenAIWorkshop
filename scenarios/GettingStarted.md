@@ -42,6 +42,6 @@
    
 1. Confirm you have a resource groups present as shown in the below screenshot. The last six digits in the resource group name are unique for every user.
 
-    ![](media/openai1.png "Resource groups")
+    ![](media/openai-1.png "Resource groups")
    
 1. Now, click on Next from the lower right corner to move to the next page.
