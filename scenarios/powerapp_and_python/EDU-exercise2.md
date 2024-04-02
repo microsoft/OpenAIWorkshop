@@ -54,6 +54,8 @@ In this exercise, you will learn how to integrate OpenAI with PowerApps. This ex
 
       ![](./images/flow-on.png)
 
+    >**Note**: When **Welcome to Power Automate** is prompted click on **Get started**.
+
 14. Click on **Edit (2)** for **Openaisummarization**.
 
       ![](./images/flow-edit.png)
