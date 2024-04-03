@@ -34,7 +34,7 @@
 
 1. If you see the pop-up **You have free Azure Advisor recommendations!**, close the window to continue the lab.
 
-1. If a **Welcome to Microsoft Azure** popup window appears, click **Maybe Later** to skip the tour.
+1. If a **Welcome to Microsoft Azure** popup window appears, click **Cancel** to skip the tour.
    
 1. Now you will see Azure Portal Dashboard, click on **Resource groups** from the Navigate panel to see the resource groups.
 
@@ -42,6 +42,6 @@
    
 1. Confirm you have a resource groups present as shown in the below screenshot. The last six digits in the resource group name are unique for every user.
 
-    ![](media/openai1.png "Resource groups")
+    ![](media/openai-1.png "Resource groups")
    
 1. Now, click on Next from the lower right corner to move to the next page.

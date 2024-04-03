@@ -2,11 +2,11 @@
 
 In this exercise, You'll be using Python to develop applications powered by OpenAI. This session is perfect for enhancing your programming skills and understanding how OpenAI can be utilized through Python.
 
-1. Search and select **Azure Synapse Analytics** in the Azure portal.
+1. Search for Synapse and select **Azure Synapse Analytics** in the Azure portal.
 
-      ![](images/p2.png)
+   ![](images/openai-3.png)
 
-1. Click on **asaworkspace<inject key="DeploymentId"></inject>** to open
+1. Click on **asaworkspace<inject key="DeploymentId"></inject>** to open.
 
     ![](images/E4S2.png)
 
@@ -20,12 +20,14 @@ In this exercise, You'll be using Python to develop applications powered by Open
 
 1. Navigate to `C:\labfile\OpenAIWorkshop\scenarios\powerapp_and_python\python` location and select `OpenAI_notebook.ipynb`, then click on **Open**.
 
-     ![](images/notebook.png)
+     ![](images/openai-4.png)
 
 1. Select **openaisparkpool** from the drop-down menu of **Attach to**.
 
     ![](images/openai-sparkpool.png)
 
+    >**Note**: Use the three ellipsis(...) button at the top right corner of your browser to zoom out the page, allowing you to view the **Attach to** option.
+    
 1. In **1. Install OpenAI**, click on the **Run** button next to the two cells, and please wait till **Apache Spark pools** turn to stop state. 
 
      ![](images/run-python12.png)
