@@ -26,6 +26,8 @@ In this exercise, You'll be using Python to develop applications powered by Open
 
     ![](images/openai-sparkpool.png)
 
+    >**Note**: Use the three ellipsis(...) button at the top right corner of your browser to zoom out the page, allowing you to view the **Attach to** option.
+    
 1. In **1. Install OpenAI**, click on the **Run** button next to the two cells, and please wait till **Apache Spark pools** turn to stop state. 
 
      ![](images/run-python12.png)
