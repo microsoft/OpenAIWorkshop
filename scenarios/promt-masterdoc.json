@@ -1,0 +1,14 @@
+[ {
+  "Name": "OpenAIWorkshop",
+  "Language": "English",
+  "Files": [
+        {
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/GettingStarted.md",
+      "Order": 1
+    },   
+    {
+    "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/prompt_engineering/Prompt-thon.md",
+      "Order": 2
+    }    
+  ]
+} ]
