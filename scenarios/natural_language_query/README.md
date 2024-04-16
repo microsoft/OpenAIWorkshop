@@ -1,11 +1,19 @@
 # Overview
-This application demonstrates the of Open AI (ChatGPT/GPT-4) to help answer business questions by performing advanced data analytic tasks on a business database.
+This application showcases the concept of a smart analytical agent designed to assist in answering business inquiries by executing advanced data analytics tasks on a business database. The agent is endowed with a learning capability; for problems it has never encountered before, it undergoes comprehensive reasoning steps including researching the database schema and interpreting the definitions of business metrics before proceeding to write code. However, for problems similar to those it has previously solved successfully (in memory recall mode), it quickly leverages its knowledge and reuses the code. The LLM that powers the full reasoning mode is GPT-4, while the LLM that facilitates the memory recall mode can be GPT-3.5-Turbo.
+
+To determine the quality of the solution or answer to a question, the application provides users with a feedback mechanism. Answers that receive positive feedback are memorized and subsequently utilized by the agent, enhancing its efficiency and accuracy over time.
+
+![Sample scenario](./data/plot1.png)
+
+For a detailed explanation of the concept, visit: [Toward Learning-Capable LLM Agents](https://medium.com/data-science-at-microsoft/toward-learning-capable-llm-agents-72db3737e1c2)
+
 Examples of questions are:
-- Simple: Show me daily revenue trends in 2023 per territory 
+- Simple: 
+    - What were the total sales for each year available in the database?
+    - Who are the top 5 customers by order volume, and what is the total number of orders for each?
 - More difficult: Is that true that top 20% customers generate 80% revenue?
 - Advanced: Forecast monthly revenue for next 12 months
 
-![Sample scenario](./data/plot1.png)
 The application supports Python's built-in SQLITE .
 # Installation 
 ## Azure Open AI setup
@@ -22,14 +30,14 @@ We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI 
         AZURE_OPENAI_ENDPOINT="https://YOUR_OPENAI.openai.azure.com/"
         AZURE_OPENAI_API_KEY=""
         AZURE_OPENAI_EMB_DEPLOYMENT="text-embedding-ada-002"
-        AZURE_OPENAI_CHAT_DEPLOYMENT="gpt-4-1106" #this can be gpt-35-turbo
-        AZURE_OPENAI_GPT4_DEPLOYMENT="gpt-4-1106"
+        AZURE_OPENAI_GPT4_DEPLOYMENT1="gpt-4-1106"
+        AZURE_OPENAI_CHAT_DEPLOYMENT2="gpt-35-turbo-1106" #this can be gpt-35-turbo
         AZURE_OPEN_AI_VISION_DEPLOYMENT=gpt-4-vision
         AZURE_SEARCH_SERVICE_ENDPOINT="https://.search.windows.net"
         AZURE_SEARCH_INDEX_NAME=sql_query_caches #name of the Azure search index that cache the SQL query
         AZURE_SEARCH_ADMIN_KEY=
         USE_SEMANTIC_CACHE=True
-
+        SEMANTIC_HIT_THRESHOLD=0.02
         ```
 4. Create a python environment with version from 3.8 and 3.10
     - [Python 3+](https://www.python.org/downloads/)
