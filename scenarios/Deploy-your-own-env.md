@@ -1,6 +1,15 @@
 ### Get started with deploy your Environment.
 
-To Deploy this lab in your env, Please follow the below steps;
+This document will help you deploy the OpenAI Like a Pro lab envrionment in your Azure environment.To Deploy this lab in your env, Please follow the below steps;
+
+
+1. You will need following to get started:
+
+   - **OpenAI Resource**: Enable your subscription for OpenAI resource deployment. [here](https://aka.ms/oai/access).
+   - **Azure subscription**: Create a free account [here](https://azure.microsoft.com/free/).
+   - **Azure Permission**: Make sure you have owner Access to the Subscription. 
+
+## Prepare your Azure Lab Environment.
 
 1. Click on the below Deploy to Azure Button.
 
