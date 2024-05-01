@@ -1,4 +1,4 @@
-### Get started with deploy your Environment.
+### Get started with deploying your Environment.
 
 This document will help you deploy the OpenAI Like a Pro lab envrionment in your Azure environment.To Deploy this lab in your env, Please follow the below steps;
 
