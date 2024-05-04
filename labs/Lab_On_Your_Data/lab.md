@@ -18,21 +18,30 @@ To chat with and analyze your own data, you need to create a storage account in 
 
     ![Create storage account](media/create-storage-01.png)
 
-1. Select your Azure OpenAI **Subscription** and create a new *Resource Group* called *AOAI-OnYourData-RG* by clicking the **Create new** link under the Resource Group dropdown and clicking **OK**
+1. In the **Basic** tab Select your Azure OpenAI **Subscription**, then click the **Create new** link under the Resource Group dropdown to create a new *Resource Group* Example: *AOAI-OnYourData-RG* and clicking **OK**
     
-    ![Create storage account](media/create-storage-02.png)
 
-1. Provide a *globally unique* **Storage Account name**, choose *East US* as your **Region**, and select *Locally Redundant Storage* for **Redundancy**. Next, click **Review** and finally **Create**.
+1. Provide a *globally unique* **Storage Account name**.
+(must be all lowercase),
+ Choose *East US* as your **Region**, and select *Locally Redundant Storage* for **Redundancy**.  Do Not click **Review + create** just yet.
+ 
+    ![Create storage account](media/create-storage-02-new.png)
 
-    ![Create storage account](media/create-storage-03.png)
+1. In the **Advanced** tab check the box **Allow enabling anonymous access on individual containers**.  Now you should, click **Review + Create**.
 
-1. Once the resoruce is created click the **Go To Resource** button. From your storage account's page, select **Containers** from the left-hand navigation pane and create a new container called *nih-documents*
 
-    ![Create storage account](media/create-storage-04.png)
+    ![Create storage account](media/create-storage-03-new.png)
+
+1. Once the resoruce is created click the **Go To Resource** button. From your storage account's page, select **Containers** from the left-hand navigation pane and create a new container called *nih-documents*. In the dropdown **Anonymous access level** under the **New Container** section on the upper right corner select **Container(anonymous read access for containers and blobs)** and then click **Create**.
+
+
+    ![Create storage account](media/create-storage-04-new.png)
 
 1. Click on your new **nih-documents** container and upload the [NIH grant writing manual](data/general-forms-h.pdf).
 
     ![Create storage account](media/create-storage-05.png)
+
+
 
 ## Create an AI Search Resource
 An AI Search service in Azure is another requirement for models to chat with and analyze your own data. AI Cognitive Search service is where you index and enrich your data source, such as a PDF document, a web page, or a database. AI Search service also provides retrieval and augmentation benefits, such as natural language processing, semantic ranking, and faceted navigation.
@@ -71,13 +80,11 @@ A system message is a type of prompt that can be used to guide the behavior and 
 ```
 Your name is GrantGPT, a friendly and helpful grant-writing assistant tasked with helping a principal investigator (PI) write grant research grant proposals, receive feedback on their proposals, and answer questions on the NIH's grant writing guidelines. You have been grounded on the NIH's grant writing guidelines and that is the only source of data you are allowed to use to answer questions. If there isn't enough information, say you do not know. If asking clarifying questions to the user would help, ask the question.
 ```
-1. From the *Azure AI Studio* click **Chat** from the left-hand navigation pane and paste the contents of your clipboard into the **System message** text box. Next, click **Save changes.**
-
-    ![Set System Message](media/set-system-message-01.png)
+1. From the *Azure AI Studio* click **Chat** from the left-hand navigation pane and paste the contents of your clipboard into the **System message** text box. Next, click **Apply changes.**
 
 1. After your System Message has been saved, test the chatbot by asking it how it can help you.
 
-    ![Set System Message](media/set-system-message-02.png)
+    ![Set System Message](media/set-system-message-01-new.png)
 
 ## Add your data
 1. From the *Chat* section of *Azure AI Studio* click **Add your data** followed by **+ Add a data source**.
@@ -86,22 +93,27 @@ Your name is GrantGPT, a friendly and helpful grant-writing assistant tasked wit
 
 1. Select *Azure Blob Storage* for **Select data Source**. Set **Subscription** to your Azure OpenAI subscription, **Azure Blob Storage resource** to the storage account created previously, **Storage container** to the container we uploaded the documents to. 
 
-1. Next, set **Azure Cognitive Search resource** to the Cognitive Search resource created previously, set the **index name** field to *nihdocs* and **Index schedule** to daily. Leave the vector search option off and check the checkbox that warns about usage charges and click **Next**.
+1. Next, set **Azure Cognitive Search resource** to the Cognitive Search resource created previously, set the **index name** field to *nihdocs* and **Index schedule** to daily. Leave the vector search option off and click **Next**.
 
-    ![Add your data](media/add-your-data-02.png)
+    ![Add your data](media/add-your-data-02-new.png)
 
-1. Chose *Semantic* for **Search Type**, check the box that warns against usage charges and click **Next**. Finally, click **Save and Close.**
+1. Chose *Semantic* for **Search Type**, and leave the **Chunk Size** as the *1024(default)*, and click **Next**.
     
-    ![Add your data](media/add-your-data-03.png)
+    ![Add your data](media/add-your-data-03-new.png)
 
-Your data will take a few minutes to processed into "*chunks*." This is done because Azure OpenAI models can only process a limited amount of text at a time. To use them on large data sources, you need to split your data into smaller chunks. Azure Cognitive Search uses a custom skill that leverages the Azure OpenAI chunking API to first chunk the data in the storage account and then index the the chunks.
+1. In the **Review and finish** page review the information and click **Save and close**.
 
+    ![Add your data](media/add-your-data-04-new.png)
 
-Once the system is done processing the data, you can interact with the chat session to test it.
+    
 
+1. Your data will take a few minutes to processed into "*chunks*." This is done because Azure OpenAI models can only process a limited amount of text at a time. To use them on large data sources, you need to split your data into smaller chunks. Azure Cognitive Search uses a custom skill that leverages the Azure OpenAI chunking API to first chunk the data in the storage account and then index the the chunks.
 
-![Add your data](media/test-chat.png) 
+    ![Add your data](media/add-your-data-05-new.png)
 
+1. Once the system is done processing the data, you can interact with the chat session to test it.
+
+    ![Add your data](media/test-chat.png) 
 
 ## Deploy to Web App
 
@@ -111,9 +123,10 @@ Now that that we've confirmed that GPT is grounded on your data, we can deploy t
 
     ![Add your data](media/deploy-app-01.png)
 
-1. Select *Create a new web app*, provide it with a globally-unique **Name**. Choose your OpenAI **Subscription** and the *AOAI-OnYourData-RG* for the **Resource Group**. Next, select your preferred **Region** and *S1* for the **Pricing Plan**. Finally, click **Enable Chat History** and acknowledge that both Chat History and the Web App will incur charges. Finally, click **Deploy**.
+1. Select *Create a new web app*, provide it with a globally-unique **Name**. Choose your OpenAI **Subscription** and the *AOAI-OnYourData-RG* for the **Resource Group**. Next, select your preferred **Region** and *S1* for the **Pricing Plan**. Finally, click **Enable Chat History** and click **Deploy**.  You will have to **Accept** the *Permissions requested*.
 
     ![Add your data](media/deploy-app-02.png)
+    ![Add your data](media/deploy-app-02-02-new.png)
 
   
 The deployment will take a few minutes to complete. After it is done, there'll be an additional wait of approximiately 10 minutes for Entra ID to secure the web app. Once it is complete, you'll be able to click the **Launch Web App** icon on the top right of the screen to take you to your new chat bot.  

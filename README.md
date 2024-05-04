@@ -19,13 +19,18 @@ The following prerequisites must be completed before you start these labs
 - Approved access to Azure OpenAI service in your Azure subscription. You can request access [here](https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUNTZBNzRKNlVQSFhZMU9aV09EVzYxWFdORCQlQCN0PWcu)
 
 
-  **IMPORTANT**:
+  
+    **IMPORTANT**:
     - Only use your institutions/organization email. Do not use a personal email address (Example: @gmail.com, hotmail.com, etc.)
     - Authorization can take up to 10 business days.
 
 
 - [Azure Open AI](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal) already provisioned and **GPT-35-turbo-16k** model deployed.
+
   For this lab, we recommend **North Central US or East US** region for your Azure Open AI deployment.
+
+   **IMPORTANT**:
+  - When you're deploying your model in Azure Open AI, make sure to select **Option 1: Allow all networks** for the networking options.
 
 - Required Resource Providers [How to Register Azure Services](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types)
 
