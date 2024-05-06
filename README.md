@@ -32,6 +32,8 @@ The following prerequisites must be completed before you start these labs
    **IMPORTANT**:
   - When you're deploying your model in Azure Open AI, make sure to select **Option 1: Allow all networks** for the networking options.
 
+  ![Alt text](documents/media/prereq-networking.png)
+
 - Required Resource Providers [How to Register Azure Services](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types)
 
   - Microsoft.Search
