@@ -25,7 +25,6 @@ We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI 
 ## Install the application locally 
 1. Clone the repo (e.g. ```git clone https://github.com/microsoft/OpenAIWorkshop.git``` or download). Then navigate to ```cd scenarios/natural_language_query```
 2. Provide settings for Open AI and Database.You can either create a `secrets.env` file in the root of this folder (scenarios/incubations/automating_analytics) as below or do it using the app's UI later on. 
-    - use built-in SQLITE.
         ```txt
         AZURE_OPENAI_ENDPOINT="https://YOUR_OPENAI.openai.azure.com/"
         AZURE_OPENAI_API_KEY=""
