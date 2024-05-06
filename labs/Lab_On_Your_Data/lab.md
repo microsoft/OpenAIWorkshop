@@ -123,12 +123,14 @@ Now that that we've confirmed that GPT is grounded on your data, we can deploy t
 
     ![Add your data](media/deploy-app-01.png)
 
-1. Select *Create a new web app*, provide it with a globally-unique **Name**. Choose your OpenAI **Subscription** and the *AOAI-OnYourData-RG* for the **Resource Group**. Next, select your preferred **Region** and *S1* for the **Pricing Plan**. Finally, click **Enable Chat History** and click **Deploy**.  You will have to **Accept** the *Permissions requested*.
+1. Select *Create a new web app*, provide it with a globally-unique **Name**. Choose your OpenAI **Subscription** and the *AOAI-OnYourData-RG* for the **Resource Group**. Next, select your preferred **Region** and *S1* for the **Pricing Plan**. Finally, click **Enable Chat History** and click **Deploy**. 
 
     ![Add your data](media/deploy-app-02.png)
+
+**Accept** the *Permissions requested* since you are deploying a new web app.
+        
     ![Add your data](media/deploy-app-02-02-new.png)
 
-  
 The deployment will take a few minutes to complete. After it is done, there'll be an additional wait of approximiately 10 minutes for Entra ID to secure the web app. Once it is complete, you'll be able to click the **Launch Web App** icon on the top right of the screen to take you to your new chat bot.  
 
 
