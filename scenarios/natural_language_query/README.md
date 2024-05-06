@@ -38,6 +38,7 @@ We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI 
         AZURE_SEARCH_ADMIN_KEY=
         USE_SEMANTIC_CACHE=True
         SEMANTIC_HIT_THRESHOLD=0.02
+        META_DATA_FILE=data/metadata.json
         ```
 4. Create a python environment with version from 3.8 and 3.10
     - [Python 3+](https://www.python.org/downloads/)
