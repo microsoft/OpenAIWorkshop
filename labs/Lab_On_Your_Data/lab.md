@@ -18,21 +18,21 @@ To chat with and analyze your own data, you need to create a storage account in 
 
     ![Create storage account](media/create-storage-01.png)
 
-1. In the **Basic** tab Select your Azure OpenAI **Subscription**, then click the **Create new** link under the Resource Group dropdown to create a new *Resource Group* Example: *AOAI-OnYourData-RG* and clicking **OK**
+1. In the **Basics** tab Select your Azure OpenAI **Subscription**, then click the **Create new** link under the Resource Group dropdown to create a new *Resource Group*. Example: *AOAI-OnYourData-RG* and click **OK**
     
 
 1. Provide a *globally unique* **Storage Account name**.
 (must be all lowercase),
- Choose *East US* as your **Region**, and select *Locally Redundant Storage* for **Redundancy**.  Do Not click **Review + create** just yet.
+ Choose *East US* as your **Region**, and select *Locally Redundant Storage* for **Redundancy**.  Then click **Next**.
  
     ![Create storage account](media/create-storage-02-new.png)
 
-1. In the **Advanced** tab check the box **Allow enabling anonymous access on individual containers**.  Now you should, click **Review + Create**.
+1. In the **Advanced** tab check the box **Allow enabling anonymous access on individual containers**. Then Click **Review + Create**.
 
 
     ![Create storage account](media/create-storage-03-new.png)
 
-1. Once the resoruce is created click the **Go To Resource** button. From your storage account's page, select **Containers** from the left-hand navigation pane and create a new container called *nih-documents*. In the dropdown **Anonymous access level** under the **New Container** section on the upper right corner select **Container(anonymous read access for containers and blobs)** and then click **Create**.
+1. Once the resoruce is created click the **Go To Resource** button. From your storage account's page, select **Containers** from the left-hand navigation pane and create a new container called *nih-documents*. In the dropdown **Anonymous access level** under the **New Container** section on the upper right corner select **Container (anonymous read access for containers and blobs)** and then click **Create**.
 
 
     ![Create storage account](media/create-storage-04-new.png)
@@ -87,7 +87,7 @@ Your name is GrantGPT, a friendly and helpful grant-writing assistant tasked wit
     ![Set System Message](media/set-system-message-01-new.png)
 
 ## Add your data
-1. From the *Chat* section of *Azure AI Studio* click **Add your data** followed by **+ Add a data source**.
+1. From the *Chat* section of *Azure AI Studio* click **Add your data (preview)** followed by **+ Add a data source**.
 
     ![Add your data](media/add-your-data-01.png)
 
@@ -97,7 +97,7 @@ Your name is GrantGPT, a friendly and helpful grant-writing assistant tasked wit
 
     ![Add your data](media/add-your-data-02-new.png)
 
-1. Chose *Semantic* for **Search Type**, and leave the **Chunk Size** as the *1024(default)*, and click **Next**.
+1. Chose *Semantic* for **Search Type**, then click **Next**.
     
     ![Add your data](media/add-your-data-03-new.png)
 
@@ -107,7 +107,7 @@ Your name is GrantGPT, a friendly and helpful grant-writing assistant tasked wit
 
     
 
-1. Your data will take a few minutes to processed into "*chunks*." This is done because Azure OpenAI models can only process a limited amount of text at a time. To use them on large data sources, you need to split your data into smaller chunks. Azure Cognitive Search uses a custom skill that leverages the Azure OpenAI chunking API to first chunk the data in the storage account and then index the the chunks.
+1. Your data will take a few minutes to be processed into "*chunks*." This is done because Azure OpenAI models can only process a limited amount of text at a time. To use them on large data sources, you need to split your data into smaller chunks. Azure Cognitive Search uses a custom skill that leverages the Azure OpenAI chunking API to first chunk the data in the storage account and then index the the chunks.
 
     ![Add your data](media/add-your-data-05-new.png)
 
