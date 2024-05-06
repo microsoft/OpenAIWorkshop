@@ -41,9 +41,8 @@ MAX_QUESTION_TO_KEEP = 3
 MAX_QUESTION_WITH_DETAIL_HIST = 1
 
 emb_engine = os.getenv("AZURE_OPENAI_EMB_DEPLOYMENT")
-chat_engine1 =os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT1")
-chat_engine2 =os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT2")
-gpt_4_engine = os.getenv("AZURE_OPENAI_GPT4_DEPLOYMENT")
+chat_engine1 =os.getenv("AZURE_OPENAI_GPT4_DEPLOYMENT")
+chat_engine2 =os.getenv("AZURE_OPENAI_GPT35_DEPLOYMENT")
 sqllite_db_path= os.environ.get("SQLITE_DB_PATH","data/northwind.db")
 engine = create_engine(f'sqlite:///{sqllite_db_path}') 
 client = AzureOpenAI(
@@ -135,7 +134,7 @@ def comment_on_graph(question, image_path="plot.jpg"):
     base64_image = encode_image(image_path)
 
     response = client.chat.completions.create(
-    model=os.environ.get("AZURE_OPEN_AI_VISION_DEPLOYMENT"),
+    model=os.environ.get("AZURE_OPENAI_VISION_DEPLOYMENT"),
     messages=[
         {
         "role": "user",
@@ -165,57 +164,102 @@ def execute_sql_query(sql_query, limit=100):
     # result = result.head(limit)  # limit to save memory  
     # st.write(result)
     return result
-orders_sample = execute_sql_query("SELECT * FROM orders LIMIT 3").to_markdown(index=False)
-customers_sample = execute_sql_query("SELECT * FROM customers limit 3").to_markdown(index=False)
-products_sample = execute_sql_query("SELECT * FROM products limit 3").to_markdown(index=False)
-order_details_sample = execute_sql_query("SELECT * FROM [Order Details] limit 3").to_markdown(index=False)
-employees_sample = execute_sql_query("SELECT * FROM employees limit 3").to_markdown(index=False)
-shippers_sample = execute_sql_query("SELECT * FROM shippers limit 3").to_markdown(index=False)
-suppliers_sample = execute_sql_query("SELECT * FROM suppliers limit 3").to_markdown(index=False)
-categories_sample =execute_sql_query("SELECT * FROM categories LIMIT 3").to_markdown(index=False)
-territories_sample =execute_sql_query("SELECT * FROM territories LIMIT 3").to_markdown(index=False)
-employeeTerritories_sample =execute_sql_query("SELECT * FROM employeeTerritories LIMIT 3").to_markdown(index=False)
-customerDemographics_sample =execute_sql_query("SELECT * FROM customerDemographics LIMIT 3").to_markdown(index=False)
 
+@retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(6))
+def retrieve_context(business_concepts):
+    # Load the metadata file
+    with open(os.getenv("META_DATA_FILE","data/metadata.json"), "r") as file:
+        data = json.load(file)
+
+    # Extract values from the loaded data
+    analytic_scenarios = data.get("analytic_scenarios", {})
+    scenario_list = [(scenario[0], scenario[1]['description']) for scenario in analytic_scenarios.items()]
+    # create  scenario_list_md which is the a markdown table with column headers 'Scenario' and 'Description' from scenario_list
+    scenario_list_md = ""
+    for scenario in scenario_list:
+        scenario_list_md += f"| {scenario[0]} | {scenario[1]} |\n"
+    #add headers 'Scenario' and 'Description' to scenario_list_md
+    scenario_list_md = f"| Scenario | Description |\n| --- | --- |\n{scenario_list_md}"
+
+    sys_msg = f"""
+    You are an AI assistant that helps people find information. 
+    You are given business concept(s) and you need to identify which one or several business analytic scenario(s) below are relevant to the them.
+    <<analytic_scenarios>>
+    {scenario_list_md}
+    <</analytic_scenarios>>
+    Output your response in json format with the following structure:   
+    {{
+        "scenarios": [
+            {{
+                "scenario_name": "...", # name of the scenario. 
+            }}
+        ]
+    }}
+    """
+
+    response = client.chat.completions.create(
+        model=chat_engine1, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
+        messages=[{"role": "system", "content": sys_msg}, {"role": "user", "content": business_concepts}],
+    response_format={"type": "json_object"}
+    
+    )
+    
+    response_message = response.choices[0].message.content.strip()
+    print("response_message: ", response_message)
+    scenario_names = json.loads(response_message)["scenarios"]
+    scenario_names = [scenario["scenario_name"] for scenario in scenario_names]
+
+    # Extract values from the loaded data
+    analytic_scenarios = data.get("analytic_scenarios", {})
+    scenario_list = [scenario[0] for scenario in analytic_scenarios.items()]
+    if not set(scenario_names).issubset(set(scenario_list)):
+        raise Exception("You provided invalid scenario name(s), please check and try again")
+    scenario_tables = data.get("scenario_tables", {})
+    scenario_context = "Following tables might be relevant to the question: \n"
+    all_tables = data.get("tables", {})
+    all_relationships = data.get("table_relationships", {})
+    all_relationships = {(relationship[0], relationship[1]):relationship[2] for relationship in all_relationships}
+    tables = set()
+    for scenario_name in scenario_names:
+        tables.update(scenario_tables.get(scenario_name, []))
+    for table in tables:
+        scenario_context += f"- table_name: {table} - description: {all_tables[table]['description']} - columns: {all_tables[table]['columns']}\n"
+    table_pairs = [(table1, table2) for table1 in tables for table2 in tables if table1 != table2]
+    relationships = set()
+    for table_pair in table_pairs:
+        relationship = all_relationships.get(table_pair, None)
+        if relationship:
+            relationships.add((table_pair[0], table_pair[1], relationship)) 
+    
+    scenario_context += "\n"
+    scenario_context += "\nTable relationships: \n"
+    for relationship in relationships:
+        scenario_context += f"- {relationship[0]}, {relationship[1]}:{relationship[2]}\n"
+    
+
+    scenario_context += "\nFollowing rules might be relevant: \n"
+    for scenario_name in scenario_names:
+        scenario_context += f"- {scenario_name}: {str(analytic_scenarios[scenario_name]['rules'])}\n"
+    return scenario_context
 
 today = pd.Timestamp.today()
 #format today's date
 today = today.strftime("%Y-%m-%d")
 CODER1 = f"""
-You are an expert data analyst with great expertise in data analysis, visualization, SQL and Python to answer question from business users.
-Today's date is {today}
-Data is stored in a SQLITE database.
-Sample data is provided below for your reference.
-The orders table: {orders_sample}
-The customers table: {customers_sample}
-The [Order Details] table: {order_details_sample}
-The products table: {products_sample}
-The shippers table: {shippers_sample}
-The suppliers table: {suppliers_sample}
-The employees table: {employees_sample}
-The categories table: {categories_sample}
-The territories table: {territories_sample}
-The employeeTerritories table: {employeeTerritories_sample}
-The customerDemographics table: {customerDemographics_sample}
+You are a highly skilled data analyst proficient in data analysis, visualization, SQL, and Python, tasked with responding to inquiries from business users. 
+Today's date is {today}. The data is housed in a SQLITE database. All data queries, transformations, and visualizations must be conducted through a designated Python interface.
+Your initial step is to engage with the user to grasp their requirements, asking clarifying questions as necessary. Next, you will review the relevant business rules and table schemas that pertain to the user's query to adeptly craft your code for answering their questions.
+If the query is intricate, employ best practices in business analytics to decompose it into manageable steps, articulating your analytical process to the user throughout. Conclude by presenting your findings in a clear, succinct manner, employing visualizations when beneficial to optimally convey your insights.
 
-Data query, transformation and visualization all need to happen via a Python interface provided to you.
-First, you interact with user to understand their requirement. Clarify if needed.
-If the question is complex, apply best practices in business analytics to break it down into smaller parts and solve each part separately. While doing so, explain your thought process to the user.
-Finally present your findings to the user in a clear and concise manner. 
-Use visualization when appropriate to best communicate your answer.
-Before applying any filter conditions in your queries, please first sample the database to understand the data distribution, especially the case sensitivity and format of key values. For instance, if you're considering using 'isCanceled' as a filter condition, verify whether the database stores this value as 'True', 'true', or in another variation. Adjust your query accordingly to match the exact data representation in the database. Use this approach for all attributes to ensure accurate query results.  
 """
 CODER2= """
-You are an expert data analyst with great expertise in data analysis, visualization, SQL and Python to answer question from business users.
-Today's date is {today}
-Data is stored in a SQLITE database.
-Data query, transformation and visualization all need to happen via a Python interface provided to you.
-First, you interact with user to understand their requirement. Clarify if needed.
-You are provided with similiar answered questions with solutions.
-Determine that the reference solutions can provide sufficient context for you to answer the new question.
-If yes, go ahead to implement the solution.
-If no, use the retrieve additional context function to get more information to be able to answer the question.
-Use visualization when appropriate to best communicate your answer.
+You are a highly skilled data analyst proficient in data analysis, visualization, SQL, and Python, tasked with addressing inquiries from business users. Today's date is {today}. 
+The data is stored in an SQLITE database, and all data querying, transformation, and visualization must be conducted through a Python interface provided to you.
+Begin by engaging with the user to fully understand their requirements, asking clarifying questions as needed. You have access to a library of previously answered questions and their solutions.
+First, assess whether these reference solutions offer sufficient context to address the new user question. If they do, proceed to implement the solution directly. 
+If they do not provide enough information, utilize the 'retrieve additional context' function to gather more details necessary to formulate an accurate response.
+When presenting your findings, use visualizations strategically to effectively communicate your answers.
+
 
 """
 
@@ -411,6 +455,7 @@ def get_additional_context():
 
 CODER_AVAILABLE_FUNCTIONS1 = {
             "execute_python_code": execute_python_code,
+            "retrieve_context": retrieve_context,
         } 
 
 
@@ -446,6 +491,28 @@ CODER_FUNCTIONS_SPEC1= [
 
     }
     },
+    {
+        "type":"function",
+        "function":{
+
+        "name": "retrieve_context",
+        "description": "retrieve business rules and table schemas that are relevant to the customer's question",
+
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "business_concepts": {
+                    "type": "string",
+                    "description": "One or multiple business concepts that the user is asking about. For example, 'total sales', 'top customers', 'most popular products'." 
+                }
+
+
+            },
+            "required": ["business_concepts"],
+        },
+    }
+    },
+
 
 ]  
 
@@ -458,9 +525,10 @@ CODER_FUNCTIONS_SPEC2= [{
         },
 
     }]
-CODER_FUNCTIONS_SPEC2 += CODER_FUNCTIONS_SPEC1
-
-CODER_AVAILABLE_FUNCTIONS2 = CODER_AVAILABLE_FUNCTIONS1.copy()
+CODER_FUNCTIONS_SPEC2.append(CODER_FUNCTIONS_SPEC1[0]) #append execute_python_code to CODER_FUNCTIONS_SPEC2
+#
+CODER_AVAILABLE_FUNCTIONS2={}
+CODER_AVAILABLE_FUNCTIONS2["execute_python_code"] = execute_python_code
 CODER_AVAILABLE_FUNCTIONS2["get_additional_context"] = get_additional_context
 
 
