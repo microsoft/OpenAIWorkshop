@@ -70,30 +70,6 @@ credential = AzureKeyCredential(key)
 azcs_search_client = SearchClient(service_endpoint, index_name =index_name , credential=credential)
 
 
-def search_memory(search_query):
-
-    vector = VectorizedQuery(vector=get_embedding(search_query), k_nearest_neighbors=3, fields="questionVector")
-    # print("search query: ", search_query)
-
-    results = azcs_search_client.search(  
-        search_text=search_query,  
-        vector_queries= [vector],
-        query_type=QueryType.SEMANTIC, semantic_configuration_name='my-semantic-config', query_caption=QueryCaptionType.EXTRACTIVE, query_answer=QueryAnswerType.EXTRACTIVE,
-        select=["code","answer"],
-        top=2
-    )  
-    text_content =""
-    for result in results:  
-        text_content += f"code solution\n: {result['code']}\nAnswer:\n {result['answer']}\n"
-    # print("text_content", text_content)
-    return text_content
-
-###Sematic caching implementation
-if os.getenv("USE_SEMANTIC_CACHE") == "True":
-    cache_index_name = os.getenv("CACHE_INDEX_NAME")
-    cache_index_name= cache_index_name.strip('"')
-    azcs_semantic_cache_search_client = SearchClient(service_endpoint, cache_index_name, credential=credential)
-
 def add_to_cache(question, code, answer):
     experience = {
                  "id" : str(uuid.uuid4()),
@@ -117,9 +93,10 @@ def get_cache(question):
     text_content =""
     for result in results:  
         if result['@search.score']>= float(os.getenv("SEMANTIC_HIT_THRESHOLD")):
-            text_content += f"question: {result['question']}\ncode solution\n: {result['code']}\nAnswer:\n {result['answer']}\n"
+            text_content += f"###Question: {result['question']}\n###Solution:\n {result['code']}\n"
         else:
             print("No cache hit at: ", result['@search.score'])
+    print("text_content", text_content)
     return text_content
 
 
@@ -255,11 +232,10 @@ If the query is intricate, employ best practices in business analytics to decomp
 CODER2= """
 You are a highly skilled data analyst proficient in data analysis, visualization, SQL, and Python, tasked with addressing inquiries from business users. Today's date is {today}. 
 The data is stored in an SQLITE database, and all data querying, transformation, and visualization must be conducted through a Python interface provided to you.
-Begin by engaging with the user to fully understand their requirements, asking clarifying questions as needed. You have access to a library of previously answered questions and their solutions.
+Begin by engaging with the user to fully understand their requirements, asking clarifying questions as needed. You are provided with similiar answered questions with solutions.
 First, assess whether these reference solutions offer sufficient context to address the new user question. If they do, proceed to implement the solution directly. 
 If they do not provide enough information, utilize the 'retrieve additional context' function to gather more details necessary to formulate an accurate response.
 When presenting your findings, use visualizations strategically to effectively communicate your answers.
-
 
 """
 
@@ -527,6 +503,7 @@ CODER_FUNCTIONS_SPEC2= [{
     }]
 CODER_FUNCTIONS_SPEC2.append(CODER_FUNCTIONS_SPEC1[0]) #append execute_python_code to CODER_FUNCTIONS_SPEC2
 #
+
 CODER_AVAILABLE_FUNCTIONS2={}
 CODER_AVAILABLE_FUNCTIONS2["execute_python_code"] = execute_python_code
 CODER_AVAILABLE_FUNCTIONS2["get_additional_context"] = get_additional_context

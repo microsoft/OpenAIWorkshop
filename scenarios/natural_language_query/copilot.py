@@ -50,7 +50,7 @@ with st.sidebar:
 3. What are the top 10 most popular products based on quantity sold?
 4. What are the total sales broken down by country?
 5. Can I see a detailed list of all orders made by a specific customer, including order date, products purchased, and quantities?
-6. Which products have inventory levels below a certain threshold?
+6. Which products have inventory levels below 50?
 7. How many products does each supplier provide, and who are the suppliers with the most products?
 8. What is the average time taken from order placement to shipment?
 9. Can I get a report on each employee's total sales and the number of orders processed?
