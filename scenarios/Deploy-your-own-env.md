@@ -19,7 +19,7 @@ This document will help you deploy the OpenAI Like a Pro lab envrionment in your
 
 2. Once the Above template is deployed, Click on the below Deploy to Azure button to deploy more required resources.
 
-      [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https://experienceazure.blob.core.windows.net/templates/openai-workshop/deploy-03.json)
+      [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fexperienceazure.blob.core.windows.net%2Ftemplates%2Fopenai-workshop%2Fdeploy-03.json)
 
    - Select the available subscription and resource group. Provide the unique alpha numeric value for `Deployment` parameter. You can review the ARM template by clicking on Edit Template. Review and create the OpenAI Like A Pro Lab.
 
