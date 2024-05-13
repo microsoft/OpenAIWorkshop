@@ -55,7 +55,7 @@ The following prerequisites must be completed before you start these labs
 
 ## Before you begin
 
-  [Retrieve your Azure OpenAI endpoint and keys](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?tabs=command-line&pivots=programming-language-python#retrieve-key-and-endpoint) and copy them to notepad for future reference as you will be using them throughout the labs.
+  [Retrieve your Azure OpenAI endpoint and keys](https://learn.microsoft.com/en-us/azure/ai-services/openai/quickstart?tabs=command-line%2Cpython-new&pivots=programming-language-powershell#retrieve-key-and-endpoint:~:text=The%20Endpoint%20and%20Keys%20can%20be%20found) and copy them to notepad for future reference as you will be using them throughout the labs.
 
 ## Agenda
 
