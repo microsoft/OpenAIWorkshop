@@ -59,14 +59,20 @@ Click on the logic app and click on the edit button
 ![](../../documents/images/lab-1-logicapp-2.png)
 
 
-Expand the first Logic App Step named "When an HTTP request is received" and copy the URL to your text editor
+Click the first Logic App Step named **manual**, to open it.  
+  
+![](../../documents/images/lab-1-logicapp-tsint-first-step-manual.png)
+  
+    
+Set the **Method** field to **POST** (1) and copy the value of the HTTP URL field to your text editor (2), for later use.
 
 ![](../../documents/images/lab-1-logicapp-3.png)
 
 
-Scroll down to locate the Logic App Step named "HTTP". If the box is not already open, click the Title bar to open it.
-
-In the **URI** field, enter the URI of your Azure OpenAI Deployment endpoint, with the following format:
+Scroll down to locate the Logic App Step named "HTTP". If the editor box is not already open, click the Title bar to open it.  
+![](../../documents/images/lab-1-logicapp-tsint-step-CallAOAI.png)  
+  
+In the **URI** field, enter the URI of your Azure OpenAI Deployment endpoint, it hsould look similar to the following:
 
 **"https://<YOUR_AZURE_OPENAI_RESOURCENAME>.openai.azure.com/openai/deployments/<DEPLOYMENT_NAME>/chat/completions?api-version=2023-05-15"**
 
@@ -83,14 +89,27 @@ In the **api-key** field, enter your Azure OpenAI API key.
 ![](../../documents/images/lab-1-logicapp-4.png)
 
 
-Scroll down to the Logic App Step named **"Connections"**, the one with the Outlook logo, and expand it to enter new authorizaion credentials for your mailbox:
+Scroll down to the Logic App Step named **"Send email with options"**, the one with the Outlook logo, and click the title to open the editor box.   
+![](../../documents/images/lab-1-logicapp-tsint-Step-SendEmlWOpts.png)
+  
+  To enter new authorizaion credentials for your mailbox, click **Change connection**:  
+![](../../documents/images/lab-1-logicapp-tsint-Step-SendEmlWOpts-ChgConn.png)  
 
+Click **Add new** then follow the instructions on the screen to **Sign in**. You will be prompted to authenticate with your credentials, and authorize permissins for the application.
 ![](../../documents/images/lab-1-logicapp-5.png)
 
 
-Scroll down to the Logic App Step named **"Condition"** and expand it, then expand the **True** box. Select the valid connection to send the final notification in this logic app.
+Scroll down to the Logic App Step named **"Condition"** and expand it.
+Then expand the **True** box.  
+Click the **Send an email (v2)** title, to open the editor box.  
+![](../../documents/images/lab-1-logicapp-tsint-Open-Step-SendEmlV2.png)  
+  
+  Click **Change connection**.  
+  ![](../../documents/images/lab-1-logicapp-tsint-Step-SendEmlV2-editor.png)
 
-![](../../documents/images/lab-1-logicapp-6.png)
+Select the valid connection to send the final notification in this logic app.
+
+![](../../documents/images/lab-1-logicapp-tsint-Step-SendEmlV2-ChgCn.png)
 
 
 Save the logic app.
