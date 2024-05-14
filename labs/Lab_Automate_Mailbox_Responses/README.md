@@ -122,8 +122,9 @@ This logic app scans a mail box every X minutes for new emails with the subject:
 
 ![](../../documents/images/lab-1-logicapp-9.png)
 
-> [!IMPORTANT]
-> When you click the 'Deploy to Azure' button below, you will need to provide the URL to your second logic app (email-techsupport-integration) in the 'Email_integration_url' parameter field.
+> **[!IMPORTANT]**  
+> When you click the 'Deploy to Azure' button below, you will need to provide the URL to your second logic app (email-techsupport-integration) in the 'Email_integration_url' parameter field.  
+![](../../documents/images/lab-1-logicapp-tsint-Oview-WorkflowURL.png)
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft-USEduAzure%2FOpenAIWorkshop%2Fmain%2Flabs%2FLab_Automate_Mailbox_Responses%2Fscripts%2Freadmailbox%2Ftemplate.json)
 
@@ -137,12 +138,14 @@ After the deployment you should see the new logic app in your resource group.
 ![](../../documents/images/lab-1-logicapp-7.png)
 
 
-Click he new Logic App, then click the **Edit** button
+Click the new Logic App (**read-mailbox-techsupport**), then click the **Edit** button
 
 ![](../../documents/images/lab-1-logicapp-readmailbox-clickedit.png)
 
 
-Select the top box titled **When a new email arrives (V3)** and select the appropiate connection to Office 365 outlook
+Select the top box titled **When a new email arrives (V3)**.  
+Click **Change connection** (at the bottom of the editor box)  
+and select the appropiate connection to Office 365 outlook
 
 ![](../../documents/images/lab-1-logicapp-8.png)
 
@@ -166,7 +169,7 @@ Your Name
 ---
 
 
-Monitor your Inbox for the automated email response. As soon as you receive it, open the email and **click one of the options provided**:
+**Monitor your Inbox for the automated email response*. As soon as you receive it, open the email and **click one of the options provided**:
 
 ![](../../documents/images/Lab-1-screenshot-automatedemailresponsewithoptions.png)
 
