@@ -23,7 +23,7 @@ styl = f"""
 st.markdown(styl, unsafe_allow_html=True)
 
 
-MAX_HIST= 2
+MAX_HIST= 3
 # Sidebar contents
 with st.sidebar:
 
@@ -49,17 +49,15 @@ with st.sidebar:
 2. Who are the top 5 customers by order volume, and what is the total number of orders for each?
 3. What are the top 10 most popular products based on quantity sold?
 4. What are the total sales broken down by country?
-5. Can I see a detailed list of all orders made by a specific customer, including order date, products purchased, and quantities?
-6. Which products have inventory levels below 50?
-7. How many products does each supplier provide, and who are the suppliers with the most products?
-8. What is the average time taken from order placement to shipment?
-9. Can I get a report on each employee's total sales and the number of orders processed?
-10. Which products have shown an increase in sales volume over the last quarter?
+                
 
 
           """)
+    st.write('')
+    st.write('')
+    st.write('')
 
-    st.write('Copyright SSG, 2024')
+    st.markdown('#### Copyright SSG, 2024')
     if 'history' not in st.session_state:
         st.session_state['history'] = []
     if 'input' not in st.session_state:
@@ -144,6 +142,7 @@ if user_input:
             # stream_out= False
             stream_out, code, history, agent_response,data = agent.run(user_input=user_input, conversation=history, stream=False)
         except Exception as e:
+            agent_response= None
             print("error in running agent, error is ", e)
             if 'history' in st.session_state:
                 st.session_state['history'] = []
@@ -161,13 +160,14 @@ if user_input:
         #     message_placeholder.markdown(full_response)
         #     history.append({"role": "assistant", "content": full_response})
         # else:
-        st.markdown(agent_response)
-        st.session_state['solution_provided']= True
-        st.session_state['code'] = code
-        st.session_state['answer'] = agent_response
-        st.session_state['question'] = user_input
+        if agent_response:
+            st.markdown(agent_response)
+            st.session_state['solution_provided']= True
+            st.session_state['code'] = code
+            st.session_state['answer'] = agent_response
+            st.session_state['question'] = user_input
 
-        feedback = st.checkbox("That was a good answer", key="feedback")
+            feedback = st.checkbox("That was a good answer", key="feedback")
 
 
 
