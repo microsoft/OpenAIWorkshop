@@ -130,7 +130,6 @@ Call logs are uploaded to a designated location in blob storage. This upload wil
 1. Once you have successfully uploaded the JSON files to the storage account, you can navigate to the storage account in the Azure portal and verify that the files have been uploaded.
 
    ![](images/batch_file_upload.png)
----
 
 ## Task 2: Set up Synapse Workspace
 
@@ -297,15 +296,13 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
 
 ### **E. Trigger Synapse Pipeline**
 
-1. Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the studio, there is a *lightning bolt* icon that says **Add trigger (1)**. Click to add trigger and select **Trigger now (2)** to begin a pipeline run then when window open ups click on **OK**.
+1. Once you have successfully published your work, we need to trigger our pipeline. To do this, just below the tabs at the top of the studio, there is a *lightning bolt* icon that says **Add trigger (1)**. Click to add a trigger and select **Trigger now (2)** to begin a pipeline run then when the window opens up click on **OK**.
 
     ![](images/trigger-1.png)
     
 2. To look at the pipeline run, navigate to the left-hand side of the screen and choose the **Monitor (1)** option. Then select the **Pipeline runs (2)** option in the **Integration** section. You will then see the pipeline run that you have triggered under the **Triggered (3)** section as **pipeline 1 (4)**. This pipeline should take approximately 4 minutes (if you are using the uploaded data for the workshop).
 
    ![](images/pipeline-run-1.png)
-
----
 
 ## Task 3: Query Results in Our SQL Table
 
