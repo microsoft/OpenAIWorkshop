@@ -46,7 +46,7 @@
      
     > **Note:** If you encounter an error "Openai module not found", enter `%` in before the **pip install** in the Install OpenAI cell and re-run the notebook again.
 
-1. For **2. Choose a Model**, replace the **model** value from **text-curie-001** to **demomodel**.
+1. For **2. Choose a Model**, and replace the **model** value from **text-curie-001** to **demomodel**.
 
     ![](images/choosemodel.png)
 
