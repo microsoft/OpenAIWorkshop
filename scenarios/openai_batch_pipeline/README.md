@@ -33,32 +33,38 @@ Call logs are uploaded to a designated location in blob storage. This upload wil
 
 ### A. Launch Azure Cloud Shell
 
-1. In the **Azure portal**, open the Azure Cloud Shell by clicking on the cloud shell icon in the top menu bar.
+1. In the [Azure portal](https://portal.azure.com?azure-portal=true), select the **[>_]** (*Cloud Shell*) button at the top of the page to the right of the search box. A Cloud Shell pane will open at the bottom of the portal.
 
     ![](images/E2I1S1.png)
 
-1. After launching the Azure Cloud Shell, select the *Bash** option.
+2. The first time you open the Cloud Shell, you may be prompted to choose the type of shell you want to use (*Bash* or *PowerShell*). Select **Bash**. If you don't see this option, skip the step.
 
-    ![](images/E2T1S2.png)
-    
-1. Now that you have no storage mounted, in the dialog box, click on **Show advanced settings**.
+3. Within the Getting Started pane, select **Mount storage account (1)**, select your **Storage account subscription (2)** from the dropdown and click **Apply (3)**.
 
-   ![](images/scenario2-02.png)
-   
-1. Follow the below-mentioned instructions and click on **Create Storage (5)**.
+   ![](images/10-06-2024(1).png)
 
-    - Subscription: Select the subscription **(1)**
-    - Cloud Shell region: Make sure you are in the **East US** region.
-    - Resource group: Select **Use existing (2)** and select the **openai-<inject key="DeploymentID" enableCopy="false"/>** resource group.
-    - Storage account: Select **openaistorage<inject key="DeploymentID" enableCopy="false"/> (3)**
-    - File Share: Enter **blob (4)**
+4. Within the **Mount storage account** pane, select **Select existing storage account (1)** and click **Next (2)**.
 
-        ![](images/openai4-new.png)
+   ![](images/10-06-2024(2).png)
+
+5. Within the **Advanced settings** pane, enter the following details:
+
+    - **Subscription**: Default- Choose the only existing subscription assigned for this lab (1).
+    - **Resource group**: Select **Use existing** **(2)**
+      - openai-<inject key="DeploymentID" enableCopy="false"></inject>
+    - **Storage account**: Select **Use existing** **(3)**
+      - openaistorage<inject key="DeploymentID" enableCopy="false"></inject>
+    - **File share**: Create a new file share **(4)**
+
+      ![](images/10-06-2024(3).png)
+
+1. Enter the file share name as **blob (1)**, and click on **Select (2)**.
+
+    ![](images/10-06-2024(4).png)
 
 1.  Once the storage account is created, you will be prompted with the Bash window, as shown in the below screenshot.
     
     ![](images/cloudshell.png)
-        
 
 ### B. Upload files to a storage account:
 
@@ -96,9 +102,10 @@ Call logs are uploaded to a designated location in blob storage. This upload wil
     cd OpenAIWorkshop/scenarios/openai_batch_pipeline/document_generation
     conda create -n document-creation
     conda activate document-creation
+    pip install --upgrade pip
     pip install -r reqs.txt
     ```
-    >**Note**: if you received "Conda: command not found" error, please close the CloudShell session and open a new session to continue.
+    > **Note**: if you received **"Conda: command not found"** error, please close the CloudShell session and open a new session to continue.
     
 1. Type **y** and hit enter to proceed.
 
@@ -118,7 +125,7 @@ Call logs are uploaded to a designated location in blob storage. This upload wil
 
    ![](images/batch_file_upload2.png)
 
-   >**Note**: Execute "cd OpenAIWorkshop/scenarios/openai_batch_pipeline/document_generation" if you are not inside OpenAIWorkshop/scenarios/openai_batch_pipeline/document_generation directory.
+   > **Note**: Execute "cd OpenAIWorkshop scenarios/openai_batch_pipeline/document_generation" if you are not inside OpenAIWorkshop/scenarios/openai_batch_pipeline/document_generation directory.
    
 1. Once you have successfully uploaded the JSON files to the storage account, you can navigate to the storage account in the Azure portal and verify that the files have been uploaded.
 
@@ -242,8 +249,7 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
    - In the Edit linked service window that opens, select the Azure selection method as **From Azure subscription** **(1)**. Select the **Azure subscription (2)** for which you have been working. Select the **asaworkspace<inject key="DeploymentID" enableCopy="false"/> (3)** for **Server name** and **openaisql (4)** as the **Database name**, and then click on **Test connection (5)** and click **Save (6)**.
 
-        ![](images/p19.png)
-
+    ![](images/p19.png)
 
 1. We will then need to head over to the **Settings (1)** tab and adjust the **Schema name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo (1)** and the Table name is **cs_detail (2)**.
 
