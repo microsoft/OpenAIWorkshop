@@ -36,7 +36,7 @@
 
      ![](images/key-endpoint.png)
    
-1. From Azure Portal, navigate to the **openaicustom-<inject key="openaimodulename" enableCopy="true"/>** resource group, and select the Azure OpenAI resource.
+1. From Azure Portal, navigate to the **openaicustom-<inject key="DeploymentID" enableCopy="false"/>** resource group, and select the **asaworkspace<inject key="DeploymentID" enableCopy="false"/>** Azure OpenAI resource.
 
     ![](images/Ex4b-S7.1.png)
 
