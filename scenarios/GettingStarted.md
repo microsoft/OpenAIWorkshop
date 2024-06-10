@@ -1,5 +1,3 @@
-
-
 # Getting Started with Lab
 
 1. Once the environment is provisioned, a virtual machine (JumpVM) and lab guide will get loaded in your browser. Use this virtual machine throughout the workshop to perform the lab. You can see the number on the lab guide bottom area to switch to different exercises of the lab guide.
@@ -36,11 +34,11 @@
 
 1. If a **Welcome to Microsoft Azure** popup window appears, click **Cancel** to skip the tour.
    
-1. Now you will see Azure Portal Dashboard, click on **Resource groups** from the Navigate panel to see the resource groups.
+1. Now you will see the Azure Portal Dashboard, click on **Resource groups** from the Navigate panel to see the resource groups.
 
     ![](media/select-rg.png "Resource groups")
    
-1. Confirm you have a resource groups present as shown in the below screenshot. The last six digits in the resource group name are unique for every user.
+1. Confirm you have resource groups present as shown in the below screenshot. The last six digits in the resource group name are unique for every user.
 
     ![](media/openai-1.png "Resource groups")
    
