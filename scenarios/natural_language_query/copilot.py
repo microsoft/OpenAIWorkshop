@@ -57,7 +57,7 @@ with st.sidebar:
     st.write('')
     st.write('')
 
-    st.markdown('#### Copyright SSG, 2024')
+    st.markdown('#### Copyright SCG, 2024')
     if 'history' not in st.session_state:
         st.session_state['history'] = []
     if 'input' not in st.session_state:
@@ -101,7 +101,7 @@ if len(history) > 0:
     for index in removal_indices:
         del history[index]
     question_count=0
-    print("done purging history, len history now", len(history ))
+    # print("done purging history, len history now", len(history ))
     for message in history:
         message = dict(message)
         # if message.get("role") != "system":
