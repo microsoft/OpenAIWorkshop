@@ -81,7 +81,6 @@ def add_to_cache(question, code, answer):
     azcs_search_client.upload_documents(documents = [experience])
 def get_cache(question):
     vector = VectorizedQuery(vector=get_embedding(question), k_nearest_neighbors=3, fields="questionVector")
-    # print("search query: ", search_query)
 
     results = azcs_search_client.search(  
         search_text=question,  
@@ -182,7 +181,7 @@ def retrieve_context(business_concepts):
     )
     
     response_message = response.choices[0].message.content.strip()
-    print("response_message: ", response_message)
+    # print("response_message: ", response_message)
     scenario_names = json.loads(response_message)["scenarios"]
     scenario_names = [scenario["scenario_name"] for scenario in scenario_names]
 
