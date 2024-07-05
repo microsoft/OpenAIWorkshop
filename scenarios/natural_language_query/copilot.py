@@ -57,7 +57,7 @@ with st.sidebar:
     st.write('')
     st.write('')
 
-    st.markdown('#### Copyright SCG, 2024')
+    st.markdown('#### Created by James N., 2024')
     if 'history' not in st.session_state:
         st.session_state['history'] = []
     if 'input' not in st.session_state:
