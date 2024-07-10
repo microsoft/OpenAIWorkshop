@@ -49,7 +49,12 @@ Let's go ahead and launch the Azure OpenAI playground to learn about prompt engi
 
    ![](../powerapp_and_python/images/chat-demo1.png)
 
-1. In the **Chat** section, choose **default** **(1)** under the use a system message template. Then, give any query from the **Chat session** **(2)** to get the response from the openai. 
+1. In the **Chat** section, choose **default** **(1)** under the use a system message template. Then, give any query from the **Chat session** **(2)** to get the response from the openai.
+
+   >**Note**: Click on **Continue** on **Update system message?** when prompted.
+   
+   ![](/scenarios/media/E2S5.png)
+
 
    > **Note**: Chat may not respond with the exact output as shown in the screenshots. Following are the examples of what you'll most likely see in this exercise, but the response may vary.
  
