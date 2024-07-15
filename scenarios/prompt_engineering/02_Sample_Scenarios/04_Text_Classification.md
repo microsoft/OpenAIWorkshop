@@ -26,7 +26,7 @@ Entertainment
 ---
 ## Classification using One Shot or Few Shot Learning
 
-This topic will be covered in the next section [Advanced Concepts](./03_Advanced_Concepts.md), but it's worth mentioning here as well. One shot or few shot learning is a technique that allows you to train a model on a small amount of data and then use that model to classify new data. This is useful when you have a small amount of data, but you want to be able to classify new data that you haven't seen before.
+This topic will be covered in the next section [Advanced Concepts](../03_Advanced_Concepts.md), but it's worth mentioning here as well. One shot or few shot learning is a technique that allows you to train a model on a small amount of data and then use that model to classify new data. This is useful when you have a small amount of data, but you want to be able to classify new data that you haven't seen before.
 
 *Prompt:*
 ```
