@@ -233,7 +233,7 @@ Once the **Sink** tile opens, choose **Inline** for the *Sink type*. Then select
 
 ![](../../documents/media/batch_dataflow9.png)
 
-We will then need to head over to the **Settings** tab and adjust the **Scehma name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo** and the Table name is **cs_detail**.
+We will then need to head over to the **Settings** tab and adjust the **Schema name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo** and the Table name is **cs_detail**.
 
 ![](../../documents/media/batch_dataflow10.png)
 
