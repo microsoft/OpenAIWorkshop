@@ -30,7 +30,7 @@ This scenario allows uses OpenAI to summarize and analyze customer service call 
 
 ![](../../documents/media/batcharch.png)
 
-Call logs are uploaded to a designated location in Blob Storage. This upload will trigger the Azure Function which utilizies the [Azure OpenAI Service](https://azure.microsoft.com/en-us/products/cognitive-services/openai-service/) for summarization, sentiment analysis, product offering the conversation was about, the topic of the call, as well as a summary of the call. These results are written into a separate desginated location in the Blob Storage. From there, Synapse Analytics is utilized to pull in the newly cleansed data to create a table that can be queried in order to derive further insights. 
+Call logs are uploaded to a designated location in Blob Storage. This upload will trigger the Azure Function which utilizies the [Azure OpenAI Service](https://azure.microsoft.com/en-us/products/cognitive-services/openai-service/) for summarization, sentiment analysis, product offering the conversation was about, the topic of the call, as well as a summary of the call. These results are written into a separate designated location in the Blob Storage. From there, Synapse Analytics is utilized to pull in the newly cleansed data to create a table that can be queried in order to derive further insights. 
 
 # Deployment
 
