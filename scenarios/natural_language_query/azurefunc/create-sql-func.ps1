@@ -22,7 +22,7 @@ echo "Creating $database on $server..."
 az sql db create --resource-group $resourceGroup --server $server --name $database --sample-name AdventureWorksLT --edition GeneralPurpose --family Gen5 --capacity 2 --zone-redundant false # zone redundancy is only supported on premium and business critical service tiers
 
 
-az storage account create --name $storageaccountname --location $location --resource-group $resourceGroup --sku "Standard_LRS"  
+az storage account create --name $storageaccountname --location $location --resource-group $resourceGroup --sku "Standard_LRS"
 echo "Creating function : $functionname"
 az functionapp create --name $functionname --storage-account $storageaccountname --consumption-plan-location $location --resource-group $resourceGroup --os-type Linux --runtime python --runtime-version 3.9 --functions-version 4
 
@@ -30,6 +30,6 @@ az webapp cors add --resource-group $resourceGroup --name $functionname --allowe
 
 echo "Deploying function : $functionname"
 
-Start-Sleep -Seconds 50  
+Start-Sleep -Seconds 50
 func azure functionapp publish $functionname --force --python
 
