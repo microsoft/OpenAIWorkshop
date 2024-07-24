@@ -109,3 +109,7 @@ The architecture for this lab involves several key components:
     ![](media/openai-1.png "Resource groups")
    
 1. Now, click on Next from the lower right corner to move to the next page.
+
+This hands-on lab aims to empower participants in leveraging OpenAI technologies within Azure environments, spanning data ingestion, application development, prompt engineering, model optimization, and theoretical AI concepts for comprehensive learning and application.
+
+### Happy Learning!!
