@@ -1,1 +1,43 @@
-
+[ {
+  "Name": "OpenAIWorkshop",
+  "Language": "English",
+  "Files": [
+        {
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/GettingStarted-01.md",
+      "Order": 1
+    },   
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/openai_batch_pipeline/README.md",
+      "Order": 2
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/powerapp_and_python/powerapp.md",
+      "Order": 3
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/powerapp_and_python/Python.md",
+      "Order": 4
+    },
+    {
+    "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/prompt_engineering/01_Prompt_Introduction.md",
+      "Order": 5
+    },
+    {
+    "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/prompt_engineering/03_Advanced_Concepts.md",
+      "Order": 6
+    },
+    {
+    "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/prompt_engineering/04_Fine_Tuning.md",
+      "Order": 7
+    },
+    {
+    "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/prompt_engineering/98_Hyperparameters_Overview.md",
+      "Order": 8
+    },
+     {
+    "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/main/scenarios/prompt_engineering/99_Glossary.md",
+      "Order": 9
+    }
+    
+  ]
+} ]
