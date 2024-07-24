@@ -1,5 +1,9 @@
 # Exercise 4E: Glossary (Read-Only)
 
+### Estimated Duration: 20 minutes
+
+Azure OpenAI Large Language Models (LLMs) like GPT-4 excel in natural language tasks by generating coherent text. Prompt engineering optimizes input prompts to influence model outputs effectively for desired responses.
+
 *language model (LM)*
 ```
 A probability distribution over sequences of words
@@ -41,3 +45,8 @@ The token is an abstraction that is defined by external rules to identify the un
 A token may be a word, part of a word, or just characters like punctuation. (e.g. 'abc ', 'abc.', ' st', etc)
 ```
 
+## Summary
+
+In this lab, you are familiarized with OpenAI large language models (LLM), natural language processing (NLP), prompt, prompt engineering and tokens.
+
+### You have successfully completed the lab
