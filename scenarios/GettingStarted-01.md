@@ -56,14 +56,6 @@ The architecture for this lab involves several key components:
 
 ![](media/arch-diagram.png)
 
-## Explanation of Components 
-
-- **Storage Account:** Supports various data types and integrates with other Azure services for data processing, analytics, and backup.
-- **Synapse Workspace:** Enables ingestion, preparation, management, and serving of data for BI and machine learning tasks. Includes features for data integration, data exploration, and real-time analytics.
-- **Azure Open AI Service:** Offers pre-trained models (like GPT-4) and APIs for developers to build AI-driven applications, with capabilities for custom model training and deployment.
-- **Microsoft Power Apps:** Integrates with various data sources and services (like Azure and Office 365) to create responsive applications for web and mobile, enhancing productivity and business process automation.
-- **Prompt Engineering:** Focuses on optimizing model responses by refining input prompts, enhancing accuracy, and ensuring AI systems generate desired outputs effectively for various applications.
-
 ## Getting Started with Lab
 
 1. Once the environment is provisioned, a virtual machine (JumpVM) and lab guide will get loaded in your browser. Use this virtual machine throughout the workshop to perform the lab. You can see the number on the lab guide bottom area to switch to different exercises of the lab guide.
