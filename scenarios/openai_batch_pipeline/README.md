@@ -1,27 +1,16 @@
 # Exercise 1: Build an Open AI Pipeline to Ingest Batch Data, Perform Intelligent Operations, and Analyze in Synapse
 
-### Summary
+### Estimated Duration: 90 minutes
 
-This scenario allows the use of OpenAI to summarize and analyze customer service call logs for the fictitious company, Contoso. The data is ingested into a blob storage account and then processed by an Azure function. The Azure Function will return the customer sentiment, the product offering the conversation was about, the topic of the call, as well as a summary of the call. These results are written in a separate, designated location in the blob storage. From there, Synapse Analytics is utilized to pull in the newly cleansed data to create a table that can be queried to derive further insights.
+This lab aims to demonstrate how to integrate OpenAI capabilities into Azure Synapse Analytics for processing batch data, performing intelligent operations like natural language processing or predictive analytics, and analyzing the results efficiently within the Synapse environment.
 
----
-# Table of Contents
-- [Build an Open AI Pipeline to Ingest Batch Data, Perform Intelligent Operations, and Analyze in Synapse](#build-an-open-ai-pipeline-to-ingest-batch-data-perform-intelligent-operations-and-analyze-in-synapse)
-- [Summary](#summary)
-- [Table of Contents](#table-of-contents)
-- [Architecture Diagram](#architecture-diagram)
-- [Deployment](#deployment)
-    - [Step 1. Ingest Data to Storage created in step 1](#step-1-Ingest-Data-to-Storage-account)
-    - [Step 2. Set up Synapse Workspace](#step-3-set-up-synapse-workspace)
-        - [a. Launch Azure Cloud Shell](#a-launch-azure-cloud-shell)
-        - [b. In the Cloud Shell run below commands:](#b-in-the-cloud-shell-run-the-below-commands)
-        - [c. Create Target SQL Table](#c-create-target-sql-table)
-        - [d. Create Source and Target Linked Services](#d-create-source-and-target-linked-services)
-        - [e. Create Synapse Data Flow](#e-create-synapse-data-flow)
-        - [f. Create Synapse Pipeline](#f-create-synapse-pipeline)
-        - [g. Trigger Synapse Pipeline](#g-trigger-synapse-pipeline)
-    - [Step 3. Query Results in Our SQL Table](#step-4-query-results-in-our-sql-table)
+## Lab Objectives
 
+You will be able to complete the following tasks:
+
+- Task 1: Ingest Data to Storage account
+- Task 2: Set up Synapse Workspace
+- Task 3: Query Results in Our SQL Table
 
 # Architecture Diagram
 
@@ -324,3 +313,7 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
    - Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar **Results (6)** to those below.
 
       ![](images/lastpic.png)
+
+## Summary
+
+This scenario allows the use of OpenAI to summarize and analyze customer service call logs for the fictitious company, Contoso. The data is ingested into a blob storage account and then processed by an Azure function. The Azure Function will return the customer sentiment, the product offering the conversation was about, the topic of the call, as well as a summary of the call. These results are written in a separate, designated location in the blob storage. From there, Synapse Analytics is utilized to pull in the newly cleansed data to create a table that can be queried to derive further insights.
