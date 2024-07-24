@@ -1,5 +1,9 @@
 # Exercise 4B: Advanced Concepts (Read-Only)
 
+### Estimated Duration: 30 minutes
+
+This lab provides in-depth theoretical and advanced practical knowledge related to OpenAI and its applications. It covers the introduction to promot engineering and it's use cases and various types of prompts one can implement to fetch the desired results.
+
 ## Topics
 
   - [Introduction](#introduction)
@@ -7,7 +11,6 @@
   - [One-Shot Prompts](#one-shot-prompts)
   - [Few-Shot Prompts](#few-shot-prompts)
 
----
 
 ## Introduction
 
@@ -202,10 +205,14 @@ JSON:
   "Company": "Danone"
 }
 ```
+
 Now we can see that the model clearly understands that we want to only extract three entities from the text and nothing else.
 
 ---
 
-[Previous Section (Sample Scenarios)](./02_Sample_Scenarios/01_Text_Summarization.md)
+## Summary
 
-[Next Section (Fine Tuning)](./04_Fine_Tuning.md)
+In this lab, you have gained in-depth theoretical and advanced practical knowledge related to OpenAI and various types of  prompt engineering methods.
+
+### You have successfully completed the lab
+
