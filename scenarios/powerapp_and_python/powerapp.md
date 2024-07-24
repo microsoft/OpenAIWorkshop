@@ -1,5 +1,9 @@
 # Exercise 2: Build an Open AI application with Power App 
 
+### Estimated Duration: 60 minutes
+
+This lab focuses on creating an application using OpenAI capabilities integrated with Microsoft Power Apps. Participants will learn how to build a functional application that leverages AI for tasks such as natural language understanding, data analysis, or customer interaction within the Power Apps framework.
+
 1. Navigate to https://make.powerapps.com/. On **Welcome to Power Apps**, select your **Country/Region (1)** and click **Get Started (2)**. 
 
    ![](./images/welcome-1.png)
@@ -67,3 +71,10 @@
      ![](./images/canves-output.png)
 
     > **Note**: You can try the other available options in the portal, i.e., **SQL**, **ClassifyText**, **Parse**, and **Classify**.
+
+
+## Summary
+
+In this lab, you have successfully integrated OpenAI APIs within Power Apps to enable functionalities like natural language processing, sentiment analysis, or personalized recommendations and built an application.
+
+### You have successfully completed the lab
