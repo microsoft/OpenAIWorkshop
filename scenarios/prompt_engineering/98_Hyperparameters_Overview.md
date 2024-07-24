@@ -1,4 +1,9 @@
 # Exercise 4D: Basic Overview of Azure OpenAI Service Hyperparameters (Read-Only)
+
+### Estimated Duration: 20 minutes
+
+This lab provides foundational knowledge on hyperparameters in the context of Azure OpenAI Service. Participants gain understanding of how hyperparameters influence model training and performance, and learn basic techniques for tuning these parameters to achieve better results.
+
 ## Quick Note on adjusting Hyperparameters
 
 When working with prompts, you will be interacting with the LLM via an API or directly. You can configure a few parameters to get different results for your prompts.
@@ -57,3 +62,8 @@ Make responses stop at a desired point, such as the end of a sentence or list.
 Specify up to four sequences where the model will stop generating further tokens
 in a response. The returned text will not contain the stop sequence.
 ```
+## Summary
+
+In this lab, you have successfully acquired the knowledge of Azure OpenAI hyperparamters and it's functionalities.
+
+### You have successfully completed the lab
