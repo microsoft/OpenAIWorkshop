@@ -1,6 +1,6 @@
 # Use Azure Open AI like a Pro to build powerful AI Applications
 
-### Estimated Duration: 10 minutes
+### Overall Estimated Duration: 480 minutes
 
 ## Overview
 
@@ -8,45 +8,62 @@ These hands-on labs provide comprehensive training on integrating OpenAI capabil
 
 The lab will include the following exercises: 
 
-1. Build an Open AI Pipeline to Ingest Batch Data, Perform Intelligent Operations, and Analyze in Synapse: Develop a pipeline to integrate OpenAI for batch data ingestion, intelligent operations, and analysis within Azure Synapse.
+1. **Build an Open AI Pipeline to Ingest Batch Data, Perform Intelligent Operations, and Analyze in Synapse:** Develop a pipeline to integrate OpenAI for batch data ingestion, intelligent operations, and analysis within Azure Synapse.
    
-1. Build an Open AI application with Power App: Create an application using Power Apps that integrates OpenAI capabilities for tasks like natural language understanding or data processing.
+1. **Build an Open AI application with Power App:** Create an application using Power Apps that integrates OpenAI capabilities for tasks like natural language understanding or data processing.
    
-1. Build an Open AI application with Python: Build applications using Python to leverage OpenAI's APIs for tasks such as language generation, sentiment analysis, or recommendation systems.
+1. **Build an Open AI application with Python:** Build applications using Python to leverage OpenAI's APIs for tasks such as language generation, sentiment analysis, or recommendation systems.
 
-1. Introduction to Prompt Engineering & Azure OpenAI Studio: Learn techniques for crafting effective prompts and utilize Azure OpenAI Studio for developing and deploying AI models.
+1. **Introduction to Prompt Engineering & Azure OpenAI Studio:** Learn techniques for crafting effective prompts and utilize Azure OpenAI Studio for developing and deploying AI models.
 
-1. Advanced Concepts (Read-Only): Explore advanced theoretical knowledge and practical applications related to OpenAI technologies and their implementations.
+1. **Advanced Concepts (Read-Only):** Explore advanced theoretical knowledge and practical applications related to OpenAI technologies and their implementations.
 
-1. Fine Tuning (Read-Only): Understand and practice fine-tuning OpenAI models to improve performance on specific tasks or datasets.
+1. **Fine Tuning (Read-Only):** Understand and practice fine-tuning OpenAI models to improve performance on specific tasks or datasets.
 
-1. Basic Overview of Azure OpenAI Service Hyperparameters (Read-Only): Gain foundational understanding of hyperparameters in Azure OpenAI Service and their impact on model training and performance.
+1. **Basic Overview of Azure OpenAI Service Hyperparameters (Read-Only):** Gain foundational understanding of hyperparameters in Azure OpenAI Service and their impact on model training and performance.
 
-1. Glossary (Read-Only): Access definitions and explanations of key terms and concepts essential for understanding OpenAI and Azure OpenAI Service.
+1. **Glossary (Read-Only):** Access definitions and explanations of key terms and concepts essential for understanding OpenAI and Azure OpenAI Service.
 
 ## Objective
 
 Focus on implementing OpenAI technologies across Azure Synapse for batch data processing and advanced analytics, Power Apps and Python for interactive applications and automation, prompt engineering with Azure OpenAI Studio, exploring advanced AI concepts, fine-tuning models, understanding hyperparameters in Azure OpenAI Service, and accessing a glossary for key AI terminologies. Participants gain practical skills and theoretical knowledge essential for leveraging OpenAI effectively in diverse applications and environments.
 
-1. Develop an Azure Synapse pipeline to process batch data with OpenAI for advanced operations and analytics.
-   
-1. Create a Power App integrating OpenAI for enhanced user interactions and automated tasks like language understanding.
-
-1. Develop Python applications utilizing OpenAI APIs for tasks such as text generation and data analysis.
-
-1. Learn prompt engineering techniques and use Azure OpenAI Studio for AI model development.
+- Develop an Azure Synapse pipeline to process batch data with OpenAI for advanced operations and analytics.
+- Create a Power App integrating OpenAI for enhanced user interactions and automated tasks like language understanding.
+- Develop Python applications utilizing OpenAI APIs for tasks such as text generation and data analysis.
+- Learn prompt engineering techniques and use Azure OpenAI Studio for AI model development.
 
 ## Prerequisites
 
 Participants should have: 
 
-1. Proficiency in Python programming language, including libraries like Pandas for data manipulation and Flask for web application development.
+- Proficiency in Python programming language, including libraries like Pandas for data manipulation and Flask for web application development.
+- Experience with Microsoft Power Apps or similar low-code platforms for application development and integrating APIs.
+- Basic understanding of machine learning concepts such as model training, deployment workflows, and RESTful APIs.
+- Understanding of AI concepts such as natural language processing, model fine-tuning, and hyperparameter optimization.
 
-1. Experience with Microsoft Power Apps or similar low-code platforms for application development and integrating APIs.
+## Architecture
 
-1. Basic understanding of machine learning concepts such as model training, deployment workflows, and RESTful APIs.
+The architecture for this lab involves several key components:
 
-1. Understanding of AI concepts such as natural language processing, model fine-tuning, and hyperparameter optimization.
+- **Storage Account:** Provides a secure and scalable cloud storage solution for storing data objects, such as files, blobs, and unstructured data.
+- **Synapse Workspace:** Azure Synapse Analytics is an integrated analytics service that combines big data and data warehousing capabilities. The workspace allows for seamless collaboration between data engineers, data scientists, and analysts.
+- **Azure Open AI Service:** Provides access to OpenAI's powerful AI models through Azure, enabling integration into applications for natural language processing, text generation, and more.
+- **Microsoft Power Apps:** A low-code platform that allows users to build custom business applications without extensive coding knowledge.
+- **Prompt Engineering:** Involves crafting specific prompts or queries to elicit desired responses from AI models, influencing the output and behavior of AI systems.
+
+## Architecture Diagram
+
+![](media/arch-diagram.png)
+
+## Explanation of Components 
+
+- **Storage Account:** Supports various data types and integrates with other Azure services for data processing, analytics, and backup.
+- **Synapse Workspace:** Enables ingestion, preparation, management, and serving of data for BI and machine learning tasks. Includes features for data integration, data exploration, and real-time analytics.
+- **Azure Open AI Service:** Offers pre-trained models (like GPT-4) and APIs for developers to build AI-driven applications, with capabilities for custom model training and deployment.
+- **Microsoft Power Apps:** Integrates with various data sources and services (like Azure and Office 365) to create responsive applications for web and mobile, enhancing productivity and business process automation.
+- **Prompt Engineering:** Focuses on optimizing model responses by refining input prompts, enhancing accuracy, and ensuring AI systems generate desired outputs effectively for various applications.
+
 ## Getting Started with Lab
 
 1. Once the environment is provisioned, a virtual machine (JumpVM) and lab guide will get loaded in your browser. Use this virtual machine throughout the workshop to perform the lab. You can see the number on the lab guide bottom area to switch to different exercises of the lab guide.
