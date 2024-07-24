@@ -1,13 +1,15 @@
 # Exercise 4C: Fine Tuning (Read-Only)
 
+### Estimated Duration: 20 minutes
+
+This lab focuses on the process of fine-tuning OpenAI models to improve their performance on specific tasks or datasets. Participants learn how to adjust model parameters, optimize training strategies, and evaluate model performance metrics through practical exercises and examples.
+
 ## Topics
 
   - [What is Fine Tuning?](#what-is-fine-tuning)
   - [When would you consider Fine Tuning vs Prompt Engineering?](#when-would-you-consider-fine-tuning-vs-prompt-engineering)
   - [Operation Cost Considerations](#operation-cost-considerations)
 
-
----
 ## What is Fine Tuning?
 
 Fine-tuning is the process of customizing an existing AI model for a specific task or domain by using additional data. OpenAI offers fine-tuning for its language models, such as GPT-3, which can generate natural language texts for various purposes.
@@ -18,7 +20,6 @@ To fine-tune an OpenAI model, users need to prepare their own training and valid
 
 Fine-tuning can improve the performance and reduce the error rates of OpenAI models significantly.
 
----
 ## Fine Tuning Training Data
 
 Training data for fine-tuning OpenAI models are pairs of input prompts and desired outputs that reflect the specific task or domain you want to customize the model for. For example, if you want to fine-tune a model for generating product reviews, your training data could look like this:
@@ -34,7 +35,6 @@ You can use the OpenAI CLI or Studio to prepare, validate, and format your train
 **IMPORTANT NOTE**:
 It is important to note that to expect better results than using prompt engineering, you will need to have a large and high-quality dataset that is relevant to your task or domain, usually a few hundred high-quality examples.
 
----
 ## When would you consider Fine Tuning vs Prompt Engineering?
 
 Fine-tuning is a powerful tool that can be used to customize OpenAI models for specific tasks or domains. However, it is not always necessary to fine-tune a model to get the desired results.
@@ -53,7 +53,6 @@ You might consider prompt engineering when you have a limited or no dataset and 
 
 **IMPORTANT NOTE**: Both methods require some trial and error, but fine-tuning usually takes more time and resources than prompt engineering, and it is not always necessary to fine-tune a model to get the desired results. It is therefore preferable to start with prompt engineering and only consider fine-tuning if you are unable to get the desired results.
 
----
 
 ## Operation Cost Considerations
 
@@ -61,14 +60,14 @@ Prompt engineering could be less cost-effective if you need to provide a large n
 
 Hosting a Fine Tune model also has its cost, but on medium to high volumes, that cost would be mostly irrelevant, so operational cost efficiency could be a driver for Fine Tuning.
 
----
 ## References
 
 [OpenAI Fine Tuning](https://platform.openai.com/docs/guides/fine-tuning)
 
 [Fine Tuning in the Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/fine-tuning?pivots=programming-language-studio)
 
+## Summary
 
----
+In this lab, you gained knowledge on various topics about what exactly is fine tuning, differences between fine tuning and prompt engineering and their operation costs to be considered.
 
-[Previous Section (Advanced Concepts)](./03_Advanced_Concepts.md)
+### You have successfully completed the lab
