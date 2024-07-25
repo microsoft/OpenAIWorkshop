@@ -9,7 +9,7 @@ These hands-on labs provide comprehensive training on integrating OpenAI capabil
 
 ## Objective
 
-The lab will include the following exercises: 
+This lab is designed to equip participants with hands-on experience in using Azure OpenAI to build powerful AI applications. By completing this lab, participants will learn to:
 
 1. **Build an Open AI Pipeline to Ingest Batch Data, Perform Intelligent Operations, and Analyze in Synapse:** Develop a pipeline to integrate OpenAI for batch data ingestion, intelligent operations, and analysis within Azure Synapse.
    
