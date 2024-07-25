@@ -42,4 +42,3 @@
 
     ![](media/openai-1.png "Resource groups")
    
-1. Now, click on Next from the lower right corner to move to the next page.
