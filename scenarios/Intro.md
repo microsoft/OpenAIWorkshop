@@ -11,21 +11,21 @@ These hands-on labs provide comprehensive training on integrating OpenAI capabil
 
 This lab is designed to equip participants with hands-on experience in using Azure OpenAI to build powerful AI applications. By completing this lab, participants will learn to:
 
-1. **Build an Open AI Pipeline to Ingest Batch Data, Perform Intelligent Operations, and Analyze in Synapse:** Develop a pipeline to integrate OpenAI for batch data ingestion, intelligent operations, and analysis within Azure Synapse. Participants will create a robust pipeline for processing and analyzing batch data with OpenAI capabilities integrated into Azure Synapse.
+1. **Build an Open AI Pipeline to Ingest Batch Data, Perform Intelligent Operations, and Analyze in Synapse:** This hands-on exercise aims to develop a pipeline to integrate OpenAI for batch data ingestion, intelligent operations, and analysis within Azure Synapse. Participants will create a robust pipeline for processing and analyzing batch data with OpenAI capabilities integrated into Azure Synapse.
    
-1. **Build an Open AI application with Power App:** Create an application using Power Apps that integrates OpenAI capabilities for tasks like natural language understanding or data processing. Participants will develop a functional business application using OpenAI features in Microsoft Power Apps, enhancing user interaction and automation.
+1. **Build an Open AI application with Power App:** This hands-on exercise aims to create an application using Power Apps that integrates OpenAI capabilities for tasks like natural language understanding or data processing. Participants will develop a functional business application using OpenAI features in Microsoft Power Apps, enhancing user interaction and automation.
    
-1. **Build an Open AI application with Python:** Build applications using Python to leverage OpenAI's APIs for tasks such as language generation, sentiment analysis, or recommendation systems. Participants will construct a custom application leveraging Python and OpenAI APIs for advanced text generation and analysis.
+1. **Build an Open AI application with Python:** This hands-on exercise aims to build applications using Python to leverage OpenAI's APIs for tasks such as language generation, sentiment analysis, or recommendation systems. Participants will construct a custom application leveraging Python and OpenAI APIs for advanced text generation and analysis.
 
-1. **Introduction to Prompt Engineering & Azure OpenAI Studio:** Learn techniques for crafting effective prompts and utilize Azure OpenAI Studio for developing and deploying AI models. Participants will learn how to optimize AI model responses through effective prompt engineering and utilize Azure OpenAI Studio for model development.
+1. **Introduction to Prompt Engineering & Azure OpenAI Studio:** This hands-on exercise aims to learn techniques for crafting effective prompts and utilize Azure OpenAI Studio for developing and deploying AI models. Participants will learn how to optimize AI model responses through effective prompt engineering and utilize Azure OpenAI Studio for model development.
 
-1. **Advanced Concepts (Read-Only):** Explore advanced theoretical knowledge and practical applications related to OpenAI technologies and their implementations. Participants will gain theoretical insights into advanced AI concepts, enriching their understanding of AI technologies.
+1. **Advanced Concepts (Read-Only):** This hands-on exercise aims to explore advanced theoretical knowledge and practical applications related to OpenAI technologies and their implementations. Participants will gain theoretical insights into advanced AI concepts, enriching their understanding of AI technologies.
 
-1. **Fine Tuning (Read-Only):** Understand and practice fine-tuning OpenAI models to improve performance on specific tasks or datasets. Participants will understand the principles and techniques of fine-tuning AI models to improve performance for specific tasks.
+1. **Fine Tuning (Read-Only):** This hands-on exercise aims to understand and practice fine-tuning OpenAI models to improve performance on specific tasks or datasets. Participants will understand the principles and techniques of fine-tuning AI models to improve performance for specific tasks.
 
-1. **Basic Overview of Azure OpenAI Service Hyperparameters (Read-Only):** Gain foundational understanding of hyperparameters in Azure OpenAI Service and their impact on model training and performance. Participants will acquire knowledge about hyperparameters in Azure OpenAI Service, crucial for model configuration and optimization.
+1. **Basic Overview of Azure OpenAI Service Hyperparameters (Read-Only):** This hands-on exercise aims to gain foundational understanding of hyperparameters in Azure OpenAI Service and their impact on model training and performance. Participants will acquire knowledge about hyperparameters in Azure OpenAI Service, crucial for model configuration and optimization.
 
-1. **Glossary (Read-Only):** Access definitions and explanations of key terms and concepts essential for understanding OpenAI and Azure OpenAI Service. Participants will familiarize themselves with key AI and Azure terminologies, enhancing their comprehension of related concepts and technologies.
+1. **Glossary (Read-Only):** This hands-on exercise aims to access definitions and explanations of key terms and concepts essential for understanding OpenAI and Azure OpenAI Service. Participants will familiarize themselves with key AI and Azure terminologies, enhancing their comprehension of related concepts and technologies.
 
 
 ## Prerequisites
