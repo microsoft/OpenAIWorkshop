@@ -1,4 +1,4 @@
-import openai
+from openai import AzureOpenAI
 import string
 import ast
 import sqlite3
@@ -14,6 +14,18 @@ from sqlalchemy import create_engine
 import sqlalchemy as sql
 from plotly.graph_objects import Figure
 import time
+from dotenv import load_dotenv
+from pathlib import Path 
+
+
+env_path = Path('.') / 'secrets.env'
+load_dotenv(dotenv_path=env_path)
+
+client = AzureOpenAI(
+  api_key=os.environ.get("AZURE_OPENAI_API_KEY"),  
+    api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+  azure_endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
+)
 
 def get_table_schema(sql_query_tool, sql_engine='sqlite'):
   
@@ -82,17 +94,46 @@ class ChatGPT_Handler: #designed for chatcompletion API
         self.temperature=temperature
         # self.conversation_history = []
         self.extract_patterns=extract_patterns
-    def _call_llm(self,prompt, stop):
-        response = openai.ChatCompletion.create(
-        engine=self.gpt_deployment, 
-        messages = prompt,
-        temperature=self.temperature,
-        max_tokens=self.max_response_tokens,
-        stop=stop
-        )
+    
+    def _get_llm_response(self, prompt,deployment_name="gpt-4-turbo", json_output=False, max_tokens=4000):
+    #self.conversation_history =  [{"role": "system", "content": system_message}]
+    #read the content of the file
+        if json_output:
+            response = client.chat.completions.create(
+                model=deployment_name, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
+                #messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": user_prompt}],
+                messages = prompt,
+                max_tokens=max_tokens,
+                #response_format={ "type": "json_object" }    
+
+                )
+        else:
+                response = client.chat.completions.create(
+                model=deployment_name, # The deployment name you chose when you deployed the GPT-35-turbo or GPT-4 model.
+                #messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": user_prompt}],
+                messages = prompt,
+                max_tokens=max_tokens,
+
+                )
+
+        # assuming the function update_notebook is called, get the response from the function
+        response_message = response.choices[0].message.content
+        if json_output:
+            response_message = json.loads(response_message)
+
+        return response_message
+    
+    #def _call_llm(self,prompt, stop):
+    #    response = openai.ChatCompletion.create(
+    #    engine=self.gpt_deployment, 
+    #    messages = prompt,
+    #    temperature=self.temperature,
+    #    max_tokens=self.max_response_tokens,
+    #    stop=stop
+    #    )
             
-        llm_output = response['choices'][0]['message']['content']
-        return llm_output
+    #    llm_output = response['choices'][0]['message']['content']
+    #    return llm_output
     def extract_output(self, text_input):
             output={}
             if len(text_input)==0:
@@ -170,6 +211,8 @@ class SQL_Query(ChatGPT_Handler):
 
 class AnalyzeGPT(ChatGPT_Handler):
     
+
+
     def __init__(self,sql_engine,content_extractor, sql_query_tool, system_message,few_shot_examples,st,**kwargs) -> None:
         super().__init__(**kwargs)
             
@@ -193,17 +236,20 @@ class AnalyzeGPT(ChatGPT_Handler):
             old_user_content= self.conversation_history.pop() #removing old history
             old_user_content=old_user_content['content']+"\n"
         self.conversation_history.append({"role": "user", "content": old_user_content+updated_user_content})
+
+            # Prepare messages in the desired format
+        
         # print("prompt input ", self.conversation_history)
         n=0
         try:
-            llm_output = self._call_llm(self.conversation_history, stop)
+            llm_output = self._get_llm_response(self.conversation_history)
             # print("llm_output \n", llm_output)
 
         except Exception as e:
-            time.sleep(8) #sleep for 8 seconds
+            #time.sleep(8) #sleep for 8 seconds
             while n<5:
                 try:
-                    llm_output = self._call_llm(self.conversation_history, stop)
+                    llm_output = self._get_llm_response(self.conversation_history)
                 except Exception as e:
                     n +=1
                     print("error calling open AI, I am retrying 5 attempts , attempt ", n)
