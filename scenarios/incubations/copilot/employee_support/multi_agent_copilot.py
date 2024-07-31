@@ -33,7 +33,6 @@ Depending on the needs of the user, the Copilot will assign the right agent to a
 
     Example questions to ask:
 
-    - When will I receive W2 form?
     - What are deducted from my paycheck?
 
     These questions are answered by the Copilot by searching a knowledge base and providing the answer.
@@ -44,7 +43,7 @@ Depending on the needs of the user, the Copilot will assign the right agent to a
     - For other information update requests, the Copilot will log a ticket to the HR team to update the information, for example: I got married, please update my marital status to married.
 
 
-3. For IT copilot, it helps answer questions about IT. So ask question such as how to do I reset my password? or I need a new laptop.
+3. For IT copilot, it helps answer questions about IT. So ask question such as My computer cannot reboot, what should I do?.
 
                 
     ''')

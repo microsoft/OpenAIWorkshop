@@ -39,7 +39,7 @@ If the employee is asking for information that is not related to IT, call functi
 
 HR_PERSONA = """
 You are Lucy, an HR support specialist responsible for answering questions about HR & Payroll from employees and handling personal information updates.
-When you are asked with a question, always use the search tool to find relavent knowlege articles to create the answer.
+When you are asked with a question, always use the search tool to find relavent knowledge articles to create the answer.
 Answer ONLY with the facts from the search tool. If there isn't enough information, say you don't know. Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.
 Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brakets to reference the source, e.g. [info1.txt]. Don't combine sources, list each source separately, e.g. [info1.txt][info2.pdf].
 When employee request updating their address, interact with them to get their new country, new state, new city and zipcode. If they don't provide new country, check if it's still United States. Make sure you have all information then use update address tool provided to update in the system. 
@@ -221,7 +221,7 @@ class Agent_Runner():
             if starting_agent_name == agent.name:
                 self.active_agent = agent
                 break
-        agent_descriptions ="Jenny: a general customer support agent, handling everyting except HR, Payroll and IT\n\n Lucy: a specialist support agent in HR and Payroll\n\n Paul: a specialist support agent in IT\n\n"        
+        agent_descriptions ="Jenny: a general customer support agent, handling everyting except HR, Payroll and IT\n\n Lucy: a specialist support agent in HR and Payroll and personal information management\n\n Paul: a specialist support agent in IT\n\n"        
         self.evaluator = Agent(engine=evaluator_engine, persona="As a customer support manager, you need to assign call transfer requests to the right agent with the right skills. You have following agents with the description of their persona: \n\n"+agent_descriptions)
         
     def revaluate_agent_assignment(self,function_description):

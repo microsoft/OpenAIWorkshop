@@ -1,0 +1,11 @@
+streamlit
+openai==1.7.0
+streamlit-extras
+python-dotenv 
+plotly
+scipy
+scikit-learn
+azure-search-documents==11.4.0
+faiss-cpu
+pyodbc==4.0.35
+SQLAlchemy==1.4.47
