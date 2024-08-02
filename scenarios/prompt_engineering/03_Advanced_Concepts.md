@@ -206,11 +206,7 @@ JSON:
 
 Now we can see that the model clearly understands that we want to only extract three entities from the text and nothing else.
 
----
-
 ## Summary
 
 In this lab, you have gained in-depth theoretical and advanced practical knowledge related to OpenAI and various types of  prompt engineering methods.
-
-### You have successfully completed the lab
 
