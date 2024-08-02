@@ -1,13 +1,14 @@
 # Lab-03: Fine Tuning (Read-Only)
 
+### Estimated Duration: 30 minutes
+
 ## Topics
 
   - [What is Fine Tuning?](#what-is-fine-tuning)
   - [When would you consider Fine Tuning vs Prompt Engineering?](#when-would-you-consider-fine-tuning-vs-prompt-engineering)
   - [Operation Cost Considerations](#operation-cost-considerations)
 
-Estimated time: 30 minutes
----
+
 ## What is Fine Tuning?
 
 Fine-tuning is the process of customizing an existing AI model for a specific task or domain by using additional data. OpenAI offers fine-tuning for its language models, such as GPT-3, which can generate natural language texts for various purposes.

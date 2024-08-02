@@ -1,5 +1,6 @@
-
 # Lab-02: Advanced Concepts (Read-Only)
+
+### Estimated Duration: 30 minutes
 
 ## Topics
 
@@ -8,8 +9,6 @@
   - [One-Shot Prompts](#one-shot-prompts)
   - [Few-Shot Prompts](#few-shot-prompts)
 
----
-Estimated time: 30 minutes
 
 ## Introduction
 
