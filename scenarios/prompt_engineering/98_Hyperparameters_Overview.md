@@ -63,5 +63,3 @@ in a response. The returned text will not contain the stop sequence.
 ## Summary
 
 In this lab, you have successfully acquired the knowledge of Azure OpenAI hyperparamters and it's functionalities.
-
-### You have successfully completed the lab
