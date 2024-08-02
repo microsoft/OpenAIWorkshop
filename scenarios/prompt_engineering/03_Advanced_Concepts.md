@@ -1,7 +1,5 @@
 # Exercise 4B: Advanced Concepts (Read-Only)
 
-### Estimated Duration: 30 minutes
-
 This lab provides in-depth theoretical and advanced practical knowledge related to OpenAI and its applications. It covers the introduction to promot engineering and it's use cases and various types of prompts one can implement to fetch the desired results.
 
 ## Topics
