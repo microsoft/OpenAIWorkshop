@@ -1,6 +1,6 @@
 # Use Azure Open AI like a Pro to build powerful AI Applications
 
-### Overall Estimated Duration: 8 hours
+### Overall Estimated Duration: 6 hours
 
 ## Overview
 
