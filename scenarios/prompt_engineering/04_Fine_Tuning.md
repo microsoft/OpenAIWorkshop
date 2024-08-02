@@ -67,5 +67,3 @@ Hosting a Fine Tune model also has its cost, but on medium to high volumes, that
 ## Summary
 
 In this lab, you gained knowledge on various topics about what exactly is fine tuning, differences between fine tuning and prompt engineering and their operation costs to be considered.
-
-### You have successfully completed the lab
