@@ -1,7 +1,5 @@
 # Exercise 4D: Basic Overview of Azure OpenAI Service Hyperparameters (Read-Only)
 
-### Estimated Duration: 20 minutes
-
 This lab provides foundational knowledge on hyperparameters in the context of Azure OpenAI Service. Participants gain understanding of how hyperparameters influence model training and performance, and learn basic techniques for tuning these parameters to achieve better results.
 
 ## Quick Note on adjusting Hyperparameters
