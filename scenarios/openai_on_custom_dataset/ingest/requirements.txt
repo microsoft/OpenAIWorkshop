@@ -1,0 +1,6 @@
+azure-core
+openai
+pandas
+#azure-search-documents==11.4.0b9
+azure-ai-formrecognizer
+python-dotenv

@@ -171,7 +171,7 @@ def process_afr_result(result, filename):
 # Function to generate embeddings for title and content fields, also used for query embeddings
 def generate_embeddings(text):
     response = openai.Embedding.create(
-        input=text, engine="text-embedding-ada-002")
+        input=text, engine=os.getenv("OPENAI_MODEL_NAME"))
     embeddings = response['data'][0]['embedding']
     return embeddings
 
@@ -185,6 +185,19 @@ def main():
       result = poller.result()
       print(f"Processing result...this might take a few minutes...")
       process_afr_result(result, "aml-api-v2.pdf")
+
+    if(localFolderPath != ""):
+      for filename in os.listdir(localFolderPath):
+        file = os.path.join(localFolderPath, filename)    
+        with open(file, "rb") as f:
+          print(f"Analyzing file {filename} from directory {localFolderPath}...")
+          poller = document_analysis_client.begin_analyze_document(
+              "prebuilt-layout", document=f
+          )
+          result = poller.result()
+          print(f"{filename}Processing result...this might take a few minutes...")
+          process_afr_result(result, filename)
+      print(f"done")
 
 
 if __name__ == "__main__":
