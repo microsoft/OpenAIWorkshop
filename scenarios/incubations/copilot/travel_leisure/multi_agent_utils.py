@@ -62,7 +62,7 @@ get_help_function_spec ={
         "function":{
 
         "name": "get_help",
-        "description": "Get help from others when you the question is out of your expertise",
+        "description": "Transfer the conversation to an expert who can help the customer",
         "parameters": {
             "type": "object",
             "properties": {

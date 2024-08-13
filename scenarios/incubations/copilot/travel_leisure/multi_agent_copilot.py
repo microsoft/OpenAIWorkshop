@@ -24,7 +24,7 @@ MAX_HIST= 5
 with st.sidebar:
     st.title('Multi-Agent Copilot')
     st.markdown('''
-    Real timeCopilot- A demo of Copilot application using GPT on top of real time data.
+    Multi-Agent Copilot demo.
 
     ''')
     add_vertical_space(5)
