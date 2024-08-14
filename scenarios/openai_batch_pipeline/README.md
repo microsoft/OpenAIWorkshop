@@ -68,8 +68,10 @@ Call logs are uploaded to a designated location in blob storage. This upload wil
      ```
     
     > **Note:** The following commands are issued in Bash; please ensure you are using **Bash** in the Cloud Shell.
+
+1. Press `Enter` to continue with the installation process.
     
-    > **Note:** Press the down arrow key to read or skip the license agreement.
+      > **Note:** Press the down arrow key to read or skip the license agreement.
 
 1. Type **yes** and hit **enter** to accept the agreement, and then hit enter to install on the default path.
 
@@ -84,7 +86,7 @@ Call logs are uploaded to a designated location in blob storage. This upload wil
     ```bash 
     export PATH=~/miniconda3/bin:$PATH
     ```
-1. Run the below commands to create and activate the conda environment in Cloudshell.
+1. Run the below commands one by one to create and activate the conda environment in Cloudshell.
 
     ```bash 
     git clone https://github.com/microsoft/OpenAIWorkshop.git
