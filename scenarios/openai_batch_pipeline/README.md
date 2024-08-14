@@ -73,9 +73,11 @@ Call logs are uploaded to a designated location in blob storage. This upload wil
     
       > **Note:** Press the down arrow key to read or skip the license agreement.
 
+      ![](images/pro1.png)
+
 1. Type **yes** and hit **enter** to accept the agreement, and then hit enter to install on the default path.
 
-   ![](images/cloudshell-accept.png)
+   ![](images/pro2.png)
 
 1. Type **yes** and hit **enter** to initialize the conda environment.
 
@@ -118,9 +120,11 @@ Call logs are uploaded to a designated location in blob storage. This upload wil
 
    > **Note**: Execute "cd OpenAIWorkshop scenarios/openai_batch_pipeline/document_generation" if you are not inside OpenAIWorkshop/scenarios/openai_batch_pipeline/document_generation directory.
    
-1. Once you have successfully uploaded the JSON files to the storage account, you can navigate to the storage account in the Azure portal and verify that the files have been uploaded.
+1. Once you have successfully uploaded the JSON files to the storage account, navigate to **Containers (1)**, click on **workshop-data (2)** and select **cleansed-documents (3)** folder and verify that the files have been uploaded.
+   
+   ![](images/pro3.png)
 
-   ![](images/batch_file_upload.png)
+   ![](images/pro4.png)
 
 ## Task 2: Set up Synapse Workspace
 
@@ -173,9 +177,9 @@ We'll next need to create two linked services: one for our source (the JSON file
 
      ![](images/synapse8.png)
 
-1. In the *New linked service* window that opens, fill in a name for your target linked service as **synapselinkedservice** **(1)**. Select the **Azure subscription (2)** for which you have been working. Select the **asaworkspace<inject key="DeploymentID" enableCopy="false"/> (3)** for **Server name** and **openaisql (4)** as the **Database name**. Be certain to change the **Authentication type** to **System Assigned Managed Identity (5)**, then scroll down and select **Legacy (6)** option then click on **Test connection (7)** and click **Create (8)**.
+1. In the *New linked service* window that opens, fill in a name for your target linked service as **synapselinkedservice** **(1)**. Select the **Azure subscription (2)** for which you have been working. Select the **asaworkspace<inject key="DeploymentID" enableCopy="false"/> (3)** for **Server name** and **openaisql (4)** as the **Database name**. Be certain to change the **Authentication type** to **System Assigned Managed Identity (5)**, then scroll down and click on **Test connection (6)** and click **Create (7)**.
 
-    ![](images/synapse-1e.png)
+    ![](images/pro5.png)
 
 1. Once you have created the two linked services, be certain to press the **Publish all** button at the top to publish our work. Finalize the creation of the linked services and click **Publish**.
 
