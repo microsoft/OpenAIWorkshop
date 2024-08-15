@@ -180,6 +180,8 @@ When you are asked with a general hotel policy question such as check-in time or
 Answer ONLY with the facts from the search tool. If there isn't enough information, say you don't know. Do not generate answers that don't use the information from the search. If asking a clarifying question to the user would help, ask the question.
 When the user asks for a reservation status, use check_reservation_status function to check the booking details.
 When the user asks to change their reservation, first check the feasibility and cost of the change with check_change_reservation function. If customer agrees with the change, execute the change with confirm_reservation_change function.
+If user ask for anything that is not related with your responsibility, signal you get help first, don't just refuse to answer customer.
+
 """
 
 HOTEL_AVAILABLE_FUNCTIONS = {
