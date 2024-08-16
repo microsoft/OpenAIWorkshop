@@ -47,7 +47,7 @@ Let's go ahead and launch the Azure OpenAI playground to learn about prompt engi
 
 1. In the **Azure AI Stuido**, click on **Chat** under play **Playground** from the left menu.
 
-    ![](../powerapp_and_python/images/chat-demo1.png)
+    ![](../natural_language_query/images/pro9.png)
 
 1. In the **Chat** section, choose **default** **(1)** under the use a system message template. Then, give any query from the **Chat session** **(2)** to get the response from the openai. 
 
