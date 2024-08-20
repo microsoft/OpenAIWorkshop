@@ -126,6 +126,8 @@ Call logs are uploaded to a designated location in blob storage. This upload wil
 
    ![](images/pro4.png)
 
+      <validation step="611472e6-8445-4bf8-8c3d-8fae9fdb9fe5" />
+
 ## Task 2: Set up Synapse Workspace
 
 ### **A. Create Target SQL Table**
@@ -298,6 +300,8 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
 2. To look at the pipeline run, navigate to the left-hand side of the screen and choose the **Monitor (1)** option. Then select the **Pipeline runs (2)** option in the **Integration** section. You will then see the pipeline run that you have triggered under the **Triggered (3)** section as **pipeline 1 (4)**. This pipeline should take approximately 4 minutes (if you are using the uploaded data for the workshop).
 
    ![](images/pipeline-run-1.png)
+
+      <validation step="5655b8a2-1369-4aa6-a8bb-38969fd6c516" />
 
 ## Task 3: Query Results in Our SQL Table
 
