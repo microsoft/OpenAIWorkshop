@@ -239,13 +239,13 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
       > **Note**: If the test connection takes more than 3–4 minutes, follow the below steps.
 
-   - Click on **Edit**.
+      - Click on **Edit**.
 
-        ![](images/p18.png)    
+           ![](images/p18.png)    
 
-   - In the Edit linked service window that opens, select the Azure selection method as **From Azure subscription** **(1)**. Select the **Azure subscription (2)** for which you have been working. Select the **asaworkspace<inject key="DeploymentID" enableCopy="false"/> (3)** for **Server name** and **openaisql (4)** as the **Database name**, and then click on **Test connection (5)** and click **Save (6)**.
+           - In the Edit linked service window that opens, select the Azure selection method as **From Azure subscription** **(1)**. Select the **Azure subscription (2)** for which you have been working. Select the **asaworkspace<inject key="DeploymentID" enableCopy="false"/> (3)** for **Server name** and **openaisql (4)** as the **Database name**, and then click on **Test connection (5)** and click **Save (6)**.
 
-        ![](images/p19.png)
+                ![](images/p19.png)
 
 1. We will then need to head over to the **Settings (1)** tab and adjust the **Schema name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo (1)** and the Table name is **cs_detail (2)**.
 
