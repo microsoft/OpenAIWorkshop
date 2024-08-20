@@ -78,6 +78,8 @@ In this lab, participants will develop an application using OpenAI's APIs and Py
 
     ![](images/publish-1.png)
 
+   <validation step="25c1c315-a610-4974-ae83-c5b3983d798e" />
+
 ## Summary
 
 In this lab, you have successfully developed an application by implementing AI functionalities such as language generation, sentiment analysis, or recommendation systems using Python, leveraging OpenAI's powerful models and tools.
