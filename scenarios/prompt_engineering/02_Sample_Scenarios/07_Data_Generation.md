@@ -63,7 +63,7 @@ Another important consideration is that we can progrmatically feed the model pro
 ---
 ## Few-Shot Data Generation
 
-The concepts from the [Introduction to Prompt Engineering](./01_Prompt_Introduction.md) and the [Advanced Concepts](./03_Advanced_Concepts.md) sections can be very informative for generating net-new data. First off, we should be as direct in our requirements as possible and provide examples of our desired output if feasible.
+The concepts from the [Introduction to Prompt Engineering](../01_Prompt_Introduction.md) and the [Advanced Concepts](../03_Advanced_Concepts.md) sections can be very informative for generating net-new data. First off, we should be as direct in our requirements as possible and provide examples of our desired output if feasible.
 
 *Prompt:*
 ```
