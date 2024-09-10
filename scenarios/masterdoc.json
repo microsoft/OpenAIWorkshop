@@ -1,5 +1,5 @@
 [ {
-  "Name": "OpenAIWorkshop",
+  "Name": "Use Azure Open AI like a Pro to build powerful AI Applications",
   "Language": "English",
   "Files": [
         {
@@ -40,4 +40,90 @@
     }
     
   ]
-} ]
+},
+{
+  "Name": "Use Azure Open AI like a Pro to build powerful AI Applications",
+  "Language": "Spanish",
+  "Files": [
+        {
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Spanish-Content/scenarios/Intro.md",
+      "Order": 1
+    },   
+    {
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Spanish-Content/scenarios/openai_batch_pipeline/README.md",
+      "Order": 2
+    },
+    {
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Spanish-Content/scenarios/powerapp_and_python/powerapp.md",
+      "Order": 3
+    },
+    {
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Spanish-Content/scenarios/powerapp_and_python/Python.md",
+      "Order": 4
+    },
+    {
+    "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Spanish-Content/scenarios/prompt_engineering/01_Prompt_Introduction.md",
+      "Order": 5
+    },
+    {
+    "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Spanish-Content/scenarios/prompt_engineering/03_Advanced_Concepts.md",
+      "Order": 6
+    },
+    {
+    "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Spanish-Content/scenarios/prompt_engineering/04_Fine_Tuning.md",
+      "Order": 7
+    },
+    {
+    "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Spanish-Content/scenarios/prompt_engineering/98_Hyperparameters_Overview.md",
+      "Order": 8
+    },
+     {
+    "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Spanish-Content/scenarios/prompt_engineering/99_Glossary.md",
+      "Order": 9
+    }    
+  ]
+},
+{
+  "Name": "Use Azure Open AI like a Pro to build powerful AI Applications",
+  "Language": "Portuguese",
+  "Files": [
+        {
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Portuguese-Content/scenarios/GettingStarted.md",
+      "Order": 1
+    },   
+    {
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Portuguese-Content/scenarios/openai_batch_pipeline/README.md",
+      "Order": 2
+    },
+    {
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Portuguese-Content/scenarios/powerapp_and_python/powerapp.md",
+      "Order": 3
+    },
+    {
+      "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Portuguese-Content/scenarios/powerapp_and_python/Python.md",
+      "Order": 4
+    },
+    {
+    "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Portuguese-Content/scenarios/prompt_engineering/01_Prompt_Introduction.md",
+      "Order": 5
+    },
+    {
+    "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Portuguese-Content/scenarios/prompt_engineering/03_Advanced_Concepts.md",
+      "Order": 6
+    },
+    {
+    "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Portuguese-Content/scenarios/prompt_engineering/04_Fine_Tuning.md",
+      "Order": 7
+    },
+    {
+    "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Portuguese-Content/scenarios/prompt_engineering/98_Hyperparameters_Overview.md",
+      "Order": 8
+    },
+     {
+    "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Portuguese-Content/scenarios/prompt_engineering/99_Glossary.md",
+      "Order": 9
+    }
+    
+  ]
+}
+]
