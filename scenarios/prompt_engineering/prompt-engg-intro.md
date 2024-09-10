@@ -1,4 +1,4 @@
-# Lab-01: Introduction to Prompt Engineering & Azure OpenAI Studio
+# Lab-01: Introduction to Prompt Engineering & Azure OpenAI Studio ( Read-Only ) 
 
 ### Estimated Duration: 60 minutes
 
