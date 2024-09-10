@@ -1,4 +1,5 @@
-[ {
+[ 
+  {
   "Name": "Use Azure Open AI like a Pro to build powerful AI Applications",
   "Language": "English",
   "Files": [
@@ -122,8 +123,7 @@
      {
     "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/OpenAIWorkshop/Portuguese-Content/scenarios/prompt_engineering/99_Glossary.md",
       "Order": 9
-    }
-    
+    } 
   ]
-}
+ }
 ]
