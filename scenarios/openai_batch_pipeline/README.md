@@ -98,7 +98,7 @@ Call logs are uploaded to a designated location in blob storage. This upload wil
     pip install --upgrade pip
     pip install -r reqs.txt
     ```
-    > **Note**: if you received **"Conda: command not found"** error, please close the CloudShell session and open a new session to continue.
+    > **Note**: If you encounter the "Conda: command not found" error, close your current CloudShell session, start a new bash session, and try running the commands from step 6 again.
     
 1. Type **y** and hit enter to proceed.
 
