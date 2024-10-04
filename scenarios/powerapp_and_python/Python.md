@@ -40,7 +40,7 @@ In this lab, participants will develop an application using OpenAI's APIs and Py
 
      ![](images/key-endpoint.png)
    
-1. From Azure Portal, navigate to the **openaicustom-<inject key="DeploymentID" enableCopy="false"/>** resource group, and select the **asaworkspace<inject key="DeploymentID" enableCopy="false"/>** Azure OpenAI resource.
+1. From Azure Portal, navigate to the **openaicustom-<inject key="DeploymentID" enableCopy="false"/>** resource group, and select the **openai<inject key="DeploymentID" enableCopy="false"/>** Azure OpenAI resource.
 
     ![](images/Ex4b-S7.1.png)
 
