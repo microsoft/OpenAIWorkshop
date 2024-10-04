@@ -175,7 +175,7 @@ We'll next need to create two linked services: one for our source (the JSON file
 
       ![](images/img-6.png)
 
-1.  Click **+ New** in the top-left. Search for **Synapse (1)**, select **Azure Synapse Analytics (2)**, and click on **Continue (3)**.
+1. Click **+ New** in the top-left. Search for **Synapse (1)**, select **Azure Synapse Analytics (2)**, and click on **Continue (3)**.
 
       ![](images/synapse8.png)
 
@@ -217,13 +217,13 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
 1. Enable the toggle **data flow debug** session located at the top menu bar adjacent to the validate button, and click on **OK** on the *Turn on data flow debug* pop-up window.
 
-    >**Note:** It will take a minute or two for the **data flow debug** session to get enabled.
+      >**Note:** It will take a minute or two for the **data flow debug** session to get enabled.
 
 1. Now head to the **Data preview** tab and run a preview to check your work thus far.
     
       ![](images/dataflow-datapreview.png)
 
-    >**Note**: If you're unable to view data under the Data Preview tab, please click on the Refresh button repeatedly until the data appears.
+      >**Note**: If you're unable to view data under the Data Preview tab, please click on the Refresh button repeatedly until the data appears.
    
 1. Next, we can add in our **Select** tile and do our minor alterations before writing the data out to the Synapse SQL table. To begin, click the small **+ (1)** sign next to our ingestion tile and choose the **Select (2)** option.
 
@@ -243,9 +243,9 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
            ![](images/p18.png)    
 
-           - In the Edit linked service window that opens, select the Azure selection method as **From Azure subscription** **(1)**. Select the **Azure subscription (2)** for which you have been working. Select the **asaworkspace<inject key="DeploymentID" enableCopy="false"/> (3)** for **Server name** and **openaisql (4)** as the **Database name**, and then click on **Test connection (5)** and click **Save (6)**.
+      - In the Edit linked service window that opens, select the Azure selection method as **From Azure subscription** **(1)**. Select the **Azure subscription (2)** for which you have been working. Select the **asaworkspace<inject key="DeploymentID" enableCopy="false"/> (3)** for **Server name** and **openaisql (4)** as the **Database name**, and then click on **Test connection (5)** and click **Save (6)**.
 
-                ![](images/p19.png)
+           ![](images/p19.png)
 
 1. We will then need to head over to the **Settings (1)** tab and adjust the **Schema name** and **Table name**. If you utilized the script provided earlier to make the target table, the Schema name is **dbo (1)** and the Table name is **cs_detail (2)**.
 
@@ -257,10 +257,10 @@ While still within the Synapse Studio, we will now need to create a **Data flow*
 
 1. To correct this, let's use our **Select (1)** tile to change the names as follows to get the expected output values:
 
-     - **Summary**: `interaction_summary` **(2)**
-     - **CustomerSentiment**: `sentiment` **(3)**
+    - **Summary**: `interaction_summary` **(2)**
+    - **CustomerSentiment**: `sentiment` **(3)**
 
-          ![](images/select-1.png)
+         ![](images/select-1.png)
     
 1. If we return to our **Sink (1)** tile and under **Data preview (2)** click **Refresh (3)**, we will now see our expected 5 columns of output.
 
@@ -320,9 +320,9 @@ Then expand the **Staging (3)** section at the bottom of the settings and utiliz
     ORDER BY count(*) desc     
      ```
 
-   - Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar **Results (6)** to those below.
+    - Your query results, if you are using the files uploaded as part of this repository or the workshop, you should see similar **Results (6)** to those below.
 
-        ![](images/pro6.png)
+         ![](images/pro6.png)
 
 ## Summary
 
