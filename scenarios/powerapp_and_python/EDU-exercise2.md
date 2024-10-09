@@ -4,19 +4,19 @@ In this exercise, you will learn how to integrate OpenAI with PowerApps. This ex
 
 1. Navigate to https://make.powerapps.com/. On the Welcome to power Apps window from **Choose your country/region** drop down select your country, and then click on **Get started**.
   
-2. In the  **Contact Information** window give a random nine-digit number for **Phone number** and click on **Submit** . 
+2. If a **Contact Information** pop up window opens, give a random ten-digit number for **Phone number** and click on **Submit** . 
 
    ![](./images/openai1.png)
     
-3. Select **Apps (1)** on the left navigation and click **Import Canvas App (2)**. 
+3. Select **Apps (1)** on the left navigation. Click **Import App (2)** and select **From package (.zip)**
 
-    ![](./images/powerapps-import.png)
+    ![](./images/import-powerapps.png)
 
 4. On the **Import package** page click on **Upload**.
 
     ![](./images/upload-importpackage.png)
 
-5. Navigate to `C:\labfile\OpenAIWorkshop-main\OpenAIWorkshop-main\scenarios\powerapp_and_python\powerapp` select the **OpenAI-Playground_20230302010547.zip (1)** folder  and click on **Open (2)**.
+5. Navigate to `C:\labfile\OpenAIWorkshop-main\scenarios\powerapp_and_python\powerapp` select the **OpenAI-Playground_20230302010547.zip (1)** folder  and click on **Open (2)**.
 
      ![](./images/openai-play.png)
 
@@ -68,7 +68,7 @@ In this exercise, you will learn how to integrate OpenAI with PowerApps. This ex
 
      ![](./images/canves-play.png)
 
-17. If you get a popup asking to start a free trial, click on **Star a Free Trial**, then on **You need a Power Apps license to use this app** window select **Start a 30-day trail**. choose your country from the drop down menu and click on **Start my trial** button wait for 2-3 minutes It might take to start the trial
+17. If you get a popup asking to start a free trial, click on **Start a Free Trial**, then on **You need a Power Apps license to use this app** window select **Start a 30-day trail**. choose your country from the drop down menu and click on **Start my trial** button. It might take 2-3 minutes to activate the free trial. 
 
 18. In the **Canvas**, click on **Summary** **(1)** button and verify the **auto-filled text** **(2)**. Then click on **Submit** **(3)** button to get the desired **Summary** **(4)**. 
 
