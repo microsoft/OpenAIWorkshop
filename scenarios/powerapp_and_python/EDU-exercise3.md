@@ -28,33 +28,33 @@ In this exercise, You'll be using Python to develop applications powered by Open
 
     >**Note**: Use the three ellipsis(...) button at the top right corner of your browser to zoom out the page, allowing you to view the **Attach to** option.
     
-1. In **1. Install OpenAI**, click on the **Run** button next to the two cells, and please wait till **Apache Spark pools** turn to stop state. 
+1. In **1. Install OpenAI**, click on the **Run** button next to the two cells, and please wait till commands are executed. 
 
      ![](images/run-python12.png)
 
-1. In **2. Import helper libraries and instantiate credentials** replace the **AZURE_OPENAI_API_KEY** with **<inject key="OpenAIKey" enableCopy="true"/>** and **AZURE_OPENAI_ENDPOINT** with **<inject key="OpenAIEndpoint" enableCopy="true"/>**.
+1. In **2. Import helper libraries and instantiate credentials** replace the **AZURE_OPENAI_API_KEY** with **<inject key="OpenAIKey" enableCopy="true"/>** and **AZURE_OPENAI_ENDPOINT** with **<inject key="OpenAIEndpoint" enableCopy="true"/>** and Run the cell.
 
      ![](images/key-endpoint.png)
    
      > **Note:** If you encounter an error "Openai module not found", enter `%` in before the **pip install** in the Install OpenAI cell and re-run the notebook again.
 
-1. For **2. Choose a Model**, replace **model** value from **text-curie-001** to **demomodel**.
+1. For **2. Choose a Model**, replace **model** value from **text-curie-001** to **demomodel** and Run the cell.
 
     ![](images/choosemodel.png)
 
-1. In **temperature**, replace **engine** value from **text-curie-001** to **demomodel**.
+1. In **temperature**, replace **engine** value from **text-curie-001** to **demomodel** and Run the cell.
 
      ![](images/temp.png)
 
-1. In **top_p**, replace **engine** value from **text-curie-001** to **demomodel**.
+1. In **top_p**, replace **engine** value from **text-curie-001** to **demomodel** and Run the cell.
 
      ![](images/top-p.png)
 
-1. For **n**, replace **engine** value from **text-curie-001** to **demomodel**.
+1. For **n**, replace **engine** value from **text-curie-001** to **demomodel** and Run the cell.
 
      ![](images/n.png)
 
-1. In **logprobs**, replace **engine** value from **text-curie-001** to **demomodel**.
+1. In **logprobs**, replace **engine** value from **text-curie-001** to **demomodel** and Run the cell.
 
      ![](images/logprobs.png)
 
