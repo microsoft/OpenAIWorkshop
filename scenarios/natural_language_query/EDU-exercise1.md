@@ -6,19 +6,19 @@ In this exercise, you will create a deployment and model in Azure OpenAI studio 
 
 1. In the **Azure portal**, search for **OpenAI** and select **Azure OpenAI**.
 
-   ![](images/openai8.png)
+   ![](images/OpenAI-search.png)
 
 1. On **Azure AI Services | Azure OpenAI** blade, select **openai-<inject key="DeploymentID" enableCopy="false"/>**
 
-   ![](images/E1T1S2.png)
+   ![](images/OpenAI-service.png)
 
 1. In the Azure OpenAI resource pane, click on **Go to Azure OpenAI Studio** it will navigate to **Azure AI Studio**.
 
-   ![](images/E1T1S3.png)
+   ![](images/OpenAI-studio1.png)
 
 1. In the **Azure AI Studio**, select **Deployments** under Management and verify that two models with the corresponding **Deployment names** of **gptmodel** and **demomodel** are present and the capacity of the model is set to **15K TPM**.
 
-   ![](images/newai.png)
+   ![](images/OpenAI-deployments.png)
 
 1. Naviagte back to [Azure portal](http://portal.azure.com/), search and select **Azure OpenAI**, from the **Azure AI Services | Azure OpenAI pane**, select the **OpenAI-<inject key="Deployment ID" enableCopy="false"/>**.
 

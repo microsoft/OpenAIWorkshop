@@ -35,30 +35,19 @@ Let's go ahead and launch the Azure OpenAI playground to learn about prompt engi
 
 1. In the **Azure portal**, search for **OpenAI** and select **Azure OpenAI**.
 
-   ![](../natural_language_query/images/openai8.png)
+   ![](../natural_language_query/images/OpenAI-search.png)
 
 1. On **Azure AI Services | Azure OpenAI** blade, select **openai-<inject key="DeploymentID" enableCopy="false"/>**
 
-   ![](../natural_language_query/images/E1T1S2.png)
+   ![](../natural_language_query/images/OpenAI-service.png)
 
 1. In the Azure OpenAI resource pane, click on **Go to Azure OpenAI Studio** it will navigate to **Azure AI Studio**.
 
-   ![](../natural_language_query/images/E1T1S3.png)
+   ![](../natural_language_query/images/OpenAI-studio1.png)
 
 1. In the **Azure AI Stuido**, click on **Chat** under play **Playground** from the left menu.
 
-   ![](../powerapp_and_python/images/chat-demo1.png)
-
-1. In the **Chat** section, choose **default** **(1)** under the use a system message template. Then, give any query from the **Chat session** **(2)** to get the response from the openai.
-
-   >**Note**: Click on **Continue** on **Update system message?** when prompted.
-   
-   ![](/scenarios/media/E2S5.png)
-
-
-   > **Note**: Chat may not respond with the exact output as shown in the screenshots. Following are the examples of what you'll most likely see in this exercise, but the response may vary.
- 
-    ![](../powerapp_and_python/images/openai-2.png)
+   ![](../natural_language_query/images/OpenAI-chat.png)
 
 ---
 ## Basic Prompt Examples
