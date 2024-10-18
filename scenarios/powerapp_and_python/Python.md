@@ -40,9 +40,9 @@ In this lab, participants will develop an application using OpenAI's APIs and Py
 
      ![](images/key-endpoint.png)
    
-1. From Azure Portal, navigate to the **openaicustom-<inject key="DeploymentID" enableCopy="false"/>** resource group, and select the **openai<inject key="DeploymentID" enableCopy="false"/>** Azure OpenAI resource.
+1. From Azure Portal, navigate to the **openaicustom-<inject key="DeploymentID" enableCopy="false"/>** resource group, and select the **openai-<inject key="DeploymentID" enableCopy="false"/>** Azure OpenAI resource.
 
-    ![](images/Ex4b-S7.1.png)
+    ![](images/openai-resource.png)
 
 1. Under Resource Management, select **Keys and Endpoint (1)**, and click **Show Keys (2)**. Copy **Key 1 (3)** and **Endpoint (4)**, and replace the **AZURE_OPENAI_API_KEY** and **AZURE_OPENAI_ENDPOINT** with your API key and Endpoint URL in the script.
 
