@@ -8,9 +8,9 @@ This lab focuses on creating an application using OpenAI capabilities integrated
 
    ![](./images/welcome-1.png)
     
-2. Select **Apps** on the left navigation and click **Import canvas app**. 
+2. Select **Apps** on the left navigation, click on **Import app** dropdown and select **From package (.zip)**. 
 
-    ![](./images/powerapps-import.png)
+    ![](./images/powerapps-import-01.png)
 
 3. On the **Import package** page, click on **Upload**.
 
