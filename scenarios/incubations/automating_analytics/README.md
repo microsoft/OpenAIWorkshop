@@ -40,7 +40,7 @@ The application supports Python's built-in SQLITE as well as your own Microsoft 
 ## Open AI setup
 1. Create an Azure OpenAI deployment in an Azure subscription with a GPT-35-Turbo deployment and preferably a GPT-4 deployment.
 Here we provide options to use both but GPT-4 should be used to address difficult & vague  questions.
-We assume that your GPT-4 and CHATGPT deployments are in the same Azure Open AI resource.
+We assume that your GPT-4 and CHATGPT deployments are in the same Azure OpenAI resource.
 ## Install the application locally 
 1. Clone the repo (e.g. ```git clone https://github.com/microsoft/OpenAIWorkshop.git``` or download). Then navigate to ```cd scenarios/incubations/automating_analytics```
 2. (Optional) Provide settings for Open AI and Database.You can either create a `secrets.env` file in the root of this folder (scenarios/incubations/automating_analytics) as below or do it using the app's UI later on. 
