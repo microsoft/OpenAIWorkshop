@@ -34,7 +34,7 @@ def print_result(endpoint, success, response=None):
 def test_customers():  
     endpoint = "/customers"  
     response = requests.get(BASE_URL + endpoint)  
-    print(response.json())  # Print the response for debugging
+    print(response.json())  # Print the response for debugging  
     success = response.status_code == 200 and isinstance(response.json(), list)  
     print_result(endpoint, success, response)  
   
@@ -59,7 +59,7 @@ def test_promotions():
 def test_kb_search(query):  
     endpoint = f"/kb/search?query={query}"  
     response = requests.get(BASE_URL + endpoint)  
-    print(response.json())  # Print the response for debugging
+    print(response.json())  # Print the response for debugging  
     success = response.status_code == 200 and isinstance(response.json(), list)  
     print_result(endpoint, success, response)  
   
@@ -81,13 +81,13 @@ def run_tests():
     try:  
         print("\nRunning test cases...\n")  
         test_customers()  
-        test_get_customer(1)            # Replace with valid customer_id  
-        test_get_customer(99999)        # Invalid customer_id to test error handling  
-        test_get_subscription(1)        # Replace with valid subscription_id  
+        test_get_customer(101)        # Replace with valid customer_id  
+        test_get_customer(99999)      # Invalid customer_id to test error handling  
+        test_get_subscription(1)      # Replace with valid subscription_id  
         test_promotions()  
         test_kb_search("Invoice Adjustment")  # Sample KB search query  
-        test_security_logs(1)           # Replace with valid customer_id  
-        test_orders(1)                  # Replace with valid customer_id  
+        test_security_logs(1)         # Replace with valid customer_id  
+        test_orders(1)                # Replace with valid customer_id  
     except requests.exceptions.ConnectionError as e:  
         print("Connection error. Is the service running?")  
         print(e)  

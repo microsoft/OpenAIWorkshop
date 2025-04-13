@@ -3,6 +3,6 @@
 name: OpenAIWorkshop
 services:
   web:
-    project: ./scenarios/incubations/automating_analytics
+    project: ./scenarios/contoso_internet/
     language: py
     host: appservice
