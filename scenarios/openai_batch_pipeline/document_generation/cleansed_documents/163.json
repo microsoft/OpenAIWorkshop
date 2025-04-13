@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having issues with their internet connection and speeds from Contoso Wireless. The agent has attempted a few troubleshooting steps, such as restarting the router and checking firewall settings, but so far nothing has worked. The agent is now asking for the customer's account information in order to take a look at the issue from their end and will update the customer with any findings.",
-    "customerSentiment": "angry",
-    "topic": "support",
-    "product": "internet",
-    "filename": "163_583_496_angry_support_internet_document.txt"
-}

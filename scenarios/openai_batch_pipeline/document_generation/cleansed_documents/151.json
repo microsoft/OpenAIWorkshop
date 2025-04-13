@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer had an incorrect charge on their account for a TV that they did not order. The customer service agent looked into the issue and discovered that it was an error on Contoso Wireless' end. The charge was removed from the customer's account and they were issued a full refund for the cost of the TV. The customer service agent also apologized for any inconvenience this may have caused.",
-    "customerSentiment": "upset",
-    "topic": "billing",
-    "product": "tv",
-    "filename": "151_475_388_upset_billing_tv_document.txt"
-}

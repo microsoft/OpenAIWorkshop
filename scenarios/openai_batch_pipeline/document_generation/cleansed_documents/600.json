@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having issues with their Contoso Wireless streaming service, which has been downgraded in quality and is buffering a lot. The agent asked for the customer's account information and address so that they can investigate the issue. The agent suggested resetting the modem again or switching to a different streaming service temporarily while they work on resolving the issue.",
-    "customerSentiment": "confused",
-    "topic": "downgrade services",
-    "product": "streaming",
-    "filename": "600_411_323_confused_downgrade services_streaming_document.txt"
-}

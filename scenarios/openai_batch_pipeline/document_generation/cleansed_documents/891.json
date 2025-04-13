@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having an issue with their payment not going through for the Contoso Wireless product streaming service. The agent looked into the issue and found that it was due to an error on their end. The agent apologized for the inconvenience and offered the customer a one-time discount of 25% off their next purchase as an apology.",
-    "customerSentiment": "negative",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "891_544_457_negative_payment_streaming_document.txt"
-}

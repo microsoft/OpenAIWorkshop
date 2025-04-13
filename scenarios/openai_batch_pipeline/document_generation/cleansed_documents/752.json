@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted the agent to report issues with their Contoso Wireless TV, including poor picture quality and frequent freezing. The agent offered assistance and asked for more information about the problem. After confirming the customer's account information, the agent suggested rebooting or resetting the TV, and offered to provide a temporary replacement while they investigate the issue further.",
-    "customerSentiment": "disappointed",
-    "topic": "churn",
-    "product": "tv",
-    "filename": "752_584_497_disappointed_churn_tv_document.txt"
-}

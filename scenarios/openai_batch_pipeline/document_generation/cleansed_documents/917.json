@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer was having a billing issue with their Contoso Wireless phone, as they were being charged for services that they did not sign up for. After looking into the customer's account, the agent discovered that these services were part of the standard package included with the phone and could not be removed from the bill. The agent apologized for any confusion and offered a discount on the services as a gesture of goodwill.",
-    "customerSentiment": "upset",
-    "topic": "billing",
-    "product": "phone",
-    "filename": "917_519_432_upset_billing_phone_document.txt"
-}

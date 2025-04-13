@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was not satisfied with the internet service they were receiving from Contoso Wireless, as the connection kept dropping. After investigating the issue, the customer service agent determined that there was an issue with the signal strength in the customer's area and dispatched technicians to fix it. The customer was offered a month of free service and a one-time credit towards any future purchases from Contoso Wireless as compensation for their inconvenience.",
-    "customerSentiment": "angry",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "802_617_530_angry_churn_internet_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having issues with the Contoso Wireless internet service, including unreliable and slow connection, frequent drops, and difficulty streaming. The customer service agent has apologized for the inconvenience and is gathering additional information from the customer in order to better understand the issue and resolve it as soon as possible.",
-    "customerSentiment": "negative",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "726_737_650_negative_churn_internet_document.txt"
-}

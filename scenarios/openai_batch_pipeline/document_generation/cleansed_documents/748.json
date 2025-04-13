@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer has been having trouble with their internet connection, particularly when streaming videos. The agent asked the customer for more information, such as the type of device they are using and their speed package. The customer provided this information and the agent requested the customer's account number so that they can run tests to determine the root cause of the issue. The agent assured the customer that they will look into it and contact them with an update on the status of their account.",
-    "customerSentiment": "disappointed",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "748_483_396_disappointed_churn_internet_document.txt"
-}

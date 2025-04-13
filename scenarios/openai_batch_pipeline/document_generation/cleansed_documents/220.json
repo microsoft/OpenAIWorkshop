@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nIn this conversation, the customer was having trouble connecting to the internet. The agent suggested that the customer update their device and then try to connect again. After the customer updated their device and still couldn't connect, the agent suggested checking if the router and modem were up-to-date with their firmware version and had all of the necessary settings enabled for a successful connection. When that didn't work, the agent suggested updating the wireless network adapter or driver on the customer's device.",
-    "customerSentiment": "positive",
-    "topic": "support",
-    "product": "internet",
-    "filename": "220_638_551_positive_support_internet_document.txt"
-}

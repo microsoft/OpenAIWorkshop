@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer was having issues with streaming a movie from Contoso Wireless. The agent identified the device and version of the streaming service being used, as well as the error code the customer was receiving. After further investigation, it was determined that there was an issue with the streaming servers that Contoso Wireless is currently experiencing. The agent apologized for the inconvenience and asked if there was anything else they could help with.",
-    "customerSentiment": "upset",
-    "topic": "other",
-    "product": "streaming",
-    "filename": "267_424_337_upset_other_streaming_document.txt"
-}

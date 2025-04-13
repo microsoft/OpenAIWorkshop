@@ -1,8 +1,0 @@
-pymupdf 
-pillow  
-python-dotenv
-openai==1.35.3
-streamlit==1.37.0
-streamlit-extras==0.4.3
-azure-search-documents==11.4.0
-scenedetect

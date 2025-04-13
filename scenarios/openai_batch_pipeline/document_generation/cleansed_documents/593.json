@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having difficulty making payments on their new television from Contoso Wireless and was informed that the last two payments had not gone through. The agent investigated the issue and determined that there was a system error which caused the payment to be declined. The agent offered the customer an alternate payment option such as a one-time payment or an extended payment plan and provided more details about these options for the customer to consider.",
-    "customerSentiment": "angry",
-    "topic": "payment",
-    "product": "tv",
-    "filename": "593_596_509_angry_payment_tv_document.txt"
-}

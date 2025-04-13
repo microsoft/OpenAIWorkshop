@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having trouble connecting to the internet and receiving an error message that says \"no connection.\" The agent has attempted several troubleshooting steps, including checking if the laptop is connected to the wireless network, disconnecting and reconnecting to the network, restarting the laptop, resetting the router, and manually entering the network settings into the laptop. However, none of these steps have been successful. The agent has asked for the customer's account information so that they can further investigate the issue.",
-    "customerSentiment": "neutral",
-    "topic": "assistance",
-    "product": "internet",
-    "filename": "557_653_566_neutral_assistance_internet_document.txt"
-}

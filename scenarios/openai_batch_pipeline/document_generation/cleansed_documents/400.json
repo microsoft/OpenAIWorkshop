@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer called Contoso Wireless to express their dissatisfaction with their service and inquire about other options. The agent explained the different plans and phones available, as well as the customer support and discounts offered by Contoso Wireless. The customer thanked the agent for their help and ended the call.",
-    "customerSentiment": "frustrated",
-    "topic": "churn",
-    "product": "other",
-    "filename": "400_710_623_frustrated_churn_other_document.txt"
-}

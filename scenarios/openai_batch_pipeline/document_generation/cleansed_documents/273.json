@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having trouble paying for their new Contoso Wireless TV with their credit card and the agent is trying to help. The customer is sure they are entering the correct information, so the agent suggests checking if the card has expired or been blocked by the bank. The customer does not want to use any other payment methods and believes there must be something wrong on the company's end. The agent is going to look into it further and requests additional information from the customer to verify their account.",
-    "customerSentiment": "angry",
-    "topic": "payment",
-    "product": "tv",
-    "filename": "273_483_396_angry_payment_tv_document.txt"
-}

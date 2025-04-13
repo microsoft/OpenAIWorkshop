@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless customer service to report an issue with their phone. The agent apologized for the delay and asked for more information about the issue. After confirming that the customer had already tried restarting the phone, the agent suggested resetting it to its factory settings as a potential solution. The customer agreed and is now in the process of backing up their data before proceeding with the reset.",
-    "customerSentiment": "angry",
-    "topic": "support",
-    "product": "phone",
-    "filename": "943_476_389_angry_support_phone_document.txt"
-}

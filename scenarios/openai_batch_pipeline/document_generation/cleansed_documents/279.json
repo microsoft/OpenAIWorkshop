@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer called to inquire about a payment they made for a Contoso Wireless TV. The agent provided them with the information that the payment had been processed and the product should be delivered within three to five business days. The agent also reminded the customer to make sure someone is available to accept the delivery at the address provided and that there is enough space to accommodate the product.",
-    "customerSentiment": "neutral",
-    "topic": "payment",
-    "product": "tv",
-    "filename": "279_522_435_neutral_payment_tv_document.txt"
-}

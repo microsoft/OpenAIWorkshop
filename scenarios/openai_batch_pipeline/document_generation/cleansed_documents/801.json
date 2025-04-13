@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble paying for their streaming subscription with Contoso Wireless and was unable to access the streaming service. The agent asked for more information and the customer provided their account number. The agent said they would look into the issue and get back to the customer as soon as possible.",
-    "customerSentiment": "frustrated",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "801_400_313_frustrated_payment_streaming_document.txt"
-}

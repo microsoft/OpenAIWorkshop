@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble making a payment for their Contoso Wireless TV. The agent asked for the last four digits of the card being used, which the customer provided. After checking, the agent found that there were insufficient funds in the account and suggested another form of payment. The customer provided the last four digits of their credit card and the agent processed the payment. The issue was resolved and the customer thanked the agent for their help.",
-    "customerSentiment": "mixed",
-    "topic": "payment",
-    "product": "tv",
-    "filename": "12_399_312_mixed_payment_tv_document.txt"
-}

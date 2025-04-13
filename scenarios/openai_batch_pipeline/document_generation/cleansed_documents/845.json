@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having issues with the streaming services from Contoso Wireless and is considering switching providers because of the slow speeds. The customer service agent apologizes for the inconvenience and offers a possible compensation or discount as an apology.",
-    "customerSentiment": "negative",
-    "topic": "churn",
-    "product": "streaming",
-    "filename": "845_633_546_negative_churn_streaming_document.txt"
-}

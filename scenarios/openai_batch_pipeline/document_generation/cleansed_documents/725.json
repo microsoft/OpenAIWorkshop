@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless regarding issues with their TV service, which included difficulty connecting to the internet and signal dropping out. After providing their account information, the customer service agent determined that the issue was due to the TV service not being connected to the internet properly. The customer service agent then reset the customer's connection and reconnected it to their TV service, which should resolve the issue.",
-    "customerSentiment": "happy",
-    "topic": "account",
-    "product": "tv",
-    "filename": "725_606_519_happy_account_tv_document.txt"
-}

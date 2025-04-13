@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer purchased a Contoso Wireless TV that was not working. The agent provided the customer with troubleshooting steps to try and fix the issue, such as checking all cables and trying a different power outlet. If those steps do not work, the agent suggested contacting the technical support team who are available 24/7 and usually respond within an hour.",
-    "customerSentiment": "angry",
-    "topic": "support",
-    "product": "tv",
-    "filename": "913_569_482_angry_support_tv_document.txt"
-}

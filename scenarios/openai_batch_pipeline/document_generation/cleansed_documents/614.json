@@ -1,7 +1,0 @@
-{
-    "summary": "\nThe customer contacted Contoso Wireless to report an issue with their recently purchased phone. The agent asked for details of the issue and the customer reported that the phone was lagging and freezing, and running slowly. The agent then confirmed which model of phone the customer had purchased before asking if they would like to return it. The customer agreed, and the agent asked for the customer's account number in order to process the return and refund the account.",
-    "customerSentiment": "negative",
-    "topic": "account",
-    "product": "other",
-    "filename": "614_501_414_negative_account_other_document.txt"
-}

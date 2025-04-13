@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having issues with their Contoso Wireless device, including freezing up, being slow, and not being able to access certain apps. After the agent ran some diagnostic tests, it was determined that the issue was caused by an outdated software on the device. The agent instructed the customer to update the software on their device, which should take approximately 10 minutes depending on the internet connection speed. Once the update is complete, all of the issues should be resolved.",
-    "customerSentiment": "frustrated",
-    "topic": "service",
-    "product": "other",
-    "filename": "663_576_489_frustrated_service_other_document.txt"
-}

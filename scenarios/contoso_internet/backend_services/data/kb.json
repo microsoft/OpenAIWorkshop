@@ -1,0 +1,38 @@
+[
+    {
+    "document_title": "Invoice Adjustment Policy - Overview",
+    "topic": "Invoice Adjustment Policy",
+    "doc_type": "Policy",
+    "document_content": "This policy describes how customers may request and receive adjustments on their billing statements when issues such as unexpected charges, billing errors, or service disruptions occur. In most cases, an invoice adjustment requires the submission of a formal inquiry detailing the nature of the dispute, including specific line items or charges. Once received, our billing team reviews the account, verifies relevant records, and determines if the charge should be partially or fully credited. If the adjustment request is approved, changes will be reflected within one to two billing cycles. In situations where the inquiry is deemed invalid, a denial with explanation will be issued. This policy also outlines the timelines for dispute resolution and emphasizes transparent communication with customers throughout the process. Additionally, any pro-rated fees tied to early plan changes or canceled subscriptions may factor into an invoice adjustment determination."
+    },
+    {
+    "document_title": "Troubleshooting Slow Internet - Basic Steps",
+    "topic": "Troubleshooting Slow Internet",
+    "doc_type": "Troubleshooting",
+    "document_content": "Slow internet performance can have a variety of causes, ranging from routine network congestion to more serious service disruptions. As a first step, customers should verify that their router and modem are operating correctly and that cables are securely connected. Running a speed test can help identify whether the issue is local or widespread. If results are consistently below the advertised speeds, users should reboot their router to clear any temporary glitches. If the connection remains slow, customers can check for outages by visiting our official service status page or by contacting support. Intermittent issues may be caused by crowded Wi-Fi channels or device interference, so switching channels or using a wired connection could improve performance. Where possible, ensure your device's software and network drivers are up to date. If problems persist, escalate the issue by contacting technical support for advanced troubleshooting."
+    },
+    {
+    "document_title": "International Roaming Options Explained",
+    "topic": "International Roaming Options",
+    "doc_type": "FAQ",
+    "document_content": "Travelers looking to stay connected abroad can take advantage of our international roaming packages, which provide voice, text, and data service outside the country. Before leaving, customers should confirm that their device is compatible with the destination’s network standards, such as GSM or LTE frequencies. Our standard package covers major travel destinations and includes an allotment of data suitable for emails, social media, and light web browsing. Customers with higher data needs may purchase add-on bundles that offer increased allocations at discounted rates. It is also recommended that travelers enable usage alerts to prevent accidental overages from data-intensive apps or streaming. For peace of mind, customers can reach our roaming support line 24/7 for troubleshooting while abroad. Plan changes must be made at least three days before traveling to ensure timely activation. Additional restrictions, such as region-specific taxes or surcharges, may apply in certain countries."
+    },
+    {
+    "document_title": "Account Unlock Procedure - Verification Steps",
+    "topic": "Account Unlock Procedure",
+    "doc_type": "Procedure",
+    "document_content": "If a customer is locked out of their account following multiple failed login attempts or a security alert, a formal account unlock procedure is required. First, the customer must verify their identity using two-factor authentication or by providing key personal details, such as date of birth and the last four digits of their ID on file. Once identity is confirmed, a temporary unlock code is sent via email or SMS. When the customer enters this code on the login page, the account is immediately unlocked, and they are prompted to create or confirm a secure password. Where suspicious activity is detected, additional steps—like contacting our fraud department—may be necessary. Customers should also update their recovery options to ensure they can reset passwords in the future. This procedure is designed to protect personal and financial information while offering a streamlined process to regain access."
+    },
+    {
+    "document_title": "Promotion Eligibility Guidelines - Loyalty and New Subscribers",
+    "topic": "Promotion Eligibility Guidelines",
+    "doc_type": "Policy",
+    "document_content": "Our promotions are designed to reward both existing loyal customers and attract new subscribers. For those enrolled in loyalty programs, eligibility often depends on tenure and membership levels—Gold members may receive more substantial discounts on certain plans than Silver or Bronze tier members. New subscriber deals typically require that individuals have not used our services in a specified time frame, usually six months or more, to be considered truly new. Basic criteria may include a clean billing history, ownership of only one active plan, or signing up for a minimum contract period. Even if a customer is not immediately eligible, there may be alternative promotions or bundle offers that could fit their needs. Because different promotions can overlap, we recommend reviewing the official FAQs or consulting a representative to identify which deals can be stacked and which cannot. Terms and conditions, such as start and end dates, may also vary."
+    },
+    {
+    "document_title": "Return Policy and Process - Instructions for Product Returns",
+    "topic": "Return Policy and Process",
+    "doc_type": "Procedure",
+    "document_content": "Customers may return eligible products within a specified window, generally 30 days from the original purchase date, with proof of purchase such as an order confirmation email or a paper receipt. Items must be in like-new condition, free of damage, and ideally in their original packaging to qualify for a full refund. In instances where the returned product shows signs of wear or missing accessories, a restocking fee may apply. Customers can initiate a return either in-store or via the online portal. Shipping labels will be provided for mail-in returns, and the cost of shipping may be deducted from the refund unless the return is due to a company error. Upon receiving the returned product, our team inspects the item to ensure compliance with policy requirements. Refunds are then processed and typically appear on the customer's account within 7-10 business days."
+    }
+    ]

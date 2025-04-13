@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted the agent to inquire about being charged for streaming services that they did not sign up for. The agent explained that the customer had been automatically enrolled in a free trial of the streaming services when they signed up for their plan, and that the trial period had expired and was automatically converted into a paid subscription. The agent apologized for not communicating this information clearly enough and offered to process a refund for any charges associated with the streaming service that had been applied to the customer's account within the last 90 days.",
-    "customerSentiment": "upset",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "736_584_497_upset_payment_streaming_document.txt"
-}

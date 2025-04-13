@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble with their Contoso Wireless internet, which had been running slow all day and was not connecting at all. The agent suggested checking the router settings, resetting the router, and checking the signal strength of the Contoso Wireless network. After these steps did not resolve the issue, the agent contacted the technical team for further assistance and asked the customer to provide more details about their device and router as well as a screenshot of their connection settings.",
-    "customerSentiment": "negative",
-    "topic": "information",
-    "product": "internet",
-    "filename": "371_645_558_negative_information_internet_document.txt"
-}

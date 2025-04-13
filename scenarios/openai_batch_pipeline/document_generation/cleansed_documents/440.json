@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble setting up their Contoso Wireless TV, as it would not turn on. The agent was able to troubleshoot the issue by having the customer check that the power cable was properly connected and that the power button was switched to \"on\". When this did not work, the agent suggested a factory reset, which also did not resolve the issue. The agent then checked the customer's serial number to confirm that their TV was still under warranty, and arranged for a technician to come out and take a look at the TV.",
-    "customerSentiment": "confused",
-    "topic": "support",
-    "product": "tv",
-    "filename": "440_625_538_confused_support_tv_document.txt"
-}

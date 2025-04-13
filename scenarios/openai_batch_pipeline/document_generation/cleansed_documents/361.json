@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is dissatisfied with their purchase of the Contoso 5G phone due to it malfunctioning after only two weeks of use and being incredibly slow. The customer service agent offered to look into the issue further and provided a 14-day refund policy as an option to resolve the customer's dissatisfaction.",
-    "customerSentiment": "disappointed",
-    "topic": "churn",
-    "product": "phone",
-    "filename": "361_612_525_disappointed_churn_phone_document.txt"
-}
