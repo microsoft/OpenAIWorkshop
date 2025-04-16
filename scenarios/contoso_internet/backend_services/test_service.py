@@ -5,7 +5,7 @@ import sys
 import signal  
   
 # Define the base URL for the API  
-BASE_URL = "http://127.0.0.1:5000"  
+BASE_URL = "https://kb-backend-service.kindplant-f71d0f9b.westus.azurecontainerapps.io"  
   
 # Start the Flask application as a subprocess  
 def start_service():  

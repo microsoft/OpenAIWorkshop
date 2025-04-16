@@ -1,9 +1,0 @@
-version: "3.9"  
-  
-services:  
-  contosoapp:  
-    build: .  
-    ports:  
-      - "5000:5000"  
-    volumes:  
-      - .:/app  
