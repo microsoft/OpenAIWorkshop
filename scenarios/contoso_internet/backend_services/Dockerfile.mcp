@@ -19,4 +19,4 @@ COPY . /app/
 EXPOSE 5000  
   
 # Run the Flask app with the host set to 0.0.0.0  
-CMD ["python", "app.py"]  
+CMD ["python", "mcp_service.py"]  
