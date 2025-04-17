@@ -5,20 +5,22 @@ import sys
 import signal  
   
 # Define the base URL for the API  
-BASE_URL = "https://kb-backend-service.kindplant-f71d0f9b.westus.azurecontainerapps.io"  
+BASE_URL = "http://localhost:5000"  # Change this to the actual port if different
   
 # Start the Flask application as a subprocess  
 def start_service():  
-    service_process = subprocess.Popen([sys.executable, 'app.py'])  
-    print("Starting Flask service...")  
-    time.sleep(3)  # Wait for service to start  
-    return service_process  
+    # service_process = subprocess.Popen([sys.executable, 'app.py'])  
+    # print("Starting Flask service...")  
+    # time.sleep(3)  # Wait for service to start  
+    # return service_process  
+    pass
   
 # Stop the Flask service gracefully  
 def stop_service(service_process):  
-    print("\nStopping Flask service...")  
-    service_process.send_signal(signal.SIGINT)  
-    service_process.wait()  
+    # print("\nStopping Flask service...")  
+    # service_process.send_signal(signal.SIGINT)  
+    # service_process.wait()
+    pass  
   
 # Helper function to print test results  
 def print_result(endpoint, success, response=None):  

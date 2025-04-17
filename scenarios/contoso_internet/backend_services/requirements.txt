@@ -4,3 +4,4 @@ python-dotenv==1.0.0
 tenacity==8.2.2  
 openai
 flasgger
+fastmcp
