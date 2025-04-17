@@ -283,4 +283,4 @@ def get_customer_orders(customer_id: int) -> List[Order]:
 if __name__ == "__main__":  
     # mcp.run()  
     # To run with SSE (as persistent web server):  
-    mcp.run(transport="sse", host="0.0.0.0", port=8000)  
+    mcp.run(transport="sse")  
