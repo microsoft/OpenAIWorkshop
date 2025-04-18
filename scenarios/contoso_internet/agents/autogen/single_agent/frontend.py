@@ -1,6 +1,6 @@
 import streamlit as st  
 import requests, uuid, os  
-BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000/chat")  
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:7000/chat")  
   
 # ───────────────── Sidebar ──────────────────  
 with st.sidebar:  
