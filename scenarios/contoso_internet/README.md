@@ -1,3 +1,7 @@
+
+## Goal
+This project focuses on revamping the existing OpenAI workshop content, aligning it with the latest Agentic AI technologies. The primary objective is to deliver an updated curriculum that equips participants with the skills to design and implement agent-based AI systems using cutting-edge tools like Azure Agent Service, Semantic Kernel, and Autogen frameworks. The refreshed content aims to guide learners through practical applications, enabling them to automate customer requests through structured data queries and knowledge base searches, and to advance from simple single-agent setups to complex multi-agent architectures.
+
 ## 1. Business Scenario Description  
   
 "Contoso Communications" provides telecom and internet services. Customers frequently submit requests about billing, account management, service status, and promotions. Requests range from simple queries (single data source) to complex questions requiring multiple backend systems interactions.  
