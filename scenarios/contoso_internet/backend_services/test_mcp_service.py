@@ -1,178 +1,229 @@
-import asyncio  
+#!/usr/bin/env python3  
+"""  
+Smoke‑tests the FastMCP server exposed in mcp_services.py.  
+  
+The helper exercises (read‑only + mutating) tools that cover every table used  
+by the nine deterministic scenarios.  
+  
+Run:  
+  
+    export MCP_URL=http://127.0.0.1:8000/sse      # override if needed  
+    python smoke_test_mcp.py  
+"""  
+  
+import os, asyncio, logging, json  
+from typing import Any, List, Dict  
+  
 from fastmcp import Client  
-from fastmcp.exceptions import ClientError
+from fastmcp.exceptions import ClientError  
   
-# Set to match your MCP SSE endpoint  
-MCP_URL = "http://127.0.0.1:8000/sse"  
+MCP_URL = os.getenv("MCP_URL", "http://127.0.0.1:8000/sse")  
   
-def print_result(title, success, data=None, error=None):  
-    if success:  
-        print(f"[PASS] {title}")  
-    else:  
-        print(f"[FAIL] {title}")  
-        if data is not None:  
-            print(f"  Data: {data}")  
-        if error:  
-            print(f"  Error: {error}")  
+logging.basicConfig(  
+    level=logging.INFO, format="%(levelname)s | %(message)s", force=True  
+)  
   
-async def test_customers(client):  
-    title = "customer://list (get all customers)"  
+  
+# ──────────────────────────  utilities  ────────────────────────────────  
+def _to_native(content) -> Any:  
+    """Return native python object (dict/list/str) regardless of TextContent/JsonContent"""  
     try:  
-        contents = await client.read_resource("customer://list")  
-        data = contents[0].as_json() if hasattr(contents[0], 'as_json') else contents[0].text  
-        is_list = isinstance(data, list)  
-        print_result(title, is_list, data)  
+        return content.as_json()  
+    except Exception:  
+        try:  
+            return json.loads(content.text)  
+        except Exception:  
+            return content.text  
+  
+  
+def print_result(title: str, success: bool, data: Any = None, error: Exception | str = None):  
+    if success:  
+        logging.info("[PASS] %s", title)  
+        if data is not None:  
+            logging.debug("    → %s", repr(data)[:300])  
+    else:  
+        logging.error("[FAIL] %s", title)  
+        if error:  
+            logging.error("       error: %s", error)  
+        if data is not None:  
+            logging.debug("       data : %s", repr(data)[:300])  
+  
+  
+# ───────────────────────  individual tests  ────────────────────────────  
+async def test_get_all_customers(client: Client) -> List[Dict[str, Any]] | None:  
+    title = "get_all_customers"  
+    try:  
+        res = await client.call_tool("get_all_customers")  
+        data = _to_native(res[0])  
+        ok = isinstance(data, list) and data  
+        print_result(title, ok, data[:2])  
         return data  
     except Exception as e:  
         print_result(title, False, error=e)  
-        return None  
   
-async def test_customer_detail(client, customer_id):  
-    title = f"customer://{customer_id}/profile (get customer detail)"  
-    try:  
-        uri = f"customer://{customer_id}/profile"  
-        contents = await client.read_resource(uri)  
-        data = contents[0].as_json() if hasattr(contents[0], 'as_json') else contents[0].text  
-        is_dict = isinstance(data, dict)  
-        print_result(title, is_dict, data)  
-    except Exception as e:  
-        # Consider "not found" as PASS if that's the test's purpose  
-        if "not found" in str(e).lower():  
-            print_result(title, True, error=e)  
-        else:  
-            print_result(title, False, error=e)  
   
-async def test_subscription_detail(client, subscription_id):  
-    title = f"subscription://{subscription_id}/detail (get subscription detail)"  
+async def test_customer_detail(client: Client, cust_id: int):  
+    title = f"get_customer_detail({cust_id})"  
     try:  
-        uri = f"subscription://{subscription_id}/detail"  
-        contents = await client.read_resource(uri)  
-        data = contents[0].as_json() if hasattr(contents[0], 'as_json') else contents[0].text  
-        is_dict = isinstance(data, dict)  
-        print_result(title, is_dict, data)  
-    except Exception as e:  
-        if "not found" in str(e).lower():  
-            print_result(title, True, error=e)  
-        else:  
-            print_result(title, False, error=e)  
-  
-async def test_promotions(client):  
-    title = "promotion://list (get all promotions)"  
-    try:  
-        contents = await client.read_resource("promotion://list")  
-        data = contents[0].as_json() if hasattr(contents[0], 'as_json') else contents[0].text  
-        is_list = isinstance(data, list)  
-        print_result(title, is_list, data)  
+        res = await client.call_tool("get_customer_detail", {"customer_id": cust_id})  
+        data = _to_native(res[0])  
+        print_result(title, isinstance(data, dict), data)  
     except Exception as e:  
         print_result(title, False, error=e)  
   
-async def test_security_logs(client, customer_id):  
-    title = f"customer://{customer_id}/security_logs"  
+  
+async def test_subscription_detail(client: Client, sub_id: int):  
+    title = f"get_subscription_detail({sub_id})"  
     try:  
-        uri = f"customer://{customer_id}/security_logs"  
-        contents = await client.read_resource(uri)  
-        data = contents[0].as_json() if hasattr(contents[0], 'as_json') else contents[0].text  
-        is_list = isinstance(data, list)  
-        print_result(title, is_list, data)  
+        res = await client.call_tool("get_subscription_detail", {"subscription_id": sub_id})  
+        data = _to_native(res[0])  
+        print_result(title, isinstance(data, dict), data)  
     except Exception as e:  
         print_result(title, False, error=e)  
   
-async def test_orders(client, customer_id):  
-    title = f"customer://{customer_id}/orders"  
+  
+async def test_promotions(client: Client):  
+    title = "get_promotions"  
     try:  
-        uri = f"customer://{customer_id}/orders"  
-        contents = await client.read_resource(uri)  
-        data = contents[0].as_json() if hasattr(contents[0], 'as_json') else contents[0].text  
-        is_list = isinstance(data, list)  
-        print_result(title, is_list, data)  
+        res = await client.call_tool("get_promotions")  
+        data = _to_native(res[0])  
+        print_result(title, isinstance(data, list), data)  
     except Exception as e:  
         print_result(title, False, error=e)  
   
-async def test_kb_search(client, query):  
-    """Test tool: search_knowledge_base(query)"""  
-    title = f"search_knowledge_base (query='{query}')"  
+  
+async def test_eligible_promos(client: Client, cust_id: int):  
+    title = f"get_eligible_promotions({cust_id})"  
     try:  
-        tool_result = await client.call_tool("search_knowledge_base", {"query": query, "topk": 3})  
-        # Returns a list of contents (usually [TextContent])  
-        results = []  
-        for content in tool_result:  
-            try:  
-                results.append(content.as_json() if hasattr(content, 'as_json') else content.text)  
-            except Exception:  
-                results.append(str(content))  
-        is_list = isinstance(results[0], list) or isinstance(results, list) 
-        print_result(title, is_list, results)  
+        res = await client.call_tool("get_eligible_promotions", {"customer_id": cust_id})  
+        data = _to_native(res[0])  
+        print_result(title, isinstance(data, list), data)  
+    except Exception as e:  
+        print_result(title, False, error=e)  
+  
+  
+async def test_kb_search(client: Client, query: str):  
+    title = f"search_knowledge_base('{query}')"  
+    try:  
+        res = await client.call_tool("search_knowledge_base", {"query": query, "topk": 2})  
+        data = [_to_native(c) for c in res]  
+        ok = isinstance(data, list) and data  
+        print_result(title, ok, data)  
+    except Exception as e:  
+        print_result(title, False, error=e)  
+  
+  
+async def test_security_logs(client: Client, cust_id: int):  
+    title = f"get_security_logs({cust_id})"  
+    try:  
+        res = await client.call_tool("get_security_logs", {"customer_id": cust_id})  
+        data = _to_native(res[0])  
+        ok = isinstance(data, list)  
+        print_result(title, ok, data[:3])  
+    except Exception as e:  
+        print_result(title, False, error=e)  
+  
+  
+async def test_orders(client: Client, cust_id: int):  
+    title = f"get_customer_orders({cust_id})"  
+    try:  
+        res = await client.call_tool("get_customer_orders", {"customer_id": cust_id})  
+        data = _to_native(res[0])  
+        ok = isinstance(data, list)  
+        print_result(title, ok, data[:2])  
+    except Exception as e:  
+        print_result(title, False, error=e)  
+  
+  
+async def test_data_usage(client: Client, sub_id: int):  
+    title = f"get_data_usage({sub_id}) aggregate"  
+    try:  
+        res = await client.call_tool(  
+            "get_data_usage",  
+            {  
+                "subscription_id": sub_id,  
+                "start_date": "2023-01-01",  
+                "end_date": "2099-01-01",  
+                "aggregate": True,  
+            },  
+        )  
+        data = _to_native(res[0])  
+        print_result(title, isinstance(data, dict), data)  
+    except Exception as e:  
+        print_result(title, False, error=e)  
+  
+  
+async def test_billing_summary(client: Client, cust_id: int):  
+    title = f"get_billing_summary({cust_id})"  
+    try:  
+        res = await client.call_tool("get_billing_summary", {"customer_id": cust_id})  
+        data = _to_native(res[0])  
+        ok = isinstance(data, dict) and "total_due" in data  
+        print_result(title, ok, data)  
+    except Exception as e:  
+        print_result(title, False, error=e)  
+  
+  
+async def test_update_subscription(client: Client, sub_id: int):  
+    title = f"update_subscription({sub_id}) set status=inactive"  
+    try:  
+        res = await client.call_tool(  
+            "update_subscription",  
+            {"subscription_id": sub_id, "update": {"status": "inactive"}},  
+        )  
+        data = _to_native(res[0])  
+        ok = "updated_fields" in data  
+        print_result(title, ok, data)  
+    except Exception as e:  
+        print_result(title, False, error=e)  
+  
+  
+async def test_unlock_account(client: Client, cust_id: int):  
+    title = f"unlock_account({cust_id})"  
+    try:  
+        res = await client.call_tool("unlock_account", {"customer_id": cust_id})  
+        data = _to_native(res[0])  
+        ok = "unlocked" in str(data).lower()  
+        print_result(title, ok, data)  
     except ClientError as e:  
-        print_result(title, False, error=f"ClientError: {e}")  
+        print_result(title, False, error=f"ClientError {e}")  
     except Exception as e:  
         print_result(title, False, error=e)  
   
   
-async def test_update_subscription(client, subscription_id):  
-    """Test tool: update_subscription"""  
-    title = f"update_subscription (subscription_id={subscription_id})"  
-    try:  
-        params = {  
-            "subscription_id": subscription_id,  
-            "update": {"status": "inactive"}  # Example change  
-        }  
-        result = await client.call_tool("update_subscription", params)  
-        # Output should be a JSON message from the server  
-        text = result[0].as_json() if hasattr(result[0], 'as_json') else result[0].text  
-        success = "successfully" in str(text).lower()  
-        print_result(title, success, text)  
-    except Exception as e:  
-        print_result(title, False, error=e)  
-  
-async def test_unlock_account(client, customer_id):  
-    """Test tool: unlock_account"""  
-    title = f"unlock_account (customer_id={customer_id})"  
-    try:  
-        params = {"customer_id": customer_id}  
-        result = await client.call_tool("unlock_account", params)  
-        text = result[0].as_json() if hasattr(result[0], 'as_json') else result[0].text  
-        success = "unlocked" in str(text).lower()  
-        print_result(title, success, text)  
-    except ClientError as e:  
-        print_result(title, False, error=f"ClientError: {e}")  
-    except Exception as e:  
-        print_result(title, False, error=e)  
-  
-# ----------- Main async test runner ------------  
-  
+# ─────────────────────────────  main runner  ────────────────────────────  
 async def run_tests():  
-    client = Client(MCP_URL)  
-    async with client:  
-        print("\n=== Running FastMCP Service Tests ===\n")  
+    async with Client(MCP_URL) as client:  
+        logging.info("Running FastMCP smoke‑tests against %s", MCP_URL)  
   
-        # You may want to use existing customer/subscription IDs from your DB  
-        customer_list = await test_customers(client)  
-        sample_cust_id = None  
-        if customer_list:  
-            try:  
-                sample_cust_id = customer_list[0]['customer_id'] if isinstance(customer_list[0], dict) else None  
-            except Exception:  
-                sample_cust_id = None  
-        if not sample_cust_id:  
-            sample_cust_id = 1  
+        customers = await test_get_all_customers(client)  
+        sample_cust = customers[0]["customer_id"] if customers else 1  
   
-        # Use sample subscription IDs, else fallback to ID=1  
-        sample_subscription_id = 1  
+        await test_customer_detail(client, sample_cust)  
+        await test_customer_detail(client, 999999)          # expected fail  
   
-        await test_customer_detail(client, sample_cust_id)  
-        await test_customer_detail(client, 99999)  # Should fail for missing ID  
+        # pick first subscription for that customer  
+        detail_res = await client.call_tool("get_customer_detail", {"customer_id": sample_cust})  
+        subs = _to_native(detail_res[0]).get("subscriptions", [])  
+        sample_sub = subs[0]["subscription_id"] if subs else 1  
   
-        await test_subscription_detail(client, sample_subscription_id)  
+        await test_subscription_detail(client, sample_sub)  
+        await test_subscription_detail(client, 987654)      # expected fail  
+  
+        # generic reads  
         await test_promotions(client)  
-        await test_kb_search(client, "Invoice Adjustment")  
-        await test_security_logs(client, sample_cust_id)  
-        await test_orders(client, sample_cust_id)  
-        await test_update_subscription(client, sample_subscription_id)  
-        await test_unlock_account(client, sample_cust_id)  
+        await test_eligible_promos(client, sample_cust)  
+        await test_kb_search(client, "Invoice Adjustment Policy")  
+        await test_security_logs(client, sample_cust)  
+        await test_orders(client, sample_cust)  
+        await test_data_usage(client, sample_sub)  
+        await test_billing_summary(client, sample_cust)  
   
-        # Add extra coverage for missing/edge case subscription ID  
-        await test_subscription_detail(client, 99999)  
+        # mutating endpoints  
+        await test_update_subscription(client, sample_sub)  
+        await test_unlock_account(client, sample_cust)  
   
-# -------- Run as script --------  
+  
+# ──────────────────────────────  CLI  ───────────────────────────────────  
 if __name__ == "__main__":  
     asyncio.run(run_tests())  
