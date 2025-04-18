@@ -1,56 +1,67 @@
 from fastmcp import FastMCP  
-from typing import List, Optional  
+from typing import List, Optional, Dict, Any  
 from pydantic import BaseModel  
-import sqlite3  
-import os  
-import json  
-import math  
+import sqlite3, os, json, math, asyncio, logging  
 from datetime import datetime  
 from dotenv import load_dotenv  
-from openai import AzureOpenAI  
-import asyncio
-import logging
   
+# ────────────────────────── FastMCP INITIALISATION ──────────────────────  
 mcp = FastMCP(  
     name="Contoso Customer API as Tools",  
     instructions=(  
-        "All info (including reads) is available via tools. Use provided parameters and schemas for arguments. "  
-        "Results are JSON objects or lists of objects as shown in schemas."  
+        "All customer, billing and knowledge data isaccessible ONLY via the declared "  
+        "tools below.  Return values follow the pydanticschemas.  Always call the most "  
+        "specific tool that answers the user’s question."  
     ),  
 )  
   
+# ─────────────────────────────  ENV & EMBEDDINGS  ───────────────────────  
 load_dotenv()  
-DATABASE = "data/contoso.db"  
-emb_engine = os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT")  
-client = AzureOpenAI(  
-    api_key=os.getenv("AZURE_OPENAI_API_KEY"),  
-    api_version=os.getenv("AZURE_OPENAI_API_VERSION"),  
-    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),  
-)  
+DB_PATH = os.getenv("DB_PATH", "data/contoso.db")  
   
-def get_db():  
-    db = sqlite3.connect(DATABASE)  
+def get_db() -> sqlite3.Connection:  
+    db = sqlite3.connect(DB_PATH)  
     db.row_factory = sqlite3.Row  
     return db  
   
-def get_embedding(text, model=emb_engine):  
-    text = text.replace("\n", " ")  
-    return client.embeddings.create(input=[text], model=model).data[0].embedding  
+# — safe OpenAI import / dummy embedding  
+try:  
+    from openai import AzureOpenAI  
+  
+    _client = AzureOpenAI(  
+        api_key=os.getenv("AZURE_OPENAI_API_KEY"),  
+        api_version=os.getenv("AZURE_OPENAI_API_VERSION"),  
+        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),  
+    )  
+    _emb_model = os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT")  
+  
+    def get_embedding(text: str) -> List[float]:  
+        text = text.replace("\n", " ")  
+        return _client.embeddings.create(input=[text], model=_emb_model).data[0].embedding  
+  
+except Exception:  # pragma: no cover  
+    def get_embedding(text: str) -> List[float]:  
+        # 1536‑d zero vector falls back when creds are missing (tests/dev mode)  
+        return [0.0] * 1536  
+  
   
 def cosine_similarity(vec1, vec2):  
     dot = sum(a * b for a, b in zip(vec1, vec2))  
     norm1 = math.sqrt(sum(a * a for a in vec1))  
     norm2 = math.sqrt(sum(b * b for b in vec2))  
-    return dot / (norm1 * norm2) if norm1 and norm2 else 0  
+    return dot / (norm1 * norm2) if norm1 and norm2 else 0.0  
   
-# --- Pydantic Schemas ---  
   
+##############################################################################  
+#                              Pydantic MODELS                               #  
+##############################################################################  
 class CustomerSummary(BaseModel):  
     customer_id: int  
     first_name: str  
     last_name: str  
     email: str  
     loyalty_level: str  
+  
   
 class CustomerDetail(BaseModel):  
     customer_id: int  
@@ -60,7 +71,33 @@ class CustomerDetail(BaseModel):
     phone: Optional[str]  
     address: Optional[str]  
     loyalty_level: str  
-    subscriptions: List[dict] # List of subscriptions (flattened)  
+    subscriptions: List[dict]  
+  
+  
+class Payment(BaseModel):  
+    payment_id: int  
+    payment_date: Optional[str]  
+    amount: float  
+    method: str  
+    status: str  
+  
+  
+class Invoice(BaseModel):  
+    invoice_id: int  
+    invoice_date: str  
+    amount: float  
+    description: str  
+    due_date: str  
+    payments: List[Payment]  
+    outstanding: float  
+  
+  
+class ServiceIncident(BaseModel):  
+    incident_id: int  
+    incident_date: str  
+    description: str  
+    resolution_status: str  
+  
   
 class SubscriptionDetail(BaseModel):  
     subscription_id: int  
@@ -70,12 +107,16 @@ class SubscriptionDetail(BaseModel):
     status: str  
     roaming_enabled: int  
     service_status: str  
+    speed_tier: Optional[str]  
+    data_cap_gb: Optional[int]  
+    autopay_enabled: int  
     product_name: str  
     product_description: Optional[str]  
     category: Optional[str]  
     monthly_fee: Optional[float]  
-    invoices: List[dict]  
-    service_incidents: List[dict]  
+    invoices: List[Invoice]  
+    service_incidents: List[ServiceIncident]  
+  
   
 class Promotion(BaseModel):  
     promotion_id: int  
@@ -87,20 +128,24 @@ class Promotion(BaseModel):
     end_date: str  
     discount_percent: Optional[int]  
   
+  
 class KBSearchParams(BaseModel):  
     query: str  
     topk: Optional[int] = 3  
+  
   
 class KBDoc(BaseModel):  
     title: str  
     doc_type: str  
     content: str  
   
+  
 class SecurityLog(BaseModel):  
     log_id: int  
     event_type: str  
     event_timestamp: str  
     description: str  
+  
   
 class Order(BaseModel):  
     order_id: int  
@@ -109,6 +154,27 @@ class Order(BaseModel):
     amount: float  
     order_status: str  
   
+  
+class DataUsageRecord(BaseModel):  
+    usage_date: str  
+    data_used_mb: int  
+    voice_minutes: int  
+    sms_count: int  
+  
+  
+class SupportTicket(BaseModel):  
+    ticket_id: int  
+    subscription_id: int  
+    category: str  
+    opened_at: str  
+    closed_at: Optional[str]  
+    status: str  
+    priority: str  
+    subject: str  
+    description: str  
+    cs_agent: str  
+  
+  
 class SubscriptionUpdateRequest(BaseModel):  
     roaming_enabled: Optional[int] = None  
     status: Optional[str] = None  
@@ -116,170 +182,420 @@ class SubscriptionUpdateRequest(BaseModel):
     product_id: Optional[int] = None  
     start_date: Optional[str] = None  
     end_date: Optional[str] = None  
+    autopay_enabled: Optional[int] = None  
+    speed_tier: Optional[str] = None  
+    data_cap_gb: Optional[int] = None  
   
-# --- TOOL ARGUMENT MODELS ---  
   
+# ─── simple arg models ───────────────────────────────────────────────────  
 class CustomerIdParam(BaseModel):  
     customer_id: int  
+  
   
 class SubscriptionIdParam(BaseModel):  
     subscription_id: int  
   
-# --- TOOL ENDPOINTS (formerly resources) ---  
   
-@mcp.tool(description="Get all customers (basic info)")  
+class InvoiceIdParam(BaseModel):  
+    invoice_id: int  
+  
+  
+##############################################################################  
+#                               TOOL ENDPOINTS                               #  
+##############################################################################  
+@mcp.tool(description="List all customers with basic info")  
 def get_all_customers() -> List[CustomerSummary]:  
     db = get_db()  
-    cur = db.execute("SELECT customer_id, first_name, last_name, email, loyalty_level FROM Customers")  
-    rows = cur.fetchall()  
+    rows = db.execute(  
+        "SELECT customer_id, first_name, last_name, email, loyalty_level FROM Customers"  
+    ).fetchall()  
     db.close()  
-    return [CustomerSummary(**dict(row)) for row in rows]  
+    return [CustomerSummary(**dict(r)) for r in rows]  
   
-@mcp.tool(description="Get full profile for a customer, with subscriptions")  
+  
+@mcp.tool(description="Get a full customer profile including their subscriptions")  
 def get_customer_detail(params: CustomerIdParam) -> CustomerDetail:  
-    print(f"Fetching details for customer ID: {params.customer_id}")
     db = get_db()  
-    cur = db.execute("SELECT customer_id, first_name, last_name, email, phone, address, loyalty_level FROM Customers WHERE customer_id = ?", (params.customer_id,))  
-    customer = cur.fetchone()  
-    if not customer:  
+    cust = db.execute(  
+        "SELECT * FROM Customers WHERE customer_id = ?", (params.customer_id,)  
+    ).fetchone()  
+    if not cust:  
         db.close()  
-        raise ValueError(f"Customer ID {params.customer_id} not found")  
-    customer_dict = dict(customer)  
-    cur2 = db.execute("SELECT subscription_id, product_id, start_date, end_date, status, roaming_enabled, service_status FROM Subscriptions WHERE customer_id = ?", (params.customer_id,))  
-    subscriptions = [dict(row) for row in cur2.fetchall()]  
+        raise ValueError(f"Customer {params.customer_id} not found")  
+    subs = db.execute(  
+        "SELECT * FROM Subscriptions WHERE customer_id = ?", (params.customer_id,)  
+    ).fetchall()  
     db.close()  
-    return CustomerDetail(**customer_dict, subscriptions=subscriptions)  
+    return CustomerDetail(**dict(cust), subscriptions=[dict(s) for s in subs])  
   
-@mcp.tool(description="Get details for a subscription, with invoices and service incidents")  
+  
+@mcp.tool(  
+    description=(  
+        "Detailed subscription view → invoices (with payments) + service incidents."  
+    )  
+)  
 def get_subscription_detail(params: SubscriptionIdParam) -> SubscriptionDetail:  
     db = get_db()  
-    cur = db.execute(  
-        """SELECT s.subscription_id, s.product_id, s.start_date, s.end_date, s.status, s.roaming_enabled, s.service_status,  
-                  p.name as product_name, p.description as product_description, p.category, p.monthly_fee  
-           FROM Subscriptions s  
-           JOIN Products p ON s.product_id = p.product_id  
-           WHERE s.subscription_id = ?""",  
+    sub = db.execute(  
+        """  
+        SELECT s.*, p.name AS product_name, p.description AS product_description,  
+               p.category, p.monthly_fee  
+        FROM Subscriptions s  
+        JOIN Products p ON p.product_id = s.product_id  
+        WHERE s.subscription_id = ?  
+        """,  
         (params.subscription_id,),  
-    )  
-    sub = cur.fetchone()  
+    ).fetchone()  
     if not sub:  
         db.close()  
-        raise ValueError(f"Subscription ID {params.subscription_id} not found")  
-    sub_dict = dict(sub)  
-    cur2 = db.execute("SELECT invoice_id, invoice_date, amount, description FROM Invoices WHERE subscription_id = ?", (params.subscription_id,))  
-    invoices = [dict(row) for row in cur2.fetchall()]  
-    cur3 = db.execute("SELECT incident_id, incident_date, description, resolution_status FROM ServiceIncidents WHERE subscription_id = ?", (params.subscription_id,))  
-    service_incidents = [dict(row) for row in cur3.fetchall()]  
-    db.close()  
-    return SubscriptionDetail(**sub_dict, invoices=invoices, service_incidents=service_incidents)  
+        raise ValueError("Subscription not found")  
   
-@mcp.tool(description="Get all active promotions")  
+    # invoices + nested payments  
+    invoices_rows = db.execute(  
+        """  
+        SELECT invoice_id, invoice_date, amount, description, due_date  
+        FROM Invoices WHERE subscription_id = ?""",  
+        (params.subscription_id,),  
+    ).fetchall()  
+  
+    invoices: List[Invoice] = []  
+    for inv in invoices_rows:  
+        pay_rows = db.execute(  
+            "SELECT * FROM Payments WHERE invoice_id = ?", (inv["invoice_id"],)  
+        ).fetchall()  
+        total_paid = sum(p["amount"] for p in pay_rows if p["status"] == "successful")  
+        invoices.append(  
+            Invoice(  
+                **dict(inv),  
+                payments=[Payment(**dict(p)) for p in pay_rows],  
+                outstanding=max(inv["amount"] - total_paid, 0.0),  
+            )  
+        )  
+  
+    # service incidents  
+    inc_rows = db.execute(  
+        """  
+        SELECT incident_id, incident_date, description, resolution_status  
+        FROM ServiceIncidents  
+        WHERE subscription_id = ?""",  
+        (params.subscription_id,),  
+    ).fetchall()  
+  
+    db.close()  
+    return SubscriptionDetail(  
+        **dict(sub),  
+        invoices=invoices,  
+        service_incidents=[ServiceIncident(**dict(r)) for r in inc_rows],  
+    )  
+  
+  
+@mcp.tool(description="Return invoice‑level payments list")  
+def get_invoice_payments(params: InvoiceIdParam) -> List[Payment]:  
+    db = get_db()  
+    rows = db.execute("SELECT * FROM Payments WHERE invoice_id = ?", (params.invoice_id,)).fetchall()  
+    db.close()  
+    return [Payment(**dict(r)) for r in rows]  
+  
+  
+@mcp.tool(description="Record a payment for a given invoice and get new outstanding balance")  
+def pay_invoice(invoice_id: int, amount: float, method: str = "credit_card") -> Dict[str, Any]:  
+    today = datetime.now().strftime("%Y-%m-%d")  
+    db = get_db()  
+    # insert payment row  
+    db.execute(  
+        "INSERT INTO Payments(invoice_id, payment_date, amount, method, status) VALUES (?,?,?,?,?)",  
+        (invoice_id, today, amount, method, "successful"),  
+    )  
+    # compute remaining balance  
+    inv = db.execute("SELECT amount FROM Invoices WHERE invoice_id = ?", (invoice_id,)).fetchone()  
+    if not inv:  
+        db.close()  
+        raise ValueError("Invoice not found")  
+    paid = db.execute(  
+        "SELECT SUM(amount) as paid FROM Payments WHERE invoice_id = ? AND status='successful'",  
+        (invoice_id,),  
+    ).fetchone()["paid"]  
+    db.commit()  
+    db.close()  
+    outstanding = max(inv["amount"] - (paid or 0), 0.0)  
+    return {"invoice_id": invoice_id, "outstanding": outstanding}  
+  
+  
+@mcp.tool(description="Daily data‑usage records for a subscription over a date range")  
+def get_data_usage(  
+    subscription_id: int,  
+    start_date: str,  
+    end_date: str,  
+    aggregate: bool = False,  
+) -> List[DataUsageRecord] | Dict[str, Any]:  
+    db = get_db()  
+    rows = db.execute(  
+        """  
+        SELECT usage_date, data_used_mb, voice_minutes, sms_count  
+        FROM DataUsage  
+        WHERE subscription_id = ?  
+          AND usage_date BETWEEN ? AND ?  
+        ORDER BY usage_date  
+        """,  
+        (subscription_id, start_date, end_date),  
+    ).fetchall()  
+    db.close()  
+    if aggregate:  
+        total_mb = sum(r["data_used_mb"] for r in rows)  
+        total_voice = sum(r["voice_minutes"] for r in rows)  
+        total_sms = sum(r["sms_count"] for r in rows)  
+        return {  
+            "subscription_id": subscription_id,  
+            "start_date": start_date,  
+            "end_date": end_date,  
+            "total_mb": total_mb,  
+            "total_voice_minutes": total_voice,  
+            "total_sms": total_sms,  
+        }  
+    return [DataUsageRecord(**dict(r)) for r in rows]  
+  
+  
+@mcp.tool(description="List every active promotion (no filtering)")  
 def get_promotions() -> List[Promotion]:  
     db = get_db()  
-    cur = db.execute("SELECT promotion_id, product_id, name, description, eligibility_criteria, start_date, end_date, discount_percent FROM Promotions")  
-    promos = [Promotion(**dict(row)) for row in cur.fetchall()]  
+    rows = db.execute("SELECT * FROM Promotions").fetchall()  
     db.close()  
-    return promos  
+    return [Promotion(**dict(r)) for r in rows]  
   
-@mcp.tool(description="Perform a semantic knowledge base search for relevant documents")  
-def search_knowledge_base(params: KBSearchParams) -> List[KBDoc]:  
+  
+@mcp.tool(  
+    description="Promotions *eligible* for a given customer right now "  
+    "(evaluates basic loyalty/date criteria)."  
+)  
+def get_eligible_promotions(params: CustomerIdParam) -> List[Promotion]:  
     db = get_db()  
-    query_embedding = get_embedding(params.query)  
-    cur = db.execute("SELECT title, doc_type, content, topic_embedding FROM KnowledgeDocuments")  
-    rows = cur.fetchall()  
+    cust = db.execute("SELECT loyalty_level FROM Customers WHERE customer_id = ?", (params.customer_id,)).fetchone()  
+    if not cust:  
+        db.close()  
+        raise ValueError("Customer not found")  
+    loyalty = cust["loyalty_level"]  
+    today = datetime.now().strftime("%Y-%m-%d")  
+    rows = db.execute(  
+        """  
+        SELECT * FROM Promotions  
+        WHERE start_date <= ? AND end_date >= ?  
+        """,  
+        (today, today),  
+    ).fetchall()  
     db.close()  
-    results = []  
-    for row in rows:  
+    eligible = []  
+    for r in rows:  
+        crit = r["eligibility_criteria"] or ""  
+        if f"loyalty_level = '{loyalty}'" in crit or "loyalty_level" not in crit:  
+            eligible.append(Promotion(**dict(r)))  
+    return eligible  
+  
+  
+# ─── Knowledge Base Search ───────────────────────────────────────────────  
+@mcp.tool(description="Semantic search on policy / procedure knowledge documents")  
+def search_knowledge_base(params: KBSearchParams) -> List[KBDoc]:  
+    query_emb = get_embedding(params.query)  
+    db = get_db()  
+    rows = db.execute("SELECT title, doc_type, content, topic_embedding FROM KnowledgeDocuments").fetchall()  
+    db.close()  
+    scored = []  
+    for r in rows:  
         try:  
-            stored_embed = json.loads(row["topic_embedding"])  
-            sim = cosine_similarity(query_embedding, stored_embed)  
+            emb = json.loads(r["topic_embedding"])  
+            sim = cosine_similarity(query_emb, emb)  
+            scored.append((sim, r))  
         except Exception:  
             continue  
-        results.append({  
-            "title": row["title"],  
-            "doc_type": row["doc_type"],  
-            "content": row["content"],  
-            "similarity": sim  
-        })  
-    top_results = sorted(results, key=lambda x: x["similarity"], reverse=True)[:params.topk]  
+    scored.sort(reverse=True, key=lambda x: x[0])  
+    best = scored[: params.topk]  
     return [  
         KBDoc(title=r["title"], doc_type=r["doc_type"], content=r["content"])  
-        for r in top_results  
+        for sim, r in best  
     ]  
   
-@mcp.tool(description="Get security logs/events for a customer")  
+  
+# ─── Security Logs ───────────────────────────────────────────────────────  
+@mcp.tool(description="Security events for a customer (newest first)")  
 def get_security_logs(params: CustomerIdParam) -> List[SecurityLog]:  
     db = get_db()  
-    cur = db.execute(  
-        """SELECT log_id, event_type, event_timestamp, description  
-           FROM SecurityLogs WHERE customer_id = ?  
-           ORDER BY event_timestamp DESC""",  
+    rows = db.execute(  
+        "SELECT log_id, event_type, event_timestamp, description "  
+        "FROM SecurityLogs WHERE customer_id = ? ORDER BY event_timestamp DESC",  
         (params.customer_id,),  
-    )  
-    logs = [SecurityLog(**dict(row)) for row in cur.fetchall()]  
+    ).fetchall()  
     db.close()  
-    return logs  
+    return [SecurityLog(**dict(r)) for r in rows]  
   
-@mcp.tool(description="Get list of orders for a customer")  
+  
+# ─── Orders ──────────────────────────────────────────────────────────────  
+@mcp.tool(description="All orders placed by a customer")  
 def get_customer_orders(params: CustomerIdParam) -> List[Order]:  
-    try:
-        db = get_db()  
-        cur = db.execute(  
-            """SELECT o.order_id, o.order_date, p.name as product_name, o.amount, o.order_status  
-            FROM Orders o  
-            JOIN Products p ON o.product_id = p.product_id  
-            WHERE o.customer_id = ?  
-            ORDER BY o.order_date DESC""",  
-            (params.customer_id,),  
-        )  
-        orders = [Order(**dict(row)) for row in cur.fetchall()]  
-        db.close()  
-    except sqlite3.Error as e:
-        logging.error(f"SQLite error: {e}")
-        db.close()
-        orders = []  # Return an empty list if there's an error
-    return orders  
-  
-@mcp.tool(description="Update fields in an existing subscription (roaming, status, product, etc.)")  
-def update_subscription(subscription_id: int, update: SubscriptionUpdateRequest) -> dict:  
     db = get_db()  
+    rows = db.execute(  
+        """  
+        SELECT o.order_id, o.order_date, p.name as product_name,  
+               o.amount, o.order_status  
+        FROM Orders o  
+        JOIN Products p ON p.product_id = o.product_id  
+        WHERE o.customer_id = ?  
+        ORDER BY o.order_date DESC  
+        """,  
+        (params.customer_id,),  
+    ).fetchall()  
+    db.close()  
+    return [Order(**dict(r)) for r in rows]  
+  
+  
+# ─── Support Tickets ────────────────────────────────────────────────────  
+@mcp.tool(description="Retrieve support tickets for a customer (optionally filter by open status)")  
+def get_support_tickets(  
+    customer_id: int,  
+    open_only: bool = False,  
+) -> List[SupportTicket]:  
+    db = get_db()  
+    query = "SELECT * FROM SupportTickets WHERE customer_id = ?"  
+    if open_only:  
+        query += " AND status != 'closed'"  
+    rows = db.execute(query, (customer_id,)).fetchall()  
+    db.close()  
+    return [SupportTicket(**dict(r)) for r in rows]  
+  
+  
+@mcp.tool(description="Create a new support ticket for a customer")  
+def create_support_ticket(  
+    customer_id: int,  
+    subscription_id: int,  
+    category: str,  
+    priority: str,  
+    subject: str,  
+    description: str,  
+) -> SupportTicket:  
+    opened = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  
+    db = get_db()  
+    cur = db.execute(  
+        """  
+        INSERT INTO SupportTickets  
+        (customer_id, subscription_id, category, opened_at, closed_at,  
+         status, priority, subject, description, cs_agent)  
+        VALUES (?,?,?,?,?,?,?,?,?,?)  
+        """,  
+        (  
+            customer_id,  
+            subscription_id,  
+            category,  
+            opened,  
+            None,  
+            "open",  
+            priority,  
+            subject,  
+            description,  
+            "AI_Bot",  
+        ),  
+    )  
+    ticket_id = cur.lastrowid  
+    db.commit()  
+    row = db.execute("SELECT * FROM SupportTickets WHERE ticket_id = ?", (ticket_id,)).fetchone()  
+    db.close()  
+    return SupportTicket(**dict(row))  
+  
+  
+# ─── Products ────────────────────────────────────────────────────────────  
+class Product(BaseModel):  
+    product_id: int  
+    name: str  
+    description: str  
+    category: str  
+    monthly_fee: float  
+  
+  
+@mcp.tool(description="List / search available products (optional category filter)")  
+def get_products(category: Optional[str] = None) -> List[Product]:  
+    db = get_db()  
+    if category:  
+        rows = db.execute("SELECT * FROM Products WHERE category = ?", (category,)).fetchall()  
+    else:  
+        rows = db.execute("SELECT * FROM Products").fetchall()  
+    db.close()  
+    return [Product(**dict(r)) for r in rows]  
+  
+  
+@mcp.tool(description="Return a single product by ID")  
+def get_product_detail(product_id: int) -> Product:  
+    db = get_db()  
+    r = db.execute("SELECT * FROM Products WHERE product_id = ?", (product_id,)).fetchone()  
+    db.close()  
+    if not r:  
+        raise ValueError("Product not found")  
+    return Product(**dict(r))  
+  
+  
+# ─── Update Subscription ────────────────────────────────────────────────  
+@mcp.tool(description="Update one or more mutable fields on a subscription.")  
+def update_subscription(subscription_id: int, update: SubscriptionUpdateRequest) -> dict:  
     data = update.dict(exclude_unset=True)  
     if not data:  
-        db.close()  
-        raise ValueError("No valid fields to update")  
-    fields_to_update = [f"{k} = ?" for k in data]  
+        raise ValueError("No fields supplied")  
+    sets = ", ".join(f"{k} = ?" for k in data)  
     params = list(data.values()) + [subscription_id]  
-    query = f"UPDATE Subscriptions SET {', '.join(fields_to_update)} WHERE subscription_id = ?"  
-    cur = db.execute(query, params)  
+    db = get_db()  
+    cur = db.execute(f"UPDATE Subscriptions SET {sets} WHERE subscription_id = ?", params)  
     db.commit()  
     db.close()  
     if cur.rowcount == 0:  
         raise ValueError("Subscription not found")  
-    return {"message": "Subscription updated successfully"}  
+    return {"subscription_id": subscription_id, "updated_fields": list(data.keys())}  
   
-@mcp.tool(description="Unlock a customer's account if it is currently locked")  
+  
+# ─── Unlock Account ──────────────────────────────────────────────────────  
+@mcp.tool(description="Unlock a customer account locked for security reasons")  
 def unlock_account(params: CustomerIdParam) -> dict:  
     db = get_db()  
-    cur = db.execute(  
-        """SELECT * FROM SecurityLogs WHERE customer_id = ? AND event_type = 'account_locked'  
-           ORDER BY event_timestamp DESC LIMIT 1""",  
+    row = db.execute(  
+        "SELECT 1 FROM SecurityLogs WHERE customer_id = ? AND event_type = 'account_locked' "  
+        "ORDER BY event_timestamp DESC LIMIT 1",  
         (params.customer_id,),  
-    )  
-    row = cur.fetchone()  
+    ).fetchone()  
     if not row:  
         db.close()  
-        raise ValueError("No lock event found or account already unlocked")  
-    unlock_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  
+        raise ValueError("No recent lock event; nothing to do.")  
     db.execute(  
-        """INSERT INTO SecurityLogs (customer_id, event_type, event_timestamp, description)  
-           VALUES (?, 'account_unlocked', ?, 'Account unlocked via request')""",  
-        (params.customer_id, unlock_time),  
+        "INSERT INTO SecurityLogs (customer_id, event_type, event_timestamp, description) "  
+        "VALUES (?, 'account_unlocked', ?, 'Unlocked via API')",  
+        (params.customer_id, datetime.now().strftime("%Y-%m-%d %H:%M:%S")),  
     )  
     db.commit()  
     db.close()  
-    return {"message": "Account unlocked successfully"}  
-# ====== SERVER RUN ===========  
+    return {"message": "Account unlocked"}  
+  
+  
+# ─── Billing summary ─────────────────────────────────────────────────────  
+@mcp.tool(description="What does a customer currently owe across all subscriptions?")  
+def get_billing_summary(params: CustomerIdParam) -> Dict[str, Any]:  
+    db = get_db()  
+    inv_rows = db.execute(  
+        """  
+        SELECT inv.invoice_id, inv.amount,  
+               IFNULL(SUM(pay.amount),0) AS paid  
+        FROM Invoices inv  
+        LEFT JOIN Payments pay ON pay.invoice_id = inv.invoice_id  
+                                 AND pay.status='successful'  
+        WHERE inv.subscription_id IN  
+            (SELECT subscription_id FROM Subscriptions WHERE customer_id = ?)  
+        GROUP BY inv.invoice_id  
+        """,  
+        (params.customer_id,),  
+    ).fetchall()  
+    db.close()  
+    outstanding = [  
+        {"invoice_id": r["invoice_id"], "outstanding": max(r["amount"] - r["paid"], 0.0)}  
+        for r in inv_rows  
+    ]  
+    total_due = sum(item["outstanding"] for item in outstanding)  
+    return {"customer_id": params.customer_id, "total_due": total_due, "invoices": outstanding}  
+  
+  
+##############################################################################  
+#                                RUN SERVER                                  #  
+##############################################################################  
 if __name__ == "__main__":  
-    # mcp.run()  
-    # To run with SSE web server:  
-    asyncio.run(mcp.run_sse_async(host="0.0.0.0", port=8000))
+    asyncio.run(mcp.run_sse_async(host="0.0.0.0", port=8000))  

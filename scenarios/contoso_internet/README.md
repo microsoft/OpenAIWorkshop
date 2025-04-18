@@ -156,3 +156,4 @@ In complex scenarios, participants will implement a coordinated multi-agent arch
 - CRM & Order Management System (Order/Purchase Data).    
 - Knowledge Base (Return Policies and Guidelines).    
   
+### [Checkout the challenges document for more scenarios](backend_services/data/customer_scenarios.md)  

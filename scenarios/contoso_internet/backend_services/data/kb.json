@@ -59,4 +59,47 @@
     "doc_type": "FAQ",
     "document_content": "Customers experiencing delays in sending or receiving SMS messages should verify that their device is properly registered on the network. Signal strength, account status, or a temporary system outage can all cause partial message delivery. Restarting the phone often resolves minor registration glitches. Larger outages or system maintenance windows are usually posted on the service status page. If undelivered messages persist, opening a support ticket with timestamps of failed messages helps our technical team investigate further."
     }
-    ]
+    ,
+    {  
+        "document_title": "Data Overage Policy - Mobile Plans",  
+        "topic": "Data Overage Policy",  
+        "doc_type": "Policy",  
+        "document_content": "When subscribers exceed the monthly data allowance on a capped plan, an overage fee is billed in 1‑GB increments. Customers may switch to a higher‑tier plan retroactively within 15 days of the invoice date to have overage charges re‑rated. Loyalty tier discounts do not apply to overage fees."  
+      },  
+      {  
+        "document_title": "Payment Failure & Reinstatement Rules",  
+        "topic": "Payment Failure",  
+        "doc_type": "Policy",  
+        "document_content": "If an automatic payment attempt fails, the account enters a 10‑day grace period before service suspension. Customers can pay the full balance or enroll in a hardship payment plan to restore service. A reconnection fee is waived for first‑time failures within a rolling 12‑month window."  
+      },  
+      {  
+        "document_title": "Financial Hardship Payment Plan Procedure",  
+        "topic": "Hardship Payment Plan",  
+        "doc_type": "Procedure",  
+        "document_content": "Subscribers who are temporarily unable to pay their balance in full may request a hardship installment plan. Proof of income disruption or comparable documentation is required. Once approved, late fees are frozen, and the balance is split into up to six equal payments."  
+      },  
+      {  
+        "document_title": "Dropped Call Investigation Workflow",  
+        "topic": "Troubleshooting Call Drops",  
+        "doc_type": "Procedure",  
+        "document_content": "CSR agents should collect at least three affected call samples (time, location, called number) before escalating to the RF engineering team. If systemic issues are identified, affected customers receive account credits based on the 'Service Reliability SLA' policy."  
+      },  
+      {  
+        "document_title": "Service Reliability SLA – Credit Matrix",  
+        "topic": "Service Reliability SLA",  
+        "doc_type": "Policy",  
+        "document_content": "If network outages or quality degradations exceed defined thresholds, account credits apply: 1–3 hrs = 10 % monthly fee; 3–24 hrs = 25 %; >24 hrs = full month credit."  
+      },  
+      {  
+        "document_title": "Autopay Discount Terms",  
+        "topic": "Autopay Discount",  
+        "doc_type": "Policy",  
+        "document_content": "Subscribers enrolled in autopay receive a $5 monthly discount. The discount is forfeited if a payment fails and is reinstated only after two consecutive successful automatic payments."  
+      },  
+      {  
+        "document_title": "Roaming Activation Cut‑off Times",  
+        "topic": "International Roaming Options",  
+        "doc_type": "Procedure",  
+        "document_content": "Roaming must be activated at least 24 hours prior to border crossing to ensure provisioning across partner networks. Same‑day activation is best‑effort and may incur delays up to 6 hours."  
+      }  
+    ]      
