@@ -44,7 +44,6 @@ class Agent:
             azure_endpoint=self.azure_openai_endpoint,  
             api_version=self.api_version,  
             azure_deployment=self.azure_deployment,  
-            model="gpt-4o-2024-11-20",  
         )  
         # Set up the assistant agent  
         agent = AssistantAgent(  
