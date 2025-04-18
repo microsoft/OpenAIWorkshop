@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having an issue with their Contoso Wireless phone where they were being charged twice in one month. The agent explained that this was due to the customer's account being set up on an automatic monthly subscription payment plan, which caused the double charge. The agent then provided instructions on how to disable the automatic payment plan to prevent any further double charges.",
-    "customerSentiment": "upset",
-    "topic": "account",
-    "product": "phone",
-    "filename": "150_574_487_upset_account_phone_document.txt"
-}

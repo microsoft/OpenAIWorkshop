@@ -1,7 +1,0 @@
-{
-    "summary": "\nThe customer called Contoso Wireless to inquire about an upgrade discount they were promised. The agent apologized for the inconvenience and looked into it, finding that there was a 10% discount available for the upgrade. They then informed the customer that due to high order volumes, it may take a few days for the order to be processed and shipped out. The agent then provided the customer with tracking information so they can monitor its progress and concluded the call.",
-    "customerSentiment": "angry",
-    "topic": "upgrade services",
-    "product": "phone",
-    "filename": "518_500_412_angry_upgrade services_phone_document.txt"
-}

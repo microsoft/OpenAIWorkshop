@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having issues with their internet connection being slow and not loading webpages. The customer service agent suggested running a speed test to determine the cause of the issue and provided troubleshooting steps such as resetting the router and clearing the cache. When these steps did not help, the customer service agent suggested contacting their technical support team or having one of their technicians come out to take a look at the connection in order to diagnose and resolve the issue.",
-    "customerSentiment": "upset",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "685_691_604_upset_churn_internet_document.txt"
-}

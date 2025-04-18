@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having an issue with their streaming service lagging and buffering when they try to watch a show. The customer service agent apologized for the inconvenience and asked the customer more questions to try and determine the cause of the issue. They asked if the customer was using the latest version of the streaming service, as well as their account number. The customer service agent also suggested restarting the device to see if that helps, and asked more questions about why the customer was using the streaming service in order to determine other options.",
-    "customerSentiment": "upset",
-    "topic": "churn",
-    "product": "streaming",
-    "filename": "693_559_472_upset_churn_streaming_document.txt"
-}

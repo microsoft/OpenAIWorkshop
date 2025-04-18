@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having trouble with their Contoso Wireless device and is unable to get it to connect to the network. The agent is helping the customer troubleshoot the issue by suggesting various steps such as restarting and resetting the device, as well as checking the settings to make sure they are enabled. If these steps don't work, the agent will look into sending a replacement device.",
-    "customerSentiment": "angry",
-    "topic": "support",
-    "product": "other",
-    "filename": "7_604_517_angry_support_other_document.txt"
-}

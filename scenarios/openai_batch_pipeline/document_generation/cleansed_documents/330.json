@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having an issue with streaming services, where they were buffering every few minutes. The Contoso Wireless Customer Service Agent asked for additional information, such as which streaming services were affected and the make and model of the customer's laptop. The customer provided the requested information and the agent suggested rebooting the router to see if that resolved the issue.",
-    "customerSentiment": "negative",
-    "topic": "service",
-    "product": "streaming",
-    "filename": "330_548_461_negative_service_streaming_document.txt"
-}

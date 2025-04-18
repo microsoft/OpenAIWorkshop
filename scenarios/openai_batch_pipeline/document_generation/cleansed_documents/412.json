@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having issues with their Contoso Wireless account, specifically when trying to watch TV. The agent troubleshooted the issue by asking what device the customer was using and if they had gone through the setup process. After confirming that the customer had already done this, they suggested turning off all other devices connected to the account in order to isolate the issue. When this didn't resolve the problem, they suggested resetting the router by unplugging it from power for at least one minute and then plugging it back in.",
-    "customerSentiment": "negative",
-    "topic": "account",
-    "product": "tv",
-    "filename": "412_499_412_negative_account_tv_document.txt"
-}

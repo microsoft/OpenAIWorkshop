@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer is experiencing slow and unreliable internet service from Contoso Wireless and has been having this issue for two weeks. The customer has already contacted technical support but they were unable to resolve the issue. The customer service agent is now investigating further to see if there are any other issues that could be causing the problem.",
-    "customerSentiment": "disappointed",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "369_456_369_disappointed_churn_internet_document.txt"
-}

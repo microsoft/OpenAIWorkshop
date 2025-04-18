@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having issues with their Contoso Wireless TV, with the picture freezing and sound being distorted. The agent suggested that the customer try moving the TV closer to a window to increase signal strength and contact their local service provider for assistance. The agent also suggested resetting the TV by unplugging it from the power source for at least 30 seconds.",
-    "customerSentiment": "confused",
-    "topic": "assistance",
-    "product": "tv",
-    "filename": "20_521_434_confused_assistance_tv_document.txt"
-}

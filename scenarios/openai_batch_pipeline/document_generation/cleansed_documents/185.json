@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer is having trouble streaming a movie using the company's streaming service. The agent asked for more information about the device and operating system being used, as well as if there have been any recent updates or changes to the device or network settings. The customer confirmed there have been no recent changes and provided the exact error message they are receiving. The agent then asked the customer to try accessing the streaming service from another device or internet connection in order to help narrow down the cause of the issue.",
-    "customerSentiment": "upset",
-    "topic": "support",
-    "product": "streaming",
-    "filename": "185_553_466_upset_support_streaming_document.txt"
-}

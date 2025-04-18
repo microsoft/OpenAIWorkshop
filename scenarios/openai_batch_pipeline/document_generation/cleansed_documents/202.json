@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was not happy with the internet service provided by Contoso Wireless, as it was too slow and unreliable. The agent suggested resetting the router, checking for any firmware updates, and making sure there were no other devices connected to the same network as the router that could be taking up bandwidth. These suggestions should help improve the customer's connection speed and stability.",
-    "customerSentiment": "negative",
-    "topic": "information",
-    "product": "internet",
-    "filename": "202_534_447_negative_information_internet_document.txt"
-}

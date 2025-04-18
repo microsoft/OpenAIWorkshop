@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer had trouble with the streaming service on their Contoso Wireless account, so the agent helped them troubleshoot the issue by suggesting they log out and log back in again. The customer was then able to access the streaming service. The agent then provided the customer with a list of new streaming services they could subscribe to.",
-    "customerSentiment": "confused",
-    "topic": "account",
-    "product": "streaming",
-    "filename": "324_471_384_confused_account_streaming_document.txt"
-}

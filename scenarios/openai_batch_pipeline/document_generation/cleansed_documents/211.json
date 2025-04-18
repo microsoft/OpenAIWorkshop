@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer was considering canceling their subscription with Contoso Wireless due to the high cost and lack of value. The customer service agent was able to provide a 10% discount on all subscription plans for the next three months and also informed the customer about the improved HD streaming service with no buffering. After hearing this, the customer decided to stay with Contoso Wireless.",
-    "customerSentiment": "positive",
-    "topic": "churn",
-    "product": "streaming",
-    "filename": "211_528_441_positive_churn_streaming_document.txt"
-}

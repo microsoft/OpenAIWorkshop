@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble adding a product to their account and the agent discovered that the billing address associated with the account was incorrect. The agent updated the address in the system and was able to add the product to the customer's account. The customer thanked the agent for their help and the agent wished them a good day.",
-    "customerSentiment": "angry",
-    "topic": "account",
-    "product": "other",
-    "filename": "599_598_511_angry_account_other_document.txt"
-}

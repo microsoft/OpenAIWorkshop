@@ -1,0 +1,1 @@
+A directory for documentation, including detailed guides, FAQs, and troubleshooting information.

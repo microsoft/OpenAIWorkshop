@@ -1,7 +1,0 @@
-{
-    "summary": "\nThe customer contacted the agent about their Contoso Wireless account, as they were promised a product that never arrived and are now being charged for something they did not receive. The agent apologized for the inconvenience and asked for more information regarding the product. The customer provided their account number, shipping address, and contact information so the agent can look into the issue further. The agent promised to investigate and get back to the customer as soon as possible with an answer.",
-    "customerSentiment": "angry",
-    "topic": "account",
-    "product": "other",
-    "filename": "103_514_427_angry_account_other_document.txt"
-}

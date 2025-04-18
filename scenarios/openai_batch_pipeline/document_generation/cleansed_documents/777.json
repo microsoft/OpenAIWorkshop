@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer is having issues with their Contoso Wireless internet service, which has been slow and cutting out. The agent asked the customer what type of internet package they have, how long it's been going on for, and what type of device they are using to connect. The agent then suggested resetting the router by unplugging it from the wall and plugging it back in after 30 seconds to 1 minute. If this doesn't work, then the agent will look into other possible solutions to resolve the issue.",
-    "customerSentiment": "confused",
-    "topic": "service",
-    "product": "internet",
-    "filename": "777_569_482_confused_service_internet_document.txt"
-}

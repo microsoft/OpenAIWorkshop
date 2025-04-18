@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having an issue with their phone not working properly and had received an unexpected bill from Contoso Wireless. After the customer provided their account number, the agent was able to determine that the extra charges were due to an increase in data usage and apologized for any confusion or frustration caused. The agent offered to refund any associated charges and waive any additional fees, which the customer accepted.",
-    "customerSentiment": "frustrated",
-    "topic": "billing",
-    "product": "phone",
-    "filename": "389_580_493_frustrated_billing_phone_document.txt"
-}

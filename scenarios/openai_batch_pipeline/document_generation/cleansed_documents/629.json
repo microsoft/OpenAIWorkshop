@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer is having trouble connecting to Contoso Wireless' internet product and has already tried restarting and resetting their modem. The agent is helping the customer by suggesting they run the connection troubleshooter tool, but this has not been successful. The agent then asks for the serial number of the modem in order to take a closer look at it, and suggests that the customer confirm all cables are securely connected and that the modem is in an area with good signal strength.",
-    "customerSentiment": "upset",
-    "topic": "support",
-    "product": "internet",
-    "filename": "629_590_503_upset_support_internet_document.txt"
-}

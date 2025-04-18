@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted the agent regarding an issue with their Contoso Wireless phone. After providing more information, the agent determined that the issue was due to an incorrect billing code in the customer's account. The agent updated the account information and provided the customer with a complimentary upgrade of their services for one month as an apology. The customer provided their name, address, and phone number so that the agent could update their account. The changes should take up to 24 hours to take effect.",
-    "customerSentiment": "frustrated",
-    "topic": "downgrade services",
-    "product": "phone",
-    "filename": "797_526_438_frustrated_downgrade services_phone_document.txt"
-}

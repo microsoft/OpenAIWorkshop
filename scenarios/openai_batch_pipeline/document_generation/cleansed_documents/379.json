@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer was having trouble with their Contoso Wireless internet service and was experiencing slowdowns and outages. The agent offered the customer a better plan with unlimited data and speeds up to 25 Mbps at no additional cost. The plan will be activated within 24-48 hours, and the customer's current monthly bill won't change. If the customer had decided to cancel their service, they would have been refunded any unused portion of their monthly bill and waived any early termination fees.",
-    "customerSentiment": "mixed",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "379_494_407_mixed_churn_internet_document.txt"
-}

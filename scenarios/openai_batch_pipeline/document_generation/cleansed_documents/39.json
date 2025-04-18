@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted the agent to get help with payment for a Contoso Wireless TV product. The agent asked for the customer's payment method, which was a debit card, and then processed the payment. The customer received an email confirmation and the agent offered assistance with anything else before ending the conversation.",
-    "customerSentiment": "happy",
-    "topic": "payment",
-    "product": "tv",
-    "filename": "39_338_251_happy_payment_tv_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer service agent provided information about the features of the phone purchased from Contoso Wireless, such as the camera quality, battery life, RAM, and storage capacity. They also confirmed that there is a one-year warranty for repair or replacement of the phone if something goes wrong. Finally, they informed the customer about the discounts and promotional offers available on the Contoso Wireless website, as well as their newsletter for staying up to date on new offers.",
-    "customerSentiment": "upset",
-    "topic": "information",
-    "product": "phone",
-    "filename": "116_466_379_upset_information_phone_document.txt"
-}

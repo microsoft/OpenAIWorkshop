@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having a problem with their Contoso Wireless TV, where the picture quality is poor. The agent is offering the customer the churn prevention program, which provides a 30-day money back guarantee and free shipping on all new purchases. The customer can take advantage of this program by calling the customer service line at 1-800-555-1234 and providing their order number and name associated with their account.",
-    "customerSentiment": "upset",
-    "topic": "churn",
-    "product": "tv",
-    "filename": "484_459_372_upset_churn_tv_document.txt"
-}

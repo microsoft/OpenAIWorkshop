@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless regarding an unexpected charge for a streaming product that they never purchased. After providing their account information, the agent looked into the issue and found that the charge was made from an email offering a free trial of the streaming service. The customer had clicked on the link in the email, which automatically added the charge to their account, even though they didn't complete the signup process. The agent apologized for any inconvenience and offered to refund the charge to their account.",
-    "customerSentiment": "upset",
-    "topic": "billing",
-    "product": "streaming",
-    "filename": "699_523_436_upset_billing_streaming_document.txt"
-}

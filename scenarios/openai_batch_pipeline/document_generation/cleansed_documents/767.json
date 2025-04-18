@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer asked the agent questions about Contoso Wireless's TV product and the agent provided detailed answers regarding features, trial options, reliability, churn reduction initiatives, warranty, shipping and return policies. The customer was satisfied with the information provided and was ready to make a decision.",
-    "customerSentiment": "happy",
-    "topic": "churn",
-    "product": "tv",
-    "filename": "767_582_495_happy_churn_tv_document.txt"
-}

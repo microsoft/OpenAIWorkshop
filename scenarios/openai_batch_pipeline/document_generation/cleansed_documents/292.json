@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless about a TV they recently purchased that wasn't working properly. The customer service agent provided the customer with a refund option and gave instructions on how to return the TV back to Contoso Wireless. They also explained that the customer will receive an email with a tracking number to track their package once it has been shipped.",
-    "customerSentiment": "negative",
-    "topic": "billing",
-    "product": "tv",
-    "filename": "292_574_487_negative_billing_tv_document.txt"
-}

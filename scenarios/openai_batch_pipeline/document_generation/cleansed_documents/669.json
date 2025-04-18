@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was considering leaving Contoso Wireless and the agent was able to provide them with information about their product offerings, including phones, tablets, and home internet services. The agent also explained the different monthly plans available and provided details about discounts and promotions for existing customers who are considering leaving.",
-    "customerSentiment": "upset",
-    "topic": "churn",
-    "product": "other",
-    "filename": "669_522_435_upset_churn_other_document.txt"
-}

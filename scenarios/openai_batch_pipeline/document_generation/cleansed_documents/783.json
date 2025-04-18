@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was being charged for a product they did not order. After the customer provided more information, the agent looked into the issue and discovered it was an accidental charge due to an error in the system. The agent refunded the full amount of $49.99 and explained that the company is working to improve their system and has a team dedicated to double-checking orders to prevent similar issues from occurring in the future.",
-    "customerSentiment": "negative",
-    "topic": "billing",
-    "product": "other",
-    "filename": "783_532_445_negative_billing_other_document.txt"
-}

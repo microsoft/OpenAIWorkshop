@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer had an issue with their billing for their Contoso Wireless TV, as the discount they were expecting was not applied to their account. The agent looked into the issue and determined that it was due to a system issue when the customer purchased the TV. The agent applied the discount to the customer's account and ensured that they got the savings they were expecting.",
-    "customerSentiment": "neutral",
-    "topic": "billing",
-    "product": "tv",
-    "filename": "341_435_348_neutral_billing_tv_document.txt"
-}
