@@ -19,11 +19,12 @@ azure_deployment = os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT")
 azure_openai_key = os.getenv("AZURE_OPENAI_API_KEY")
 azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
 api_version = os.getenv("AZURE_OPENAI_API_VERSION")
+mcp_server_uri = os.getenv("MCP_SERVER_URI")
 
 async def main() -> None:
     # Create server params for the remote MCP service
     server_params = SseServerParams(
-        url="https://mcp-backend-service.whiteriver-85d61b9b.westus.azurecontainerapps.io/sse",
+        url=mcp_server_uri,
         headers={"Content-Type": "application/json"},
         timeout=30,  # Connection timeout in seconds
     )

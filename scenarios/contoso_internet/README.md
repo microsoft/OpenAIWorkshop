@@ -1,10 +1,10 @@
-## Business Scenario Description    
+## 1. Business Scenario Description  
+  
 "Contoso Communications" provides telecom and internet services. Customers frequently submit requests about billing, account management, service status, and promotions. Requests range from simple queries (single data source) to complex questions requiring multiple backend systems interactions.  
   
 ---  
-
-
-## Backend System Setup & Details    
+  
+## 2. Backend System Setup & Details  
   
 Participants will use the following simulated backend systems during the workshop. These systems replicate real-world business environments and will be accessible via structured APIs or simplified interfaces.  
   
@@ -20,59 +20,159 @@ Participants will use the following simulated backend systems during the worksho
   
 ---  
   
-## Agentic System Design    
+## 3. Model Context Protocol API Service Endpoints  
   
-Participants will implement and use an agentic AI system with the following components:  
+**The following services are exposed as tools for AI Agents:**  
   
-### Single-Agent Setup (Simple & Medium Complexity Scenarios)  
-  
-**Primary Agent (Generalist)**    
-- **Role:** Handles end-to-end requests independently.    
-- **Operations:**    
-  - Analyzes and understands customer requests.    
-  - Queries backend systems (CRM, Billing, Promotions).    
-  - Retrieves relevant documents from the knowledge base.    
-  - Synthesizes information and formulates customer responses.  
-  
-**Memory Implementation:**    
-- Short-term memory: Maintains session context during interaction.    
-- Simple caching: Stores recent data lookups for faster subsequent access.  
+- `get_all_customers`: List all customers with basic info.  
+- `get_customer_detail`: Get a full customer profile including their subscriptions.  
+- `get_subscription_detail`: Detailed subscription view including invoices (with payments) and service incidents.  
+- `get_invoice_payments`: Return invoice-level payments list.  
+- `pay_invoice`: Record a payment for a given invoice and get new outstanding balance.  
+- `get_data_usage`: Daily data-usage records for a subscription over a date range (optional aggregation).  
+- `get_promotions`: List every active promotion (no filtering).  
+- `get_eligible_promotions`: Promotions eligible for a given customer (evaluates basic loyalty/date criteria).  
+- `search_knowledge_base`: Semantic search on policy/procedure knowledge documents.  
+- `get_security_logs`: Security events for a customer (newest first).  
+- `get_customer_orders`: All orders placed by a customer.  
+- `get_support_tickets`: Retrieve support tickets for a customer (optionally filter by open status).  
+- `create_support_ticket`: Create a new support ticket for a customer.  
+- `get_products`: List or search available products (optional category filter).  
+- `get_product_detail`: Return a single product by ID.  
+- `update_subscription`: Update one or more mutable fields on a subscription.  
+- `unlock_account`: Unlock a customer account locked for security reasons.  
+- `get_billing_summary`: What does a customer currently owe across all subscriptions?  
   
 ---  
   
-### Multi-Agent Setup (Complex Scenarios)  
+## 4. Agent System Design  
   
-In complex scenarios, participants will implement a coordinated multi-agent architecture as follows:  
+### Common Agent Design Patterns  
   
-| Agent Type | Role & Responsibility | Operations |  
-|------------|-----------------------|------------|  
-| **Analysis & Planning Agent** | Central coordinator responsible for interpreting customer requests, planning actions, delegating tasks to specialized agents, and integrating results. | - Parses and analyzes abstract customer requests.<br>- Creates and dynamically updates task plans.<br>- Orchestrates communication between specialized agents.<br>- Integrates findings and prepares final responses. |  
-| **Structured Data Lookup Agent** | Specialized agent responsible for structured backend queries. | - Executes structured data queries (CRM, Billing, Promotions, Security systems).<br>- Returns structured results to Analysis & Planning agent. |  
-| **Knowledge Base Search Agent** | Specialized agent managing knowledge-base interactions. | - Performs semantic searches in knowledge base.<br>- Retrieves relevant policy documents, troubleshooting guides, and procedures.<br>- Returns summarized or relevant extracts to Analysis & Planning agent. |  
-| **Communication & Response Agent** | Specialized agent responsible for crafting and delivering customer responses clearly and effectively. | - Generates natural language response from integrated data.<br>- Manages dialogue context, ensuring clarity and coherence. |  
+- **Intelligent Single Agent:** Single intelligent agent interacting with user and leveraging tools (structured APIs, RAG-based search) to handle user requests.  
+- **Multi-domain Agents:** Coordinator agent manages multiple specialist agents, each handling requests within their specific business domain.  
+- **Collaborative Multi-Agent System:** Multiple agents coordinated by a planning agent to collaboratively solve complex problems.  
+  
+#### Special Sub-patterns (can be integrated within any of the above patterns):  
+  
+- **Coding Agent:** Agent that generates code to address complex computational tasks.  
+- **Reflection Pattern:** Agents capable of self-reflection before responding or leveraging separate reviewer/advisor agents for feedback in multi-agent configurations.  
+  
+---  
+  
+### Agent Setup  
+  
+#### 🧩 Intelligent Single Agent Setup  
+  
+**Primary Agent**  
+- **Role:** Handles end-to-end requests using multiple tools.  
+- **Operations:**  
+    - Analyzes and understands customer requests.  
+    - Queries backend systems (CRM, Billing, Promotions).  
+    - Retrieves relevant documents from the knowledge base.  
+    - Synthesizes information and formulates customer responses.  
+  
+**Memory Implementation:**  
+- Short-term memory: Maintains session context during interaction.  
+  
+---  
+  
+#### 🧩 Multi-Domain Agent Setup  
+  
+In this simplified multi-domain architecture, the Coordinator Agent's primary responsibility is lightweight domain detection and routing. It does not engage in complex planning or orchestration. Instead, it directly forwards user requests to appropriate domain-specialist agents who independently handle the interaction with the user within their own specialized domain. Once the user's request moves beyond a specialist agent's domain, the request is returned to the Coordinator Agent for further routing.  
+  
+**Agent Roles & Responsibilities:**  
+  
+1. **Coordinator Agent (Router)**  
+    - **Role:** Acts purely as a lightweight dispatcher, quickly identifying the correct domain specialist based on initial customer request analysis and routing the request accordingly.  
+    - **Operations:**  
+        - Analyzes the user's initial request to determine the relevant domain.  
+        - Routes the request to the appropriate specialist agent.  
+        - Receives requests back from specialist agents once their domain tasks are complete or if the user moves to another domain.  
+    - **Memory & Context:** Minimal context storage (only maintains domain routing logic and basic conversational state).  
+  
+2. **Specialist Agents (Independent Domain Experts)**  
+    - **Role:** Directly interact with users within their specialized domains, independently managing all communication, analysis, planning, queries, and responses.  
+    - **Operations:**  
+        - Independently handle requests within their domain without involving other specialist agents.  
+        - Perform structured API queries or knowledge base retrieval as needed within their domain.  
+        - Maintain short-term memory for conversational context within their domain.  
+        - Hand-off back to Coordinator Agent if the user's request shifts to another domain.  
+    - **Specialist agents include:**  
+        - **CRM & Billing Agent:** Handles structured queries related to customer profile data, account details, billing information, invoices, subscriptions, and payment status.  
+        - **Product & Promotions Agent:** Manages structured queries related to products, promotions, discounts, eligibility criteria, and available subscription plans.  
+        - **Security & Authentication Agent:** Specializes in account security, authentication issues, login attempt analysis, and account lockout resolution.  
+  
+---  
+  
+#### 🧩 Collaborative Multi-Agent System Setup  
+  
+In complex scenarios, participants will implement a collaborative multi-agent architecture. Each agent specializes in a specific functional domain and collaborates with other agents to jointly address complex customer requests. Agents communicate and share intermediate results through a shared context memory system, enabling them to coordinate their actions effectively.  
+  
+**Agent Roles & Responsibilities:**  
+  
+1. **Analysis & Planning Agent**  
+    - **Role:** Serves as the central orchestrator responsible for interpreting abstract customer requests, decomposing them into actionable tasks, delegating clearly defined subtasks to specialized functional agents, and integrating the agents' findings into a unified response.  
+    - **Operations:**  
+        - Parses and analyzes abstract customer requests.  
+        - Identifies specific subtasks needed to fulfill the request.  
+        - Delegates subtasks clearly to relevant functional agents.  
+        - Dynamically updates the task plan based on inputs received from functional agents.  
+        - Integrates intermediate results and formulates the final customer response.  
+    - **Memory & Context:** Maintains a structured task plan and tracks the status of delegated subtasks using shared context memory.  
+  
+2. **CRM & Billing Agent (Functional Specialist)**  
+    - **Role:** Specialized agent responsible for handling structured queries related to customer profiles, account details, billing, invoicing, subscription status, and payment history.  
+    - **Operations:**  
+        - Executes structured queries against CRM and Billing databases.  
+        - Provides structured data results (account status, billing history, subscription details) to the Analysis & Planning Agent.  
+        - Collaborates with other functional agents by sharing relevant structured customer data as needed.  
+    - **Memory & Context:** Maintains short-term cache for rapid access to frequently queried data.  
+  
+3. **Product & Promotions Agent (Functional Specialist)**  
+    - **Role:** Specialized agent for managing product details, promotions, discounts, eligibility criteria, and subscription plans.  
+    - **Operations:**  
+        - Queries Product & Promotions Database for active promotions, products, and eligibility criteria.  
+        - Determines customer eligibility for promotions based on CRM data provided by CRM & Billing Agent.  
+        - Shares eligibility results, recommendations, and structured product details with Analysis & Planning Agent and other agents as required.  
+    - **Memory & Context:** Maintains short-term cache for rapid access to frequent product/promotion queries.  
+  
+4. **Security & Authentication Agent (Functional Specialist)**  
+    - **Role:** Specialized agent for managing customer account security, authentication issues, login attempts, and security flags.  
+    - **Operations:**  
+        - Queries Security & Authentication Database for account security issues, login activity, and lockout reasons.  
+        - Provides security assessments, status reports, and recommended actions to Analysis & Planning Agent and other agents as needed.  
+    - **Memory & Context:** Maintains short-term cache for rapid access to frequent security queries.  
+  
+5. **Knowledge Base Agent (Functional Specialist)**  
+    - **Role:** Specialized agent for retrieving and interpreting semi-structured/unstructured content (FAQs, policies, troubleshooting guides) from the knowledge base.  
+    - **Operations:**  
+        - Performs semantic searches in the Knowledge Base to retrieve relevant documents and information.  
+        - Summarizes extracted content clearly and concisely.  
+        - Shares summarized knowledge and relevant policies or guidelines with Analysis & Planning Agent and other functional agents as necessary.  
+    - **Memory & Context:** Maintains semantic search memory to optimize knowledge retrieval.  
   
 ---  
   
 ### Memory Implementation in Multi-Agent Setup  
   
-**Individual Agent Memory:**    
-- Short-term conversational context storage (session memory).    
-- Structured data lookup cache for faster retrieval.    
-- Semantic search memory for knowledge base queries.  
+- **Individual Agent Memory:**  
+    - Short-term conversational context storage (session memory).  
+    - Semantic search memory for knowledge base queries.  
   
-**Shared Context Memory:**    
-- Centralized, shared memory system that facilitates context sharing and coordination between multiple agents.    
-- Stores intermediate task plans, status updates, and inter-agent communication.    
-- Implementable via vector-database-based memories or shared in-memory data structures.  
-
-
-
-
-### Customer Request Examples  
+- **Shared Context Memory:**  
+    - Centralized, shared memory system that facilitates context sharing and coordination between multiple agents.  
+    - Stores intermediate task plans, status updates, and inter-agent communication.  
+    - Implementable via vector-database-based memories or shared in-memory data structures.  
   
 ---  
   
-#### Example 1:    
+## 5. Customer Request Examples  
+  
+---  
+  
+#### Example 1:   
+  
 **Customer:** "I noticed my last invoice was higher than usual—can you help me understand why and what can be done about it?"    
   
 **Analysis & Plan:**    
@@ -84,7 +184,8 @@ In complex scenarios, participants will implement a coordinated multi-agent arch
   
 ---  
   
-#### Example 2:    
+#### Example 2:   
+  
 **Customer:** "My internet service seems slower than before—can you check what's happening?"    
   
 **Analysis & Plan:**    
@@ -99,7 +200,8 @@ In complex scenarios, participants will implement a coordinated multi-agent arch
   
 ---  
   
-#### Example 3:    
+#### Example 3:   
+  
 **Customer:** "I'm traveling abroad next month. What should I do about my phone plan?"    
   
 **Analysis & Plan:**    
@@ -114,7 +216,8 @@ In complex scenarios, participants will implement a coordinated multi-agent arch
   
 ---  
   
-#### Example 4:    
+#### Example 4:   
+  
 **Customer:** "I tried logging into my account, but it says I'm locked out. Can you help?"    
   
 **Analysis & Plan:**    
@@ -129,7 +232,8 @@ In complex scenarios, participants will implement a coordinated multi-agent arch
   
 ---  
   
-#### Example 5:    
+#### Example 5:   
+  
 **Customer:** "Do I qualify for any discounts or promotions right now?"    
   
 **Analysis & Plan:**    
@@ -144,7 +248,8 @@ In complex scenarios, participants will implement a coordinated multi-agent arch
   
 ---  
   
-#### Example 6:    
+#### Example 6:   
+  
 **Customer:** "I want to return a product I recently purchased. What's the process?"    
   
 **Analysis & Plan:**    
@@ -155,5 +260,7 @@ In complex scenarios, participants will implement a coordinated multi-agent arch
 **Systems Accessed:**    
 - CRM & Order Management System (Order/Purchase Data).    
 - Knowledge Base (Return Policies and Guidelines).    
+  
+---  
   
 ### [Checkout the challenges document for more scenarios](backend_services/data/customer_scenarios.md)  
