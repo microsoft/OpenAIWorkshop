@@ -1,0 +1,9 @@
+Flask
+Faker
+python-dotenv
+tenacity
+openai
+flasgger
+fastmcp
+autogen-ext[mcp]
+autogen-agentchat
