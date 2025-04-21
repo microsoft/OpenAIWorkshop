@@ -2,31 +2,23 @@ import os
 from dotenv import load_dotenv  
   
 from autogen_agentchat.agents import AssistantAgent  
-from autogen_agentchat.messages import TextMessage  
 from autogen_agentchat.teams import RoundRobinGroupChat  
 from autogen_agentchat.conditions import TextMessageTermination  
 from autogen_core import CancellationToken  
 from autogen_ext.models.openai import AzureOpenAIChatCompletionClient  
 from autogen_ext.tools.mcp import SseServerParams, mcp_server_tools  
   
-# Ensure environment is loaded every time  
+from agents.base_agent import BaseAgent    
 load_dotenv()  
   
-class Agent:  
-    def __init__(self, state=None) -> None:  
-        # Load Azure/OpenAI/MCP configuration from environment  
-        self.azure_deployment = os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT")  
-        self.azure_openai_key = os.getenv("AZURE_OPENAI_API_KEY")  
-        self.azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")  
-        self.api_version = os.getenv("AZURE_OPENAI_API_VERSION")  
-        self.mcp_server_uri = os.getenv("MCP_SERVER_URI")  
-        # self.loop_agent and others will be set during async init  
+class Agent(BaseAgent):  
+    def __init__(self, state_store, session_id) -> None:  
+        super().__init__(state_store, session_id)  
         self.loop_agent = None  
         self._initialized = False  
-        self.state = state
   
-    async def _ensure_initialized(self):  
-        # Only initialize once per instance  
+    async def _setup_loop_agent(self) -> None:  
+        """Initialize the assistant and tools once."""  
         if self._initialized:  
             return  
   
@@ -35,7 +27,8 @@ class Agent:
             headers={"Content-Type": "application/json"},  
             timeout=30  
         )  
-        # Get the translation tool from the server (async)  
+  
+        # Fetch tools (async)  
         tools = await mcp_server_tools(server_params)  
   
         # Set up the OpenAI/Azure model client  
@@ -44,8 +37,9 @@ class Agent:
             azure_endpoint=self.azure_openai_endpoint,  
             api_version=self.api_version,  
             azure_deployment=self.azure_deployment,  
-            model="gpt-4o-2024-11-20",  
+            model=self.openai_model_name,  
         )  
+  
         # Set up the assistant agent  
         agent = AssistantAgent(  
             name="ai_assistant",  
@@ -57,21 +51,34 @@ class Agent:
                 "the user is not clear."  
             )  
         )  
-        # Termination condition: stop when agent answers as itself  
+  
+        # Set the termination condition: stop when agent answers as itself  
         termination_condition = TextMessageTermination("ai_assistant")  
   
         self.loop_agent = RoundRobinGroupChat(  
             [agent],  
             termination_condition=termination_condition,  
         )  
+  
+        if self.state:  
+            await self.loop_agent.load_state(self.state)  
         self._initialized = True  
   
-    async def chat_async(self, prompt: str) -> str: 
-        # Ensure agent/tools are ready  
-        await self._ensure_initialized() 
-        if self.state:  
-            await self.loop_agent.load_state(self.state)
-
-        response = await self.loop_agent.run(task=prompt, cancellation_token=CancellationToken())
-        return response.messages[-1].content
+    async def chat_async(self, prompt: str) -> str:  
+        """Ensure agent/tools are ready and process the prompt."""  
+        await self._setup_loop_agent()  
   
+        response = await self.loop_agent.run(task=prompt, cancellation_token=CancellationToken())  
+        assistant_response = response.messages[-1].content  
+  
+        messages = [  
+            {"role": "user", "content": prompt},  
+            {"role": "assistant", "content": assistant_response}  
+        ]  
+        self.append_to_chat_history(messages)  
+  
+        # Update/store latest agent state  
+        new_state = await self.loop_agent.save_state()  
+        self._setstate(new_state)  
+  
+        return assistant_response  

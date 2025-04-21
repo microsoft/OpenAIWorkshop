@@ -111,50 +111,18 @@ In this simplified multi-domain architecture, the Coordinator Agent's primary re
   
 #### 🧩 Collaborative Multi-Agent System Setup  
   
-In complex scenarios, participants will implement a collaborative multi-agent architecture. Each agent specializes in a specific functional domain and collaborates with other agents to jointly address complex customer requests. Agents communicate and share intermediate results through a shared context memory system, enabling them to coordinate their actions effectively.  
+In complex scenarios, participants will implement a collaborative multi-agent architecture. Each agent specializes in a specific functional domain and collaboratively addresses more sophisticated customer requests. A central **Analysis & Planning Agent** orchestrates interactions, task delegation, and integrates results from various domain specialists.  
+  
+Critically, **all functional specialist agents** independently utilize the organization's centralized **Knowledge Base** proactively. They retrieve semi-structured and unstructured content such as FAQs, internal policies, troubleshooting protocols, guidelines, and best practices. Leveraging Knowledge Base resources ensures that every agent consistently adheres to organizational standards and formulates accurate, informed, and comprehensive responses within their specialized domain areas.  
   
 **Agent Roles & Responsibilities:**  
   
-1. **Analysis & Planning Agent**  
-    - **Role:** Serves as the central orchestrator responsible for interpreting abstract customer requests, decomposing them into actionable tasks, delegating clearly defined subtasks to specialized functional agents, and integrating the agents' findings into a unified response.  
-    - **Operations:**  
-        - Parses and analyzes abstract customer requests.  
-        - Identifies specific subtasks needed to fulfill the request.  
-        - Delegates subtasks clearly to relevant functional agents.  
-        - Dynamically updates the task plan based on inputs received from functional agents.  
-        - Integrates intermediate results and formulates the final customer response.  
-    - **Memory & Context:** Maintains a structured task plan and tracks the status of delegated subtasks using shared context memory.  
-  
-2. **CRM & Billing Agent (Functional Specialist)**  
-    - **Role:** Specialized agent responsible for handling structured queries related to customer profiles, account details, billing, invoicing, subscription status, and payment history.  
-    - **Operations:**  
-        - Executes structured queries against CRM and Billing databases.  
-        - Provides structured data results (account status, billing history, subscription details) to the Analysis & Planning Agent.  
-        - Collaborates with other functional agents by sharing relevant structured customer data as needed.  
-    - **Memory & Context:** Maintains short-term cache for rapid access to frequently queried data.  
-  
-3. **Product & Promotions Agent (Functional Specialist)**  
-    - **Role:** Specialized agent for managing product details, promotions, discounts, eligibility criteria, and subscription plans.  
-    - **Operations:**  
-        - Queries Product & Promotions Database for active promotions, products, and eligibility criteria.  
-        - Determines customer eligibility for promotions based on CRM data provided by CRM & Billing Agent.  
-        - Shares eligibility results, recommendations, and structured product details with Analysis & Planning Agent and other agents as required.  
-    - **Memory & Context:** Maintains short-term cache for rapid access to frequent product/promotion queries.  
-  
-4. **Security & Authentication Agent (Functional Specialist)**  
-    - **Role:** Specialized agent for managing customer account security, authentication issues, login attempts, and security flags.  
-    - **Operations:**  
-        - Queries Security & Authentication Database for account security issues, login activity, and lockout reasons.  
-        - Provides security assessments, status reports, and recommended actions to Analysis & Planning Agent and other agents as needed.  
-    - **Memory & Context:** Maintains short-term cache for rapid access to frequent security queries.  
-  
-5. **Knowledge Base Agent (Functional Specialist)**  
-    - **Role:** Specialized agent for retrieving and interpreting semi-structured/unstructured content (FAQs, policies, troubleshooting guides) from the knowledge base.  
-    - **Operations:**  
-        - Performs semantic searches in the Knowledge Base to retrieve relevant documents and information.  
-        - Summarizes extracted content clearly and concisely.  
-        - Shares summarized knowledge and relevant policies or guidelines with Analysis & Planning Agent and other functional agents as necessary.  
-    - **Memory & Context:** Maintains semantic search memory to optimize knowledge retrieval.  
+| Agent | Role Description | Operations | Knowledge Base Usage |  
+|-------|------------------|------------|----------------------|  
+| **Analysis & Planning Agent** | Central orchestrator responsible for parsing abstract customer requests, decomposing these into clear subtasks, delegating subtasks to specific specialists, and synthesizing agent outputs into unified customer responses. | - Parses/analyzes abstract customer requests <br> - Identifies required subtasks <br> - Delegates tasks clearly to respective domain agents <br> - Dynamically revises task plans based on specialist agents' inputs <br> - Integrates all agents' outputs into final cohesive responses | Primarily relies on information synthesized from specialist agents; direct Knowledge Base access is minimal and situational. |  
+| **CRM & Billing Agent** (Functional Specialist)| Handles structured queries around customer profiles, subscriptions details, invoicing, billing histories, and payment processing. | - Queries CRM & Billing backend databases for structured data <br> - Provides account status, billing history, subscription details, and billing-related information <br> - Shares relevant data/results with Analysis & Planning Agent and other specialists as necessary | Frequently consults Knowledge Base materials related to billing policies, account-handling protocols, and payment processing procedures to inform and validate structured-query responses. |  
+| **Product & Promotions Agent** (Functional Specialist) | Manages structured information concerning promotions, products, eligibility, customer upgrades, and discounts. | - Queries structured data from Product & Promotions backend systems <br> - Determines product availability, promotions, discounts, and customer eligibility <br> - Provides structured product/promotional information and recommendations to Analysis & Planning Agent and potentially other specialists | Regularly accesses Knowledge Base content to retrieve promotional terms, eligibility guidelines, product/service-related FAQs and internal documentation to enhance structured responses and recommendations. |  
+| **Security & Authentication Agent** (Functional Specialist) | Handles customer authentication queries, security issues, account lockouts, and reviews login attempts. | - Queries backend structured data (security logs, login history/authentication events) from Security & Authentication databases <br> - Analyzes security statuses/issues, authentication logs, and provides recommended actions <br> - Shares security assessments and recommendations with Analysis & Planning Agent and other agents as needed | Consistently leverages Knowledge Base documentation such as security policies, authentication guidelines, lockout troubleshooting protocols, and best practices to ensure accurate, compliant, and informed security-focused responses. |  
   
 ---  
   

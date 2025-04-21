@@ -58,10 +58,6 @@ async def main() -> None:
     async for message in team.run_stream(task="I noticed my last invoice was higher than usual—can you help me understand why and what can be done about it? my customer id is 101"):  # type: ignore
         print(type(message).__name__, message)
 
-    # # Let the agent translate some text
-    # await Console(
-    #     agent.run_stream(task="I noticed my last invoice was higher than usual—can you help me understand why and what can be done about it? my customer id is 101", cancellation_token=CancellationToken())
-    # )
 
 
 if __name__ == "__main__":

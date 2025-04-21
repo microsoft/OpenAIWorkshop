@@ -623,6 +623,8 @@ def populate_data(conn: sqlite3.Connection, markdown_file="customer_scenarios.md
         roaming=0,  
         service_status="normal",  
         speed_tier="300Mbps",  
+        data_cap_gb=10 # explicitly setting the data cap to 10GB
+
     )  
     # Prior normal invoice  
     add_invoice(sc1_sub, amount=60.00, desc="Standard monthly charge", when_days=-30, mark_unpaid=False)  
