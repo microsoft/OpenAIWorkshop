@@ -7,3 +7,6 @@ flasgger
 fastmcp
 autogen-ext[mcp]
 autogen-agentchat
+fastapi
+tiktoken
+streamlit
