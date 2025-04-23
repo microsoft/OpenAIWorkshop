@@ -1,6 +1,7 @@
 import asyncio
 import dotenv
 
+from agents.base_agent import BaseAgent
 from semantic_kernel.agents import ChatCompletionAgent, ChatHistoryAgentThread
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
 from semantic_kernel.connectors.mcp import MCPSsePlugin
@@ -20,24 +21,33 @@ If this is not set, it will try to use DefaultAzureCredential.
 
 """
 
-USER_INPUTS = [
-    "I noticed my last invoice was higher than usual. Can you help me understand why? My customer id is 101",
-    "What can I do to reduce my bill?",
-]
+MCP_SERVER_URI="http://localhost:8000/sse"
 
-async def main():
-    # Load environment variables from .env file
-    dotenv.load_dotenv()
+class Agent(BaseAgent):  
+    def __init__(self, state_store, session_id) -> None:  
+        super().__init__(state_store, session_id)
+        self._agent = None  
+        self._initialized = False 
+        
+    async def _setup_agent(self) -> None:
+        # Initialize the assistant and tools only once. 
+        if self._initialized:  
+            return
+        
+        # Load environment variables from .env file.
+        dotenv.load_dotenv()
 
-    # 1. Create the agent
-    async with MCPSsePlugin(
-        name="ContosoMCP",
-        description="Contoso MCP Plugin",
-        url="http://localhost:8000/sse",
-        headers={"Content-Type": "application/json"},
-        timeout=30,
-    ) as contoso_plugin:
-        agent = ChatCompletionAgent(
+        # Set up the SSE plugin for the MCP service.
+        contoso_plugin = MCPSsePlugin(
+            name="ContosoMCP",
+            description="Contoso MCP Plugin",
+            url=MCP_SERVER_URI,
+            headers={"Content-Type": "application/json"},
+            timeout=30,
+        )
+        
+        # Set up the chat completion agent with the Azure OpenAI service and the MCP plugin.
+        self._agent = ChatCompletionAgent(
             service=AzureChatCompletion(),
             name="ChatBot",
             instructions="You are a helpful assistant. You can use multiple tools to find information "
@@ -46,20 +56,44 @@ async def main():
             plugins=[contoso_plugin],
         )
 
-        for user_input in USER_INPUTS:
-            # 2. Create a thread to hold the conversation
-            # If no thread is provided, a new thread will be
-            # created and returned with the initial response
-            thread: ChatHistoryAgentThread | None = None
+        # Create a thread to hold the conversation.
+        # If no thread is provided, a new thread will be created and returned with the initial response.
+        self._thread: ChatHistoryAgentThread | None = None
 
-            print(f"### User: {user_input}")
-            # 3. Invoke the agent for a response
-            response = await agent.get_response(messages=user_input, thread=thread)
-            print(f"### {response.name}: {response}")
-            thread = response.thread
+        self._initialized = True  
+    
+    async def chat_async(self, prompt: str) -> str:  
+        # Ensure agent/tools are ready and process the prompt.
+        await self._setup_agent()
 
-            # 4. Cleanup: Clear the thread
-            await thread.delete() if thread else None
+        response = await self._agent.get_response(messages=prompt, thread=self._thread)
+        response_content = str(response.content)
+        self._thread = response.thread
 
-if __name__ == "__main__":
-    asyncio.run(main())
+        messages = [  
+            {"role": "user", "content": prompt},  
+            {"role": "assistant", "content": response_content}  
+        ]
+        self.append_to_chat_history(messages)
+
+        # Cleanup the thread async.
+        await response.thread.delete() if response.thread else None
+  
+        return response_content  
+
+### Uncomment the following lines to run the agent in a standalone mode (i.e without FastAPI backend) ###
+# async def main():
+#     SESSION_STORE = {} # In-memory session store (use Redis/DB for production)
+#     agent = Agent(SESSION_STORE, "test_session_id")
+
+#     SAMPLE_USER_INPUTS = [
+#         "I noticed my last invoice was higher than usual. Can you help me understand why? My customer id is 101",
+#         "What can I do to reduce my bill?",
+#     ]
+
+#     for user_input in SAMPLE_USER_INPUTS:
+#         answer = await agent.chat_async(user_input)
+#         print(f"User: {user_input}\nAssistant: {answer}\n")
+
+# if __name__ == "__main__":
+#     asyncio.run(main())

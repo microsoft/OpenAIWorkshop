@@ -1,7 +1,11 @@
 import streamlit as st  
-import requests, uuid, os  
+import requests, uuid, os
+import dotenv
+
+# Load environment variables from .env file.
+dotenv.load_dotenv()
   
-BASE_BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:7000")  
+BASE_BACKEND_URL = os.getenv("BACKEND_URL")  
 CHAT_URL = f"{BASE_BACKEND_URL}/chat"  
 HISTORY_URL = f"{BASE_BACKEND_URL}/history" 
 SESSION_RESET_URL = f"{BASE_BACKEND_URL}/reset_session" 

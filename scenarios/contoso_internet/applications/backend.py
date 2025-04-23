@@ -5,11 +5,14 @@ from pydantic import BaseModel
 import pickle  
 import os
 from typing import List, Dict  
-from dotenv import load_dotenv
+import dotenv
 import importlib
-load_dotenv()  # Load environment variables from .env file if needed
 import sys
 from pathlib import Path
+
+# Load environment variables from .env file.
+dotenv.load_dotenv()
+
 # Add parent directory (contoso_internet) to the python path  
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  
 agent_module_path = os.getenv("AGENT_MODULE")
