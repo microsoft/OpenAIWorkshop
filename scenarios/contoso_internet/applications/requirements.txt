@@ -1,6 +1,5 @@
-Flask
-fastapi
-Faker
+flask
+faker
 python-dotenv
 tenacity
 openai
@@ -8,15 +7,9 @@ flasgger
 fastmcp
 autogen-ext[mcp]
 autogen-agentchat
-tiktoken
-tornado
 uvicorn
+fastapi
 streamlit
-pydantic
-
-
-semantic-kernel == 1.0.1
-openai
-python-dotenv
-aiohttp
 requests
+pydantic
+semantic-kernel

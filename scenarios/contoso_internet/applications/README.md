@@ -51,6 +51,7 @@ pip install -r requirements.txt
 - `streamlit`  
 - `requests`  
 - `pydantic`  
+- `semantic-kernel`
 - *(Add others as needed for your specific environment)*  
   
 ---  
