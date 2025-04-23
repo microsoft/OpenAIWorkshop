@@ -1,0 +1,105 @@
+[
+    {
+    "document_title": "Invoice Adjustment Policy - Overview",
+    "topic": "Invoice Adjustment Policy",
+    "doc_type": "Policy",
+    "document_content": "This policy describes how customers may request and receive adjustments on their billing statements when issues such as unexpected charges, billing errors, or service disruptions occur. In most cases, an invoice adjustment requires the submission of a formal inquiry detailing the nature of the dispute, including specific line items or charges. Once received, our billing team reviews the account, verifies relevant records, and determines if the charge should be partially or fully credited. If the adjustment request is approved, changes will be reflected within one to two billing cycles. In situations where the inquiry is deemed invalid, a denial with explanation will be issued. This policy also outlines timelines for dispute resolution and emphasizes transparent communication with customers throughout the process. Additionally, any pro-rated fees tied to early plan changes or canceled subscriptions may factor into an invoice adjustment determination."
+    },
+    {
+    "document_title": "Troubleshooting Slow Internet - Basic Steps",
+    "topic": "Troubleshooting Slow Internet",
+    "doc_type": "Troubleshooting",
+    "document_content": "Slow internet performance can result from routine network congestion, device issues, or broader service disruptions. First, verify that routers and modems are powered correctly and that cables are firmly connected. Running a speed test helps determine if the issue is local or widespread. If speeds are below advertised rates, reboot the router or switch Wi-Fi channels. Customers may also visit the service status dashboard or open a support inquiry to check for outages. For more advanced diagnosis, authorized staff can query the ServiceIncidents table or Service Monitoring System to identify any region-wide problems. Continued slow performance after these steps should be escalated to technical support for deeper troubleshooting."
+    },
+    {
+    "document_title": "International Roaming Options Explained",
+    "topic": "International Roaming Options",
+    "doc_type": "FAQ",
+    "document_content": "Travelers looking to stay connected abroad can use our international roaming packages, which cover voice, text, and data in supported countries. Before departure, customers should verify that their device is compatible with local GSM or LTE networks. Standard roaming bundles typically include enough data for light browsing and messaging, while additional data add-ons are available for higher usage. Users can enable usage alerts to avoid overage fees. Plan adjustments should be made at least three days prior to departure. Region-specific surcharges or taxes may apply."
+    },
+    {
+    "document_title": "Account Unlock Procedure - Verification Steps",
+    "topic": "Account Unlock Procedure",
+    "doc_type": "Procedure",
+    "document_content": "When multiple failed login attempts or a security anomaly occur, the account is locked as a preventive measure. To unlock, customers must complete a formal verification, typically via two-factor authentication or key personal details on file. Upon successful verification, a temporary code is sent to the registered contact method. Once the customer enters this code on the login page, the account unlocks and prompts a password reset or reconfirmation. In cases of suspected fraudulent activity, customers may be directed to our fraud department for additional checks before account restoration."
+    },
+    {
+    "document_title": "Promotion Eligibility Guidelines - Loyalty and New Subscribers",
+    "topic": "Promotion Eligibility Guidelines",
+    "doc_type": "Policy",
+    "document_content": "Our promotions reward both loyal participants and newly enrolled subscribers. Loyalty-based promotions often scale with membership levels—Gold members may qualify for more generous plan discounts than Silver or Bronze. New subscriber offers typically require at least a six-month lapse since any prior subscription. Some promotions also require a minimum contract term or a clean billing history. Availability can vary, so consult official announcements or contact a representative for specifics. Terms may limit combining multiple offers simultaneously."
+    },
+    {
+    "document_title": "Return Policy and Process - Instructions for Product Returns",
+    "topic": "Return Policy and Process",
+    "doc_type": "Procedure",
+    "document_content": "Customers may return eligible products within a set period—usually 30 days from the purchase date—accompanied by proof of purchase. Goods should be in like-new condition, with minimal wear and all included accessories. A restocking fee may apply if items show damage or missing parts. Returns may be initiated either online or in-store. For mail-in returns, a shipping label is issued. Any shipping fees may be deducted unless the return was due to an error on our part. Inspection occurs upon receipt; if approved, refunds typically appear within 7-10 business days."
+    },
+    {
+    "document_title": "Billing Dispute Escalation - Next Steps",
+    "topic": "Billing Dispute Escalation",
+    "doc_type": "Policy",
+    "document_content": "In cases where a customer disagrees with an initial invoice adjustment ruling, we provide an escalation path. Customers can request a second review by submitting additional supporting documentation or clarifications. Our escalation team reevaluates the billing records, subscriber history, and any relevant service logs. If further credit or partial refunds are deemed appropriate, adjustments will be applied in a subsequent invoice cycle. If the dispute is ultimately upheld as invalid, the customer is provided a clear explanatory statement. Persisting disagreements after escalation may be referred to external arbitration, if applicable under contract terms."
+    },
+    {
+    "document_title": "Late Payment Fee Policy",
+    "topic": "Late Payment Fee",
+    "doc_type": "Policy",
+    "document_content": "A late fee is assessed if an invoice remains unpaid beyond the due date specified in the customer's billing statement. The fee is calculated as a percentage of the outstanding balance, typically 1.5% monthly. Customers who demonstrate financial hardship or account errors can have late fees waived at management’s discretion. Accounts with repeated late payments risk suspension or downgraded service tiers until balances are cleared."
+    },
+    {
+    "document_title": "Troubleshooting Call Dropping Issues",
+    "topic": "Troubleshooting Call Drops",
+    "doc_type": "Troubleshooting",
+    "document_content": "Frequent dropped calls can be due to network congestion, device hardware issues, or coverage limitations in certain geographic areas. Users should first confirm that their device software is up-to-date and test calls in different locations to rule out local coverage gaps. For repeated call failures, gather logs indicating call times, approximate duration before drop, and any error messages displayed. Customer support can then reference the network monitoring data or submit a service incident ticket if widespread coverage issues are discovered. If device malfunction is suspected, users may be directed to a repair center for further testing."
+    },
+    {
+    "document_title": "Text Messaging Issues - Basic FAQ",
+    "topic": "Text Messaging Issues",
+    "doc_type": "FAQ",
+    "document_content": "Customers experiencing delays in sending or receiving SMS messages should verify that their device is properly registered on the network. Signal strength, account status, or a temporary system outage can all cause partial message delivery. Restarting the phone often resolves minor registration glitches. Larger outages or system maintenance windows are usually posted on the service status page. If undelivered messages persist, opening a support ticket with timestamps of failed messages helps our technical team investigate further."
+    }
+    ,
+    {  
+        "document_title": "Data Overage Policy - Mobile Plans",  
+        "topic": "Data Overage Policy",  
+        "doc_type": "Policy",  
+        "document_content": "When subscribers exceed the monthly data allowance on a capped plan, an overage fee is billed in 1‑GB increments. Customers may switch to a higher‑tier plan retroactively within 15 days of the invoice date to have overage charges re‑rated. Loyalty tier discounts do not apply to overage fees."  
+      },  
+      {  
+        "document_title": "Payment Failure & Reinstatement Rules",  
+        "topic": "Payment Failure",  
+        "doc_type": "Policy",  
+        "document_content": "If an automatic payment attempt fails, the account enters a 10‑day grace period before service suspension. Customers can pay the full balance or enroll in a hardship payment plan to restore service. A reconnection fee is waived for first‑time failures within a rolling 12‑month window."  
+      },  
+      {  
+        "document_title": "Financial Hardship Payment Plan Procedure",  
+        "topic": "Hardship Payment Plan",  
+        "doc_type": "Procedure",  
+        "document_content": "Subscribers who are temporarily unable to pay their balance in full may request a hardship installment plan. Proof of income disruption or comparable documentation is required. Once approved, late fees are frozen, and the balance is split into up to six equal payments."  
+      },  
+      {  
+        "document_title": "Dropped Call Investigation Workflow",  
+        "topic": "Troubleshooting Call Drops",  
+        "doc_type": "Procedure",  
+        "document_content": "CSR agents should collect at least three affected call samples (time, location, called number) before escalating to the RF engineering team. If systemic issues are identified, affected customers receive account credits based on the 'Service Reliability SLA' policy."  
+      },  
+      {  
+        "document_title": "Service Reliability SLA – Credit Matrix",  
+        "topic": "Service Reliability SLA",  
+        "doc_type": "Policy",  
+        "document_content": "If network outages or quality degradations exceed defined thresholds, account credits apply: 1–3 hrs = 10 % monthly fee; 3–24 hrs = 25 %; >24 hrs = full month credit."  
+      },  
+      {  
+        "document_title": "Autopay Discount Terms",  
+        "topic": "Autopay Discount",  
+        "doc_type": "Policy",  
+        "document_content": "Subscribers enrolled in autopay receive a $5 monthly discount. The discount is forfeited if a payment fails and is reinstated only after two consecutive successful automatic payments."  
+      },  
+      {  
+        "document_title": "Roaming Activation Cut‑off Times",  
+        "topic": "International Roaming Options",  
+        "doc_type": "Procedure",  
+        "document_content": "Roaming must be activated at least 24 hours prior to border crossing to ensure provisioning across partner networks. Same‑day activation is best‑effort and may incur delays up to 6 hours."  
+      }  
+    ]      
