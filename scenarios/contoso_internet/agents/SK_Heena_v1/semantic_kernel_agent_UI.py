@@ -81,7 +81,7 @@ class Agent(BaseAgent):
   
         return response_content  
 
-### Uncomment the following lines to run the agent in a standalone mode (i.e without FastAPI backend) ###
+# ## Uncomment the following lines to run the agent in a standalone mode (i.e without FastAPI backend) ###
 # async def main():
 #     SESSION_STORE = {} # In-memory session store (use Redis/DB for production)
 #     agent = Agent(SESSION_STORE, "test_session_id")
