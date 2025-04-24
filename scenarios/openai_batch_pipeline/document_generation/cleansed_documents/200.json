@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless about a new TV that was not working. The customer service agent apologized for the inconvenience and asked for the order number to look into the issue further. The customer was dissatisfied with the customer service and threatened to cancel their subscription if the problem was not fixed soon. The customer service agent assured the customer that they would do their best to resolve the issue as quickly as possible and thanked the customer for their patience.",
-    "customerSentiment": "angry",
-    "topic": "churn",
-    "product": "tv",
-    "filename": "200_548_461_angry_churn_tv_document.txt"
-}

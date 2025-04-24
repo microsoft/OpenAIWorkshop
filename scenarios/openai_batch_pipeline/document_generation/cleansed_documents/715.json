@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted the Contoso Wireless customer service representative for help with their account, which they suspected had been hacked. After confirming their username and password, the agent looked into the issue and also provided information on Contoso Wireless products and services, such as cell phones, tablets, accessories, and data plans. The customer asked about the data plans, and the agent explained that they come in different sizes and include unlimited text messaging and additional add-ons. The customer then asked if they could switch plans at any time, to which the agent replied that they can switch at any time by contacting Contoso Wireless via phone or email.",
-    "customerSentiment": "negative",
-    "topic": "account",
-    "product": "other",
-    "filename": "715_583_496_negative_account_other_document.txt"
-}

@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless customer service with an issue of their phone randomly turning off and restarting. After running diagnostics on the phone, the agent determined that there was an issue with the software and recommended performing a factory reset to resolve the issue. The agent instructed the customer on how to perform the factory reset, emphasizing the importance of backing up any important data beforehand.",
-    "customerSentiment": "upset",
-    "topic": "support",
-    "product": "phone",
-    "filename": "436_700_613_upset_support_phone_document.txt"
-}

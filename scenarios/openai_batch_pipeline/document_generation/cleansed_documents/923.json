@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer service agent provided the customer with detailed information about Contoso Wireless, a TV streaming service that offers exclusive content, discounts, loyalty rewards, 24/7 customer service, live and on-demand programming, parental controls, and support for up to 4 devices at once. The customer was satisfied with the explanation and thanked the agent for their help.",
-    "customerSentiment": "confused",
-    "topic": "churn",
-    "product": "tv",
-    "filename": "923_552_465_confused_churn_tv_document.txt"
-}

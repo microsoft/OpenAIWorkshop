@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer requested to downgrade their Contoso Wireless services, specifically their tv package. The agent provided them with two options, the Contoso Basic Package and the Contoso Select Package. After explaining the differences between the two packages, the customer chose to downgrade to the Contoso Select Package. The agent then processed the downgrade and confirmed that the new package will be available in 24-48 hours.",
-    "customerSentiment": "neutral",
-    "topic": "downgrade services",
-    "product": "tv",
-    "filename": "146_603_515_neutral_downgrade services_tv_document.txt"
-}

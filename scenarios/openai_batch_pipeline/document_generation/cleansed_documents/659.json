@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble connecting to the internet and the agent walked them through the steps to get connected. When that didn't work, the agent suggested unplugging and replugging the router and restarting the computer, but when those didn't work they ran a speed test, a ping test, and a traceroute test to determine what the issue was. The tests should take a few minutes each and once they are done, the agent will provide an estimate on how long it will take to fix the issue.",
-    "customerSentiment": "happy",
-    "topic": "assistance",
-    "product": "internet",
-    "filename": "659_609_522_happy_assistance_internet_document.txt"
-}

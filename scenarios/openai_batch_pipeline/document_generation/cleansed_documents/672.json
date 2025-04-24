@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble with their Contoso Wireless bill because a payment for a new TV had not been processed yet. The agent checked the account and found that the payment had not been processed, so they manually processed the payment and offered the customer a $50 credit on their next bill as an apology for any inconvenience caused.",
-    "customerSentiment": "frustrated",
-    "topic": "payment",
-    "product": "tv",
-    "filename": "672_508_421_frustrated_payment_tv_document.txt"
-}

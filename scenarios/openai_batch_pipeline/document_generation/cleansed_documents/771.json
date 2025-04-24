@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer is having trouble setting up the Contoso Wireless TV service. The agent has checked the connection settings, signal strength of the Wi-Fi network, and router compatibility. They have also tried restarting the router and resetting the app, but nothing has worked so far. The agent is now asking the customer to try resetting the app and reconnecting to the network again.",
-    "customerSentiment": "frustrated",
-    "topic": "service",
-    "product": "tv",
-    "filename": "771_519_432_frustrated_service_tv_document.txt"
-}

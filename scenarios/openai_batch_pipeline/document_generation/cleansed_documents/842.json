@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless to inquire about their downgraded internet service. The agent explained that the basic plan offers speeds up to 25 Mbps download and 3 Mbps upload, with a monthly data cap of 300 GB, free installation and 24/7 customer support, as well as optional add-on features for an additional fee. The agent also informed the customer that they could upgrade their plan to get faster speeds up to 100 Mbps download and 10 Mbps upload, as well as larger data caps up to 1 TB per month. The cost of the upgrade will depend on the plan selected and any promotional offers available. To upgrade their plan, the customer can log into their account on the Contoso Wireless website and select the \u201cUpgrade Plan\u201d option.",
-    "customerSentiment": "negative",
-    "topic": "downgrade services",
-    "product": "internet",
-    "filename": "842_611_523_negative_downgrade services_internet_document.txt"
-}

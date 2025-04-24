@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer service agent provided the customer with information about payment methods and payment plans offered by Contoso Wireless. They accept major credit cards, PayPal, and Apple Pay. Payment plans are available with a fixed monthly fee that varies depending on the phone chosen. Interest rates for payment plans are based on the type of phone purchased and the customer's credit score. Ways to lower the interest rate include having good credit and purchasing certain phones in the company's inventory.",
-    "customerSentiment": "mixed",
-    "topic": "payment",
-    "product": "phone",
-    "filename": "422_462_375_mixed_payment_phone_document.txt"
-}

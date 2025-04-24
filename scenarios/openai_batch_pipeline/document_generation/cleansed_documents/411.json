@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer has a phone from Contoso Wireless with battery life and microphone issues. The agent suggested restarting the phone, but when that didn't work, the agent offered to repair or replace the phone under the one-year warranty. The customer can either fill out an online form or call customer service to set up an appointment, or take the phone to an authorized service center for repair or replacement.",
-    "customerSentiment": "negative",
-    "topic": "support",
-    "product": "phone",
-    "filename": "411_525_438_negative_support_phone_document.txt"
-}

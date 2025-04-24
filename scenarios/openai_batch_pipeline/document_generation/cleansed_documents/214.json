@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted the agent for help with their Contoso Wireless TV, which was not working properly. The agent provided troubleshooting steps such as checking for software updates, confirming that the TV was connected to a wireless network with a strong signal, and confirming that the TV was connected to an HDMI source device. The agent then suggested resetting the TV back to its factory settings and powering it off and on again.",
-    "customerSentiment": "disappointed",
-    "topic": "information",
-    "product": "tv",
-    "filename": "214_528_441_disappointed_information_tv_document.txt"
-}

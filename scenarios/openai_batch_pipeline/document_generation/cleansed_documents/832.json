@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble with their internet connection and the agent provided troubleshooting steps to try and resolve the issue. After these steps did not work, the agent looked into the network logs and found that there was an issue with the signal in the customer's area which was causing the slow connection speed. The agent suggested trying to move closer to the router or using an ethernet cable to connect directly to it as this should improve their connection speed until the issue is resolved.",
-    "customerSentiment": "confused",
-    "topic": "service",
-    "product": "internet",
-    "filename": "832_662_575_confused_service_internet_document.txt"
-}

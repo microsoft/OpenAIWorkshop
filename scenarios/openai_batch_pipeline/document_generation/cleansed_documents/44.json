@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble understanding their bill from Contoso Wireless after purchasing a new 4K TV. The agent explained that the first charge was for the TV itself, then taxes and fees associated with it, followed by any additional services or features that were added on. The agent also mentioned that there may be additional charges related to promotional offers or subscription services included in the purchase, which may be recurring if the customer signed up for a subscription service. Finally, the agent provided instructions on how to cancel any services if the customer no longer wanted them.",
-    "customerSentiment": "content",
-    "topic": "billing",
-    "product": "tv",
-    "filename": "44_614_527_content_billing_tv_document.txt"
-}

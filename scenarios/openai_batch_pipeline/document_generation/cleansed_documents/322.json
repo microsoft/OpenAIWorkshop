@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless about an unexpected charge on their bill and the agent confirmed that the charge was due to a subscription to the streaming service. The customer was not made aware of this additional fee during the signup process and the agent apologized for any confusion or inconvenience. The agent was unable to provide a refund, but offered a one-time credit of $5 as a gesture of goodwill. The customer accepted the offer and the credit was applied to their account.",
-    "customerSentiment": "negative",
-    "topic": "billing",
-    "product": "streaming",
-    "filename": "322_623_536_negative_billing_streaming_document.txt"
-}

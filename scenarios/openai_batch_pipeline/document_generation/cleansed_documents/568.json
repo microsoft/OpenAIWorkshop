@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer expressed dissatisfaction with the Contoso Wireless TV service, citing poor picture and sound quality as well as unavailable channels. The agent offered the customer a discounted package with fewer channels at a lower cost or the option to remove certain channels from their current package. The customer opted to remove certain channels and the agent provided them with a list of channels to be removed. The customer was satisfied with the resolution.",
-    "customerSentiment": "upset",
-    "topic": "downgrade services",
-    "product": "tv",
-    "filename": "568_568_480_upset_downgrade services_tv_document.txt"
-}

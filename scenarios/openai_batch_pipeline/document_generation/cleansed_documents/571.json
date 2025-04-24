@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having issues with their internet connection, which the agent identified as being caused by the customer's subscription expiring. The agent offered to renew the subscription and went over different plans available to the customer so they could find the best one for their needs.",
-    "customerSentiment": "mixed",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "571_566_479_mixed_churn_internet_document.txt"
-}

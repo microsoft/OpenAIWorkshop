@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having trouble connecting to Contoso Wireless's internet service and is receiving an error message. The customer service agent is attempting to resolve the issue by checking for any reported outages in the customer's area and asking them to restart their modem and reset their router. The customer service agent is now asking for the customer's account information in order to further investigate the issue.",
-    "customerSentiment": "negative",
-    "topic": "support",
-    "product": "internet",
-    "filename": "541_547_460_negative_support_internet_document.txt"
-}

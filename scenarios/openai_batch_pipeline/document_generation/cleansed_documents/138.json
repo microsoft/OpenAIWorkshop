@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having issues with their phone, which they recently purchased from Contoso Wireless. The customer service agent is offering to troubleshoot the issue over the phone or arrange for a technician to come out and take a look at the device in person. The customer opts to have a technician come out. The customer service agent then offers to review the customer's current plan and see if there is anything else they can offer that would better suit their needs.",
-    "customerSentiment": "negative",
-    "topic": "churn",
-    "product": "phone",
-    "filename": "138_589_502_negative_churn_phone_document.txt"
-}

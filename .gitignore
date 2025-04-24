@@ -4,3 +4,4 @@ __pycache__/
 .tmp/
 .vscode/
 .azure
+OAI_CONFIG_LIST

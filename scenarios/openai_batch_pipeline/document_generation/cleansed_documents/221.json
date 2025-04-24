@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nIn this conversation, the customer asked the agent questions about the payment process for Contoso Wireless' streaming product. The agent explained that there is a one-time fee of $19.99 and they offer a payment plan option to spread out the cost over several months. They also clarified that refunds are not offered on streaming products purchased through their payment plan, and that late or missed payments may result in cancellation of the subscription. Lastly, they confirmed that they accept all major credit cards, PayPal, and Apple Pay as methods of payment.",
-    "customerSentiment": "content",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "221_522_435_content_payment_streaming_document.txt"
-}

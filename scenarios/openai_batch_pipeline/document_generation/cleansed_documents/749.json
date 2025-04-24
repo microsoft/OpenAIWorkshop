@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer contacted Contoso Wireless for help understanding the payment process for their product streaming service. The customer service agent provided information about the three plans available, which range in price from $9.99 to $19.99 per month, and explained that customers will be charged the monthly rate for the plan until they cancel or switch to another plan. The agent also clarified that all plans offer HD streaming quality, but the Premium plan offers Ultra HD streaming quality.",
-    "customerSentiment": "confused",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "749_568_481_confused_payment_streaming_document.txt"
-}

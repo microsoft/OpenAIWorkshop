@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer expressed dissatisfaction with their product phone and was considering canceling their service with Contoso Wireless due to the battery life being incredibly short and the phone becoming increasingly unreliable. The agent offered to repair the phone and also offered a discount on the customer's next purchase as an apology for the trouble this has caused.",
-    "customerSentiment": "negative",
-    "topic": "churn",
-    "product": "phone",
-    "filename": "123_705_618_negative_churn_phone_document.txt"
-}

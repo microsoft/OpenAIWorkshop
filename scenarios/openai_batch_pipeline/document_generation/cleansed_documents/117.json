@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless for assistance with their bill, and the agent was able to identify that an additional product had been added to the customer's account by mistake. The agent apologized for the inconvenience and offered to refund the customer for the product. The agent then provided the customer with information about other products and services offered by Contoso Wireless, as well as discounts available to customers. The customer thanked the agent for their help and the conversation ended.",
-    "customerSentiment": "positive",
-    "topic": "billing",
-    "product": "other",
-    "filename": "117_540_453_positive_billing_other_document.txt"
-}

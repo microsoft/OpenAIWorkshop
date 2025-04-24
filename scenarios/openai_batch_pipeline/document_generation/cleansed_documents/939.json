@@ -1,7 +1,0 @@
-{
-    "summary": " \nThe customer was having trouble connecting their Contoso Wireless TV to their Wi-Fi network. The agent provided detailed instructions on how to connect the TV, which included checking if the Wi-Fi was enabled, confirming that the network name matched the router's network name, and then selecting the home Wi-Fi network from the list of available networks and entering the password for it.",
-    "customerSentiment": "positive",
-    "topic": "support",
-    "product": "tv",
-    "filename": "939_609_522_positive_support_tv_document.txt"
-}

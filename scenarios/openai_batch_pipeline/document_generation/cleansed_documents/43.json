@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer is having trouble with their Contoso Wireless TV, which won't turn on. The agent suggested checking the power cord and resetting the TV by unplugging it from the wall for 10 seconds, but this did not help. The agent then suggested unplugging the TV from the surge protector and plugging it directly into the wall outlet to see if that helps.",
-    "customerSentiment": "confused",
-    "topic": "assistance",
-    "product": "tv",
-    "filename": "43_595_508_confused_assistance_tv_document.txt"
-}

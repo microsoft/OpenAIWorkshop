@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted the agent to inquire about their payment for their Contoso Wireless service. The agent apologized for the inconvenience and asked for the customer's account number to look into the issue. The customer provided the account number and the agent is looking into it, while also offering information about other products and services that Contoso Wireless offers.",
-    "customerSentiment": "angry",
-    "topic": "payment",
-    "product": "other",
-    "filename": "876_454_367_angry_payment_other_document.txt"
-}

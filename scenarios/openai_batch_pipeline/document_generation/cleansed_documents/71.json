@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer was having trouble making a payment for the Contoso Wireless streaming service. After verifying the customer's payment information, the agent suggested that the customer update their iOS version in order to access the streaming service properly.",
-    "customerSentiment": "confused",
-    "topic": "payment",
-    "product": "streaming",
-    "filename": "71_455_368_confused_payment_streaming_document.txt"
-}

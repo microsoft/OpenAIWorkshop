@@ -1,6 +1,0 @@
-name: nl2sqlwebapp
-services:
-  web:
-    project: ./
-    language: py
-    host: appservice

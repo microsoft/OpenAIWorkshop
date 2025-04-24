@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer is experiencing an issue with their internet connection purchased from Contoso Wireless, where it drops out and disconnects every few minutes. The agent requested additional information about the laptop the customer is using to connect, which was an HP Pavilion g6-2210us with no additional software installed. The agent then suggested resetting the router, but this did not help. The agent then asked for more information about the issue and provided a suggestion of connecting to the network using a different device or another router to see if this would help improve the connection speed or stability.",
-    "customerSentiment": "frustrated",
-    "topic": "other",
-    "product": "internet",
-    "filename": "229_524_437_frustrated_other_internet_document.txt"
-}

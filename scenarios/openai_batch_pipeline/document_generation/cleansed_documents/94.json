@@ -1,7 +1,0 @@
-{
-    "summary": " \n\nThe customer was having trouble streaming a movie on their Contoso Wireless device. The agent provided assistance by suggesting the customer check their Wi-Fi connection, make sure they have enough free storage space available, and update their streaming apps. The customer then tried restarting their device and was able to successfully stream the movie.",
-    "customerSentiment": "content",
-    "topic": "support",
-    "product": "streaming",
-    "filename": "94_548_461_content_support_streaming_document.txt"
-}

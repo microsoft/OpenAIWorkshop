@@ -1,7 +1,0 @@
-{
-    "summary": "\n\nThe customer contacted Contoso Wireless to report issues with their internet service. They were not getting the speeds they were promised and their connection was unreliable. The agent apologized for the inconvenience and asked for more information in order to troubleshoot the issue further. The customer provided their account details, location, and the type of device they were using to connect to the internet. The agent then asked if any changes had been made recently on the customer's end, to which they replied that nothing had changed since they signed up for the service two months ago.",
-    "customerSentiment": "negative",
-    "topic": "churn",
-    "product": "internet",
-    "filename": "210_681_594_negative_churn_internet_document.txt"
-}
