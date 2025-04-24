@@ -5,7 +5,7 @@ from typing import Any
 from pathlib import Path
 
 # Add BaseAgent 
-from agents.base_agent import BaseAgent 
+from base_agent import BaseAgent 
 
 # Add Semantic Kernel Modules as it looks like AIAS uses SK for MCP
 from semantic_kernel.agents import ChatCompletionAgent, ChatHistoryAgentThread
