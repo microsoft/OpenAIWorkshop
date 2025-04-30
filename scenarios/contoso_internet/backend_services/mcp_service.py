@@ -1,6 +1,6 @@
 from fastmcp import FastMCP  
 from typing import List, Optional, Dict, Any  
-from pydantic import BaseModel  
+from pydantic import BaseModel, Field  
 import sqlite3, os, json, math, asyncio, logging  
 from datetime import datetime  
 from dotenv import load_dotenv  
@@ -130,8 +130,8 @@ class Promotion(BaseModel):
   
   
 class KBSearchParams(BaseModel):  
-    query: str  
-    topk: Optional[int] = 3  
+    query: str = Field(..., description="natural lanaguage query")  
+    topk: Optional[int] = Field(3, description="Number of top documents to return")  
   
   
 class KBDoc(BaseModel):  
