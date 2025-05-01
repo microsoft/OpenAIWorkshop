@@ -18,7 +18,7 @@ class Agent(BaseAgent):
         self._agent = None
         self._initialized = False
 
-    async def _setup_agent(self) -> None:
+    async def _setup_agents(self) -> None:
         """Initialize the assistant and tools only once."""
         if self._initialized:
             return
@@ -31,22 +31,34 @@ class Agent(BaseAgent):
             headers={"Content-Type": "application/json"},
             timeout=30,
         )
+
         # Open the SSE connection so tools/prompts are loaded
         await contoso_plugin.connect()
 
-        # Set up the chat completion agent with the Azure OpenAI service and the MCP plugin.
+        # Define compete agents and use them to create the main agent.
+        primary_agent = ChatCompletionAgent(
+            service=AzureChatCompletion(),
+            name="PrimaryAgent",
+            instructions="You are a helpful assistant. You can use multiple tools to find information and answer questions. "  
+            "Review the tools available to you and use them as needed. You can also ask clarifying questions if "  
+            "the user is not clear." ,
+            plugins=[contoso_plugin]
+        )
+        critic_agent = ChatCompletionAgent(
+            service=AzureChatCompletion(),
+            name="CriticAgent",
+            instructions="Provide constructive feedback. Respond with 'APPROVE' to when your feedbacks are addressed.",
+            plugins=[contoso_plugin]
+        )
         self._agent = ChatCompletionAgent(
-            service=AzureChatCompletion(
-                api_key=self.azure_openai_key,
-                endpoint=self.azure_openai_endpoint,
-                api_version=self.api_version,
-                deployment_name=self.azure_deployment,
-            ),
+            service=AzureChatCompletion(),
             name="ChatBot",
-            instructions="You are a helpful assistant. You can use multiple tools to find information "
-            "and answer questions. Review the tools available under the MCPTools plugin "
-            "and use them as needed. You can also ask clarifying questions if the user is not clear.",
-            plugins=[contoso_plugin],
+            instructions=(
+                "You coordinate between PrimaryAgent and CriticAgent. "
+                "First, get the response from PrimaryAgent, then ask CriticAgent to review it. "
+                "Finally, present the improved response to the user if needed."
+            ),
+            plugins=[primary_agent, critic_agent]
         )
 
         # Create a thread to hold the conversation.
@@ -63,7 +75,7 @@ class Agent(BaseAgent):
 
     async def chat_async(self, prompt: str) -> str:
         # Ensure agent/tools are ready and process the prompt.
-        await self._setup_agent()
+        await self._setup_agents()
 
         response = await self._agent.get_response(messages=prompt, thread=self._thread)
         response_content = str(response.content)
