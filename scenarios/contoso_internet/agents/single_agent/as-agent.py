@@ -1,3 +1,6 @@
+# This is sample of a single-agent that uses AI Agent Service
+# It does not point to the MCP service or tools and uses local data.txt sample file instead
+
 import os  
 from dotenv import load_dotenv  
 from typing import Any

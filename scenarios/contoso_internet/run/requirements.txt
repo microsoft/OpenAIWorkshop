@@ -10,3 +10,5 @@ autogen-agentchat
 fastapi
 tiktoken
 streamlit
+azure-ai-projects
+azure-identity

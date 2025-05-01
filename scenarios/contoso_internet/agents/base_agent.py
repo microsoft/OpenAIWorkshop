@@ -1,3 +1,8 @@
+# BaseAgent Class
+# User does not need to modify this class.
+# This parent class is called by individual agents to handle common functionality.
+# The user should only modify the individual agent classes (e.g., AIASAgent, etc.)
+
 import os  
 import logging  
 from typing import Any, Dict, List, Optional  
