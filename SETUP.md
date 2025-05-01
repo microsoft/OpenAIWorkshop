@@ -10,7 +10,7 @@ This document describes how to setup and run your AI Agents for the workshop
 Open VS Code terminal 
 
 ```bash 
-git clone <repo_url> # from folder when you want clone to reside
+git clone <repo_url> # from folder where you want clone to reside
 ```
 ### 2. Install Python dependencies  
   
@@ -194,4 +194,5 @@ If you successfully completed all the steps, setup is complete and your agent sh
   
 - Microsoft Azure OpenAI Service    
 - MCP Project    
-- AutoGen    
+- AutoGen
+- SDP CSA & SE Team - James Nguyen, Anil Dwarkanath, Nicole Serafino, Claire Rehfuss, Patrick O'Malley, Kirby Repko, Heena Ugale, Aditya Agrawal    
