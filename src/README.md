@@ -1,1 +1,0 @@
-The source code directory, containing all the scripts and code necessary for the workshop. This can be organized by modules or components.

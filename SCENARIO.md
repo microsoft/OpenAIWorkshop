@@ -1,14 +1,15 @@
+![alt text](image-1.png)
+# Microsoft AI Agentic Workshop Business Scenario and Suggested Queries 
+  
+This document describes the business scenario for this AI Agentic Workshop from Microsoft. 
+There are customer query suggestions below for queries to use with your agents to check and evaluate their responses
 
-## Goal
-This project focuses on revamping the existing OpenAI workshop content, aligning it with the latest Agentic AI technologies. The primary objective is to deliver an updated curriculum that equips participants with the skills to design and implement agent-based AI systems using cutting-edge tools like Azure Agent Service, Semantic Kernel, and Autogen frameworks. The refreshed content aims to guide learners through practical applications, enabling them to automate customer requests through structured data queries and knowledge base searches, and to advance from simple single-agent setups to complex multi-agent architectures.
-
-## 1. Business Scenario Description  
+## 1. Business Scenario  
   
 "Contoso Communications" provides telecom and internet services. Customers frequently submit requests about billing, account management, service status, and promotions. Requests range from simple queries (single data source) to complex questions requiring multiple backend systems interactions.  
   
----  
   
-## 2. Backend System Setup & Details  
+## 2. Input Data, Interfaces and Backend System Setup & Details  
   
 Participants will use the following simulated backend systems during the workshop. These systems replicate real-world business environments and will be accessible via structured APIs or simplified interfaces.  
   
@@ -20,10 +21,99 @@ Participants will use the following simulated backend systems during the worksho
 | **Security & Authentication Database** | Manages structured information about account security status, login attempts, and authentication issues. | Account lockout reasons, authentication logs, security flags. | Structured API queries or REST API. |  
 | **Knowledge Base (Confluence or SharePoint-like system)** | Centralized repository for documentation, FAQs, troubleshooting guides, internal policies, and procedural guidelines. | Unstructured/semi-structured text documents, policy documents, troubleshooting procedures. | Semantic search API, keyword-based or embedding-based retrieval. |  
   
-**Note:** Participants will be provided with simplified API endpoints and credentials to interact with these backend systems directly during the hands-on exercises.  
+**Note:** Participants are provided with simplified API endpoints and credentials to interact with these backend systems directly during the hands-on exercises.  
+  
+## 3. Customer Query Suggestions  
+#### Example 1:   
+
+**Customer:** "I noticed my last invoice was higher than usual—can you help me understand why and what can be done about it?"    
+
+**Analysis & Plan:**    
+- Check billing history and recent changes in subscriptions or charges.    
+- Review policy for invoice adjustments. 
+
+**Systems Accessed:**    
+- CRM, Billing Database, Knowledge Base.    
+---  
+  
+#### Example 2:   
+
+**Customer:** "My internet service seems slower than before—can you check what's happening?"    
+
+**Analysis & Plan:**    
+- Review the customer’s current subscription plan and service status.    
+- Check for recent service incidents or network usage history.    
+- Search knowledge base for troubleshooting guidance or policies on service quality guarantees.    
+
+**Systems Accessed:**    
+- CRM (Customer Profile).    
+- Service Monitoring and Diagnostics System (Technical Data).    
+- Knowledge Base (Troubleshooting Guides).    
+---  
+  
+#### Example 3:   
+  
+**Customer:** "I'm traveling abroad next month. What should I do about my phone plan?"    
+  
+**Analysis & Plan:**    
+- Check the customer’s current mobile subscription, roaming capabilities, and international charges.    
+- Search knowledge base for suitable international roaming options or temporary international plans.    
+- Update the plan after verifying eligibility and availability.    
+  
+**Systems Accessed:**    
+- CRM (Current Subscription).    
+- Product & Service Database (Available Plans).    
+- Knowledge Base (International Roaming Policies).    
   
 ---  
   
+#### Example 4:   
+  
+**Customer:** "I tried logging into my account, but it says I'm locked out. Can you help?"    
+  
+**Analysis & Plan:**    
+- Review the customer’s account status, recent login attempts, and security alerts.    
+- Investigate reasons for account lockout in the security database.    
+- Search knowledge base for account security policies, unlock procedures, and verification processes.    
+  
+**Systems Accessed:**    
+- CRM (Customer Account).    
+- Security & Authentication System (Security Data).    
+- Knowledge Base (Unlock Procedures, Security Policies).    
+  
+---  
+  
+#### Example 5:   
+  
+**Customer:** "Do I qualify for any discounts or promotions right now?"    
+  
+**Analysis & Plan:**    
+- Check the customer’s account history, current subscriptions, loyalty status, and previous promotional usage.    
+- Search the product database for active promotions or discounts applicable to the customer’s profile.    
+- Refer to the knowledge base for eligibility criteria for promotions or loyalty rewards.    
+  
+**Systems Accessed:**    
+- CRM (Customer Profile, Loyalty Information).    
+- Promotions & Discounts Database (Promotional Data).    
+- Knowledge Base (Promotion Eligibility Policies).    
+  
+---  
+  
+#### Example 6:   
+  
+**Customer:** "I want to return a product I recently purchased. What's the process?"    
+  
+**Analysis & Plan:**    
+- Confirm recent purchases from the customer’s order history.    
+- Check eligibility for return based on purchase date and item category.    
+- Search the knowledge base for return policies, guidelines, and procedures.    
+  
+**Systems Accessed:**    
+- CRM & Order Management System (Order/Purchase Data).    
+- Knowledge Base (Return Policies and Guidelines).    
+  
+---  
+
 ## 3. Model Context Protocol API Service Endpoints  
   
 **The following services are exposed as tools for AI Agents:**  
@@ -139,100 +229,6 @@ Critically, **all functional specialist agents** independently utilize the organ
   
 ---  
   
-## 5. Customer Request Examples  
-  
----  
-  
-#### Example 1:   
-  
-**Customer:** "I noticed my last invoice was higher than usual—can you help me understand why and what can be done about it?"    
-  
-**Analysis & Plan:**    
-- Check billing history and recent changes in subscriptions or charges.    
-- Review policy for invoice adjustments.    
-  
-**Systems Accessed:**    
-- CRM, Billing Database, Knowledge Base.    
-  
----  
-  
-#### Example 2:   
-  
-**Customer:** "My internet service seems slower than before—can you check what's happening?"    
-  
-**Analysis & Plan:**    
-- Review the customer’s current subscription plan and service status.    
-- Check for recent service incidents or network usage history.    
-- Search knowledge base for troubleshooting guidance or policies on service quality guarantees.    
-  
-**Systems Accessed:**    
-- CRM (Customer Profile).    
-- Service Monitoring and Diagnostics System (Technical Data).    
-- Knowledge Base (Troubleshooting Guides).    
-  
----  
-  
-#### Example 3:   
-  
-**Customer:** "I'm traveling abroad next month. What should I do about my phone plan?"    
-  
-**Analysis & Plan:**    
-- Check the customer’s current mobile subscription, roaming capabilities, and international charges.    
-- Search knowledge base for suitable international roaming options or temporary international plans.    
-- Update the plan after verifying eligibility and availability.    
-  
-**Systems Accessed:**    
-- CRM (Current Subscription).    
-- Product & Service Database (Available Plans).    
-- Knowledge Base (International Roaming Policies).    
-  
----  
-  
-#### Example 4:   
-  
-**Customer:** "I tried logging into my account, but it says I'm locked out. Can you help?"    
-  
-**Analysis & Plan:**    
-- Review the customer’s account status, recent login attempts, and security alerts.    
-- Investigate reasons for account lockout in the security database.    
-- Search knowledge base for account security policies, unlock procedures, and verification processes.    
-  
-**Systems Accessed:**    
-- CRM (Customer Account).    
-- Security & Authentication System (Security Data).    
-- Knowledge Base (Unlock Procedures, Security Policies).    
-  
----  
-  
-#### Example 5:   
-  
-**Customer:** "Do I qualify for any discounts or promotions right now?"    
-  
-**Analysis & Plan:**    
-- Check the customer’s account history, current subscriptions, loyalty status, and previous promotional usage.    
-- Search the product database for active promotions or discounts applicable to the customer’s profile.    
-- Refer to the knowledge base for eligibility criteria for promotions or loyalty rewards.    
-  
-**Systems Accessed:**    
-- CRM (Customer Profile, Loyalty Information).    
-- Promotions & Discounts Database (Promotional Data).    
-- Knowledge Base (Promotion Eligibility Policies).    
-  
----  
-  
-#### Example 6:   
-  
-**Customer:** "I want to return a product I recently purchased. What's the process?"    
-  
-**Analysis & Plan:**    
-- Confirm recent purchases from the customer’s order history.    
-- Check eligibility for return based on purchase date and item category.    
-- Search the knowledge base for return policies, guidelines, and procedures.    
-  
-**Systems Accessed:**    
-- CRM & Order Management System (Order/Purchase Data).    
-- Knowledge Base (Return Policies and Guidelines).    
-  
----  
+
   
 ### [Checkout the challenges document for more scenarios](backend_services/data/customer_scenarios.md)  
