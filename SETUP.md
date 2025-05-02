@@ -17,16 +17,18 @@ git clone <repo_url> # from folder where you want clone to reside
 It is recommended to use a virtual environment.  
 
 ```bash 
-# Creating and activating virtual environment on Mac, installing dependencies 
-python -m venv venv  
-source venv/bin/activate   
-pip install -r requirements.txt  # From folder where this file resides
-
-# Creating and activating virtual environment on Windows, installing dependencies
+# Creating and activating virtual environment on Mac 
 python -m venv venv
-venv\Scripts\activate  
-pip install -r requirements.txt  # From folder where this file resides
-
+source venv/bin/activate
+```
+```sh
+# Creating and activating virtual environment on Windows
+python -m venv venv
+venv\Scripts\activate
+```
+```sh
+# Install dependencies from folder where this file resides
+pip install -r requirements.txt  
 ```
 
 #### Example `requirements.txt` includes:  
