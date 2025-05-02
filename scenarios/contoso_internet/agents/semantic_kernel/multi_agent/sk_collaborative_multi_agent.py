@@ -2,7 +2,6 @@ import asyncio
 import logging
 from typing import List, Optional
 
-import debugpy
 from agents.base_agent import BaseAgent
 from semantic_kernel.agents import AgentGroupChat, ChatCompletionAgent
 from semantic_kernel.agents.strategies import (
@@ -13,9 +12,6 @@ from semantic_kernel.connectors.ai.function_choice_behavior import (
     FunctionChoiceBehavior,
 )
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
-from semantic_kernel.connectors.ai.prompt_execution_settings import (
-    PromptExecutionSettings,
-)
 from semantic_kernel.connectors.mcp import MCPSsePlugin
 from semantic_kernel.contents import ChatHistoryTruncationReducer
 from semantic_kernel.functions import KernelArguments, KernelFunctionFromPrompt
@@ -41,16 +37,24 @@ class Agent(BaseAgent):
     • security_authentication  – security specialist
     """
 
-    # ------------------------------------------------------------------ #
-    #                           INITIALISATION                           #
-    # ------------------------------------------------------------------ #
+    def __new__(cls, state_store: dict, session_id: str):
+        # Return the existing instance if it exists in the session store.
+        if session_id in state_store:
+            return state_store[session_id]
+        instance = super().__new__(cls)
+        state_store[session_id] = instance
+        return instance
+
     def __init__(self, state_store: dict, session_id: str) -> None:
+        # Prevent re‑initialization if the instance was already constructed.
+        if hasattr(self, "_constructed"):
+            return
+        self._constructed = True
         super().__init__(state_store, session_id)
-        self._chat: Optional[AgentGroupChat] = None
-        self._initialized: bool = False
+        self._chat: AgentGroupChat
 
     async def _setup_team(self) -> None:
-        if self._initialized:
+        if getattr(self, "_initialized", False):
             return
 
         # 1. ---------- "System" Kernel + Service (Azure OpenAI) ---------------
@@ -95,21 +99,14 @@ class Agent(BaseAgent):
             included_tools: Optional[List[str]] = [],
         ) -> ChatCompletionAgent:
             settings = kernel.get_prompt_execution_settings_from_service_id("default")
-            settings.function_choice_behavior = (
-                FunctionChoiceBehavior.Auto(
-                    filters={"included_functions": included_tools}
-                )  # specialists
-                # if allow_tool_calls
-                # else FunctionChoiceBehavior.NoneInvoke()  # planner
+            settings.function_choice_behavior = FunctionChoiceBehavior.Auto(
+                filters={"included_functions": included_tools}
             )
-            # expose the MCP plugin only when tool calls are allowed
-            # active_plugins = [self.contoso_plugin] if allow_tool_calls else []
 
             return ChatCompletionAgent(
                 kernel=kernel,
                 name=name,
                 instructions=instructions,
-                # plugins=active_plugins,
                 arguments=KernelArguments(settings=settings),
             )
 
@@ -288,18 +285,10 @@ class Agent(BaseAgent):
                 kernel=system_kernel,
                 result_parser=lambda r: str(r.value[0]).lower().startswith("yes"),
                 history_variable_name="lastmessage",
-                maximum_iterations=30,
+                maximum_iterations=15,
                 history_reducer=history_reducer,
             ),
         )
-
-        # Restore previous state if any
-        if self.state and "thread" in self.state:
-            try:
-                await self._chat.add_chat_messages(self.state["thread"])
-                logger.info("Restored SK multi‑agent state from SESSION_STORE")
-            except Exception as exc:
-                logger.warning(f"Could not restore thread: {exc}")
 
         self._initialized = True
 
@@ -313,14 +302,16 @@ class Agent(BaseAgent):
         if not self._chat:
             return "Multi‑agent system not initialised."
 
+        if self._chat.is_complete:
+            self._chat.is_complete = False
+
         # Add the user message to the conversation
         await self._chat.add_chat_message(message=prompt)
 
         final_answer: str = ""
+
         try:
-            debugpy.breakpoint()
             async for response in self._chat.invoke():
-                # stream each agent reply if needed (for UI telemetry etc.)
                 if response and response.name:
                     logger.info(f"[{response.name}] {response.content}")
                     # capture orchestrator final answer
@@ -329,28 +320,6 @@ class Agent(BaseAgent):
                     ).lower().startswith("final answer:"):
                         # Remove the prefix (case‑insensitive)
                         final_answer = str(response.content).split(":", 1)[1].lstrip()
-
-            # Persist state for future turns
-            if self._chat.history:
-
-                cleaned_history = []
-                async for m in self._chat.get_chat_messages():
-                    text = str(m.content)
-                    if text.lower().startswith("final answer:"):
-                        # strip the prefix so termination strategy won’t see it
-                        text = text.split(":", 1)[1].lstrip()
-                    # mutate the message *in‑place* so the live chat history is
-                    # also updated for the next turn
-                    m.content = text
-                    cleaned_history.append(m)
-
-                # overwrite the internal history used by AgentGroupChat
-                # (history is just a MutableSequence[ChatMessage])
-                self._chat.history.messages = cleaned_history
-
-                # persist to your own session store
-                self._setstate({"thread": cleaned_history})
-                logger.info(f"Chat history: {cleaned_history}")
 
         except Exception as exc:
             logger.error(f"[SK MultiAgent] chat_async error: {exc}")
@@ -380,8 +349,7 @@ if __name__ == "__main__":
     async def _demo() -> None:
         dummy_state: dict = {}
         agent = Agent(dummy_state, session_id="demo")
-        # user_question = "My customer id is 101, what is my current balance?"
-        user_question = "hi"
+        user_question = "My customer id is 101, what is my current balance?"
         answer = await agent.chat_async(user_question)
         print("\n>>> Assistant reply:\n", answer)
         try:
