@@ -12,7 +12,7 @@ from autogen_core import CancellationToken
 from autogen_ext.models.openai import AzureOpenAIChatCompletionClient  
 from autogen_ext.tools.mcp import SseServerParams, mcp_server_tools  
 
-from base_agent import BaseAgent
+from agents.base_agent import BaseAgent
 
 #Define termination conditions
 text_mention_termination = TextMentionTermination("FINAL_ANSWER:")
