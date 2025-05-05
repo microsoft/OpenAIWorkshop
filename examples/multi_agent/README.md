@@ -1,1 +1,0 @@
-Examples of multi-agent architectures.
