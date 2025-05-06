@@ -7,3 +7,13 @@ flasgger
 fastmcp
 autogen-ext[mcp]
 autogen-agentchat
+uvicorn
+fastapi
+streamlit
+requests
+pydantic
+semantic-kernel
+tiktoken
+streamlit
+azure-ai-projects
+azure-identity

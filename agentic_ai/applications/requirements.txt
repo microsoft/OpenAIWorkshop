@@ -13,3 +13,6 @@ streamlit
 requests
 pydantic
 semantic-kernel
+tiktoken
+azure-ai-projects
+azure-identity
