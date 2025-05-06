@@ -231,4 +231,4 @@ Critically, **all functional specialist agents** independently utilize the organ
   
 
   
-### [Checkout the challenge document for more scenarios](backend_services/data/customer_scenarios.md)  
+### [Checkout the challenge document for more scenarios](agentic_ai/backend_services/data/customer_scenarios.md)  
