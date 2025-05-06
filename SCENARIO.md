@@ -1,5 +1,5 @@
-![alt text](image-1.png)
-# Microsoft AI Agentic Workshop Business Scenario and Suggested Queries 
+![alt text](media/image-1.png)
+# Microsoft AI Agentic Workshop Business Scenario 
   
 This document describes the business scenario for this AI Agentic Workshop from Microsoft. 
 There are customer query suggestions below for queries to use with your agents to check and evaluate their responses
@@ -231,4 +231,4 @@ Critically, **all functional specialist agents** independently utilize the organ
   
 
   
-### [Checkout the challenges document for more scenarios](backend_services/data/customer_scenarios.md)  
+### [Checkout the challenge document for more scenarios](backend_services/data/customer_scenarios.md)  

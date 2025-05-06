@@ -1,35 +1,66 @@
-![alt text](image-1.png)
+![alt text](media/image-1.png)
 # Microsoft AI Agentic Workshop Repository  
   
-This repository has materials for latest AI Agentic Workshop from Microsoft. 
-
-# Repository includes
-1. Business scenario - **SCENARIO.md**
-2. Step-by-step instructions -  **SETUP.md**
-3. Agent implementations -  **agents** folder
-4. Documentation on agent implementations - **AGENT_DOC.md**
-5. Agent Design Patterns reference - **AGENT_PATTERNS.md**
-6. Common framework all agents in this workshop use - **FRAMEWORK.md**
-7. Back-end server and APIs - **applications** folder
-8. Front-end app - **applications** folder
-9. Common toolset in an MCP server - see **run** folder
-10. Data files -  **data** folder
-
-# Users can 
-1. Design and prototype agent solutions 
-2. Compare single vs multi-agent implementations 
-3. Develop and compare agents using different platforms
-- Azure AI Agent Service
-- Semantic Kernel
-- Autogen  
-
-# Features  
-- **Latest Azure OpenAI GPT models** (configurable, e.g. GPT-4.1, GPT-4o) as LLM backend  
-- **MCP Server tool** integration for enhanced agent capabilities  
-- **Flexible agent architecture**:  
-  - Single agent, multi-agent, or reflection agent (agent module is selectable via `.env`)  
-  - Agents can self-loop, collaborate, reflect, or select roles as coded in agent modules  
-- **Session-based chat** with persistable conversation history  
-- **FastAPI backend** with REST endpoints for chat/reset/history  
-- **Modern Streamlit web frontend** for real-time chat, session reset, and history viewing  
-- **Environment-based configuration** via `.env`  
+Welcome to the official repository for the Microsoft AI Agentic Workshop! This repository provides all the resources, code, and documentation you need to explore, prototype, and compare various agent-based AI solutions using Microsoft's leading AI technologies.  
+  
+---  
+  
+## Quick Links  
+  
+- [Business Scenario and Agent Design](./SCENARIO.md)  
+- [Getting Started (Setup Instructions)](./SETUP.md)  
+- [System Architecture Overview](./ARCHITECTURE.md)  
+- [Data Sets](./DATA.md)  
+- [Code of Conduct](./CODE_OF_CONDUCT.md)  
+- [Security Guidelines](./SECURITY.md)  
+- [Support](./SUPPORT.md)  
+- [License](./LICENSE)  
+  
+---  
+  
+## What You Can Do With This Workshop  
+  
+- **Design and prototype agent solutions** for real-world business scenarios.  
+- **Compare single-agent vs. multi-agent** architectures and approaches.  
+- **Develop and contrast agent implementations** using different platforms:  
+  - Azure AI Agent Service  
+  - Semantic Kernel  
+  - Autogen  
+  
+---  
+  
+## Key Features  
+  
+- **Configurable LLM Backend:** Use the latest Azure OpenAI GPT models (e.g., GPT-4.1, GPT-4o).  
+- **MCP Server Integration:** Advanced tools to enhance agent orchestration and capabilities.  
+- **Flexible Agent Architecture:**  
+  - Supports single-agent, multi-agent, or reflection-based agents (selectable via `.env`).  
+  - Agents can self-loop, collaborate, reflect, or take on dynamic roles as defined in modules.  
+- **Session-Based Chat:** Persistent conversation history for each session.  
+- **Full-Stack Application:**  
+  - FastAPI backend with RESTful endpoints (chat, reset, history, etc.).  
+  - Streamlit frontend for real-time chat, session management, and history viewing.  
+- **Environment-Based Configuration:** Easily configure the system using `.env` files.  
+  
+---  
+  
+## Getting Started  
+  
+1. Review the [Setup Instructions](./SETUP.md) for environment prerequisites and step-by-step installation.  
+2. Explore the [Business Scenario and Agent Design](./SCENARIO.md) to understand the workshop challenge.  
+3. Dive into  [System Architecture](./ARCHITECTURE.md) before building and customizing your agent solutions.  
+4. Utilize the [Support Guide](./SUPPORT.md) for troubleshooting and assistance.  
+  
+---  
+  
+## Contributing  
+  
+Please review our [Code of Conduct](./CODE_OF_CONDUCT.md) and [Security Guidelines](./SECURITY.md) before contributing.  
+  
+---  
+  
+## License  
+  
+This project is licensed under the terms described in the [LICENSE](./LICENSE) file.  
+  
+---  

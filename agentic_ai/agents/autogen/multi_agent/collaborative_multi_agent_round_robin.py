@@ -74,7 +74,7 @@ class Agent(BaseAgent):
                     "3) Integrate the specialists' outputs into ONE comprehensive, "  
                     "coherent answer for the customer.\n"  
                     "4) When satisfied, respond to the customer with the final answer "  
-                    "prefixed by: FINAL ANSWER:\n\n"  
+                    "prefixed by: FINAL_ANSWER:\n\n"  
                     "If you still need information, continue the dialogue with the "  
                     "specialists; otherwise finish with the final answer."  
                 ),  
@@ -174,7 +174,8 @@ class Agent(BaseAgent):
             )  
   
             assistant_response: str = response.messages[-1].content  
-  
+            assistant_response = assistant_response.replace("FINAL_ANSWER:", "").strip()
+
             # Persist interaction in chat history so UI / analytics can render it.  
             self.append_to_chat_history(  
                 [  
