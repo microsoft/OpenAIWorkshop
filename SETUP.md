@@ -1,4 +1,4 @@
-![alt text](image-1.png)
+![alt text](media/image-1.png)
 # Microsoft AI Agentic Workshop Setup
 
 This document describes how to setup and run your AI Agents for the workshop

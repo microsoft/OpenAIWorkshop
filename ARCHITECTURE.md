@@ -1,5 +1,5 @@
 
-
+![alt text](media/image-1.png)
 # System Architecture  
 ![System Architecture Diagram](media/system_architecture.png)
   
