@@ -92,6 +92,8 @@ class Agent(BaseAgent):
             name="triage_agent",
             instructions=(
                 "Handoff to the appropriate agent based on the language of the request."
+                "if you need clarification or info is not complete ask follow-up Qs"
+                "Like if customer asks questions without providing any identifying info such as customer ID, ask for it"
             ),
             plugins=[crm_billing, product_promotions, security_authentication],
         )
