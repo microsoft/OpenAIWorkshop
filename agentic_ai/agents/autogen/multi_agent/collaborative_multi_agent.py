@@ -32,7 +32,7 @@ class Agent(BaseAgent):
     Collaborative multi‑agent system composed of:  
         • Analysis & Planning Agent (orchestrator)  
         • CRM & Billing Agent  
-        • Product & Promotions Agent  
+        • Product & Promotions Agent 
         • Security & Authentication Agent  
   
     Each specialist has access to the central Knowledge Base through the  
@@ -114,40 +114,11 @@ class Agent(BaseAgent):
                 ),  
             )  
 
-            product_promotions_agent = AssistantAgent(  
-                name="product_promotions",  
-                description="Agent for retrieving and explaining product availability, promotions, discounts, eligibility, and terms.",  
-                model_client=model_client,  
-                tools=tools,  
-                system_message=(  
-                    "You are the Product & Promotions Agent.\n"  
-                    "- Retrieve promotional offers, product availability, eligibility "  
-                    "criteria, and discount information from structured sources.\n"  
-                    "- Augment answers with *Knowledge Base* FAQs, terms & conditions, "  
-                    "and best practices.\n"  
-                    "- Provide factual, up‑to‑date product/promo details."  
-                ),  
-            )  
-
-            security_authentication_agent = AssistantAgent(  
-                name="security_authentication",  
-                description="Agent focusing on security, authentication issues, lockouts, account security incidents, providing risk assessment and mitigation guidance.",  
-                model_client=model_client,  
-                tools=tools,  
-                system_message=(  
-                    "You are the Security & Authentication Agent.\n"  
-                    "- Investigate authentication logs, account lockouts, and security "  
-                    "incidents in structured security databases.\n"  
-                    "- Always cross‑reference *Knowledge Base* security policies and "  
-                    "lockout troubleshooting guides.\n"  
-                    "- Return clear risk assessments and recommended remediation steps."  
-                ),  
-            )    
+            
             # 4. -----------------  Assemble Team -----------------  
             participants: List[AssistantAgent] = [  
                 crm_billing_agent,  
-                product_promotions_agent,  
-                security_authentication_agent,  
+                # users can add other specicialist agents here, e.g. product_promotions_agent etc
                 analysis_planning_agent,      # orchestrator always concludes a cycle  
             ]  
   

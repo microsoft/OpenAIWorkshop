@@ -135,10 +135,11 @@ class Agent(BaseAgent):
             "Specialist directory – choose the SINGLE best match for each sub‑task:\n"
             "- crm_billing – Accesses CRM & billing systems for account, subscription, invoice,\n"
             "  payment status, refunds and policy compliance questions.\n"
-            "- product_promotions – Provides product catalogue details, current promotions,\n"
-            "  discount eligibility rules and T&Cs from structured sources & FAQs.\n"
-            "- security_authentication – Investigates authentication logs, account lock‑outs,\n"
-            "  security incidents; references security KBs and recommends remediation steps.\n"
+            # this sample does not implement specialist functions for these tasks, user can try implementing them and uncommenting lines
+            #"- product_promotions – Provides product catalogue details, current promotions,\n"
+            #"  discount eligibility rules and T&Cs from structured sources & FAQs.\n"
+            #"- security_authentication – Investigates authentication logs, account lock‑outs,\n"
+            #"  security incidents; references security KBs and recommends remediation steps.\n"
             "\n"
             "STRICT RULES:\n"
             "- Do not emit planning commentary or bullet lists to the user.\n"
@@ -174,52 +175,16 @@ class Agent(BaseAgent):
             ],
         )
 
-        product_promotions = make_agent(
-            "product_promotions",
-            "You are the Product & Promotions Agent.\n"
-            "- Retrieve promotional offers, product availability, eligibility "
-            "criteria, and discount information from structured sources.\n"
-            "- For each response you **MUST** cross‑reference relevant *Knowledge Base* FAQs, terms & conditions, "
-            "and best practices.\n"
-            "- Provide factual, up‑to‑date product/promo details."
-            "Only respond with data you retrieve using your tools.\n"
-            "DO NOT respond to anything out of your domain.",
-            kernel=specialist_kernel,
-            included_tools=[
-                "ContosoMCP-get_all_customers",
-                "ContosoMCP-get_customer_detail",
-                "ContosoMCP-get_promotions",
-                "ContosoMCP-get_eligible_promotions",
-                "ContosoMCP-search_knowledge_base",
-                "ContosoMCP-get_products",
-                "ContosoMCP-get_product_detail",
-            ],
-        )
+        
 
-        security_authentication = make_agent(
-            "security_authentication",
-            "You are the Security & Authentication Agent.\n"
-            "- Investigate authentication logs, account lockouts, and security "
-            "incidents in structured security databases.\n"
-            "- For each response you **MUST** cross‑reference relevant *Knowledge Base* security policies and "
-            "lockout troubleshooting guides.\n"
-            "- Return clear risk assessments and recommended remediation steps."
-            "Only respond with data you retrieve using your tools.\n"
-            "DO NOT respond to anything out of your domain.",
-            kernel=specialist_kernel,
-            included_tools=[
-                "ContosoMCP-get_all_customers",
-                "ContosoMCP-get_customer_detail",
-                "ContosoMCP-get_security_logs",
-                "ContosoMCP-search_knowledge_base",
-                "ContosoMCP-unlock_account",
-            ],
-        )
+        
 
         participants: List[ChatCompletionAgent] = [
             crm_billing,
-            product_promotions,
-            security_authentication,
+            # uncomment these other specialist agents once you implement their functions
+            #product_promotions,
+            #security_authentication,
+            # .... other specialists can be added here
             analysis_planning,  # orchestrator closes a cycle
         ]
 
