@@ -7,3 +7,8 @@ flasgger
 fastmcp
 autogen-ext[mcp]
 autogen-agentchat
+azure-ai-projects==1.0.0b10
+azure-core==1.33.0
+azure-identity==1.21.0
+msal==1.32.3
+msal-extensions==1.3.1
