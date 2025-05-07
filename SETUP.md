@@ -70,7 +70,6 @@ Rename `.env.sample` to `.env` and fill in all required fields:
 AZURE_OPENAI_ENDPOINT="https://your-openai-service-endpoint.openai.azure.com"
 
 #User to replace your-openai-api-key with their project API Key in Azure AI Foundry
-#e.g. AbcDefgHijKLmnopQRst98Rt5TreSXyZ34AbcdefeghijklmnopQrts............................z
 AZURE_OPENAI_API_KEY="your-openai-api-key"
 
 #User to replace your-agent with name of agent python file
@@ -96,7 +95,6 @@ DB_PATH="data/contoso.db"
 # E.g AGENT_MODULE="agents.loop_agent"
 AGENT_MODULE="agents.your-agent"
 
-# MCP_SERVER_URI="https://mcp-backend-service.whitefield-2abc17d9.westus.azurecontainerapps.io/sse"
 
 ```
 
@@ -110,7 +108,7 @@ AGENT_MODULE="agents.your-agent"
 Go to "run" folder, and in terminal window with virtual environment activated, run MCP server
 
 ```bash
-python mcp_server.py # Don't close terminal window once MCP server is running, use new terminal to run application
+python mcp_service.py # Don't close terminal window once MCP server is running, use new terminal to run application
 ```
 
 ### 6. Run application  
