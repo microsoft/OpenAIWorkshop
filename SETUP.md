@@ -110,7 +110,7 @@ AGENT_MODULE="agents.autogen.single_agent.loop_agent"
 Go to "backend_services" folder, and in terminal window with virtual environment activated, run MCP server
 
 ```bash
-python mcp_server.py # Don't close terminal window once MCP server is running, use new terminal to run application
+python mcp_service.py # Don't close terminal window once MCP server is running, use new terminal to run application
 ```
 
 ### 6. Run application  
