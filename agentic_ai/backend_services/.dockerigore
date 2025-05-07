@@ -1,0 +1,5 @@
+__pycache__/  
+*.pyc  
+.git/  
+test_service.py  
+docker-compose.yml  

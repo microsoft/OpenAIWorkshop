@@ -1,6 +1,6 @@
 # Data
 
-### 1. Data Generation (`data/`)  
+### 1. Data Generation ([agentic_ai/backend_services/data)](agentic_ai/backend_services/data))  
   
 - **create_db.py**    
   Generates the entire customer, subscription, billing, and usage database (`contoso.db`) with:  
