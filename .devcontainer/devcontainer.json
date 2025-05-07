@@ -1,0 +1,55 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "OpenAI Workshop",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/base:jammy",
+	"features": {
+		"ghcr.io/azure/azure-dev/azd:latest": {},
+		"ghcr.io/devcontainers/features/azure-cli:1": {},
+		"ghcr.io/devcontainers/features/conda:1": {},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/python:1": {
+			"installTools": true,
+			"version": "3.11"
+		},
+		"ghcr.io/azure/azure-dev/azd:0": {}
+	},
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+	"customizations": {
+		"vscode": {
+		  "extensions": [
+			"GitHub.remotehub",
+			"GitHub.copilot",
+			"GitHub.copilot-chat",
+			"github.vscode-pull-request-github",
+			"ms-toolsai.jupyter",
+			"ms-azuretools.azure-dev",
+			"ms-azuretools.vscode-bicep",
+			"ms-vscode.powershell",
+			"ms-vscode-remote.vscode-remote-extensionpack",
+			"ms-azuretools.vscode-docker",
+			"ms-azuretools.vscode-azureresourcegroups",
+			"ms-azuretools.vscode-azurestorage",
+			"ms-azuretools.vscode-azure-github-copilot"
+		  ]
+		}
+	  },
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+	"postCreateCommand": ".devcontainer/post-create.sh"
+}
