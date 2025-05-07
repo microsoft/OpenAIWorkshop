@@ -257,7 +257,7 @@ class Agent(BaseAgent):
             logging.info(f"Found stored conversation ID: {self.conversation_id}")
         
         # Get connection string from environment variable
-        self.conn_str = os.environ.get("PROJECT_CONNECTION_STRING")
+        self.conn_str = os.environ.get("AZURE_AI_AGENT_PROJECT_CONNECTION_STRING")
         if not self.conn_str:
             raise ValueError("PROJECT_CONNECTION_STRING environment variable is not set")
     
