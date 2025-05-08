@@ -91,10 +91,9 @@ MCP_SERVER_URI="http://localhost:8000/sse"
 #Check if this is still needed
 DB_PATH="data/contoso.db"
 
-#User to replace your-agent with name of agent python file
-# E.g AGENT_MODULE="agents.loop_agent"
-AGENT_MODULE="agents.your-agent"
-
+# Specify your agent Python module path  
+# AGENT_MODULE="agents.autogen.single_agent.loop_agent"
+AGENT_MODULE="path_to_your_agent_module"
 
 ```
 
@@ -105,13 +104,16 @@ AGENT_MODULE="agents.your-agent"
   
 ### 5. Run MCP Server 
 
-Go to "run" folder, and in terminal window with virtual environment activated, run MCP server
+Navigate to ```agentic_ai/backend_services``` folder, and in terminal window with virtual environment activated, run MCP server
 
 ```bash
-python mcp_service.py # Don't close terminal window once MCP server is running, use new terminal to run application
+python mcp_service.py  
+# Keep this terminal open; open another terminal for the next step.  
+
 ```
 
 ### 6. Run application  
+Navigate to ```agentic_ai/applications```
 
 The common backend application runs the agent selected in the .env file and connects to the frontend UI. 
   
@@ -130,7 +132,8 @@ This script will start the FastAPI backend (`backend.py`) and the Streamlit fron
 ### 1. Start the FastAPI Backend  
   
 ```bash  
-python backend.py # Don't close terminal window once backend server is running, use new terminal to run frontend 
+python backend.py  
+# Keep this terminal open; open another terminal for the frontend.  
 ```
 The backend will be available at `http://localhost:7000/chat`.  
   
