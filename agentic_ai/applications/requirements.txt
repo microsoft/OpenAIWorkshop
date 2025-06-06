@@ -1,0 +1,15 @@
+flask
+faker
+python-dotenv
+tenacity
+openai
+flasgger
+fastmcp
+autogen-ext[mcp]
+autogen-agentchat
+uvicorn
+fastapi
+streamlit
+requests
+pydantic
+semantic-kernel

@@ -1,7 +1,66 @@
-# Microsoft AI Agentic Solutions Training Repository  
+![alt text](media/image-1.png)
+# Microsoft AI Agentic Workshop Repository  
   
-This repository provides training materials and hands-on scenarios for learning the latest AI capabilities from Microsoft, including topics such as Agentic AI and multi-agent systems.   
+Welcome to the official repository for the Microsoft AI Agentic Workshop! This repository provides all the resources, code, and documentation you need to explore, prototype, and compare various agent-based AI solutions using Microsoft's leading AI technologies.  
   
-It serves as a resource for exploring how intelligent agents can be built, orchestrated, and applied to a variety of real-world enterprise scenarios using cutting-edge Microsoft AI technologies.  
+---  
   
-You will find reference architectures, backend APIs, practical labs, and step-by-step exercises to help you design, develop, and evaluate next-generation AI agent solutions.  
+## Quick Links  
+  
+- [Business Scenario and Agent Design](./SCENARIO.md)  
+- [Getting Started (Setup Instructions)](./SETUP.md)  
+- [System Architecture Overview](./ARCHITECTURE.md)  
+- [Data Sets](./DATA.md)  
+- [Code of Conduct](./CODE_OF_CONDUCT.md)  
+- [Security Guidelines](./SECURITY.md)  
+- [Support](./SUPPORT.md)  
+- [License](./LICENSE)  
+  
+---  
+  
+## What You Can Do With This Workshop  
+  
+- **Design and prototype agent solutions** for real-world business scenarios.  
+- **Compare single-agent vs. multi-agent** architectures and approaches.  
+- **Develop and contrast agent implementations** using different platforms:  
+  - Azure AI Agent Service  
+  - Semantic Kernel  
+  - Autogen  
+  
+---  
+  
+## Key Features  
+  
+- **Configurable LLM Backend:** Use the latest Azure OpenAI GPT models (e.g., GPT-4.1, GPT-4o).  
+- **MCP Server Integration:** Advanced tools to enhance agent orchestration and capabilities.  
+- **Flexible Agent Architecture:**  
+  - Supports single-agent, multi-agent, or reflection-based agents (selectable via `.env`).  
+  - Agents can self-loop, collaborate, reflect, or take on dynamic roles as defined in modules.  
+- **Session-Based Chat:** Persistent conversation history for each session.  
+- **Full-Stack Application:**  
+  - FastAPI backend with RESTful endpoints (chat, reset, history, etc.).  
+  - Streamlit frontend for real-time chat, session management, and history viewing.  
+- **Environment-Based Configuration:** Easily configure the system using `.env` files.  
+  
+---  
+  
+## Getting Started  
+  
+1. Review the [Setup Instructions](./SETUP.md) for environment prerequisites and step-by-step installation.  
+2. Explore the [Business Scenario and Agent Design](./SCENARIO.md) to understand the workshop challenge.  
+3. Dive into  [System Architecture](./ARCHITECTURE.md) before building and customizing your agent solutions.  
+4. Utilize the [Support Guide](./SUPPORT.md) for troubleshooting and assistance.  
+  
+---  
+  
+## Contributing  
+  
+Please review our [Code of Conduct](./CODE_OF_CONDUCT.md) and [Security Guidelines](./SECURITY.md) before contributing.  
+  
+---  
+  
+## License  
+  
+This project is licensed under the terms described in the [LICENSE](./LICENSE) file.  
+  
+---  
