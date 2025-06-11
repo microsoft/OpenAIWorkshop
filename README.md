@@ -59,7 +59,7 @@ Welcome to the official repository for the Microsoft AI Agentic Workshop! This r
 This repository now supports a strict cross-domain multi-agent scenario using the A2A protocol, enabling message-driven, black-box collaboration between a customer-service agent and a logistics agent.  
   
 **A2A Example Included:**    
-See `agentic_ai/agents/semantic_kernel/multi_agent/a2a/` for reference implementation and details.  
+ See [`agentic_ai/agents/semantic_kernel/multi_agent/a2a`](agentic_ai/agents/semantic_kernel/multi_agent/a2a).  
   
 ---  
 
