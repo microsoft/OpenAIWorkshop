@@ -70,9 +70,10 @@ async def build_sk_logistics_agent() -> ChatCompletionAgent:
         "You are the Logistics AI agent responsible for arranging product-return "  
         "pick-ups."  
         "Supported request types:\n"  
-        "  • availability_request\n"  
-        "  • schedule_pickup\n"  
-        "  • cancel_request\n"  
+        "  • availability_request: requireing pickup address and preferred data range\n"  
+        "  • schedule_pickup: need order_id, address and timeslot\n"  
+        "  • cancel_request\n." \
+
     )  
   
     agent = ChatCompletionAgent(  
@@ -113,11 +114,11 @@ class LogisticsA2AExecutor(AgentExecutor):
         try:  
             agent = await self._get_agent()  
             query = context.get_user_input()
+            print(f"Received query: {query}")
             task = context.current_task
             if not task:
                 task = new_task(context.message)
                 await event_queue.enqueue_event(task)
-            print("received contextid", task.contextId)
             #get thread from session store
             thread = AGENT_STATE_STORE.get(task.contextId, {})
             # Retrieve user's raw JSON payload (1st text part)  
@@ -128,6 +129,7 @@ class LogisticsA2AExecutor(AgentExecutor):
             else:
                 response = await agent.get_response(messages=query)
             response_content = str(response.content) 
+            print(f"Response content: {response_content}")
             # Update the thread in the session store
             AGENT_STATE_STORE[task.contextId] = response.thread if response.thread else {}
   

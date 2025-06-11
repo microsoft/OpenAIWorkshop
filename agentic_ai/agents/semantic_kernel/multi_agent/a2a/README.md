@@ -32,6 +32,7 @@ sequenceDiagram
     LogAgent-->>CSAgent: PickupScheduledConfirmation (confirmation details)  
     CSAgent->>Customer: Confirms pickup details, provides instructions      
 ```
+
 ## Running the A2A Demo End-to-End  
   
 The repo ships three Python modules:  

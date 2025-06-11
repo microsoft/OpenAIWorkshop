@@ -10,6 +10,7 @@ from typing import List, Optional, Dict, Any
 from dotenv import load_dotenv  
 from fastmcp import FastMCP  
 from pydantic import BaseModel, Field, field_validator  
+import logging
   
 # ──────────────────── FastMCP initialisation ────────────────────────  
 mcp = FastMCP(  
@@ -61,11 +62,8 @@ class PickupAvailabilityRequest(BaseModel):
     """  
   
     address: str = Field(..., description="Street address for the return pick-up")  
-    earliest_date: Optional[str] = Field(  
-        None, description="First acceptable date (YYYY-MM-DD, default: tomorrow)"  
-    )  
-    latest_date: Optional[str] = Field(  
-        None, description="Last acceptable date (YYYY-MM-DD, default: +7 days)"  
+    earliest_date: str = Field(  description="First acceptable date (YYYY-MM-DD)")  
+    latest_date: Optional[str] = Field( description="Last acceptable date (YYYY-MM-DD)"  
     )  
     count: Optional[int] = Field(  
         5, description="How many candidate slots to return (max 10)"  
@@ -138,6 +136,7 @@ def get_pickup_availability(
     requested interval we expose three windows – 09-12, 12-15, 15-18 –  
     until we have satisfied `count` slots.  
     """  
+    print(f"Received availability request: {params}")  # Debug output
     carriers = ["UPS", "FedEx", "DHL"]  # round-robin assignment  
   
     start = datetime.strptime(params.earliest_date, "%Y-%m-%d")  
@@ -161,7 +160,8 @@ def get_pickup_availability(
                         carrier=carriers[len(slots) % len(carriers)],  
                     )  
                 )  
-        day_cursor += timedelta(days=1)  
+        day_cursor += timedelta(days=1) 
+    logging.debug("Generated slots: %s", slots)  # Debug output 
   
     return PickupAvailabilityResponse(slots=slots)  
   
@@ -170,27 +170,31 @@ def schedule_pickup(
     request: PickupConfirmationRequest,  
 ) -> PickupScheduledConfirmation:  
     db = get_db()  
-    cur = db.execute(  
-        """  
-        INSERT INTO Pickups(order_id, slot_id, date, start_time, end_time,  
-                            carrier, address, status, created_at)  
-        VALUES (?,?,?,?,?,?,?,?,?)  
-        """,  
-        (  
-            request.order_id,  
-            request.slot.slot_id,  
-            request.slot.date,  
-            request.slot.start_time,  
-            request.slot.end_time,  
-            request.slot.carrier,  
-            request.address,  
-            "scheduled",  
-            datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),  
-        ),  
-    )  
-    pickup_id = cur.lastrowid  
-    db.commit()  
-    db.close()  
+    try:
+        cur = db.execute(  
+                """  
+                INSERT INTO Pickups(order_id, slot_id, date, start_time, end_time,  
+                                    carrier, address, status, created_at)  
+                VALUES (?,?,?,?,?,?,?,?,?)  
+                """,  
+                (  
+                    request.order_id,  
+                    request.slot.slot_id,  
+                    request.slot.date,  
+                    request.slot.start_time,  
+                    request.slot.end_time,  
+                    request.slot.carrier,  
+                    request.address,  
+                    "scheduled",  
+                    datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),  
+                ),  
+            )  
+        pickup_id = cur.lastrowid  
+        db.commit()  
+        db.close()  
+    except sqlite3.Error as e:
+        logging.error(f"Database error: {e}")  # Log database errors
+    
   
     return PickupScheduledConfirmation(  
         pickup_id=pickup_id,  
