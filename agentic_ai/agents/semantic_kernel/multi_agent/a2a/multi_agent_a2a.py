@@ -60,11 +60,15 @@ class LogisticsA2AChatPlugin:
   
     # --------  the single exposed tool  -------------------------------  
     @kernel_function(  
-        name="logistics_chat",  
+        name="logistics_agent",  
         description=(  
-            "Talk to Contoso Logistics to set up a return pick-up. "  
-            "Just pass the user's message; the agent will respond with the next step."  
-        ),  
+        "Logistics AI agent responsible for arranging product-return "  
+        "pick-ups."  
+        "Supported request types:\n"  
+        "  • availability_request\n"  
+        "  • schedule_pickup\n"  
+        "  • cancel_request\n"       
+         ),  
     )  
     async def chat(self, message: str) -> str:  
         """  
@@ -105,7 +109,7 @@ class Agent(BaseAgent):
   
         # URLs / env ---------------------------------------------------  
         self.logistics_a2a_url = os.getenv("LOGISTICS_A2A_URL", "http://localhost:9100")  
-        self.mcp_server_uri = os.getenv("LOGISTIC_MCP_SERVER_URI")  
+        self.mcp_server_uri = os.getenv("MCP_SERVER_URI")  
   
         # runtime members ---------------------------------------------  
         self._initialized = False  
@@ -142,11 +146,9 @@ class Agent(BaseAgent):
         self.customer_service_agent = ChatCompletionAgent(  
             service=AzureChatCompletion(),  
             name="customer_service_agent",  
-            instructions=(  
-                "You are a helpful Contoso customer-service assistant.\n"  
-                "• Use Contoso MCP tools for order & billing.\n"  
-                "• For product returns, talk to the 'logistics_chat' tool "  
-                "to arrange pick-ups – you can speak naturally, no JSON needed."  
+            instructions=( "You are a helpful assistant. You can use multiple tools to find information and answer questions. "  
+            "When customer ask for a product return, first check if the product is eligible for return, that is if the order has been delivered and check with customer if the condition of the product is acceptable and the return is within 30 days of delivery. "  
+            "If the product is eligible for return, ask customer for their address, their prefered timeframe and forward all information to the logistic agent to schedule a pick-up. Ask logistic agent for 3 options within the next week. " 
             ),  
             plugins=[  
                 contoso_plugin,  
@@ -167,11 +169,13 @@ class Agent(BaseAgent):
     # ----------------------------------------------------------------  
     async def chat_async(self, prompt: str) -> str:  
         await self._setup_agents()  
+        logging.info("prompt: %s", prompt)
   
         response = await self.customer_service_agent.get_response(  
             messages=prompt, thread=self._thread  
         )  
         response_content = str(response.content)  
+        logging.info("response: %s", response_content)
   
         # ---------- persist state ------------------------------------  
         self._thread = response.thread  
