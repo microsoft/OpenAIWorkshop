@@ -1,3 +1,5 @@
+# Cross-Domain Return-Pick-up Scheduling (A2A)
+
 This A2A implementation demonstrates inter-domain communication between agents in different domains. Unlike inter-agent communication within a single domain or application—where participating agents typically have full transparency into each other’s details—cross-domain agent communication enforces strict modularity and abstraction. In cross-domain scenarios, the logic and implementation of each agent system are hidden from one another, and only high-level structured information is exchanged. This approach aligns with Google’s Agent-to-Agent (A2A) protocol principles.  
   
 ### Scenario: Cross-Domain Return Pickup Scheduling  
