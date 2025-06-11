@@ -33,6 +33,7 @@ Welcome to the official repository for the Microsoft AI Agentic Workshop! This r
   
 - **Configurable LLM Backend:** Use the latest Azure OpenAI GPT models (e.g., GPT-4.1, GPT-4o).  
 - **MCP Server Integration:** Advanced tools to enhance agent orchestration and capabilities.  
+- **A2A (Agent-to-Agent) Protocol Support:** Enables strict cross-domain, black-box multi-agent collaboration using [Google's A2A protocol](https://github.com/google-a2a/A2A).
 - **Flexible Agent Architecture:**  
   - Supports single-agent, multi-agent, or reflection-based agents (selectable via `.env`).  
   - Agents can self-loop, collaborate, reflect, or take on dynamic roles as defined in modules.  
@@ -53,6 +54,15 @@ Welcome to the official repository for the Microsoft AI Agentic Workshop! This r
   
 ---  
   
+## 🆕 A2A (Agent-to-Agent) Cross-Domain Demo  
+  
+This repository now supports a strict cross-domain multi-agent scenario using the A2A protocol, enabling message-driven, black-box collaboration between a customer-service agent and a logistics agent.  
+  
+**A2A Example Included:**    
+ See [`agentic_ai/agents/semantic_kernel/multi_agent/a2a`](agentic_ai/agents/semantic_kernel/multi_agent/a2a).  
+  
+---  
+
 ## Contributing  
   
 Please review our [Code of Conduct](./CODE_OF_CONDUCT.md) and [Security Guidelines](./SECURITY.md) before contributing.  
