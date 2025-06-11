@@ -13,3 +13,5 @@ streamlit
 requests
 pydantic
 semantic-kernel
+a2a-sdk
+httpx
