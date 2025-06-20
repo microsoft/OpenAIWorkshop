@@ -344,17 +344,17 @@ class Agent(BaseAgent):
 
 
 # --------------------------- Manual test helper --------------------------- #
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    async def _demo() -> None:
-        dummy_state: dict = {}
-        agent = Agent(dummy_state, session_id="demo")
-        user_question = "My customer id is 101, what is my current balance?"
-        answer = await agent.chat_async(user_question)
-        print("\n>>> Assistant reply:\n", answer)
-        try:
-            await agent.contoso_plugin.close()
-        except Exception as exc:
-            logger.warning(f"SSE plugin close failed: {exc}")
+#     async def _demo() -> None:
+#         dummy_state: dict = {}
+#         agent = Agent(dummy_state, session_id="demo")
+#         user_question = "My customer id is 101, why is my internet bill so high?"
+#         answer = await agent.chat_async(user_question)
+#         print("\n>>> Assistant reply:\n", answer)
+#         try:
+#             await agent.contoso_plugin.close()
+#         except Exception as exc:
+#             logger.warning(f"SSE plugin close failed: {exc}")
 
-    asyncio.run(_demo())
+#     asyncio.run(_demo())
