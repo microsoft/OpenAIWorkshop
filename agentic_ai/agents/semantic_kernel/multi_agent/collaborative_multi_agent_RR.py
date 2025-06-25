@@ -1,5 +1,21 @@
+"""
+Step-by-step debugging and serialization workflow for multi-agent orchestration:
+
+1. Run the manual test at the bottom of this file (or import and call Agent.chat_async) with a sample user question.
+2. Observe the console/log output for each agent response. Each message will print:
+   - The agent name
+   - The message content
+   - The type of the message content
+3. If a serialization error occurs, check the logs for the last message type/value. If it is not a string or JSON-serializable, the log will show the problematic value and type.
+4. If you see a non-serializable type (e.g., a custom object, coroutine, or generator), update the agent or orchestration logic to convert it to a string or dict before returning.
+5. Repeat until all agent responses are serializable and the orchestration completes without error.
+6. If you need to debug a specific agent, add more print/log statements in its respond method or tool call.
+7. Once stable, remove or reduce debug logging as needed.
+"""
+
 import asyncio
 import logging
+import json
 from typing import Optional
 
 from agents.base_agent import BaseAgent
@@ -61,11 +77,15 @@ class Agent(BaseAgent):
         specialist_kernel.add_plugin(self.contoso_plugin, plugin_name="ContosoMCP")
 
         def make_agent(name, description, instructions, included_tools=[]):
+            # Debug: Log agent creation details
+            logger.info(f"[DEBUG] Creating agent: {name}\nDescription: {description}\nIncluded tools: {included_tools}")
+            
             settings = specialist_kernel.get_prompt_execution_settings_from_service_id("default")
             function_choice_behavior = FunctionChoiceBehavior.Auto(
                 filters={"included_functions": included_tools} if included_tools else None
             )
-            return ChatCompletionAgent(
+            
+            agent = ChatCompletionAgent(
                 name=name,
                 description=description,
                 instructions=instructions,
@@ -73,6 +93,8 @@ class Agent(BaseAgent):
                 function_choice_behavior=function_choice_behavior,
                 kernel=specialist_kernel,
             )
+            
+            return agent
 
         participants = [
             make_agent(
@@ -170,6 +192,7 @@ class Agent(BaseAgent):
                     "4. If you need clarification from the user, ask it immediately and prefix with\n"
                     "   FINAL ANSWER: <your question>\n"
                     "\n"
+                    "Pay close attention to user query and identify keywords that you can find in agent definition/instruction to correctly delegate the task.\n"
                     "Specialist directory – choose the SINGLE best match for each sub‑task:\n"
                     "- crm_billing – Accesses CRM & billing systems for account, subscription, invoice,\n"
                     "  payment status, refunds and policy compliance questions.\n"
@@ -182,6 +205,7 @@ class Agent(BaseAgent):
                     "- Do not emit planning commentary or bullet lists to the user.\n"
                     "- Only ‘FINAL ANSWER’ messages or specialist delegations are allowed.\n"
                     "- After all agents discuss, make sure you respond only relevant information asked as per user request.\n"
+                    "- It's possible in taking multiple turns you got different answers, but the most appropraite response was in one of the earlier rounds, so look at keywords in questions and map the response to closest keyword matching\n"
                     "- Never include ‘FINAL ANSWER’ when talking to a specialist.\n"
                 ),
             ),
@@ -202,6 +226,21 @@ class Agent(BaseAgent):
 
         self._initialized = True
 
+    def to_serializable(self, obj):
+        """Recursively convert an object to something JSON-serializable."""
+        if isinstance(obj, (str, int, float, bool, type(None))):
+            return obj
+        if isinstance(obj, dict):
+            return {k: self.to_serializable(v) for k, v in obj.items()}
+        if isinstance(obj, (list, tuple, set)):
+            return [self.to_serializable(v) for v in obj]
+        # Try to extract common content/text attributes
+        for attr in ("text", "content", "value", "data"):
+            if hasattr(obj, attr):
+                return self.to_serializable(getattr(obj, attr))
+        # Fallback: string representation
+        return str(obj)
+
     async def chat_async(self, prompt: str) -> str:
         await self._setup_team()
 
@@ -213,12 +252,17 @@ class Agent(BaseAgent):
                 task=prompt,
                 runtime=self._group_chat_runtime,
             )
+
+            # Get the final result directly
             value = await orchestration_result.get()
 
+            # Debug log: show the type and repr of the value and value.content
+            logger.info(f"[DEBUG] orchestration_result.get() value: {repr(value)} (type: {type(value)})")
             if hasattr(value, "content"):
-                answer = str(value.content)
+                logger.info(f"[DEBUG] value.content: {repr(value.content)} (type: {type(value.content)})")
+                answer = self.to_serializable(value.content)
             else:
-                answer = str(value)
+                answer = self.to_serializable(value)
 
         except Exception as e:
             logger.error(f"Agent error during orchestration: {e}")
@@ -229,4 +273,28 @@ class Agent(BaseAgent):
             {"role": "assistant", "content": answer}
         ])
 
-        return answer
+        return str(answer)
+
+# # --------------------------- Manual test helper --------------------------- #
+# print("Script started")
+# if __name__ == "__main__":
+#     print("Main block running")
+#     async def _demo() -> None:
+#         print("Demo function started")
+#         try:
+#             dummy_state: dict = {}
+#             agent = Agent(dummy_state, session_id="demo")
+#             print("Agent created")
+#             user_question = "why was my internet bill high for customer ID 101?"
+#             print("Calling chat_async...")
+#             answer = await agent.chat_async(user_question)
+#             print("chat_async returned")
+#             print("\n>>> Assistant reply:\n", answer)
+#             try:
+#                 await agent.contoso_plugin.close()
+#             except Exception as exc:
+#                 logger.warning(f"SSE plugin close failed: {exc}")
+#         except Exception as exc:
+#             print(f"Exception in _demo: {exc}")
+
+#     asyncio.run(_demo())
