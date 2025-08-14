@@ -1,3 +1,5 @@
+[![MSeeP.ai Security Assessment Badge](https://mseep.net/pr/microsoft-openaiworkshop-badge.png)](https://mseep.ai/app/microsoft-openaiworkshop)
+
 ![alt text](media/image-1.png)
 # Microsoft AI Agentic Workshop Repository  
   
