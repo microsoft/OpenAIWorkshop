@@ -119,6 +119,17 @@ env.bak/
 venv.bak/
 **/secrets.env
 
+# DevTunnel and sensitive configuration files
+**/crm-mcp-connector.yaml
+**/*devtunnel*.yaml
+**/*.local.yaml
+**/*.personal.yaml
+
+# Additional sensitive files
+**/*.secret
+**/*.private
+**/local-config.*
+
 # Spyder project settings
 .spyderproject
 .spyproject

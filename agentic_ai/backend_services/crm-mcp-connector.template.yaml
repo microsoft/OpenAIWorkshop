@@ -1,0 +1,18 @@
+swagger: '2.0'
+info:
+  title: CRM MCP Server
+  description: Allows to manage CRM data for specific customers, details, subscriptions providing tools to list, search, update, and create customer, product and invoice data.
+  version: 1.0.0
+host: YOUR_DEVTUNNEL_URL.use.devtunnels.ms
+basePath: /mcp
+schemes:
+  - https
+paths:
+  /:
+    post:
+      summary: CRM MCP Server
+      x-ms-agentic-protocol: mcp-streamable-1.0
+      operationId: InvokeMCP
+      responses:
+        '200':
+          description: Success
