@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { PublicClientApplication, InteractionRequiredAuthError } from '@azure/msal-browser';
 import {
   Box,
@@ -32,7 +32,6 @@ import {
 import {
   Send as SendIcon,
   Psychology as BrainIcon,
-  SmartToy as AgentIcon,
   CheckCircle as CheckIcon,
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon,
@@ -88,7 +87,7 @@ function App() {
   const [agentEvents, setAgentEvents] = useState({});
   const [currentAgents, setCurrentAgents] = useState(new Set());
   const [currentTurn, setCurrentTurn] = useState(0); // Track conversation turn for tool call grouping
-  const [lastFinalAnswer, setLastFinalAnswer] = useState(null); // Track last final answer for deduplication
+  const [, setLastFinalAnswer] = useState(null); // Track last final answer for deduplication
 
   const [authConfig, setAuthConfig] = useState({ authEnabled: false });
   const [authConfigLoaded, setAuthConfigLoaded] = useState(false);
@@ -111,8 +110,8 @@ function App() {
   const canInteract = !isAuthEnabled || (isSignedIn && authConfigLoaded);
   const shouldBlockUi = isAuthEnabled && authConfigLoaded && !isSignedIn;
   const inputPlaceholder = canInteract ? 'Type your message...' : 'Sign in to chat…';
-
-  const buildAuthHeaders = () => (accessToken ? { Authorization: `Bearer ${accessToken}` } : {});
+// Memoized to prevent unnecessary re-creation when used in effects
+  const buildAuthHeaders = useCallback(() => (accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),[accessToken]);
 
   const acquireAccessToken = async (instance, activeAccount, scope) => {
     if (!instance || !activeAccount || !scope) {
@@ -274,61 +273,10 @@ function App() {
       }
     };
     fetchAgents();
-  }, [authConfigLoaded, isAuthEnabled, accessToken]);
+  }, [authConfigLoaded, isAuthEnabled, accessToken, buildAuthHeaders]);
 
-  useEffect(() => {
-    if (isAuthEnabled && !accessToken) {
-      if (wsRef.current) {
-        wsRef.current.close();
-        wsRef.current = null;
-      }
-      return;
-    }
-    if (!authConfigLoaded) {
-      return;
-    }
-
-    // Connect to WebSocket
-    const connectWebSocket = () => {
-      const ws = new WebSocket(WS_URL);
-
-      ws.onopen = () => {
-        console.log('WebSocket connected');
-        // Register session
-        ws.send(JSON.stringify({
-          session_id: sessionId,
-          access_token: isAuthEnabled ? accessToken : null,
-        }));
-      };
-
-      ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        handleWebSocketMessage(data);
-      };
-
-      ws.onerror = (error) => {
-        console.error('WebSocket error:', error);
-      };
-
-      ws.onclose = () => {
-        console.log('WebSocket disconnected');
-        // Reconnect after 3 seconds
-        setTimeout(connectWebSocket, 3000);
-      };
-
-      wsRef.current = ws;
-    };
-
-    connectWebSocket();
-
-    return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
-      }
-    };
-  }, [sessionId, isAuthEnabled, accessToken, authConfigLoaded]);
-
-  const handleWebSocketMessage = (event) => {
+// Memoized to ensure stable reference for useEffect dependencies
+const handleWebSocketMessage = useCallback((event) => {
     const { type } = event;
 
     switch (type) {
@@ -492,7 +440,59 @@ function App() {
       default:
         break;
     }
-  };
+  },[currentTurn]);
+
+  useEffect(() => {
+    if (isAuthEnabled && !accessToken) {
+      if (wsRef.current) {
+        wsRef.current.close();
+        wsRef.current = null;
+      }
+      return;
+    }
+    if (!authConfigLoaded) {
+      return;
+    }
+
+    // Connect to WebSocket
+    const connectWebSocket = () => {
+      const ws = new WebSocket(WS_URL);
+
+      ws.onopen = () => {
+        console.log('WebSocket connected');
+        // Register session
+        ws.send(JSON.stringify({
+          session_id: sessionId,
+          access_token: isAuthEnabled ? accessToken : null,
+        }));
+      };
+
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        handleWebSocketMessage(data);
+      };
+
+      ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+
+      ws.onclose = () => {
+        console.log('WebSocket disconnected');
+        // Reconnect after 3 seconds
+        setTimeout(connectWebSocket, 3000);
+      };
+
+      wsRef.current = ws;
+    };
+
+    connectWebSocket();
+
+    return () => {
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
+    };
+  }, [sessionId, isAuthEnabled, accessToken, authConfigLoaded, handleWebSocketMessage]);
 
   const handleSend = () => {
     if (!input.trim() || !wsRef.current || isProcessing) return;
