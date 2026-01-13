@@ -261,7 +261,7 @@ markupsafe==3.0.3
     # via
     #   jinja2
     #   werkzeug
-mcp==1.21.1
+mcp==1.23.0
     # via
     #   agent-framework-core
     #   autogen-ext
