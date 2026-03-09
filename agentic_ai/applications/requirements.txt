@@ -119,7 +119,7 @@ azure-ai-projects==2.0.0b3
     #   agent-framework-core
 azure-common==1.1.28
     # via azure-search-documents
-azure-core==1.36.0
+azure-core==1.38.0
     # via
     #   agent-framework-purview
     #   azure-ai-agents
