@@ -75,19 +75,32 @@ class MetricSnapshot:
     tool_calls_count: int
     tool_call_names: List[str]
     irrelevant_tool_calls_count: int
-    
+
+    # Tool-context metrics (new)
+    tools_exposed_count: int = 0              # number of tools visible in the schema
+    tool_schema_tokens: int = 0               # estimated tokens consumed by tool schemas
+    required_tool_coverage: float = 1.0       # fraction of required_tools that were called
+
+    # Cross-domain / grounding metrics (new)
+    cross_domain_calls_count: int = 0         # tool calls outside the test's expected domain
+    grounded_answer: bool = False             # success AND required_tool_coverage > 0
+
     # Quality metrics
     domain_detected: Optional[str] = None  # for skills-based variant
     hallucination_detected: bool = False
     tool_precision: float = 1.0  # measure of tool call appropriateness (1.0 = perfect)
-    
+
     # Cost estimate
     cost_estimate_usd: float = 0.0  # rough estimate based on token usage
 
     @property
     def effective_context_size(self) -> int:
-        """Total context including instruction and query."""
-        return self.instruction_size_tokens + self.query_tokens
+        """Total context including instruction, tool schemas, and query."""
+        return self.instruction_size_tokens + self.tool_schema_tokens + self.query_tokens
+
+    @property
+    def total_input_with_tools(self) -> int:
+        return self.input_tokens + self.tool_schema_tokens
 
 
 # ---------------------------------------------------------------------------
@@ -119,6 +132,82 @@ _CATEGORY_TO_DOMAIN: Dict[str, str] = {
     "security": "security",
     "support": "security",
 }
+
+# Approximate tokens consumed by a single tool schema entry in the prompt.
+# Based on typical MCP tool schemas (~300-400 chars / 75-100 tokens).
+_TOKENS_PER_TOOL_SCHEMA = 80
+# Baseline agents expose the full MCP tool catalogue; verified at 18 at time of writing.
+_BASELINE_TOOL_COUNT = 18
+
+
+def _compute_determinism(runs: List["MetricSnapshot"]) -> Dict[str, float]:
+    """Determinism metrics across N repeated runs of the same test.
+
+    Returns keys:
+        tool_set_jaccard      — mean pairwise Jaccard of tool sets (1.0 = identical)
+        tool_order_match_rate — fraction of run pairs with identical call sequence
+        coverage_stdev        — stdev of required_tool_coverage across runs
+        success_rate          — fraction of runs that succeeded
+        latency_stdev_ms      — stdev of end-to-end latency
+    """
+    if not runs:
+        return {
+            "tool_set_jaccard": 0.0,
+            "tool_order_match_rate": 0.0,
+            "coverage_stdev": 0.0,
+            "success_rate": 0.0,
+            "latency_stdev_ms": 0.0,
+        }
+    n = len(runs)
+    if n == 1:
+        return {
+            "tool_set_jaccard": 1.0,
+            "tool_order_match_rate": 1.0,
+            "coverage_stdev": 0.0,
+            "success_rate": 1.0 if runs[0].success else 0.0,
+            "latency_stdev_ms": 0.0,
+        }
+
+    tool_sets = [set(r.tool_call_names) for r in runs]
+    tool_seqs = [tuple(r.tool_call_names) for r in runs]
+
+    jaccards: List[float] = []
+    order_matches: List[int] = []
+    for i in range(n):
+        for j in range(i + 1, n):
+            a, b = tool_sets[i], tool_sets[j]
+            union = a | b
+            jaccards.append(len(a & b) / len(union) if union else 1.0)
+            order_matches.append(1 if tool_seqs[i] == tool_seqs[j] else 0)
+
+    coverages = [r.required_tool_coverage for r in runs]
+    latencies = [r.latency_ms for r in runs]
+    mean_cov = sum(coverages) / n
+    mean_lat = sum(latencies) / n
+    cov_var = sum((c - mean_cov) ** 2 for c in coverages) / n
+    lat_var = sum((l - mean_lat) ** 2 for l in latencies) / n
+
+    return {
+        "tool_set_jaccard": round(sum(jaccards) / len(jaccards), 3),
+        "tool_order_match_rate": round(sum(order_matches) / len(order_matches), 3),
+        "coverage_stdev": round(cov_var ** 0.5, 3),
+        "success_rate": round(sum(1 for r in runs if r.success) / n, 3),
+        "latency_stdev_ms": round(lat_var ** 0.5, 1),
+    }
+
+
+def _serialize_entry(entry: Dict[str, Any]) -> Dict[str, Any]:
+    """Convert a result entry (with MetricSnapshot objects) into JSON-safe dicts."""
+    out: Dict[str, Any] = {
+        "test_id": entry["test_id"],
+        "baseline": asdict(entry["baseline"]),
+        "skills": asdict(entry["skills"]),
+    }
+    if "baseline_runs" in entry:
+        out["baseline_runs"] = [asdict(s) for s in entry["baseline_runs"]]
+        out["skills_runs"] = [asdict(s) for s in entry["skills_runs"]]
+        out["determinism"] = entry.get("determinism", {})
+    return out
 
 
 class AgentEvaluator:
@@ -211,9 +300,13 @@ class AgentEvaluator:
             skill_info = agent.get_skill_info() if hasattr(agent, "get_skill_info") else {}
             detected_domain = skill_info.get("skill_name")
             instruction_size_chars = skill_info.get("instruction_chars", 2500)
+            tools_exposed_count = len(skill_info.get("allowed_tools", []) or []) or _BASELINE_TOOL_COUNT
         else:
             detected_domain = None
             instruction_size_chars = 2000
+            tools_exposed_count = _BASELINE_TOOL_COUNT
+
+        tool_schema_tokens = tools_exposed_count * _TOKENS_PER_TOOL_SCHEMA
 
         category = test_case.get("category", "")
         combined_query = " ".join(
@@ -231,13 +324,31 @@ class AgentEvaluator:
         irrelevant_tool_calls_count = self._count_out_of_domain_calls(
             all_tool_names, category, active_skill=detected_domain
         )
+        # cross_domain_calls_count: fair comparison across agents — always based on
+        # the test's category (not the skill the agent chose to activate). This is
+        # the "calls outside the task's intended domain" number.
+        expected_domain = _CATEGORY_TO_DOMAIN.get(category)
+        expected_allowed = set(_DOMAIN_TOOLS.get(expected_domain, [])) if expected_domain else set()
+        cross_domain_calls_count = (
+            sum(1 for name in all_tool_names if name not in expected_allowed)
+            if expected_allowed else 0
+        )
         if required_tools:
-            called_required = sum(1 for name in all_tool_names if any(rt in name for rt in required_tools))
-            tool_precision = called_required / len(required_tools)
+            required_hits = sum(
+                1 for rt in required_tools
+                if any(rt in name or name == rt for name in all_tool_names)
+            )
+            required_tool_coverage = required_hits / len(required_tools)
+            called_required = sum(
+                1 for name in all_tool_names
+                if any(rt in name for rt in required_tools)
+            )
+            tool_precision = called_required / max(len(all_tool_names), 1)
         else:
+            required_tool_coverage = 1.0
             tool_precision = 1.0
 
-        cost_estimate = self._estimate_cost(input_tokens, response_tokens)
+        cost_estimate = self._estimate_cost(input_tokens + tool_schema_tokens, response_tokens)
 
         return MetricSnapshot(
             test_id=test_case.get("id", "unknown"),
@@ -255,6 +366,11 @@ class AgentEvaluator:
             tool_calls_count=len(all_tool_names),
             tool_call_names=all_tool_names,
             irrelevant_tool_calls_count=irrelevant_tool_calls_count,
+            tools_exposed_count=tools_exposed_count,
+            tool_schema_tokens=tool_schema_tokens,
+            required_tool_coverage=round(required_tool_coverage, 3),
+            cross_domain_calls_count=cross_domain_calls_count,
+            grounded_answer=bool(success and required_tool_coverage > 0),
             domain_detected=detected_domain,
             hallucination_detected=self._detect_hallucination(combined_response),
             tool_precision=tool_precision,
@@ -343,8 +459,14 @@ class AgentEvaluator:
         dataset_path: str,
         sample_fraction: float = 1.0,
         turn_type: str = "all",  # "single", "multi", or "all"
-    ) -> List[Dict[str, MetricSnapshot]]:
-        """Run evaluation on dataset, filtered by turn type."""
+        repeats: int = 1,
+    ) -> List[Dict[str, Any]]:
+        """Run evaluation on dataset, filtered by turn type.
+
+        When ``repeats > 1``, each test is executed N times per variant and
+        determinism metrics (tool-set Jaccard, tool-order match rate, required-
+        coverage stdev, success rate) are computed across the repeats.
+        """
         with open(dataset_path, "r") as f:
             data = json.load(f)
 
@@ -366,9 +488,10 @@ class AgentEvaluator:
 
         logger.info(
             f"[{turn_type.upper()}] Running {len(test_cases)} / {total_available} test cases"
+            + (f" x {repeats} repeats" if repeats > 1 else "")
         )
 
-        results: List[Dict[str, MetricSnapshot]] = []
+        results: List[Dict[str, Any]] = []
         for idx, test_case in enumerate(test_cases):
             logger.info(
                 f"Evaluating test case {idx + 1}/{len(test_cases)}: {test_case.get('id')}"
@@ -376,15 +499,29 @@ class AgentEvaluator:
             is_multi = test_case.get("multi_turn", False)
             run = self.run_multi_turn_agent if is_multi else self.run_agent
 
-            baseline_result = await run("baseline", test_case)
-            await asyncio.sleep(0.5)
-            skills_result = await run("skills", test_case)
+            baseline_runs: List[MetricSnapshot] = []
+            skills_runs: List[MetricSnapshot] = []
+            for rep in range(repeats):
+                if repeats > 1:
+                    logger.info(f"  repeat {rep + 1}/{repeats}")
+                baseline_runs.append(await run("baseline", test_case))
+                await asyncio.sleep(0.5)
+                skills_runs.append(await run("skills", test_case))
+                await asyncio.sleep(0.5)
 
-            results.append({
+            entry: Dict[str, Any] = {
                 "test_id": test_case.get("id"),
-                "baseline": baseline_result,
-                "skills": skills_result,
-            })
+                "baseline": baseline_runs[0],
+                "skills": skills_runs[0],
+            }
+            if repeats > 1:
+                entry["baseline_runs"] = baseline_runs
+                entry["skills_runs"] = skills_runs
+                entry["determinism"] = {
+                    "baseline": _compute_determinism(baseline_runs),
+                    "skills": _compute_determinism(skills_runs),
+                }
+            results.append(entry)
 
         return results
 
@@ -562,6 +699,8 @@ async def main():
                         help="Fraction of SINGLE-TURN cases to sample (0-1). Multi-turn always runs all.")
     parser.add_argument("--turn-type", default="all", choices=["all", "single", "multi"],
                         help="Which turn types to evaluate: all (default), single, or multi.")
+    parser.add_argument("--repeats", type=int, default=1,
+                        help="Number of times to repeat each test per variant. >1 enables determinism metrics.")
     parser.add_argument("--output", default="eval_results/comparison_skills.json",
                         help="Base output file path. Suffixed with _single / _multi automatically.")
 
@@ -581,13 +720,15 @@ async def main():
         print(f"# SINGLE-TURN EVALUATION  (sample={args.sample:.0%} of 25 single-turn cases)")
         print("#" * 150)
         single_results = await evaluator.evaluate_dataset(
-            args.dataset, sample_fraction=args.sample, turn_type="single"
+            args.dataset, sample_fraction=args.sample, turn_type="single",
+            repeats=args.repeats,
         )
         single_headline = print_comparison_table(single_results, title="SINGLE-TURN: BASELINE vs SKILLS")
         all_results["single_turn"] = {
             "headline": single_headline,
             "num_tests": len(single_results),
-            "results": [{"test_id": r["test_id"], "baseline": asdict(r["baseline"]), "skills": asdict(r["skills"])} for r in single_results],
+            "repeats": args.repeats,
+            "results": [_serialize_entry(r) for r in single_results],
         }
 
     # ── Multi-turn ────────────────────────────────────────────────────────────
@@ -596,13 +737,15 @@ async def main():
         print("# MULTI-TURN EVALUATION  (all 5 multi-turn cases, full conversation per case)")
         print("#" * 150)
         multi_results = await evaluator.evaluate_dataset(
-            args.dataset, sample_fraction=1.0, turn_type="multi"
+            args.dataset, sample_fraction=1.0, turn_type="multi",
+            repeats=args.repeats,
         )
         multi_headline = print_comparison_table(multi_results, title="MULTI-TURN: BASELINE vs SKILLS")
         all_results["multi_turn"] = {
             "headline": multi_headline,
             "num_tests": len(multi_results),
-            "results": [{"test_id": r["test_id"], "baseline": asdict(r["baseline"]), "skills": asdict(r["skills"])} for r in multi_results],
+            "repeats": args.repeats,
+            "results": [_serialize_entry(r) for r in multi_results],
         }
 
     # ── Combined headline summary ─────────────────────────────────────────────

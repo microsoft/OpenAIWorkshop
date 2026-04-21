@@ -1,204 +1,602 @@
 {
+  "version": "2.0",
+  "description": "Comprehensive evaluation dataset for Contoso customer support agents",
+  "metadata": {
+    "total_scenarios": 30,
+    "single_turn": 25,
+    "multi_turn": 5,
+    "categories": ["billing", "internet", "mobile", "account", "tv", "bundle", "support"]
+  },
   "test_cases": [
     {
-      "id": "example_1_billing",
-      "customer_query": "I noticed my last invoice was higher than usual - can you help me understand why and what can be done about it?",
+      "id": "billing_high_invoice",
+      "category": "billing",
+      "name": "Invoice Higher Than Usual",
+      "customer_query": "Hi, I'm customer 251. I noticed my last invoice was $150, which is much higher than usual. Can you help me understand why?",
       "customer_id": 251,
-      "expected_analysis": [
-        "Check billing history and recent changes in subscriptions or charges",
-        "Review policy for invoice adjustments"
-      ],
-      "expected_systems_accessed": [
-        "CRM",
-        "Billing Database",
-        "Knowledge Base"
-      ],
-      "expected_tools": [
-        "get_customer_detail",
-        "get_billing_summary",
-        "get_subscription_detail",
-        "search_knowledge_base"
-      ],
-      "required_tools": [
-        "get_billing_summary",
-        "get_subscription_detail"
-      ],
-      "expected_knowledge_queries": [
-        "invoice adjustment",
-        "billing policy",
-        "refund policy"
-      ],
+      "expected_tools": ["get_customer_detail", "get_billing_summary", "get_subscription_detail", "get_data_usage", "search_knowledge_base"],
+      "required_tools": ["get_billing_summary", "get_data_usage"],
       "success_criteria": {
         "must_access_billing": true,
         "must_explain_charges": true
-      }
+      },
+      "ground_truth_solution": "The customer's invoice is $150 instead of the usual $60 because of data overage charges. Key facts: 1) The plan has a 10GB data cap, 2) Customer used 22GB (12GB over), 3) Overage charges of $7.50/GB apply, 4) Additional $90 explains the higher bill. Solutions: offer courtesy adjustment, recommend plan upgrade, set up usage alerts.",
+      "scoring_rubric": "5=Identifies overage (22GB vs 10GB), explains charges, offers adjustment AND upgrade; 4=Identifies overage, offers solution; 3=Identifies cause but missing details; 2=Vague explanation; 1=Incorrect or unhelpful",
+      "multi_turn": false
     },
     {
-      "id": "example_2_service_quality",
-      "customer_query": "My internet service seems slower than before - can you check what's happening?",
-      "customer_id": 101,
-      "expected_analysis": [
-        "Review the customer's current subscription plan and service status",
-        "Check for recent service incidents or network usage history",
-        "Search knowledge base for troubleshooting guidance or policies on service quality guarantees"
-      ],
-      "expected_systems_accessed": [
-        "CRM",
-        "Service Monitoring and Diagnostics System",
-        "Knowledge Base"
-      ],
-      "expected_tools": [
-        "get_customer_detail",
-        "get_subscription_detail",
-        "get_data_usage",
-        "search_knowledge_base"
-      ],
-      "required_tools": [
-        "get_subscription_detail"
-      ],
-      "expected_knowledge_queries": [
-        "slow internet",
-        "troubleshooting",
-        "service quality",
-        "speed tier"
-      ],
+      "id": "billing_payment_history",
+      "category": "billing",
+      "name": "Payment History Inquiry",
+      "customer_query": "Hi, I'm customer 5. Can you show me my recent payments? I want to make sure they all went through.",
+      "customer_id": 5,
+      "expected_tools": ["get_customer_detail", "get_billing_summary"],
+      "required_tools": ["get_billing_summary"],
+      "success_criteria": {
+        "must_access_billing": true
+      },
+      "ground_truth_solution": "Show payment history with dates, amounts, and methods. Confirm all payments were successful. Mention autopay option if not enabled. Offer to send payment receipts if needed.",
+      "scoring_rubric": "5=Shows history with dates/amounts/methods, confirms status; 4=Shows history and confirms; 3=Provides payment info but incomplete; 2=Vague response; 1=No payment info",
+      "multi_turn": false
+    },
+    {
+      "id": "billing_autopay_setup",
+      "category": "billing",
+      "name": "Autopay Setup Request",
+      "customer_query": "Hi, I'm customer 10. I keep forgetting to pay my bill on time. Can you help me set up autopay?",
+      "customer_id": 10,
+      "expected_tools": ["get_customer_detail", "get_billing_summary", "get_subscription_detail", "search_knowledge_base"],
+      "required_tools": ["get_billing_summary"],
+      "success_criteria": {
+        "must_access_billing": true,
+        "must_explain_autopay": true
+      },
+      "ground_truth_solution": "Check current autopay status. Explain $5 monthly discount for autopay. Guide through setup process. Confirm payment method on file.",
+      "scoring_rubric": "5=Checks status, mentions $5 discount, explains benefits, guides setup; 4=Explains benefits and setup; 3=Basic autopay info; 2=Generic response; 1=Doesn't help with autopay",
+      "multi_turn": false
+    },
+    {
+      "id": "billing_overdue_invoice",
+      "category": "billing",
+      "name": "Overdue Invoice Question",
+      "customer_query": "Hi, I'm customer 15. I received a notice about an overdue invoice. What happens if I don't pay soon?",
+      "customer_id": 15,
+      "expected_tools": ["get_customer_detail", "get_billing_summary", "search_knowledge_base"],
+      "required_tools": ["get_billing_summary"],
+      "success_criteria": {
+        "must_access_billing": true,
+        "must_explain_consequences": true
+      },
+      "ground_truth_solution": "Show overdue invoices with amounts and due dates. Explain late fee policy and potential service suspension after 30+ days. Offer payment plan if large amount. Process payment if customer wants.",
+      "scoring_rubric": "5=Shows overdue details, explains consequences, offers solutions; 4=Explains consequences and helps; 3=Addresses concern but missing specifics; 2=Generic response; 1=Doesn't address concern",
+      "multi_turn": false
+    },
+    {
+      "id": "billing_refund_request",
+      "category": "billing",
+      "name": "Refund Request for Service Issue",
+      "customer_query": "Hi, I'm customer 20. I was without internet for 3 days last week. Can I get a refund or credit for those days?",
+      "customer_id": 20,
+      "expected_tools": ["get_customer_detail", "get_support_tickets", "get_subscription_detail", "get_billing_summary"],
+      "required_tools": ["get_support_tickets", "get_billing_summary"],
+      "success_criteria": {
+        "must_verify_outage": true,
+        "must_offer_credit": true
+      },
+      "ground_truth_solution": "Verify outage via support tickets or service incidents. Calculate pro-rated credit for 3 days. Apply credit to next invoice. Apologize for inconvenience and confirm credit will appear on next bill.",
+      "scoring_rubric": "5=Verifies outage, calculates credit, applies and confirms; 4=Acknowledges and offers credit; 3=Offers help but missing verification; 2=Generic response; 1=Doesn't address refund",
+      "multi_turn": false
+    },
+    {
+      "id": "internet_slow",
+      "category": "internet",
+      "name": "Internet Slower Than Before",
+      "customer_query": "Hi, I'm customer 252. My internet has been really slow lately. I'm paying for 1Gbps but it feels much slower.",
+      "customer_id": 252,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_support_tickets", "search_knowledge_base"],
+      "required_tools": ["get_subscription_detail"],
       "success_criteria": {
         "must_check_subscription": true,
         "must_provide_troubleshooting": true
-      }
+      },
+      "ground_truth_solution": "Check subscription and service status. Look for existing service incidents. Acknowledge known issue if exists. Provide troubleshooting steps (restart router, check cables, test wired). Offer to escalate and mention potential service credit.",
+      "scoring_rubric": "5=Identifies incident, provides troubleshooting, offers escalation AND credit; 4=Identifies issue and troubleshoots; 3=Acknowledges and provides some steps; 2=Generic troubleshooting; 1=Unhelpful",
+      "multi_turn": false
     },
     {
-      "id": "example_3_international_roaming",
-      "customer_query": "I'm traveling abroad next month. What should I do about my phone plan?",
-      "customer_id": 250,
-      "expected_analysis": [
-        "Check the customer's current mobile subscription, roaming capabilities, and international charges",
-        "Search knowledge base for suitable international roaming options or temporary international plans",
-        "Update the plan after verifying eligibility and availability"
-      ],
-      "expected_systems_accessed": [
-        "CRM",
-        "Product & Service Database",
-        "Knowledge Base"
-      ],
-      "expected_tools": [
-        "get_customer_detail",
-        "get_subscription_detail",
-        "get_products",
-        "search_knowledge_base"
-      ],
-      "required_tools": [
-        "get_subscription_detail"
-      ],
-      "expected_knowledge_queries": [
-        "international roaming",
-        "roaming policy",
-        "travel abroad",
-        "international plan"
-      ],
+      "id": "internet_upgrade_inquiry",
+      "category": "internet",
+      "name": "Internet Speed Upgrade Options",
+      "customer_query": "Hi, I'm customer 25. I work from home and my current internet is too slow for video calls. What upgrade options do I have?",
+      "customer_id": 25,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_products", "search_knowledge_base"],
+      "required_tools": ["get_subscription_detail", "get_products"],
       "success_criteria": {
-        "must_check_current_plan": true,
-        "must_explain_roaming_charges": true
-      }
+        "must_check_subscription": true,
+        "must_show_products": true
+      },
+      "ground_truth_solution": "Check current plan. Show upgrade options: Basic (100Mbps/$49.99), Pro (500Mbps/$79.99), Ultimate (1Gbps/$119.99). Recommend Pro for video calls. Explain benefits, show price difference, mention promotions. Upgrades take effect within 24 hours.",
+      "scoring_rubric": "5=Shows current plan, presents options with pricing, recommends, mentions promos; 4=Shows options with pricing and recommends; 3=Lists options but missing personalization; 2=Generic product info; 1=No helpful upgrade info",
+      "multi_turn": false
     },
     {
-      "id": "example_4_account_lockout",
-      "customer_query": "I tried logging into my account, but it says I'm locked out. Can you help?",
-      "customer_id": 1,
-      "expected_analysis": [
-        "Review the customer's account status, recent login attempts, and security alerts",
-        "Investigate reasons for account lockout in the security database",
-        "Search knowledge base for account security policies, unlock procedures, and verification processes"
-      ],
-      "expected_systems_accessed": [
-        "CRM",
-        "Security & Authentication System",
-        "Knowledge Base"
-      ],
-      "expected_tools": [
-        "get_customer_detail",
-        "get_security_logs",
-        "unlock_account",
-        "search_knowledge_base"
-      ],
-      "required_tools": [
-        "get_security_logs"
-      ],
-      "expected_knowledge_queries": [
-        "account lockout",
-        "unlock procedure",
-        "security policy",
-        "account recovery"
-      ],
+      "id": "internet_router_reset",
+      "category": "internet",
+      "name": "Router Reset Help",
+      "customer_query": "Hi, I'm customer 30. My router isn't working and I think I need to reset it. How do I do that?",
+      "customer_id": 30,
+      "expected_tools": ["get_customer_detail", "search_knowledge_base"],
+      "required_tools": ["search_knowledge_base"],
+      "success_criteria": {
+        "must_search_knowledge": true,
+        "must_provide_steps": true
+      },
+      "ground_truth_solution": "Provide step-by-step: 1) Locate reset button on back, 2) Use paperclip to press and hold 10 seconds, 3) Wait for router to restart (lights blink), 4) Returns to factory settings, 5) Reconnect using default WiFi on label. Offer technician if uncomfortable.",
+      "scoring_rubric": "5=Complete steps, mentions factory settings warning, offers additional help; 4=Provides reset steps and guidance; 3=Gives instructions but incomplete; 2=Vague instructions; 1=Doesn't help",
+      "multi_turn": false
+    },
+    {
+      "id": "internet_outage_report",
+      "category": "internet",
+      "name": "Internet Outage Report",
+      "customer_query": "Hi, I'm customer 35. My internet is completely down! Nothing is working. Is there an outage in my area?",
+      "customer_id": 35,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_support_tickets", "search_knowledge_base"],
+      "required_tools": ["get_subscription_detail"],
+      "success_criteria": {
+        "must_check_subscription": true,
+        "must_check_incidents": true
+      },
+      "ground_truth_solution": "Check subscription service status and existing incidents. If outage confirmed: apologize, provide ETA, offer notification when restored. If no known outage: create support ticket, provide troubleshooting, offer technician visit, mention service credit for extended outages.",
+      "scoring_rubric": "5=Checks outage status, creates ticket if needed, provides ETA, offers follow-up; 4=Checks status and takes action; 3=Acknowledges and offers help; 2=Generic response; 1=Doesn't address outage",
+      "multi_turn": false
+    },
+    {
+      "id": "internet_static_ip",
+      "category": "internet",
+      "name": "Static IP Request",
+      "customer_query": "Hi, I'm customer 40. I need a static IP address for my home server. Do you offer that?",
+      "customer_id": 40,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_products"],
+      "required_tools": ["get_subscription_detail", "get_products"],
+      "success_criteria": {
+        "must_check_subscription": true,
+        "must_explain_options": true
+      },
+      "ground_truth_solution": "Static IP included in: Pro ($79.99/month) - 1 static IP, Ultimate ($119.99/month) - 1 static IP, Business Enterprise ($299.99/month) - IP block. Basic plan does not include. Check current plan and recommend upgrade to Pro if on Basic.",
+      "scoring_rubric": "5=Checks plan, explains which include static IP, recommends option; 4=Explains availability and recommends upgrade; 3=Mentions static IP but missing plan details; 2=Generic response; 1=Doesn't address request",
+      "multi_turn": false
+    },
+    {
+      "id": "roaming_travel",
+      "category": "mobile",
+      "name": "Travelling Abroad - Needs Roaming",
+      "customer_query": "Hi, I'm customer 253. I'm traveling to Spain in 2 days and need to know about international roaming.",
+      "customer_id": 253,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_products", "search_knowledge_base"],
+      "required_tools": ["get_subscription_detail"],
+      "success_criteria": {
+        "must_check_subscription": true,
+        "must_explain_roaming": true
+      },
+      "ground_truth_solution": "Roaming currently NOT enabled. Packages typically require 3 days to activate (cutting it close). Spain covered under European options. Urgently enable roaming, recommend appropriate package, warn about timeline, explain rates and usage alerts.",
+      "scoring_rubric": "5=Identifies roaming off, explains urgency, offers to enable AND recommends package; 4=Identifies status and urgency, offers to enable; 3=Identifies not enabled, offers to help; 2=Generic roaming info; 1=Doesn't address request",
+      "multi_turn": false
+    },
+    {
+      "id": "mobile_data_usage",
+      "category": "mobile",
+      "name": "Mobile Data Usage Check",
+      "customer_query": "Hi, I'm customer 45. How much data have I used this month? I don't want to go over my limit.",
+      "customer_id": 45,
+      "expected_tools": ["get_customer_detail", "get_data_usage", "get_subscription_detail"],
+      "required_tools": ["get_data_usage", "get_subscription_detail"],
+      "success_criteria": {
+        "must_check_usage": true,
+        "must_show_limit": true
+      },
+      "ground_truth_solution": "Show current data usage for billing cycle, data cap from plan, days remaining, percentage used. If close to limit: warn about overage, suggest data-saving tips, offer unlimited upgrade, explain usage alerts.",
+      "scoring_rubric": "5=Shows usage, cap, remaining, provides proactive advice; 4=Shows usage and limit clearly; 3=Provides data info; 2=Vague or incomplete; 1=Doesn't provide usage",
+      "multi_turn": false
+    },
+    {
+      "id": "mobile_upgrade_premium",
+      "category": "mobile",
+      "name": "Mobile Plan Upgrade",
+      "customer_query": "Hi, I'm customer 3. I keep running out of data. What mobile plans with more data do you have?",
+      "customer_id": 3,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_products"],
+      "required_tools": ["get_subscription_detail", "get_products"],
+      "success_criteria": {
+        "must_check_subscription": true,
+        "must_show_products": true
+      },
+      "ground_truth_solution": "Current plan: Essential (5GB/$29.99). Recommend Premium ($59.99/month): unlimited data, international roaming, 5G Priority, 50GB hotspot. Explain $30/month price difference, highlight unlimited benefit, offer to process upgrade.",
+      "scoring_rubric": "5=Shows current plan, recommends Premium with pricing, highlights benefits; 4=Provides options with comparison; 3=Mentions options but missing details; 2=Generic product info; 1=Doesn't help",
+      "multi_turn": false
+    },
+    {
+      "id": "mobile_hotspot_question",
+      "category": "mobile",
+      "name": "Mobile Hotspot Inquiry",
+      "customer_query": "Hi, I'm customer 8. Does my mobile plan include hotspot? I need to use it for my laptop.",
+      "customer_id": 8,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_products"],
+      "required_tools": ["get_subscription_detail"],
+      "success_criteria": {
+        "must_check_subscription": true
+      },
+      "ground_truth_solution": "Check current plan. Essential: Hotspot NOT included or limited. Premium: 50GB hotspot included. Explain availability based on their plan, provide usage info or offer Premium upgrade, give instructions on enabling if available.",
+      "scoring_rubric": "5=Checks plan, explains status, provides info or upgrade option; 4=Explains availability for their plan; 3=Addresses question generally; 2=Vague without checking plan; 1=Doesn't address hotspot",
+      "multi_turn": false
+    },
+    {
+      "id": "account_locked",
+      "category": "account",
+      "name": "Account Locked After Failed Logins",
+      "customer_query": "Hi, I'm customer 254. I can't log into my account - it says it's locked!",
+      "customer_id": 254,
+      "expected_tools": ["get_customer_detail", "get_security_logs", "unlock_account", "search_knowledge_base"],
+      "required_tools": ["get_security_logs", "unlock_account"],
       "success_criteria": {
         "must_check_security_logs": true,
-        "must_explain_lockout_reason": true
-      }
+        "must_unlock_account": true
+      },
+      "ground_truth_solution": "Security logs show multiple failed login attempts triggering lockout. Security feature to protect account. Verify identity, unlock account using unlock_account tool, confirm accessible. Suggest password reset, recommend 2FA, advise password manager.",
+      "scoring_rubric": "5=Verifies identity, unlocks, confirms, provides security recommendations (password, 2FA); 4=Unlocks and provides one recommendation; 3=Unlocks and confirms; 2=Attempts but doesn't unlock; 1=Doesn't address lockout",
+      "multi_turn": false
     },
     {
-      "id": "example_5_promotions",
-      "customer_query": "Do I qualify for any discounts or promotions right now?",
-      "customer_id": 104,
-      "expected_analysis": [
-        "Check the customer's account history, current subscriptions, loyalty status, and previous promotional usage",
-        "Search the product database for active promotions or discounts applicable to the customer's profile",
-        "Refer to the knowledge base for eligibility criteria for promotions or loyalty rewards"
-      ],
-      "expected_systems_accessed": [
-        "CRM",
-        "Promotions & Discounts Database",
-        "Knowledge Base"
-      ],
-      "expected_tools": [
-        "get_customer_detail",
-        "get_eligible_promotions",
-        "get_promotions",
-        "search_knowledge_base"
-      ],
-      "required_tools": [
-        "get_eligible_promotions"
-      ],
-      "expected_knowledge_queries": [
-        "promotion eligibility",
-        "loyalty rewards",
-        "discount criteria"
-      ],
+      "id": "account_security_check",
+      "category": "account",
+      "name": "Security Audit Request",
+      "customer_query": "Hi, I'm customer 12. I heard about data breaches in the news. Can you check if my account is secure?",
+      "customer_id": 12,
+      "expected_tools": ["get_customer_detail", "get_security_logs", "search_knowledge_base"],
+      "required_tools": ["get_security_logs"],
       "success_criteria": {
-        "must_check_promotions": true,
-        "must_explain_eligibility": true
-      }
+        "must_check_security_logs": true,
+        "must_provide_recommendations": true
+      },
+      "ground_truth_solution": "Review security logs for suspicious activity, failed logins from unknown locations, unauthorized access. Provide recommendations: enable 2FA, use strong unique password, update every 90 days, never share credentials, monitor account. Reassure and explain security measures.",
+      "scoring_rubric": "5=Reviews logs, reports findings, comprehensive recommendations; 4=Checks status and provides recommendations; 3=Reviews but limited recommendations; 2=Generic advice without checking; 1=Doesn't address concern",
+      "multi_turn": false
     },
     {
-      "id": "example_6_product_return",
-      "customer_query": "I want to return a product I recently purchased. What's the process?",
-      "customer_id": 251,
-      "expected_analysis": [
-        "Confirm recent purchases from the customer's order history",
-        "Check eligibility for return based on purchase date and item category",
-        "Search the knowledge base for return policies, guidelines, and procedures"
-      ],
-      "expected_systems_accessed": [
-        "CRM",
-        "Order Management System",
-        "Knowledge Base"
-      ],
-      "expected_tools": [
-        "get_customer_detail",
-        "get_customer_orders",
-        "search_knowledge_base"
-      ],
-      "required_tools": [
-        "get_customer_orders"
-      ],
-      "expected_knowledge_queries": [
-        "return policy",
-        "return procedure",
-        "refund process",
-        "return eligibility"
-      ],
+      "id": "account_update_contact",
+      "category": "account",
+      "name": "Update Contact Information",
+      "customer_query": "Hi, I'm customer 18. I have a new email and phone number. Can you update my account information?",
+      "customer_id": 18,
+      "expected_tools": ["get_customer_detail"],
+      "required_tools": ["get_customer_detail"],
       "success_criteria": {
-        "must_check_orders": true
-      }
+        "must_access_customer": true
+      },
+      "ground_truth_solution": "Retrieve current contact details. Verify identity. Collect new email and phone. Explain verification process for new contact info. Note: new email may require verification, update affects notifications/billing alerts, password reset links go to email on file.",
+      "scoring_rubric": "5=Shows current info, requests new details, explains verification, updates preferences; 4=Helps with update and explains process; 3=Acknowledges and provides guidance; 2=Generic without checking info; 1=Doesn't help",
+      "multi_turn": false
+    },
+    {
+      "id": "account_paperless_billing",
+      "category": "account",
+      "name": "Paperless Billing Setup",
+      "customer_query": "Hi, I'm customer 22. I want to go paperless and stop receiving paper bills. How do I do that?",
+      "customer_id": 22,
+      "expected_tools": ["get_customer_detail", "search_knowledge_base"],
+      "required_tools": ["get_customer_detail"],
+      "success_criteria": {
+        "must_access_customer": true
+      },
+      "ground_truth_solution": "Check current billing preferences. Verify email on file. Enable paperless billing. Confirm: bills sent to email, paper stops within 1-2 cycles, can view all bills online, email notifications for new bills.",
+      "scoring_rubric": "5=Checks settings, confirms email, enables paperless, explains benefits; 4=Enables and confirms; 3=Provides guidance; 2=Generic without checking; 1=Doesn't help",
+      "multi_turn": false
+    },
+    {
+      "id": "tv_channel_lineup",
+      "category": "tv",
+      "name": "TV Channel Lineup Question",
+      "customer_query": "Hi, I'm customer 28. What channels do I get with my TV streaming plan?",
+      "customer_id": 28,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_products"],
+      "required_tools": ["get_subscription_detail"],
+      "success_criteria": {
+        "must_check_subscription": true
+      },
+      "ground_truth_solution": "TV plans: Basic ($34.99/month): 50+ channels, 2 screens, 7-day replay. Premium ($64.99/month): 150+ channels, 4 screens, 30-day replay, sports, movies. Check current subscription, list features, mention upgrade if on Basic, explain streaming app access.",
+      "scoring_rubric": "5=Shows plan details, lists features, mentions upgrade if applicable; 4=Explains channels and features; 3=Provides plan info; 2=Generic TV info; 1=Doesn't address question",
+      "multi_turn": false
+    },
+    {
+      "id": "tv_add_sports",
+      "category": "tv",
+      "name": "Add Sports Package",
+      "customer_query": "Hi, I'm customer 32. I want to watch football games. Do you have a sports package I can add?",
+      "customer_id": 32,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_products"],
+      "required_tools": ["get_subscription_detail", "get_products"],
+      "success_criteria": {
+        "must_check_subscription": true,
+        "must_show_products": true
+      },
+      "ground_truth_solution": "Sports included in TV Streaming Premium ($64.99/month). Basic does not include sports. Check current subscription. If on Basic, offer upgrade to Premium which includes sports plus movie channels, 4 screens, 30-day replay. Calculate price difference.",
+      "scoring_rubric": "5=Checks plan, explains sports in Premium, shows pricing, offers upgrade; 4=Explains availability and upgrade; 3=Mentions sports info; 2=Generic without checking plan; 1=Doesn't help",
+      "multi_turn": false
+    },
+    {
+      "id": "bundle_inquiry",
+      "category": "bundle",
+      "name": "Bundle Package Inquiry",
+      "customer_query": "Hi, I'm customer 38. I have internet and mobile separately. Would I save money if I bundle them?",
+      "customer_id": 38,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_products"],
+      "required_tools": ["get_subscription_detail", "get_products"],
+      "success_criteria": {
+        "must_check_subscription": true,
+        "must_show_products": true
+      },
+      "ground_truth_solution": "Bundle - Family Complete: $199.99/month includes 500Mbps Internet, 150+ TV Channels, 2 Unlimited Mobile Lines, 20% discount vs individual. Check current subscriptions and total cost, calculate potential savings, explain bundle includes more, show value, offer to switch.",
+      "scoring_rubric": "5=Shows current cost, calculates savings, explains benefits, offers switch; 4=Explains options and potential savings; 3=Provides bundle info; 2=Generic bundle info; 1=Doesn't help",
+      "multi_turn": false
+    },
+    {
+      "id": "promotion_eligibility",
+      "category": "bundle",
+      "name": "Promotion Eligibility Check",
+      "customer_query": "Hi, I'm customer 42. Are there any promotions or discounts I'm eligible for?",
+      "customer_id": 42,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_eligible_promotions"],
+      "required_tools": ["get_customer_detail", "get_eligible_promotions"],
+      "success_criteria": {
+        "must_access_customer": true,
+        "must_check_promotions": true
+      },
+      "ground_truth_solution": "Available promotions: 1) New Customer 20% off (if new), 2) Bundle & Save $50/month (if 3+ services), 3) Loyalty Reward free speed upgrade (if Gold/Platinum), 4) Refer a Friend $100 credit. Check loyalty level and services, identify applicable promotions, explain how to take advantage.",
+      "scoring_rubric": "5=Checks eligibility, lists applicable promos, explains how to apply; 4=Identifies promotions customer qualifies for; 3=Mentions available promotions; 2=Generic list without checking; 1=Doesn't help",
+      "multi_turn": false
+    },
+    {
+      "id": "loyalty_benefits",
+      "category": "bundle",
+      "name": "Loyalty Program Benefits",
+      "customer_query": "Hi, I'm customer 48. I've been with you for years. What loyalty benefits do I get?",
+      "customer_id": 48,
+      "expected_tools": ["get_customer_detail", "get_products", "search_knowledge_base"],
+      "required_tools": ["get_customer_detail"],
+      "success_criteria": {
+        "must_access_customer": true
+      },
+      "ground_truth_solution": "Loyalty tiers: Bronze (basic support), Silver (priority support, occasional discounts), Gold (24/7 VIP support, free speed upgrades, special promotions), Platinum (all Gold plus dedicated account manager). Check current level, explain tier benefits, mention how to reach next tier, highlight current Gold/Platinum promotion.",
+      "scoring_rubric": "5=Shows level, explains tier benefits, mentions upgrade path and promos; 4=Explains benefits for their tier; 3=Provides loyalty info; 2=Generic without checking level; 1=Doesn't address question",
+      "multi_turn": false
+    },
+    {
+      "id": "support_ticket_status",
+      "category": "support",
+      "name": "Support Ticket Status Check",
+      "customer_query": "Hi, I'm customer 6. I opened a support ticket a few days ago. Can you check the status?",
+      "customer_id": 6,
+      "expected_tools": ["get_customer_detail", "get_support_tickets"],
+      "required_tools": ["get_support_tickets"],
+      "success_criteria": {
+        "must_check_tickets": true
+      },
+      "ground_truth_solution": "Look up open/pending tickets. Provide ticket number and status. Explain current stage of resolution. Provide expected timeline. If pending: explain what's being done, offer to escalate if delayed, provide contact for urgent issues.",
+      "scoring_rubric": "5=Finds ticket, shows status, explains next steps, offers escalation; 4=Provides status and explanation; 3=Finds and reports status; 2=Generic without checking; 1=Doesn't help",
+      "multi_turn": false
+    },
+    {
+      "id": "support_new_ticket",
+      "category": "support",
+      "name": "Create New Support Ticket",
+      "customer_query": "Hi, I'm customer 14. My cable box keeps rebooting randomly. I need someone to look at this.",
+      "customer_id": 14,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_support_tickets"],
+      "required_tools": ["get_subscription_detail"],
+      "success_criteria": {
+        "must_check_subscription": true,
+        "must_offer_support": true
+      },
+      "ground_truth_solution": "Document cable box issue (random reboots). Check subscription for equipment details. Basic troubleshooting: unplug 30 seconds, check connections. If persists, create support ticket with equipment type, issue description, troubleshooting attempted, priority level. Offer technician visit.",
+      "scoring_rubric": "5=Documents issue, tries troubleshooting, creates ticket, offers technician; 4=Creates ticket and offers options; 3=Acknowledges and offers help; 2=Generic troubleshooting without ticket; 1=Doesn't address issue",
+      "multi_turn": false
+    },
+    {
+      "id": "multi_billing_dispute",
+      "category": "billing",
+      "name": "[Multi-Turn] Billing Dispute Resolution",
+      "multi_turn": true,
+      "turns": [
+        {
+          "turn_number": 1,
+          "customer_query": "Hi, I'm customer 7. There's a $50 charge on my bill I don't recognize. What is this for?",
+          "expected_tools": ["get_billing_summary"],
+          "expected_response_elements": ["charge", "invoice", "billing"]
+        },
+        {
+          "turn_number": 2,
+          "customer_query": "I didn't order any equipment or additional services. Can you remove this charge?",
+          "expected_tools": [],
+          "expected_response_elements": ["credit", "remove", "adjustment"]
+        },
+        {
+          "turn_number": 3,
+          "customer_query": "Thanks for the credit. While I have you, are there any promotions I qualify for?",
+          "expected_tools": ["get_customer_detail", "get_eligible_promotions"],
+          "expected_response_elements": ["promotion", "discount", "offer"]
+        }
+      ],
+      "customer_id": 7,
+      "expected_tools": ["get_customer_detail", "get_billing_summary", "get_subscription_detail", "get_eligible_promotions"],
+      "required_tools": ["get_billing_summary"],
+      "success_criteria": {
+        "must_access_billing": true,
+        "must_handle_credit": true,
+        "must_check_promotions": true
+      },
+      "ground_truth_solution": "Turn 1: Pull billing summary, identify $50 charge, explain what it's for. Turn 2: If erroneous, apply credit; if valid, explain but offer goodwill credit if appropriate, confirm adjustment on next bill. Turn 3: Review loyalty level and services, identify applicable promotions, recommend best options.",
+      "scoring_rubric": "5=Investigates thoroughly, handles credit appropriately, provides personalized promo info; 4=Addresses each turn adequately; 3=Responds but missing depth; 2=Misses context between turns; 1=Fails to address dispute or loses context"
+    },
+    {
+      "id": "multi_internet_troubleshoot",
+      "category": "internet",
+      "name": "[Multi-Turn] Internet Troubleshooting Flow",
+      "multi_turn": true,
+      "turns": [
+        {
+          "turn_number": 1,
+          "customer_query": "Hi, I'm customer 16. My internet keeps dropping every few minutes. It's really frustrating.",
+          "expected_tools": ["get_subscription_detail", "get_support_tickets"],
+          "expected_response_elements": ["internet", "issue", "connection"]
+        },
+        {
+          "turn_number": 2,
+          "customer_query": "I already tried restarting the router. It worked for a bit but started dropping again.",
+          "expected_tools": ["search_knowledge_base"],
+          "expected_response_elements": ["troubleshoot", "check", "cable"]
+        },
+        {
+          "turn_number": 3,
+          "customer_query": "I checked the cables and they look fine. I think there might be something wrong with the equipment.",
+          "expected_tools": [],
+          "expected_response_elements": ["technician", "appointment", "visit"]
+        },
+        {
+          "turn_number": 4,
+          "customer_query": "Yes, please schedule a technician. What times are available?",
+          "expected_tools": [],
+          "expected_response_elements": ["scheduled", "appointment", "confirm"]
+        }
+      ],
+      "customer_id": 16,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_support_tickets", "search_knowledge_base"],
+      "required_tools": ["get_subscription_detail"],
+      "success_criteria": {
+        "must_check_subscription": true,
+        "must_provide_troubleshooting": true,
+        "must_offer_technician": true
+      },
+      "ground_truth_solution": "Turn 1: Check subscription/incidents, acknowledge issue. Turn 2: Since router restart tried, suggest cable check, wired connection test, interference check. Turn 3: Acknowledge customer tried troubleshooting, agree equipment may need inspection, offer technician. Turn 4: Offer time slots, confirm details, provide arrival window.",
+      "scoring_rubric": "5=Progressive troubleshooting, builds on previous turns, smooth escalation; 4=Addresses each step, schedules technician; 3=Follows flow but may skip steps; 2=Repetitive or doesn't build on attempts; 1=Doesn't progress logically"
+    },
+    {
+      "id": "multi_service_cancellation",
+      "category": "account",
+      "name": "[Multi-Turn] Service Cancellation Retention",
+      "multi_turn": true,
+      "turns": [
+        {
+          "turn_number": 1,
+          "customer_query": "Hi, I'm customer 24. I want to cancel my internet service. It's too expensive.",
+          "expected_tools": ["get_subscription_detail", "get_billing_summary"],
+          "expected_response_elements": ["cancel", "service", "understand"]
+        },
+        {
+          "turn_number": 2,
+          "customer_query": "I've been paying $119 a month and I found a competitor offering $70 for similar speeds.",
+          "expected_tools": ["get_products"],
+          "expected_response_elements": ["offer", "discount", "match", "retention"]
+        },
+        {
+          "turn_number": 3,
+          "customer_query": "A 20% discount sounds good. What would my new monthly rate be?",
+          "expected_tools": [],
+          "expected_response_elements": ["$95", "monthly", "rate", "discount"]
+        }
+      ],
+      "customer_id": 24,
+      "expected_tools": ["get_customer_detail", "get_subscription_detail", "get_billing_summary", "get_products"],
+      "required_tools": ["get_subscription_detail", "get_billing_summary"],
+      "success_criteria": {
+        "must_check_subscription": true,
+        "must_attempt_retention": true
+      },
+      "ground_truth_solution": "Turn 1: Pull subscription/billing, express understanding, ask about needs, don't immediately accept cancellation. Turn 2: Acknowledge competitor pricing, check retention offers, offer 20% loyalty discount or price match, highlight value-adds. Turn 3: Calculate new rate ($119 x 0.8 = $95.20), confirm discount applied, explain duration, thank for staying.",
+      "scoring_rubric": "5=Empathetic handling, competitive retention offer, calculates rate, secures retention; 4=Makes appropriate offer and calculates; 3=Attempts retention but may miss personalization; 2=Too quick to cancel or weak retention; 1=Processes cancellation without effort"
+    },
+    {
+      "id": "multi_new_customer_setup",
+      "category": "internet",
+      "name": "[Multi-Turn] New Service Setup Assistance",
+      "multi_turn": true,
+      "turns": [
+        {
+          "turn_number": 1,
+          "customer_query": "Hi, I'm customer 2. I just moved to a new apartment and need to set up internet. What are my options?",
+          "expected_tools": ["get_products"],
+          "expected_response_elements": ["internet", "plans", "options"]
+        },
+        {
+          "turn_number": 2,
+          "customer_query": "I work from home and need reliable internet for video calls. Which plan do you recommend?",
+          "expected_tools": ["get_subscription_detail"],
+          "expected_response_elements": ["Pro", "500Mbps", "recommend"]
+        },
+        {
+          "turn_number": 3,
+          "customer_query": "The Pro plan sounds good. Do you have any current promotions for new setups?",
+          "expected_tools": ["get_eligible_promotions"],
+          "expected_response_elements": ["promotion", "discount", "new customer"]
+        },
+        {
+          "turn_number": 4,
+          "customer_query": "Great! Please set me up with the Pro plan and the new customer discount.",
+          "expected_tools": [],
+          "expected_response_elements": ["confirm", "order", "setup", "welcome"]
+        }
+      ],
+      "customer_id": 2,
+      "expected_tools": ["get_customer_detail", "get_products", "get_subscription_detail", "get_eligible_promotions"],
+      "required_tools": ["get_products"],
+      "success_criteria": {
+        "must_show_products": true,
+        "must_recommend_plan": true,
+        "must_check_promotions": true
+      },
+      "ground_truth_solution": "Turn 1: List plans (Basic, Pro, Ultimate) with speeds and pricing. Turn 2: Recommend Pro (500Mbps) for WFH video calls, explain why suitable. Turn 3: New Customer 20% off first 3 months, WiFi 6 router included, installation options. Turn 4: Confirm Pro @ $79.99, apply 20% (first 3 months = $63.99), set installation, welcome.",
+      "scoring_rubric": "5=Natural sales flow, personalized recommendation, applies promo, completes smoothly; 4=Guides through selection and setup; 3=Completes but may lack personalization; 2=Disjointed or missing steps; 1=Doesn't complete setup"
+    },
+    {
+      "id": "multi_complex_account_issue",
+      "category": "account",
+      "name": "[Multi-Turn] Complex Account Resolution",
+      "multi_turn": true,
+      "turns": [
+        {
+          "turn_number": 1,
+          "customer_query": "Hi, I'm customer 11. I have several issues. First, I was charged for a service I cancelled last month.",
+          "expected_tools": ["get_billing_summary", "get_subscription_detail"],
+          "expected_response_elements": ["charge", "cancelled", "billing"]
+        },
+        {
+          "turn_number": 2,
+          "customer_query": "Also, my internet has been slow for the past week. Are there any known issues?",
+          "expected_tools": ["get_support_tickets"],
+          "expected_response_elements": ["slow", "internet", "incident", "issue"]
+        },
+        {
+          "turn_number": 3,
+          "customer_query": "One more thing - I want to downgrade my TV package. I don't watch that much anymore.",
+          "expected_tools": ["get_products"],
+          "expected_response_elements": ["downgrade", "TV", "package", "change"]
+        },
+        {
+          "turn_number": 4,
+          "customer_query": "Can you summarize all the changes you're making to my account?",
+          "expected_tools": [],
+          "expected_response_elements": ["summary", "credit", "downgrade", "changes"]
+        }
+      ],
+      "customer_id": 11,
+      "expected_tools": ["get_customer_detail", "get_billing_summary", "get_subscription_detail", "get_support_tickets", "get_products"],
+      "required_tools": ["get_billing_summary", "get_subscription_detail"],
+      "success_criteria": {
+        "must_access_billing": true,
+        "must_check_subscription": true,
+        "must_handle_multiple_issues": true
+      },
+      "ground_truth_solution": "Turn 1: Check billing for cancelled service charge, identify erroneous charge, apply credit/refund. Turn 2: Check service incidents and subscription status, provide status/ETA or troubleshooting. Turn 3: Show current TV package, explain downgrade options (Premium to Basic), calculate savings, process change. Turn 4: Recap all changes: credit applied, internet issue status, TV downgrade and savings.",
+      "scoring_rubric": "5=Handles all 3 issues effectively, provides clear summary, maintains context; 4=Unable to handle multiple issues"
     }
   ]
 }

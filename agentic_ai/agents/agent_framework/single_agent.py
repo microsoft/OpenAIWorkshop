@@ -5,12 +5,12 @@ from typing import Any, Dict, List
 from agent_framework import AgentThread, ChatAgent, MCPStreamableHTTPTool
 from agent_framework.azure import AzureOpenAIChatClient
 
-from agents.base_agent import BaseAgent
+from agents.base_agent import BaseAgent, ToolCallTrackingMixin
 
 logger = logging.getLogger(__name__)
 
 
-class Agent(BaseAgent):
+class Agent(ToolCallTrackingMixin, BaseAgent):
     """Agent Framework implementation of a single assistant loop."""
 
     def __init__(self, state_store: Dict[str, Any], session_id: str, access_token: str | None = None) -> None:
@@ -23,6 +23,7 @@ class Agent(BaseAgent):
         # Track conversation turn for tool call grouping - load from state store
         self._turn_key = f"{session_id}_current_turn"
         self._current_turn = state_store.get(self._turn_key, 0)
+        self.init_tool_tracking()
 
     def set_websocket_manager(self, manager: Any) -> None:
         """Allow backend to inject WebSocket manager for streaming events."""
@@ -121,6 +122,9 @@ class Agent(BaseAgent):
         if not self._agent or not self._thread:
             raise RuntimeError("Agent Framework single agent failed to initialize correctly.")
 
+        # Reset tool-call tracking for this turn
+        self.clear_tool_calls()
+
         # Increment turn counter for this new conversation turn and persist to state store
         self._current_turn += 1
         self.state_store[self._turn_key] = self._current_turn
@@ -128,10 +132,15 @@ class Agent(BaseAgent):
         # Use streaming if WebSocket manager is available
         if self._ws_manager:
             return await self._chat_async_streaming(prompt)
-        
-        # Non-streaming path
-        response = await self._agent.run(prompt, thread=self._thread)
-        assistant_response = response.text
+
+        # Non-streaming path — use run_stream so we can capture tool calls
+        full_response: List[str] = []
+        async for chunk in self._agent.run_stream(prompt, thread=self._thread):
+            self._process_chunk(chunk)
+            if hasattr(chunk, "text") and chunk.text:
+                full_response.append(chunk.text)
+        self.finalize_tool_tracking()
+        assistant_response = "".join(full_response)
 
         messages = [
             {"role": "user", "content": prompt},
@@ -143,6 +152,20 @@ class Agent(BaseAgent):
         self._setstate(new_state)
 
         return assistant_response
+
+    def _process_chunk(self, chunk: Any) -> None:
+        """Extract tool-call tracking info from a streaming chunk."""
+        if not (hasattr(chunk, "contents") and chunk.contents):
+            return
+        for content in chunk.contents:
+            if content.type == "function_call":
+                if content.name:
+                    self.track_function_call_start(content.name)
+                args_chunk = getattr(content, "arguments", "")
+                if args_chunk:
+                    self.track_function_call_arguments(args_chunk)
+            elif content.type == "function_result":
+                self.finalize_tool_tracking()
 
     async def _chat_async_streaming(self, prompt: str) -> str:
         """Handle chat with streaming support via WebSocket."""

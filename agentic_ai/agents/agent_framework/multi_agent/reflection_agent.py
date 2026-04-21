@@ -5,11 +5,11 @@ from typing import Any, Dict, List
 from agent_framework import AgentThread, ChatAgent, MCPStreamableHTTPTool
 from agent_framework.azure import AzureOpenAIChatClient
 
-from agents.base_agent import BaseAgent
+from agents.base_agent import BaseAgent, ToolCallTrackingMixin
 
 logger = logging.getLogger(__name__)
 
-class Agent(BaseAgent):
+class Agent(ToolCallTrackingMixin, BaseAgent):
     """Agent Framework implementation with Primary Agent + Reviewer reflection workflow and MCP streaming."""
 
     def __init__(self, state_store: Dict[str, Any], session_id: str, access_token: str | None = None) -> None:
@@ -23,6 +23,7 @@ class Agent(BaseAgent):
         # Track conversation turn for tool call grouping - load from state store
         self._turn_key = f"{session_id}_current_turn"
         self._current_turn = state_store.get(self._turn_key, 0)
+        self.init_tool_tracking()
         
         # Log that reflection agent is being used
         print(f"REFLECTION AGENT INITIALIZED - Session: {session_id}")
@@ -61,21 +62,34 @@ class Agent(BaseAgent):
         if self._initialized:
             return
 
-        if not all([self.azure_openai_key, self.azure_deployment, self.azure_openai_endpoint, self.api_version]):
+        if not all([self.azure_deployment, self.azure_openai_endpoint, self.api_version]):
             raise RuntimeError(
-                "Azure OpenAI configuration is incomplete. Ensure AZURE_OPENAI_API_KEY, "
+                "Azure OpenAI configuration is incomplete. Ensure "
                 "AZURE_OPENAI_CHAT_DEPLOYMENT, AZURE_OPENAI_ENDPOINT, and AZURE_OPENAI_API_VERSION are set."
+            )
+        if not self.azure_openai_key and not self.azure_credential:
+            raise RuntimeError(
+                "Azure OpenAI authentication is not configured. Either set "
+                "AZURE_OPENAI_API_KEY or ensure managed identity is available."
             )
 
         headers = self._build_headers()
         mcp_tools = await self._maybe_create_tools(headers)
 
-        chat_client = AzureOpenAIChatClient(
-            api_key=self.azure_openai_key,
-            deployment_name=self.azure_deployment,
-            endpoint=self.azure_openai_endpoint,
-            api_version=self.api_version,
-        )
+        if self.azure_openai_key:
+            chat_client = AzureOpenAIChatClient(
+                api_key=self.azure_openai_key,
+                deployment_name=self.azure_deployment,
+                endpoint=self.azure_openai_endpoint,
+                api_version=self.api_version,
+            )
+        else:
+            chat_client = AzureOpenAIChatClient(
+                credential=self.azure_credential,
+                deployment_name=self.azure_deployment,
+                endpoint=self.azure_openai_endpoint,
+                api_version=self.api_version,
+            )
 
         tools = mcp_tools[0] if mcp_tools else None
 
@@ -216,6 +230,8 @@ class Agent(BaseAgent):
                 if hasattr(chunk, 'contents') and chunk.contents:
                     for content in chunk.contents:
                         if content.type == "function_call":
+                            if getattr(content, 'name', None):
+                                self.add_tool_call(content.name, {})
                             if self._ws_manager:
                                 await self._ws_manager.broadcast(
                                     self.session_id,
@@ -364,6 +380,8 @@ Do not include phrases like "Thank you for the feedback" or other meta-commentar
                     if hasattr(chunk, 'contents') and chunk.contents:
                         for content in chunk.contents:
                             if content.type == "function_call":
+                                if getattr(content, 'name', None):
+                                    self.add_tool_call(content.name, {})
                                 if self._ws_manager:
                                     await self._ws_manager.broadcast(
                                         self.session_id,
