@@ -295,10 +295,15 @@ DO NOT OUTPUT ANYTHING OTHER THAN JSON, AND DO NOT DEVIATE FROM THIS SCHEMA:
         return cleaned_answer
 
     def _validate_configuration(self) -> None:
-        if not all([self.azure_openai_key, self.azure_deployment, self.azure_openai_endpoint, self.api_version]):
+        if not all([self.azure_deployment, self.azure_openai_endpoint, self.api_version]):
             raise RuntimeError(
-                "Azure OpenAI configuration is incomplete. Ensure AZURE_OPENAI_API_KEY, "
+                "Azure OpenAI configuration is incomplete. Ensure "
                 "AZURE_OPENAI_CHAT_DEPLOYMENT, AZURE_OPENAI_ENDPOINT, and AZURE_OPENAI_API_VERSION are set."
+            )
+        if not self.azure_openai_key and not self.azure_credential:
+            raise RuntimeError(
+                "Azure OpenAI authentication is not configured. Either set AZURE_OPENAI_API_KEY "
+                "or ensure managed identity is available for credential-based authentication."
             )
 
     def _build_headers(self) -> Dict[str, str]:

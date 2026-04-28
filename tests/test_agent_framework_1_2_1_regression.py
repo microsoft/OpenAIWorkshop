@@ -149,11 +149,24 @@ class TestAgentConstructors:
         # description was wired through in 1.2.x and is consumed by HandoffBuilder
         assert 'description' in params
 
-    def test_chat_options_model_id(self):
-        """ChatOptions accepts model_id for specifying the model."""
+    def test_chat_options_model(self):
+        """ChatOptions uses ``model`` (not ``model_id``) for specifying the model in 1.2.x.
+
+        ChatOptions is a TypedDict (``total=False``), so unknown keys like ``model_id`` are
+        silently accepted at construction time but get forwarded verbatim into the underlying
+        OpenAI client call, where they raise ``TypeError: unexpected keyword argument 'model_id'``.
+        Pin the supported key here so a future rename is caught at unit-test time rather than
+        at runtime in the deployed backend (see PR #421).
+        """
         from agent_framework import ChatOptions
-        opts = ChatOptions(model_id="gpt-4o")
-        assert opts["model_id"] == "gpt-4o"
+        opts = ChatOptions(model="gpt-4o")
+        assert opts["model"] == "gpt-4o"
+        # Ensure the underlying TypedDict definition still declares ``model`` as a valid key.
+        assert "model" in ChatOptions.__annotations__
+        assert "model_id" not in ChatOptions.__annotations__, (
+            "ChatOptions field was renamed model_id → model in 1.2.x; "
+            "production code in agentic_ai/agents/agent_framework/** must use model=."
+        )
 
     def test_openai_client_constructor_supports_azure_kwargs(self):
         """OpenAIChatClient accepts model, api_key, credential, azure_endpoint, api_version."""
