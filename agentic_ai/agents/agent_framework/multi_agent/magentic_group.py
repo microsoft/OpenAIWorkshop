@@ -579,7 +579,7 @@ DO NOT OUTPUT ANYTHING OTHER THAN JSON, AND DO NOT DEVIATE FROM THIS SCHEMA:
             agent_kwargs: Dict[str, Any] = {
                 **defaults,
                 "client": participant_client,
-                "default_options": ChatOptions(model_id=self.openai_model_name),
+                "default_options": ChatOptions(model=self.openai_model_name),
             }
             
             # Apply tool filtering for this participant's domain

@@ -85,7 +85,7 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
             name="ai_assistant",
             instructions=instructions,
             tools=tools,
-            default_options=ChatOptions(model_id=self.openai_model_name),
+            default_options=ChatOptions(model=self.openai_model_name),
         )
 
         try:
