@@ -647,19 +647,19 @@ class TestMagenticGroupIntegration:
         storage = InMemoryCheckpointStorage()
         cp = WorkflowCheckpoint(workflow_name="wf-A", graph_signature_hash="hash-1", checkpoint_id="cp-1")
 
-        cid = asyncio.new_event_loop().run_until_complete(storage.save(cp))
+        cid = asyncio.run(storage.save(cp))
         assert cid == "cp-1"
 
-        loaded = asyncio.new_event_loop().run_until_complete(storage.load("cp-1"))
+        loaded = asyncio.run(storage.load("cp-1"))
         assert loaded is not None
         assert loaded.workflow_name == "wf-A"
         assert loaded.checkpoint_id == "cp-1"
 
-        latest = asyncio.new_event_loop().run_until_complete(storage.get_latest(workflow_name="wf-A"))
+        latest = asyncio.run(storage.get_latest(workflow_name="wf-A"))
         assert latest is not None and latest.checkpoint_id == "cp-1"
 
         # get_latest with a non-matching workflow_name returns None
-        none = asyncio.new_event_loop().run_until_complete(storage.get_latest(workflow_name="other"))
+        none = asyncio.run(storage.get_latest(workflow_name="other"))
         assert none is None
 
     def test_get_latest_checkpoint_id_uses_workflow_name_kwarg(self):
@@ -674,19 +674,19 @@ class TestMagenticGroupIntegration:
 
         storage = InMemoryCheckpointStorage()
         cp = WorkflowCheckpoint(workflow_name="wf-resume", graph_signature_hash="h", checkpoint_id="cp-latest")
-        asyncio.new_event_loop().run_until_complete(storage.save(cp))
+        asyncio.run(storage.save(cp))
 
         # Simulate a previous build having recorded the workflow_name.
         state_store: dict = {}
         agent = Agent(state_store=state_store, session_id="test")
         state_store[agent._workflow_name_state_key] = "wf-resume"
 
-        latest_id = asyncio.new_event_loop().run_until_complete(agent._get_latest_checkpoint_id(storage))
+        latest_id = asyncio.run(agent._get_latest_checkpoint_id(storage))
         assert latest_id == "cp-latest"
 
         # Without a recorded workflow_name, no resume target is returned.
         state_store.pop(agent._workflow_name_state_key)
-        latest_id_none = asyncio.new_event_loop().run_until_complete(agent._get_latest_checkpoint_id(storage))
+        latest_id_none = asyncio.run(agent._get_latest_checkpoint_id(storage))
         assert latest_id_none is None
 
     def test_magentic_factory_override_still_works(self):
@@ -732,9 +732,7 @@ class TestMagenticGroupIntegration:
         agent.set_websocket_manager(ws_manager)
         
         event = WorkflowEvent.output("exec1", "Final answer text")
-        asyncio.get_event_loop().run_until_complete(
-            agent._process_workflow_event(event)
-        )
+        asyncio.run(agent._process_workflow_event(event))
         
         ws_manager.broadcast.assert_called()
         call_args = ws_manager.broadcast.call_args[0]
@@ -756,9 +754,7 @@ class TestMagenticGroupIntegration:
         mock_data.text = "streaming token"
         event = WorkflowEvent.emit("crm_billing", mock_data)
         
-        asyncio.get_event_loop().run_until_complete(
-            agent._process_workflow_event(event)
-        )
+        asyncio.run(agent._process_workflow_event(event))
         
         # Should broadcast agent_start and agent_token
         assert ws_manager.broadcast.call_count >= 1
