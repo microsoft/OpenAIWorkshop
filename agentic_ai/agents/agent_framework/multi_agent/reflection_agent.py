@@ -108,7 +108,7 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
             name="PrimaryAgent",
             instructions=PRIMARY_AGENT_INSTRUCTIONS,
             tools=tools,
-            default_options=ChatOptions(model_id=self.openai_model_name),
+            default_options=ChatOptions(model=self.openai_model_name),
         )
 
         self._reviewer = FrameworkAgent(
@@ -116,7 +116,7 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
             name="Reviewer",
             instructions=REVIEWER_INSTRUCTIONS,
             tools=tools,
-            default_options=ChatOptions(model_id=self.openai_model_name),
+            default_options=ChatOptions(model=self.openai_model_name),
         )
 
         # Initialize agents

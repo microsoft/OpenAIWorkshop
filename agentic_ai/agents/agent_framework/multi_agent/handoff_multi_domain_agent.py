@@ -340,7 +340,7 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
                 description=cfg["description"],
                 instructions=cfg["instructions"],
                 tools=domain_tools,
-                default_options=ChatOptions(model_id=self.openai_model_name),
+                default_options=ChatOptions(model=self.openai_model_name),
                 require_per_service_call_history_persistence=True,
             )
             await agent.__aenter__()
