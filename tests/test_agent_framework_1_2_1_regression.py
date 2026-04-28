@@ -570,46 +570,66 @@ class TestMagenticGroupIntegration:
         assert agent._max_round_count == 4
         assert agent._max_stall_count == 2
 
-    def test_magentic_checkpoint_storage(self):
-        """DictCheckpointStorage works for checkpointing."""
-        from agents.agent_framework.multi_agent.magentic_group import DictCheckpointStorage
-        from agent_framework import WorkflowCheckpoint
-        
-        backing = {}
-        storage = DictCheckpointStorage(backing)
-        assert storage.latest_checkpoint_id is None
+    def test_magentic_uses_builtin_checkpoint_storage(self):
+        """Magentic agent's _create_checkpoint_storage returns a built-in 1.2.1 storage."""
+        from agents.agent_framework.multi_agent.magentic_group import Agent
+        from agent_framework import InMemoryCheckpointStorage
+        from agents.agent_framework.multi_agent import checkpoint_storage as cps
 
-    def test_magentic_checkpoint_storage_implements_1_2_1_protocol(self):
-        """DictCheckpointStorage implements the 1.2.x CheckpointStorage protocol.
+        cps.reset_storage_cache()
+        agent = Agent(state_store={}, session_id="magentic-builtin-test")
+        storage = agent._create_checkpoint_storage()
+        # Default backend is in-memory
+        assert isinstance(storage, InMemoryCheckpointStorage)
 
-        In 1.0.0rc1 the methods were named save_checkpoint/load_checkpoint/...; in
-        1.2.x they are save/load/delete/get_latest with workflow_name kwargs.
-        """
-        from agents.agent_framework.multi_agent.magentic_group import DictCheckpointStorage
+    def test_handoff_uses_builtin_checkpoint_storage(self):
+        """Handoff agent picks up the built-in checkpoint storage by default."""
+        from agents.agent_framework.multi_agent.handoff_multi_domain_agent import Agent
+        from agent_framework import InMemoryCheckpointStorage
+        from agents.agent_framework.multi_agent import checkpoint_storage as cps
+
+        cps.reset_storage_cache()
+        agent = Agent(state_store={}, session_id="handoff-builtin-test")
+        assert isinstance(agent._checkpoint_storage, InMemoryCheckpointStorage)
+        assert agent._workflow_name == "handoff-handoff-builtin-test"
+
+    def test_checkpoint_storage_factory_implements_1_2_1_protocol(self):
+        """Built-in storage exposes the 1.2.x CheckpointStorage protocol surface."""
+        from agents.agent_framework.multi_agent.checkpoint_storage import (
+            create_checkpoint_storage,
+            reset_storage_cache,
+        )
         import inspect
+
+        reset_storage_cache()
+        storage = create_checkpoint_storage("protocol-test")
         for name in ("save", "load", "delete", "get_latest", "list_checkpoints", "list_checkpoint_ids"):
-            assert callable(getattr(DictCheckpointStorage, name, None)), (
-                f"DictCheckpointStorage must implement 1.2.x method {name!r}"
+            assert callable(getattr(storage, name, None)), (
+                f"Built-in storage must expose 1.2.x method {name!r}"
             )
-        # Old method names should NOT exist
-        assert not hasattr(DictCheckpointStorage, "save_checkpoint"), \
-            "save_checkpoint was renamed to save in 1.2.x"
-        assert not hasattr(DictCheckpointStorage, "load_checkpoint"), \
-            "load_checkpoint was renamed to load in 1.2.x"
-        # workflow_name keyword-only enforcement
+        # Old method names should NOT exist on the built-in storage.
+        assert not hasattr(storage, "save_checkpoint")
+        assert not hasattr(storage, "load_checkpoint")
+        # workflow_name keyword-only enforcement on protocol methods.
         for name in ("list_checkpoints", "list_checkpoint_ids", "get_latest"):
-            sig = inspect.signature(getattr(DictCheckpointStorage, name))
+            sig = inspect.signature(getattr(storage, name))
             assert "workflow_name" in sig.parameters, (
                 f"{name} must accept workflow_name keyword in 1.2.x"
             )
 
-    def test_handoff_checkpoint_storage_implements_1_2_1_protocol(self):
-        """The handoff agent's _DictCheckpointStorage matches the 1.2.x protocol."""
-        from agents.agent_framework.multi_agent.handoff_multi_domain_agent import _DictCheckpointStorage
-        for name in ("save", "load", "delete", "get_latest", "list_checkpoints", "list_checkpoint_ids"):
-            assert callable(getattr(_DictCheckpointStorage, name, None)), (
-                f"_DictCheckpointStorage must implement 1.2.x method {name!r}"
-            )
+    def test_checkpoint_storage_backend_selection(self, tmp_path, monkeypatch):
+        """WORKFLOW_CHECKPOINT_BACKEND env var selects file-backed storage."""
+        from agent_framework import FileCheckpointStorage
+        from agents.agent_framework.multi_agent.checkpoint_storage import (
+            create_checkpoint_storage,
+            reset_storage_cache,
+        )
+
+        monkeypatch.setenv("WORKFLOW_CHECKPOINT_BACKEND", "file")
+        monkeypatch.setenv("WORKFLOW_CHECKPOINT_DIR", str(tmp_path))
+        reset_storage_cache()
+        storage = create_checkpoint_storage("file-session")
+        assert isinstance(storage, FileCheckpointStorage)
 
     def test_workflow_checkpoint_uses_workflow_name(self):
         """WorkflowCheckpoint uses workflow_name (was workflow_id in 1.0.0rc1)."""
@@ -620,52 +640,64 @@ class TestMagenticGroupIntegration:
         assert "workflow_id" not in sig.parameters, \
             "workflow_id was renamed to workflow_name in 1.2.x"
 
-    def test_dict_checkpoint_storage_save_load_roundtrip(self):
+    def test_builtin_storage_save_load_roundtrip(self):
         """save() persists a checkpoint that load()/get_latest() can recover."""
-        from agents.agent_framework.multi_agent.magentic_group import DictCheckpointStorage
-        from agent_framework import WorkflowCheckpoint
+        from agent_framework import InMemoryCheckpointStorage, WorkflowCheckpoint
 
-        storage = DictCheckpointStorage({})
+        storage = InMemoryCheckpointStorage()
         cp = WorkflowCheckpoint(workflow_name="wf-A", graph_signature_hash="hash-1", checkpoint_id="cp-1")
 
-        cid = asyncio.get_event_loop().run_until_complete(storage.save(cp))
+        cid = asyncio.new_event_loop().run_until_complete(storage.save(cp))
         assert cid == "cp-1"
 
-        loaded = asyncio.get_event_loop().run_until_complete(storage.load("cp-1"))
+        loaded = asyncio.new_event_loop().run_until_complete(storage.load("cp-1"))
         assert loaded is not None
         assert loaded.workflow_name == "wf-A"
         assert loaded.checkpoint_id == "cp-1"
 
-        latest = asyncio.get_event_loop().run_until_complete(storage.get_latest(workflow_name="wf-A"))
+        latest = asyncio.new_event_loop().run_until_complete(storage.get_latest(workflow_name="wf-A"))
         assert latest is not None and latest.checkpoint_id == "cp-1"
 
         # get_latest with a non-matching workflow_name returns None
-        none = asyncio.get_event_loop().run_until_complete(storage.get_latest(workflow_name="other"))
+        none = asyncio.new_event_loop().run_until_complete(storage.get_latest(workflow_name="other"))
         assert none is None
 
     def test_get_latest_checkpoint_id_uses_workflow_name_kwarg(self):
-        """_get_latest_checkpoint_id resumes from a 1.2.x-protocol-only storage.
+        """_get_latest_checkpoint_id resumes via the standardized 1.2.x protocol.
 
-        Storages that follow the 1.2.x ``CheckpointStorage`` protocol require
-        the keyword-only ``workflow_name`` argument on ``get_latest`` /
-        ``list_checkpoints`` / ``list_checkpoint_ids`` and do not expose the
-        nonstandard ``latest_checkpoint_id`` convenience. The resume helper
-        must call those methods with ``workflow_name=`` so it can still find
-        the latest checkpoint.
+        After a previous build recorded the workflow name in state_store, the
+        helper must call ``storage.get_latest(workflow_name=...)`` with that
+        recorded name to find the latest checkpoint.
         """
-        from agents.agent_framework.multi_agent.magentic_group import Agent, DictCheckpointStorage
-        from agent_framework import WorkflowCheckpoint
+        from agents.agent_framework.multi_agent.magentic_group import Agent
+        from agent_framework import InMemoryCheckpointStorage, WorkflowCheckpoint
 
-        # Back the storage with a dict that records the workflow_name so
-        # _workflow_name_for_storage can recover it (mirrors how save() works).
-        backing: dict = {"workflow_name": "wf-resume"}
-        storage = DictCheckpointStorage(backing)
+        storage = InMemoryCheckpointStorage()
         cp = WorkflowCheckpoint(workflow_name="wf-resume", graph_signature_hash="h", checkpoint_id="cp-latest")
-        asyncio.get_event_loop().run_until_complete(storage.save(cp))
+        asyncio.new_event_loop().run_until_complete(storage.save(cp))
 
-        agent = Agent(state_store={}, session_id="test")
-        latest_id = asyncio.get_event_loop().run_until_complete(agent._get_latest_checkpoint_id(storage))
+        # Simulate a previous build having recorded the workflow_name.
+        state_store: dict = {}
+        agent = Agent(state_store=state_store, session_id="test")
+        state_store[agent._workflow_name_state_key] = "wf-resume"
+
+        latest_id = asyncio.new_event_loop().run_until_complete(agent._get_latest_checkpoint_id(storage))
         assert latest_id == "cp-latest"
+
+        # Without a recorded workflow_name, no resume target is returned.
+        state_store.pop(agent._workflow_name_state_key)
+        latest_id_none = asyncio.new_event_loop().run_until_complete(agent._get_latest_checkpoint_id(storage))
+        assert latest_id_none is None
+
+    def test_magentic_factory_override_still_works(self):
+        """Hosts can still inject a custom CheckpointStorage via state_store."""
+        from agents.agent_framework.multi_agent.magentic_group import Agent
+        from agent_framework import InMemoryCheckpointStorage
+
+        custom = InMemoryCheckpointStorage()
+        state_store = {"magentic_checkpoint_storage": custom}
+        agent = Agent(state_store=state_store, session_id="override-test")
+        assert agent._create_checkpoint_storage() is custom
 
     def test_magentic_sanitize_final_answer(self):
         """FINAL_ANSWER prefix is stripped from workflow output."""

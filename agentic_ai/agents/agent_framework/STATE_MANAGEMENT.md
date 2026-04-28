@@ -253,7 +253,43 @@ Executors can include arbitrary JSON-friendly payloads in their `snapshot_state`
 
 ## 6. External checkpoint storage implementations
 
-### 6.1 Redis-backed CheckpointStorage
+Starting with `agent-framework` 1.2.1 the framework ships ready-made
+`CheckpointStorage` implementations, so most workshops should use those
+directly rather than rolling their own. The samples below are kept for
+reference / advanced customization.
+
+### 6.0 Built-in storages (recommended)
+
+```python
+# In-process (default) – great for tests and single-process demos.
+from agent_framework import InMemoryCheckpointStorage
+storage = InMemoryCheckpointStorage()
+
+# JSON-on-disk – atomic writes, path-traversal protection, type-restricted
+# pickle deserialization for safety.
+from agent_framework import FileCheckpointStorage
+storage = FileCheckpointStorage("/var/lib/workshop/checkpoints")
+
+# Durable, partitioned by workflow_name. Auto-creates the database and
+# container on first use; supports DefaultAzureCredential or an account key.
+from agent_framework_azure_cosmos import CosmosCheckpointStorage
+from azure.identity.aio import DefaultAzureCredential
+storage = CosmosCheckpointStorage(
+    endpoint="https://my-account.documents.azure.com:443/",
+    credential=DefaultAzureCredential(),
+    database_name="agent-db",
+    container_name="checkpoints",
+)
+```
+
+In this workshop the multi-agent agents pick a storage via
+`agentic_ai/agents/agent_framework/multi_agent/checkpoint_storage.py` based on
+the `WORKFLOW_CHECKPOINT_BACKEND` environment variable
+(`memory` (default) | `file` | `cosmos`). For `file` the location can be
+overridden with `WORKFLOW_CHECKPOINT_DIR`; for `cosmos` the standard
+`AZURE_COSMOS_*` environment variables apply.
+
+### 6.1 Custom Redis-backed CheckpointStorage
 
 ```python
 import json
@@ -305,6 +341,11 @@ class RedisCheckpointStorage(CheckpointStorage):
 ```
 
 ### 6.2 Azure Cosmos DB CheckpointStorage
+
+> Prefer the built-in `agent_framework_azure_cosmos.CosmosCheckpointStorage`
+> shown in §6.0 for production deployments. The custom implementation
+> below is kept for reference if you need to integrate with an existing
+> Cosmos schema.
 
 ```python
 from azure.cosmos.aio import CosmosClient
