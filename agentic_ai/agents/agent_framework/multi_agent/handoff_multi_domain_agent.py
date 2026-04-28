@@ -1,29 +1,50 @@
-"""
-Optimized handoff pattern for domain-based multi-agent routing.
+"""Multi-domain handoff agent built on the native ``HandoffBuilder``.
+
+This module migrates the previous hand-rolled handoff implementation
+(intent classification + regex-based handoff detection + manual context
+transfer) to the native handoff orchestration introduced in
+``agent-framework`` 1.2.x.
 
 Architecture:
-1. User chats directly with the assigned specialist agent (no middleman)
-2. Lightweight intent classifier checks for domain changes
-3. Only re-routes when user switches topics or requests help
-4. Full streaming visibility via WebSocket
 
-Key improvements over v2:
-- No heavy Magentic orchestrator
-- Direct agent-to-user communication
-- Efficient intent detection using vanilla LLM calls
-- Simple state management for current agent tracking
+1. Each domain specialist is a regular ``Agent`` configured with a
+   filtered MCP tool set.
+2. ``HandoffBuilder`` constructs a workflow where every agent can hand off
+   to every other agent (mesh topology). The framework auto-injects
+   synthetic ``handoff_to_<target>`` tools into each agent and intercepts
+   them via middleware to route control — no more manual handoff
+   detection.
+3. Cross-request continuity is handled via the workflow's checkpointing
+   (``with_checkpointing``). The first turn starts a fresh run; subsequent
+   turns resume by responding to the pending ``request_info`` event with
+   the new user prompt.
+4. Streaming agent updates and ``handoff_sent`` events are forwarded to
+   the WebSocket layer to preserve the existing UI behaviour
+   (``agent_start``, ``agent_token``, ``tool_called``,
+   ``handoff_announcement``, ``final_result``).
 """
 
-import json
+from __future__ import annotations
+
+import asyncio
 import logging
 import os
-import random
-import re
+from threading import Lock as ThreadLock
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, Field
-from agent_framework import Agent as FrameworkAgent, AgentSession, ChatOptions, Message, Role, MCPStreamableHTTPTool
-from agent_framework.azure import AzureOpenAIChatClient
+from agent_framework import (
+    Agent as FrameworkAgent,
+    ChatOptions,
+    CheckpointStorage,
+    MCPStreamableHTTPTool,
+    WorkflowCheckpoint,
+)
+from agent_framework.openai import OpenAIChatClient
+from agent_framework_orchestrations import (
+    HandoffAgentUserRequest,
+    HandoffBuilder,
+    HandoffSentEvent,
+)
 
 from agents.base_agent import BaseAgent, ToolCallTrackingMixin
 from agents.agent_framework.utils import create_filtered_tool_list
@@ -31,30 +52,18 @@ from agents.agent_framework.utils import create_filtered_tool_list
 logger = logging.getLogger(__name__)
 
 
-# Pydantic model for structured intent classification output
-class IntentClassification(BaseModel):
-    """Structured output for intent classification."""
-    domain: str = Field(
-        description="Target domain: crm_billing, product_promotions, or security_authentication"
-    )
-    is_domain_change: bool = Field(
-        description="Whether this represents a change from the current domain"
-    )
-    confidence: float = Field(
-        ge=0.0,
-        le=1.0,
-        description="Confidence score between 0.0 and 1.0"
-    )
-    reasoning: str = Field(
-        description="Brief explanation of the classification decision"
-    )
-
-
-# Domain definitions
-DOMAINS = {
+# Domain definitions for the handoff workflow.
+#
+# ``description`` is consumed by ``HandoffBuilder`` to populate the
+# auto-generated handoff tool description, so it must clearly state when
+# control should transfer to that specialist.
+DOMAINS: Dict[str, Dict[str, Any]] = {
     "crm_billing": {
         "name": "CRM & Billing Specialist",
-        "description": "Handles subscriptions, billing, invoices, payments, and account adjustments",
+        "description": (
+            "Handles customer accounts, subscriptions, billing, invoices, "
+            "payments, data usage and account adjustments."
+        ),
         "tools": [
             "get_all_customers",
             "get_customer_detail",
@@ -74,14 +83,18 @@ DOMAINS = {
             "**Critical rules:**\n"
             "- ALWAYS use your tools to retrieve factual data. NEVER guess or hallucinate.\n"
             "- If customer info is needed but not provided, ask the user directly for it.\n"
-            "- If the user asks about products, promotions, or security issues, you MUST respond with this EXACT phrase: "
-            "'This is outside my area. Let me connect you with the right specialist.'\n"
+            "- If the user asks about products, promotions, or security/authentication issues, "
+            "you MUST hand off to the appropriate specialist by calling the corresponding "
+            "handoff tool. Do not attempt to answer outside your domain.\n"
             "- Be concise and professional. Provide specific details from tool responses.\n"
         ),
     },
     "product_promotions": {
         "name": "Product & Promotions Specialist",
-        "description": "Handles product inquiries, plan changes, promotions, and eligibility",
+        "description": (
+            "Handles product catalog inquiries, plan changes, promotions, "
+            "eligibility checks and customer orders."
+        ),
         "tools": [
             "get_products",
             "get_product_detail",
@@ -98,14 +111,18 @@ DOMAINS = {
             "- Customer orders and product recommendations\n\n"
             "**Critical rules:**\n"
             "- ALWAYS use your tools to retrieve factual data. NEVER guess or hallucinate.\n"
-            "- If the user asks about billing or security issues, you MUST respond with this EXACT phrase: "
-            "'This is outside my area. Let me connect you with the right specialist.'\n"
+            "- If the user asks about billing or security/authentication issues, you MUST "
+            "hand off to the appropriate specialist by calling the corresponding handoff "
+            "tool. Do not attempt to answer outside your domain.\n"
             "- Be enthusiastic and helpful. Highlight benefits and savings opportunities.\n"
         ),
     },
     "security_authentication": {
         "name": "Security & Authentication Specialist",
-        "description": "Handles authentication failures, lockouts, security incidents, and remediation",
+        "description": (
+            "Handles authentication failures, account lockouts, security "
+            "incidents and remediation."
+        ),
         "tools": [
             "get_security_logs",
             "unlock_account",
@@ -121,157 +138,154 @@ DOMAINS = {
             "- Support ticket management for security issues\n\n"
             "**Critical rules:**\n"
             "- ALWAYS use your tools to retrieve factual data. NEVER guess or hallucinate.\n"
-            "- If the user asks about billing or products, you MUST respond with this EXACT phrase: "
-            "'This is outside my area. Let me connect you with the right specialist.'\n"
+            "- If the user asks about billing or products/promotions, you MUST hand off "
+            "to the appropriate specialist by calling the corresponding handoff tool. "
+            "Do not attempt to answer outside your domain.\n"
             "- Take security seriously. Verify user identity and flag suspicious activity.\n"
         ),
     },
 }
 
-# Intent classification prompt
-INTENT_CLASSIFIER_PROMPT = """You are an intent classifier for Contoso customer support.
 
-Available domains:
-1. crm_billing: subscriptions, billing, invoices, payments, account adjustments
-2. product_promotions: products, plans, promotions, eligibility, orders
-3. security_authentication: security issues, lockouts, authentication failures
+class _DictCheckpointStorage(CheckpointStorage):
+    """Dictionary-backed ``CheckpointStorage`` shared via the session state store.
 
-Analyze the user's message and determine:
-1. Which domain it belongs to
-2. Whether it's a domain change from the current context
+    Survives across BaseAgent instances within the same session so that the
+    HandoffBuilder workflow can resume mid-conversation on subsequent
+    requests.
+    """
 
-Current domain: {current_domain}
-User message: {user_message}
+    _RETENTION = 5
 
-Respond with JSON:
-{{
-    "domain": "crm_billing|product_promotions|security_authentication",
-    "is_domain_change": true|false,
-    "confidence": 0.0-1.0,
-    "reasoning": "brief explanation"
-}}
+    def __init__(self, backing: Dict[str, Any]) -> None:
+        self._backing = backing
+        self._checkpoints: Dict[str, Dict[str, Any]] = backing.setdefault("checkpoints", {})
+        self._async_lock = asyncio.Lock()
+        self._sync_lock = ThreadLock()
 
-Rules:
-- If uncertain, default to current domain with low confidence
-- Detect explicit requests to "talk to someone else" or "get help with X" as domain changes
-- Consider context: billing questions stay in billing unless user explicitly changes topic
-"""
+    async def save_checkpoint(self, checkpoint: WorkflowCheckpoint) -> str:
+        async with self._async_lock:
+            self._checkpoints[checkpoint.checkpoint_id] = checkpoint.to_dict()
+            self._backing["latest_checkpoint"] = checkpoint.checkpoint_id
+            self._backing["workflow_id"] = checkpoint.workflow_id
+
+            if len(self._checkpoints) > self._RETENTION:
+                sorted_ids = sorted(
+                    self._checkpoints.items(),
+                    key=lambda item: (item[1].get("timestamp", ""), item[1].get("iteration_count", 0)),
+                )
+                for cid, _ in sorted_ids[: -self._RETENTION]:
+                    self._checkpoints.pop(cid, None)
+            return checkpoint.checkpoint_id
+
+    async def load_checkpoint(self, checkpoint_id: str) -> WorkflowCheckpoint | None:
+        async with self._async_lock:
+            data = self._checkpoints.get(checkpoint_id)
+            if not data:
+                return None
+            return WorkflowCheckpoint.from_dict(data)
+
+    async def list_checkpoint_ids(self, workflow_id: str | None = None) -> List[str]:
+        async with self._async_lock:
+            if workflow_id is None:
+                return list(self._checkpoints.keys())
+            return [cid for cid, d in self._checkpoints.items() if d.get("workflow_id") == workflow_id]
+
+    async def list_checkpoints(self, workflow_id: str | None = None) -> List[WorkflowCheckpoint]:
+        async with self._async_lock:
+            if workflow_id is None:
+                ids = list(self._checkpoints.keys())
+            else:
+                ids = [cid for cid, d in self._checkpoints.items() if d.get("workflow_id") == workflow_id]
+            return [WorkflowCheckpoint.from_dict(self._checkpoints[cid]) for cid in ids]
+
+    async def delete_checkpoint(self, checkpoint_id: str) -> bool:
+        async with self._async_lock:
+            removed = self._checkpoints.pop(checkpoint_id, None)
+            if removed and self._backing.get("latest_checkpoint") == checkpoint_id:
+                self._backing.pop("latest_checkpoint", None)
+            return removed is not None
+
+    @property
+    def latest_checkpoint_id(self) -> str | None:
+        with self._sync_lock:
+            return self._backing.get("latest_checkpoint")
 
 
 class Agent(ToolCallTrackingMixin, BaseAgent):
-    """
-    Optimized handoff pattern using vanilla workflow and direct agent communication.
-    
-    Flow:
-    1. Intent classifier determines which domain specialist to route to
-    2. User communicates directly with assigned specialist
-    3. On domain change detection, seamlessly transfer to new specialist
-    4. Specialists have filtered tool access and clear boundaries
-    """
+    """Multi-domain handoff agent backed by the native ``HandoffBuilder``."""
 
-    def __init__(self, state_store: Dict[str, Any], session_id: str, access_token: str | None = None) -> None:
+    def __init__(
+        self,
+        state_store: Dict[str, Any],
+        session_id: str,
+        access_token: str | None = None,
+    ) -> None:
         super().__init__(state_store, session_id)
         self._access_token = access_token
         self._ws_manager = None
-        
-        # Track current agent and conversation history per domain
-        self._current_domain = state_store.get(f"{session_id}_current_domain", None)
-        self._domain_agents: Dict[str, FrameworkAgent] = {}
-        self._domain_sessions: Dict[str, AgentSession] = {}
+
+        self._workflow: Any = None
         self._initialized = False
-        
+        self._domain_agents: Dict[str, FrameworkAgent] = {}
+        self._mcp_tool: Optional[MCPStreamableHTTPTool] = None
+
+        # Checkpoint storage is backed by the per-session state_store so the
+        # workflow's conversation state survives across HTTP requests.
+        self._handoff_state_key = f"{session_id}_handoff_state"
+        backing = state_store.setdefault(self._handoff_state_key, {})
+        self._checkpoint_storage = _DictCheckpointStorage(backing)
+
+        # Track the pending ``request_info`` ID so the next turn can resume.
+        self._pending_request_id_key = f"{session_id}_handoff_pending_req"
+        self._pending_request_id: Optional[str] = state_store.get(self._pending_request_id_key)
+
+        # Current speaking domain (used for UI hints + start-agent selection
+        # on resume after a process restart).
+        self._current_domain_key = f"{session_id}_current_domain"
+        self._current_domain: Optional[str] = state_store.get(self._current_domain_key)
+
         # Turn tracking for tool grouping
         self._turn_key = f"{session_id}_handoff_turn"
         self._current_turn = state_store.get(self._turn_key, 0)
-        
-        # Initialize tool tracking from mixin
+
         self.init_tool_tracking()
-        
-        # Context transfer configuration: -1 = all history, 0 = none, N = last N turns
-        self._context_transfer_turns = int(os.getenv("HANDOFF_CONTEXT_TRANSFER_TURNS", "-1"))
-        
-        # Lazy classification configuration
-        self._lazy_classification = os.getenv("HANDOFF_LAZY_CLASSIFICATION", "true").lower() == "true"
+
         self._default_domain = os.getenv("HANDOFF_DEFAULT_DOMAIN", "crm_billing")
-        
+        if self._default_domain not in DOMAINS:
+            logger.warning(
+                "[HANDOFF] HANDOFF_DEFAULT_DOMAIN=%s is not a known domain; falling back to crm_billing",
+                self._default_domain,
+            )
+            self._default_domain = "crm_billing"
+
         logger.info(
-            f"[HANDOFF] Configuration: lazy_classification={self._lazy_classification}, "
-            f"default_domain={self._default_domain}, context_transfer_turns={self._context_transfer_turns}"
+            "[HANDOFF] Configuration: default_domain=%s current_domain=%s pending_req=%s",
+            self._default_domain,
+            self._current_domain,
+            self._pending_request_id,
         )
 
-    def _detect_handoff_request(self, response_text: str) -> bool:
-        """
-        Detect if the agent response contains a handoff request using pattern matching.
-        
-        This avoids the need for LLM-based detection by looking for key phrases that
-        agents are instructed to use when a request is outside their domain.
-        
-        Args:
-            response_text: The agent's response text
-            
-        Returns:
-            True if handoff is requested, False otherwise
-        """
-        # Normalize text for matching
-        normalized = response_text.lower()
-        
-        # Define handoff patterns (in order of specificity)
-        handoff_patterns = [
-            r"outside my area.*connect you with.*specialist",  # Exact template match
-            r"outside my (domain|expertise|area)",  # Domain boundary indication
-            r"connect you with.*specialist",  # Explicit handoff language
-            r"let me (transfer|route|connect) you",  # Transfer language
-            r"not my (specialty|expertise|domain)",  # Boundary indication
-            r"better suited to help",  # Redirection language
-        ]
-        
-        # Check each pattern
-        for pattern in handoff_patterns:
-            if re.search(pattern, normalized):
-                logger.info(f"[HANDOFF] Detected handoff request with pattern: {pattern}")
-
-                return True
-        
-        # Additional keyword-based detection with proximity check
-        keywords_group1 = ["outside", "not my"]
-        keywords_group2 = ["area", "domain", "expertise", "specialty"]
-        keywords_group3 = ["connect", "transfer", "specialist", "help"]
-        
-        # Check if keywords from different groups appear within reasonable distance (100 chars)
-        for kw1 in keywords_group1:
-            if kw1 in normalized:
-                start_pos = normalized.find(kw1)
-                window = normalized[start_pos:start_pos + 100]
-                
-                has_group2 = any(kw2 in window for kw2 in keywords_group2)
-                has_group3 = any(kw3 in window for kw3 in keywords_group3)
-                
-                if has_group2 and has_group3:
-                    logger.info(f"[HANDOFF] Detected handoff via keyword proximity: {kw1} + groups 2&3")
-
-                    return True
-        return False
-
     def set_websocket_manager(self, manager: Any) -> None:
-        """Allow backend to inject WebSocket manager for streaming events."""
+        """Allow backend to inject a WebSocket manager for streaming events."""
         self._ws_manager = manager
-        logger.info(f"[HANDOFF] WebSocket manager set for handoff agent, session_id={self.session_id}")
+        logger.info("[HANDOFF] WebSocket manager set, session_id=%s", self.session_id)
 
-    async def _setup_agents(self) -> None:
-        """Initialize all domain specialist agents with filtered MCP tools."""
+    # ------------------------------------------------------------------
+    # Setup
+    # ------------------------------------------------------------------
+    async def _setup(self) -> None:
         if self._initialized:
             return
 
-        # Check for either API key OR credential-based authentication
         has_api_key = bool(self.azure_openai_key)
         has_credential = bool(self.azure_credential)
-        
+
         if not all([self.azure_deployment, self.azure_openai_endpoint, self.api_version]):
             raise RuntimeError(
                 "Azure OpenAI configuration is incomplete. Ensure "
                 "AZURE_OPENAI_CHAT_DEPLOYMENT, AZURE_OPENAI_ENDPOINT, and AZURE_OPENAI_API_VERSION are set."
             )
-        
         if not has_api_key and not has_credential:
             raise RuntimeError(
                 "Azure OpenAI authentication is not configured. Either set AZURE_OPENAI_API_KEY "
@@ -279,504 +293,285 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
             )
 
         headers = self._build_headers()
-        base_mcp_tool = await self._create_mcp_tool(headers)
+        self._mcp_tool = await self._create_mcp_tool(headers)
+        if self._mcp_tool is not None:
+            await self._mcp_tool.__aenter__()
+            logger.info(
+                "[HANDOFF] Connected to MCP server, loaded %d tools",
+                len(self._mcp_tool.functions),
+            )
 
-        # Connect to MCP server once to load all available tools
-        if base_mcp_tool:
-            await base_mcp_tool.__aenter__()
-            logger.info(f"[HANDOFF] Connected to MCP server, loaded {len(base_mcp_tool.functions)} tools")
-
-        # Use API key if available, otherwise use credential-based authentication
         if has_api_key:
-            chat_client = AzureOpenAIChatClient(
+            chat_client = OpenAIChatClient(
                 api_key=self.azure_openai_key,
-                deployment_name=self.azure_deployment,
-                endpoint=self.azure_openai_endpoint,
+                model=self.azure_deployment,
+                azure_endpoint=self.azure_openai_endpoint,
                 api_version=self.api_version,
             )
             logger.info("[HANDOFF] Using API key authentication for Azure OpenAI")
         else:
-            chat_client = AzureOpenAIChatClient(
+            chat_client = OpenAIChatClient(
                 credential=self.azure_credential,
-                deployment_name=self.azure_deployment,
-                endpoint=self.azure_openai_endpoint,
+                model=self.azure_deployment,
+                azure_endpoint=self.azure_openai_endpoint,
                 api_version=self.api_version,
             )
             logger.info("[HANDOFF] Using managed identity authentication for Azure OpenAI")
 
-        # Create all domain specialist agents with filtered tools
-        for domain_id, domain_config in DOMAINS.items():
-            # Create filtered tool list for this domain using common utility
+        # Build one Agent per domain. ``require_per_service_call_history_persistence``
+        # is required by HandoffBuilder because the framework injects middleware
+        # that short-circuits handoff tool calls (MiddlewareTermination); without
+        # this flag local history providers would persist tool results the
+        # service never observed.
+        for domain_id, cfg in DOMAINS.items():
             domain_tools = create_filtered_tool_list(
-                base_mcp_tool=base_mcp_tool,
-                allowed_tool_names=domain_config["tools"],
-                agent_name=domain_id
+                base_mcp_tool=self._mcp_tool,
+                allowed_tool_names=cfg["tools"],
+                agent_name=domain_id,
             )
-            
             agent = FrameworkAgent(
                 client=chat_client,
                 name=domain_id,
-                instructions=domain_config["instructions"],
-                tools=domain_tools,  # Pass list of filtered AIFunction objects
+                description=cfg["description"],
+                instructions=cfg["instructions"],
+                tools=domain_tools,
                 default_options=ChatOptions(model_id=self.openai_model_name),
+                require_per_service_call_history_persistence=True,
             )
-            
-            # Enter agent context
             await agent.__aenter__()
             self._domain_agents[domain_id] = agent
-            
-            # Create or restore session for this domain
-            session_state_key = f"{self.session_id}_session_{domain_id}"
-            session_state = self.state_store.get(session_state_key)
-            
-            if session_state:
-                self._domain_sessions[domain_id] = AgentSession.from_dict(session_state)
-            else:
-                self._domain_sessions[domain_id] = agent.create_session()
+
+        # Choose start agent: prefer the domain that handled the prior turn
+        # (so a fresh process can route the next message to the same specialist),
+        # otherwise fall back to the configured default. Note: ``with_start_agent``
+        # only matters when there is no checkpoint to resume from.
+        start_id = (
+            self._current_domain
+            if self._current_domain in self._domain_agents
+            else self._default_domain
+        )
+
+        # Default mesh topology (no add_handoff calls = every agent can hand
+        # off to every other agent), which matches the previous "any specialist
+        # can route anywhere" behaviour.
+        self._workflow = (
+            HandoffBuilder(
+                name=f"handoff-{self.session_id}",
+                participants=list(self._domain_agents.values()),
+            )
+            .with_start_agent(self._domain_agents[start_id])
+            .with_checkpointing(self._checkpoint_storage)
+            .build()
+        )
 
         self._initialized = True
-        logger.info(f"[HANDOFF] Initialized {len(self._domain_agents)} domain specialists with filtered tools")
+        logger.info(
+            "[HANDOFF] Initialized %d domain specialists with native HandoffBuilder; start=%s",
+            len(self._domain_agents),
+            start_id,
+        )
 
     def _build_headers(self) -> Dict[str, str]:
-        headers: Dict[str, str] = {"Content-Type": "application/json"}
+        h: Dict[str, str] = {"Content-Type": "application/json"}
         if self._access_token:
-            headers["Authorization"] = f"Bearer {self._access_token}"
-        return headers
+            h["Authorization"] = f"Bearer {self._access_token}"
+        return h
 
     async def _create_mcp_tool(self, headers: Dict[str, str]) -> MCPStreamableHTTPTool | None:
-        """
-        Create the base MCP tool that will be shared across all domain specialists.
-        
-        The tool will be connected once and then filtered for each domain.
-        
-        Returns:
-            MCPStreamableHTTPTool instance or None if MCP server is not configured
-        """
         if not self.mcp_server_uri:
             logger.warning("MCP_SERVER_URI is not configured; agents will run without MCP tools.")
             return None
-
-        tool = MCPStreamableHTTPTool(
+        return MCPStreamableHTTPTool(
             name="mcp-streamable",
             url=self.mcp_server_uri,
             headers=headers,
             timeout=30,
             request_timeout=30,
         )
-        
-        return tool
 
-    async def _build_context_prefix(self, from_domain: str, to_domain: str) -> str | None:
-        """
-        Build a context prefix to prepend to the user's prompt on handoff.
-        
-        Args:
-            from_domain: Previous domain specialist
-            to_domain: New domain specialist
-            
-        Returns:
-            Context prefix string or None if no context to transfer
-        """
-        if self._context_transfer_turns == 0:
-            logger.info(f"[HANDOFF] Context transfer disabled (HANDOFF_CONTEXT_TRANSFER_TURNS=0)")
-            return None
-            
-        # Get chat history
-        history = self.chat_history
-        if not history:
-            logger.info(f"[HANDOFF] No chat history to transfer")
-            return None
-        
-        # Determine how much history to transfer
-        if self._context_transfer_turns == -1:
-            # Transfer all history
-            context_messages = history
-            logger.info(f"[HANDOFF] Transferring all {len(history)} messages to {to_domain}")
-        else:
-            # Transfer last N turns (each turn = user + assistant pair)
-            turns_to_transfer = self._context_transfer_turns * 2  # Each turn has 2 messages
-            context_messages = history[-turns_to_transfer:] if len(history) > turns_to_transfer else history
-            logger.info(f"[HANDOFF] Transferring last {self._context_transfer_turns} turns ({len(context_messages)} messages) to {to_domain}")
-        
-        # Build context summary
-        context_parts = []
-        for msg in context_messages:
-            role = msg.get("role", "unknown")
-            content = msg.get("content", "")
-            if role == "user":
-                context_parts.append(f"User: {content}")
-            elif role == "assistant":
-                context_parts.append(f"Previous Specialist: {content}")
-        
-        context_summary = "\n".join(context_parts)
-        
-        # Build context prefix
-        context_prefix = (
-            f"[CONTEXT FROM PREVIOUS CONVERSATION]\n"
-            f"The user was previously speaking with the {DOMAINS[from_domain]['name']}.\n"
-            f"Here is the recent conversation history for your reference:\n\n"
-            f"{context_summary}\n\n"
-            f"[END OF CONTEXT]\n"
-            f"Now, please address their current request:"
-        )
-        
-        logger.info(f"[HANDOFF] Built context prefix with {len(context_messages)} messages for {to_domain}")
-        return context_prefix
-
-    async def _classify_intent(self, user_message: str, current_domain: str | None) -> Dict[str, Any]:
-        """
-        Use structured output with Pydantic to classify user intent and detect domain changes.
-        
-        This uses the beta.chat.completions.parse() API with response_format to ensure
-        robust JSON parsing without validation errors.
-        
-        Args:
-            user_message: The user's message to classify
-            current_domain: Current active domain (or None for first message)
-            
-        Returns:
-            Dictionary with keys: domain, is_domain_change, confidence, reasoning
-        """
-        # If no current domain, route to default domain
-        if not current_domain:
-            return {
-                "domain": self._default_domain,
-                "is_domain_change": True,
-                "confidence": 1.0,
-                "reasoning": f"First message, routing to {self._default_domain}"
-            }
-
-        # Build classification prompt
-        prompt = INTENT_CLASSIFIER_PROMPT.format(
-            current_domain=current_domain,
-            user_message=user_message
-        )
-
-        try:
-            # Use OpenAI client directly for structured output support
-            from openai import AsyncAzureOpenAI
-            
-            client = AsyncAzureOpenAI(
-                api_key=self.azure_openai_key,
-                api_version=self.api_version,
-                azure_endpoint=self.azure_openai_endpoint,
-            )
-            
-            # Use beta API with structured output
-            completion = await client.beta.chat.completions.parse(
-                model=self.azure_deployment,
-                messages=[
-                    {"role": "user", "content": prompt}
-                ],
-                response_format=IntentClassification,
-            )
-            
-            # Extract structured result
-            intent = completion.choices[0].message.parsed
-            
-            result = {
-                "domain": intent.domain,
-                "is_domain_change": intent.is_domain_change,
-                "confidence": intent.confidence,
-                "reasoning": intent.reasoning,
-            }
-            
-            logger.info(f"[HANDOFF] Intent classification: {result}")
-            return result
-            
-        except Exception as exc:
-            logger.error(f"[HANDOFF] Intent classification failed: {exc}", exc_info=True)
-            
-            # Fallback: randomly select a different domain (not current)
-            available_domains = [d for d in DOMAINS.keys() if d != current_domain]
-            fallback_domain = random.choice(available_domains) if available_domains else current_domain
-            
-            logger.warning(f"[HANDOFF] Falling back to random domain: {fallback_domain}")
-            
-            return {
-                "domain": fallback_domain,
-                "is_domain_change": fallback_domain != current_domain,
-                "confidence": 0.3,
-                "reasoning": f"Classification error, randomly selected {fallback_domain}"
-            }
-
+    # ------------------------------------------------------------------
+    # Chat entry point
+    # ------------------------------------------------------------------
     async def chat_async(self, prompt: str) -> str:
-        """
-        Main chat entry point with intelligent routing and lazy classification.
-        
-        Flow:
-        1. If first message OR lazy classification is disabled: classify intent upfront
-        2. If lazy classification enabled: route to current agent first
-        3. Check agent response for handoff markers
-        4. If handoff detected: run intent classification and re-route
-        5. Stream response back to user
-        """
-        await self._setup_agents()
-
-        # Clear tool calls from previous request (from mixin)
+        await self._setup()
         self.clear_tool_calls()
 
-        # Increment turn counter
         self._current_turn += 1
         self.state_store[self._turn_key] = self._current_turn
 
-        # Determine if we need upfront classification
-        is_first_message = self._current_domain is None
-        needs_upfront_classification = is_first_message or not self._lazy_classification
-        
-        target_domain = None
-        is_domain_change = False
-        
-        if needs_upfront_classification:
-            # Run intent classification before routing
-            logger.info(f"[HANDOFF] Running upfront classification (first_message={is_first_message}, lazy={self._lazy_classification})")
-            intent = await self._classify_intent(prompt, self._current_domain)
-            target_domain = intent["domain"]
-            is_domain_change = intent["is_domain_change"]
-            
-            # Announce handoff if domain changed
-            if is_domain_change and self._current_domain:
-                handoff_message = (
-                    f"I'll connect you with our {DOMAINS[target_domain]['name']} "
-                    f"who can better assist with that."
-                )
-                
-                if self._ws_manager:
-                    await self._ws_manager.broadcast(
-                        self.session_id,
-                        {
-                            "type": "handoff_announcement",
-                            "from_domain": self._current_domain,
-                            "to_domain": target_domain,
-                            "message": handoff_message,
-                        },
-                    )
-                
-                logger.info(f"[HANDOFF] Domain change: {self._current_domain} -> {target_domain}")
+        latest_checkpoint = self._checkpoint_storage.latest_checkpoint_id
+
+        # Resume an in-flight workflow (typical path after the first turn) by
+        # responding to the pending HandoffAgentUserRequest with the new user
+        # message. Otherwise start a fresh run.
+        if latest_checkpoint and self._pending_request_id:
+            user_msgs = HandoffAgentUserRequest.create_response(prompt)
+            stream = self._workflow.run(
+                responses={self._pending_request_id: user_msgs},
+                checkpoint_id=latest_checkpoint,
+                stream=True,
+            )
+            logger.info(
+                "[HANDOFF] Resuming workflow from checkpoint=%s with pending request=%s",
+                latest_checkpoint,
+                self._pending_request_id,
+            )
         else:
-            # Lazy mode: use current domain (will check response for handoff markers)
-            target_domain = self._current_domain
-            logger.info(f"[HANDOFF] Using lazy classification, routing to current domain: {target_domain}")
+            stream = self._workflow.run(prompt, stream=True)
+            logger.info("[HANDOFF] Starting fresh handoff workflow run")
 
-        # Update current domain
-        previous_domain = self._current_domain
-        self._current_domain = target_domain
-        self.state_store[f"{self.session_id}_current_domain"] = target_domain
+        active_agent_id: Optional[str] = self._current_domain or self._default_domain
+        per_agent_text: Dict[str, List[str]] = {}
+        new_pending_request_id: Optional[str] = None
 
-        # Get the specialist agent and session
-        agent = self._domain_agents[target_domain]
-        session = self._domain_sessions[target_domain]
-        
-        # Prepare the prompt with context if this is a handoff
-        actual_prompt = prompt
-        if is_domain_change and previous_domain and previous_domain != target_domain:
-            context_prefix = await self._build_context_prefix(previous_domain, target_domain)
-            if context_prefix:
-                actual_prompt = f"{context_prefix}\n\n{prompt}"
-                logger.info(f"[HANDOFF] Added context prefix to prompt for {target_domain}")
+        # Announce the initial speaking agent so the UI shows activity even
+        # before the first token arrives.
+        await self._notify_agent_start(active_agent_id, is_handoff=False)
 
-        # Notify UI that agent started
+        try:
+            async for event in stream:
+                etype = event.type
+
+                if etype == "handoff_sent":
+                    data = event.data  # HandoffSentEvent
+                    src_id = getattr(data, "source", None) or active_agent_id or ""
+                    tgt_id = getattr(data, "target", None) or ""
+                    logger.info("[HANDOFF] handoff_sent: %s -> %s", src_id, tgt_id)
+                    await self._notify_handoff(src_id, tgt_id)
+                    if tgt_id:
+                        active_agent_id = tgt_id
+                        await self._notify_agent_start(tgt_id, is_handoff=True)
+                    continue
+
+                if etype == "output" and event.executor_id in self._domain_agents:
+                    update = event.data  # AgentResponseUpdate
+                    if update is None:
+                        continue
+                    await self._handle_agent_update(event.executor_id, update, per_agent_text)
+                    continue
+
+                if etype == "request_info":
+                    new_pending_request_id = event.request_id
+                    continue
+        except Exception as exc:
+            logger.error("[HANDOFF] Workflow error: %s", exc, exc_info=True)
+            raise
+
+        # Finalize any in-flight tool tracking
+        self.finalize_tool_tracking()
+
+        # Pick the response that should be returned to the user — the last
+        # agent to speak (which is ``active_agent_id`` after any handoffs).
+        if active_agent_id and active_agent_id in per_agent_text:
+            assistant_response = "".join(per_agent_text[active_agent_id])
+        else:
+            # Fallback: concatenate all speaker output in order
+            assistant_response = "".join(t for buf in per_agent_text.values() for t in buf)
+
+        # Persist resumption state for the next turn
+        self._pending_request_id = new_pending_request_id
+        if new_pending_request_id is not None:
+            self.state_store[self._pending_request_id_key] = new_pending_request_id
+        else:
+            self.state_store.pop(self._pending_request_id_key, None)
+
+        if active_agent_id:
+            self._current_domain = active_agent_id
+            self.state_store[self._current_domain_key] = active_agent_id
+
         if self._ws_manager:
             await self._ws_manager.broadcast(
                 self.session_id,
-                {
-                    "type": "agent_start",
-                    "agent_id": target_domain,
-                    "agent_name": DOMAINS[target_domain]["name"],
-                    "show_message_in_internal_process": is_domain_change,  # Show handoff in left panel
-                },
+                {"type": "final_result", "content": assistant_response},
             )
 
-        # Stream response from specialist agent
-        full_response = []
-        
-        try:
-            response_stream = agent.run(actual_prompt, stream=True, session=session)
-            async for chunk in response_stream:
-                # Process contents in the chunk
-                if hasattr(chunk, 'contents') and chunk.contents:
-                    for content in chunk.contents:
-                        # Check for tool/function calls - track with arguments
-                        if content.type == "function_call":
-                            if content.name:
-                                # New function call - finalize previous and start new
-                                self.track_function_call_start(content.name)
-                                
-                                if self._ws_manager:
-                                    await self._ws_manager.broadcast(
-                                        self.session_id,
-                                        {
-                                            "type": "tool_called",
-                                            "agent_id": target_domain,
-                                            "tool_name": content.name,
-                                            "turn": self._current_turn,
-                                        },
-                                    )
-                            
-                            # Accumulate arguments
-                            args_chunk = getattr(content, 'arguments', '')
-                            if args_chunk:
-                                self.track_function_call_arguments(args_chunk)
-                        
-                        elif content.type == "function_result":
-                            # Function completed - finalize
-                            self.finalize_tool_tracking()
-                
-                # Extract text from chunk
-                if hasattr(chunk, 'text') and chunk.text:
-                    full_response.append(chunk.text)
-                    
-                    # Broadcast token to WebSocket
+        # Mirror the conversation in the BaseAgent chat history (used by the
+        # backend's history APIs and the magentic_group context-transfer logic).
+        self.append_to_chat_history(
+            [
+                {"role": "user", "content": prompt},
+                {"role": "assistant", "content": assistant_response},
+            ]
+        )
+        self._setstate({"mode": "handoff_multi_domain", "current_domain": self._current_domain})
+
+        return assistant_response
+
+    # ------------------------------------------------------------------
+    # Streaming helpers
+    # ------------------------------------------------------------------
+    async def _handle_agent_update(
+        self,
+        executor_id: str,
+        update: Any,
+        per_agent_text: Dict[str, List[str]],
+    ) -> None:
+        contents = getattr(update, "contents", None) or []
+        for content in contents:
+            ctype = getattr(content, "type", None)
+            if ctype == "function_call":
+                name = getattr(content, "name", None)
+                if name and not name.startswith("handoff_to_"):
+                    # Real domain tool — track for the UI. Synthetic handoff
+                    # tools are filtered out because the framework already
+                    # surfaces those as ``handoff_sent`` events.
+                    self.track_function_call_start(name)
                     if self._ws_manager:
                         await self._ws_manager.broadcast(
                             self.session_id,
                             {
-                                "type": "agent_token",
-                                "agent_id": target_domain,
-                                "content": chunk.text,
+                                "type": "tool_called",
+                                "agent_id": executor_id,
+                                "tool_name": name,
+                                "turn": self._current_turn,
                             },
                         )
-                        
-        except Exception as exc:
-            logger.error(f"[HANDOFF] Error during agent streaming: {exc}", exc_info=True)
-            raise
-        
-        # Finalize any remaining function call
-        self.finalize_tool_tracking()
-
-        assistant_response = ''.join(full_response)
-
-        # Check if lazy classification is enabled and handoff was requested
-        if self._lazy_classification and self._detect_handoff_request(assistant_response):
-            logger.info(f"[HANDOFF] Handoff marker detected in response, running intent classification")
-            
-            # Run intent classification to determine new domain
-            intent = await self._classify_intent(prompt, target_domain)
-            new_target_domain = intent["domain"]
-            
-            if new_target_domain != target_domain:
-                logger.info(f"[HANDOFF] Re-routing from {target_domain} to {new_target_domain}")
-                
-                # Update domain
-                self._current_domain = new_target_domain
-                self.state_store[f"{self.session_id}_current_domain"] = new_target_domain
-                
-                # Announce handoff
-                handoff_message = (
-                    f"I'll connect you with our {DOMAINS[new_target_domain]['name']} "
-                    f"who can better assist with that."
-                )
-                
-                if self._ws_manager:
-                    await self._ws_manager.broadcast(
-                        self.session_id,
-                        {
-                            "type": "handoff_announcement",
-                            "from_domain": target_domain,
-                            "to_domain": new_target_domain,
-                            "message": handoff_message,
-                        },
-                    )
-                
-                # Get new agent and session
-                new_agent = self._domain_agents[new_target_domain]
-                new_session = self._domain_sessions[new_target_domain]
-                
-                # Build context prefix
-                context_prefix = await self._build_context_prefix(target_domain, new_target_domain)
-                actual_prompt_handoff = f"{context_prefix}\n\n{prompt}" if context_prefix else prompt
-                
-                # Notify UI
-                if self._ws_manager:
-                    await self._ws_manager.broadcast(
-                        self.session_id,
-                        {
-                            "type": "agent_start",
-                            "agent_id": new_target_domain,
-                            "agent_name": DOMAINS[new_target_domain]["name"],
-                            "show_message_in_internal_process": True,
-                        },
-                    )
-                
-                # Get response from new agent
-                full_response_handoff = []
-                try:
-                    response_stream_handoff = new_agent.run(actual_prompt_handoff, stream=True, session=new_session)
-                    async for chunk in response_stream_handoff:
-                        if hasattr(chunk, 'contents') and chunk.contents:
-                            for content in chunk.contents:
-                                if content.type == "function_call":
-                                    if content.name:
-                                        self.track_function_call_start(content.name)
-                                        
-                                        if self._ws_manager:
-                                            await self._ws_manager.broadcast(
-                                                self.session_id,
-                                                {
-                                                    "type": "tool_called",
-                                                    "agent_id": new_target_domain,
-                                                    "tool_name": content.name,
-                                                    "turn": self._current_turn,
-                                                },
-                                            )
-                                    
-                                    args_chunk = getattr(content, 'arguments', '')
-                                    if args_chunk:
-                                        self.track_function_call_arguments(args_chunk)
-                                
-                                elif content.type == "function_result":
-                                    self.finalize_tool_tracking()
-                        
-                        if hasattr(chunk, 'text') and chunk.text:
-                            full_response_handoff.append(chunk.text)
-                            
-                            if self._ws_manager:
-                                await self._ws_manager.broadcast(
-                                    self.session_id,
-                                    {
-                                        "type": "agent_token",
-                                        "agent_id": new_target_domain,
-                                        "content": chunk.text,
-                                    },
-                                )
-                except Exception as exc:
-                    logger.error(f"[HANDOFF] Error during handoff agent streaming: {exc}", exc_info=True)
-                    raise
-                
-                # Finalize any remaining function call
+                args_chunk = getattr(content, "arguments", "")
+                if args_chunk:
+                    self.track_function_call_arguments(args_chunk)
+            elif ctype == "function_result":
                 self.finalize_tool_tracking()
-                
-                # Use handoff response
-                assistant_response = ''.join(full_response_handoff)
-                target_domain = new_target_domain
-                session = new_session
 
-        # Send final result
-        if self._ws_manager:
-            await self._ws_manager.broadcast(
-                self.session_id,
-                {
-                    "type": "final_result",
-                    "content": assistant_response,
-                },
-            )
+        text = getattr(update, "text", None)
+        if text:
+            per_agent_text.setdefault(executor_id, []).append(text)
+            if self._ws_manager:
+                await self._ws_manager.broadcast(
+                    self.session_id,
+                    {
+                        "type": "agent_token",
+                        "agent_id": executor_id,
+                        "content": text,
+                    },
+                )
 
-        # Update chat history
-        messages = [
-            {"role": "user", "content": prompt},
-            {"role": "assistant", "content": assistant_response},
-        ]
-        self.append_to_chat_history(messages)
+    async def _notify_agent_start(self, agent_id: Optional[str], *, is_handoff: bool) -> None:
+        if not self._ws_manager or not agent_id:
+            return
+        cfg = DOMAINS.get(agent_id, {})
+        await self._ws_manager.broadcast(
+            self.session_id,
+            {
+                "type": "agent_start",
+                "agent_id": agent_id,
+                "agent_name": cfg.get("name", agent_id),
+                # Handoffs should appear in the UI's left "internal process" panel;
+                # the very first agent_start of a turn should not.
+                "show_message_in_internal_process": is_handoff,
+            },
+        )
 
-        # Save session state for this domain
-        session_state_key = f"{self.session_id}_session_{target_domain}"
-        new_state = session.to_dict()
-        self.state_store[session_state_key] = new_state
-
-        # Save overall state
-        self._setstate({
-            "mode": "handoff_multi_domain",
-            "current_domain": target_domain,
-        })
-
-        return assistant_response
+    async def _notify_handoff(self, from_id: str, to_id: str) -> None:
+        if not self._ws_manager:
+            return
+        to_name = DOMAINS.get(to_id, {}).get("name", to_id)
+        msg = f"I'll connect you with our {to_name} who can better assist with that."
+        await self._ws_manager.broadcast(
+            self.session_id,
+            {
+                "type": "handoff_announcement",
+                "from_domain": from_id,
+                "to_domain": to_id,
+                "message": msg,
+            },
+        )
