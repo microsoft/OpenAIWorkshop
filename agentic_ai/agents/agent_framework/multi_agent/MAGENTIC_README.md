@@ -128,7 +128,7 @@ When stalling, the manager calls `replan()`, which uses [`ORCHESTRATOR_TASK_LEDG
 1. Registers **participants** (`participants()`), each either a `BaseAgent` or another `Executor`.
 2. Configures the **manager** (`with_standard_manager()`).
 3. Optionally enables **plan review**, **checkpointing**, and **unified callbacks**.
-4. Builds a [`Workflow`](reference/agent-framework/python/packages/main/agent_framework/_workflow/_workflow.py) graph: orchestrator (start node), optional `RequestInfoExecutor` for plan review, and bidirectional edges to each agent executor.
+4. Builds a [`Workflow`](reference/agent-framework/python/packages/main/agent_framework/_workflow/_workflow.py) graph: orchestrator (start node) with optional plan review enabled via `enable_plan_review=True`, and bidirectional edges to each agent executor. Plan review is handled internally by the orchestrator, which emits `WorkflowEvent(type="request_info")` events containing `MagenticPlanReviewRequest` data.
 
 ### 4.2 Workflow Context & State
 
