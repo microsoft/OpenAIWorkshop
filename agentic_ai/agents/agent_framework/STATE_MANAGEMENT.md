@@ -408,7 +408,7 @@ class SessionMemoryCheckpointStorage(CheckpointStorage):
 
 2. **Team agent**  
    - `MagenticOrchestratorExecutor` automatically snapshots each participant’s `chat_history`.
-   - Checkpoints include outstanding tool requests (`RequestInfoExecutor` state).
+   - Checkpoints include outstanding tool requests and plan-review state managed by the orchestrator via `WorkflowEvent(type="request_info")`.
    - Ensure all custom executors implement `restore_state` to interpret snapshots after schema changes.
 
 3. **Human-in-the-loop**  
