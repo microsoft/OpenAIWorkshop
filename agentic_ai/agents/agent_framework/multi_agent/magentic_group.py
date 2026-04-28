@@ -695,7 +695,7 @@ DO NOT OUTPUT ANYTHING OTHER THAN JSON, AND DO NOT DEVIATE FROM THIS SCHEMA:
     async def _process_workflow_event(self, event: WorkflowEvent) -> None:
         """Process workflow events and stream to WebSocket clients.
         
-        In 1.0.0rc1, all events are WorkflowEvent with a .type field:
+        In agent-framework 1.2.x, all events are WorkflowEvent with a .type field:
         - 'magentic_orchestrator': plan, replan, progress ledger updates
         - 'request_info': plan review requests
         - 'data': streaming tokens from participant agents

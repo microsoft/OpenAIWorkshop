@@ -422,8 +422,7 @@ uv run python workflow_group_chat.py
 
 | Package | Purpose |
 |---------|---------|
-| [agent-framework-core](https://github.com/microsoft/agent-framework) | Microsoft Agent Framework — agents, tools, MCP client |
-| [agent-framework-orchestrations](https://github.com/microsoft/agent-framework) | GroupChatBuilder for multi-agent workflows |
+| [agent-framework](https://github.com/microsoft/agent-framework) | Microsoft Agent Framework 1.2.1 — unified umbrella package (agents, tools, MCP client, orchestrations including the native `HandoffBuilder`, `GroupChatBuilder`, etc.) |
 | [fastmcp](https://github.com/jlowin/fastmcp) | PrefectHQ FastMCP v3 — stateful MCP server with session support |
 | [langgraph](https://github.com/langchain-ai/langgraph) | Stateful agent graphs with MemorySaver |
 | [langchain-openai](https://github.com/langchain-ai/langchain) | Azure OpenAI integration for LangGraph |

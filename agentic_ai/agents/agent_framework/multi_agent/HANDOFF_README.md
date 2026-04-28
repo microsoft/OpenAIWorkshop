@@ -2,79 +2,100 @@
 
 ## Overview
 
-A scalable domain-based routing pattern for customer support that enables **direct specialist-to-user communication** with intelligent handoff detection. Specialists handle requests within their domain autonomously, and routing only occurs when a request falls outside their expertise.
+A scalable domain-based routing pattern for customer support that uses the
+**native `HandoffBuilder`** from `agent-framework-orchestrations` (1.2.x).
+Each domain specialist talks to the user directly, and any specialist can
+transfer the conversation to another specialist by calling an
+auto-generated `handoff_to_<target>` tool. The framework intercepts those
+calls and routes control accordingly — no hand-rolled intent classifier
+or regex-based handoff detection is needed.
 
-## Core Concept: Lazy Intent Classification
+## Core Concept: Tool-Based Handoff
 
-**The key innovation:** Lightweight, lazy intent classification triggered only when a specialist signals a request is outside their domain.
+The key change from earlier workshop versions is that handoffs are now
+**modeled as tool calls** that the agents themselves decide to invoke. The
+`HandoffBuilder` does three things automatically:
 
-**The key advantage:** Specialist agents interact directly with users without third-party monitoring. Intent classification is triggered **only when needed**, making the system efficient and scalable.
+1. **Synthesizes one handoff tool per allowed target** for every
+   participant agent (e.g., `handoff_to_product_promotions`).
+2. **Injects middleware** that intercepts those tool calls — they never
+   actually execute, they just signal "route control to this target".
+3. **Broadcasts the cleaned conversation** to the target agent so the new
+   specialist sees the full conversation when it takes over (no manual
+   context transfer required).
 
 ### How It Works
 
-1. **Direct Communication** - Most of the time, the specialist agent communicates directly with the user
-2. **Out-of-Domain Detection** - When a user asks something outside the agent's domain, the agent responds with a predefined phrase: *"This is outside my area. Let me connect you with the right specialist."*
-3. **Pattern Matching** - The system detects this phrase using simple regex patterns (no LLM needed)
-4. **Lazy Classification** - Only when detected, the intent classifier runs to determine the correct specialist
-5. **Seamless Handoff** - The conversation transfers to the appropriate domain specialist with context
+1. **Direct Communication** — The active specialist receives the user
+   message, runs its own tool calls (filtered MCP tools for its domain),
+   and replies.
+2. **Self-Initiated Routing** — When a request is outside its domain, the
+   specialist calls the appropriate `handoff_to_<target>` tool. This is
+   declared in its instructions ("you MUST hand off to the appropriate
+   specialist by calling the corresponding handoff tool").
+3. **Workflow Routing** — `HandoffBuilder`'s middleware intercepts the
+   tool call, emits a `handoff_sent` workflow event, and dispatches an
+   `AgentExecutorRequest` to the target specialist with the full
+   conversation history.
+4. **Target Specialist Responds** — The new specialist sees the prior
+   conversation and answers the user's request.
 
 ### Why This Design?
 
-- **Efficiency**: No intent classification overhead on every message
-- **Scalability**: Specialists don't need to know about other agents' capabilities
-- **Autonomy**: Each specialist operates independently within their domain
-- **Cost-effective**: Minimal LLM calls compared to continuous monitoring
-
-### Classification Modes
-
-**Lazy Mode (Default)** - `HANDOFF_LAZY_CLASSIFICATION=true`
-- Intent classifier runs only when:
-  - First message (initial routing)
-  - Handoff phrase detected in specialist response
-- Agent communicates directly with user during normal conversation
-
-**Always-On Mode** - `HANDOFF_LAZY_CLASSIFICATION=false`
-- Intent classifier runs on every user message
-- Useful for complex routing scenarios or testing
+- **First-class framework support** — handoffs are part of the
+  orchestration layer, not an application-level workaround.
+- **No regex / classifier overhead** — the LLM decides when to hand off.
+- **Conversation is shared automatically** — every specialist sees the
+  full cleaned conversation, no manual `_build_context_prefix` step.
+- **Less code to maintain** — the agent file went from 782 lines (with a
+  hand-rolled `_classify_intent`, `_detect_handoff_request`, and
+  `_build_context_prefix`) down to ~510 lines.
 
 ## Architecture
 
 ```mermaid
 graph TD
-    A[User Message] --> B{First Message?}
-    B -->|Yes| C[Intent Classifier]
-    B -->|No| D{Lazy Mode?}
-    
-    D -->|Yes| E[Route to Current Specialist]
-    D -->|No| C
-    
-    C --> F[Assign Domain Specialist]
-    F --> E
-    
-    E --> G[Specialist Responds Directly]
-    
-    G --> H{Handoff Phrase Detected?}
-    H -->|No| I[User Receives Response]
-    H -->|Yes| J[Run Intent Classifier]
-    
-    J --> K[Switch to New Specialist]
-    K --> L[New Specialist Responds]
-    L --> I
-    
+    A[User Message] --> B{Resume from checkpoint?}
+    B -->|Yes| C[Workflow.run responses=...,checkpoint_id=...]
+    B -->|No| D[Workflow.run prompt]
+
+    C --> E[Active Specialist]
+    D --> E
+
+    E --> F{Tool call?}
+    F -->|Domain tool| G[Execute MCP tool] --> E
+    F -->|handoff_to_X| H[Middleware intercepts]
+    F -->|None / text| I[Stream tokens to user]
+
+    H --> J[handoff_sent event] --> K[Target Specialist]
+    K --> F
+
+    I --> L[request_info: HandoffAgentUserRequest]
+    L --> M[Save checkpoint]
+    M --> N[Return response to user]
+
     style E fill:#90EE90
-    style G fill:#90EE90
-    style C fill:#FFD700
-    style J fill:#FFD700
-    style H fill:#87CEEB
+    style K fill:#90EE90
+    style H fill:#FFD700
 ```
 
 ### Flow Description
 
-1. **Initial Routing**: First message triggers intent classification to select starting specialist
-2. **Direct Communication**: Specialist agent handles user messages directly using domain-specific tools
-3. **Handoff Detection**: System monitors specialist response for out-of-domain phrase
-4. **Lazy Classification**: Only when handoff phrase detected, intent classifier runs to find new domain
-5. **Context Transfer**: Conversation history transfers to new specialist for continuity
+1. **First Turn**: `chat_async` calls `workflow.run(prompt, stream=True)`.
+   The configured start agent (`HANDOFF_DEFAULT_DOMAIN`) handles the
+   message.
+2. **Streaming**: `AgentResponseUpdate` events are forwarded to the
+   WebSocket as `agent_token`/`tool_called` messages. `handoff_sent`
+   events become `handoff_announcement` + a follow-up `agent_start`.
+3. **Pause for User**: After the agent finishes (without handing off),
+   the workflow emits a `request_info` event carrying a
+   `HandoffAgentUserRequest`. We save the request ID alongside the
+   checkpoint.
+4. **Subsequent Turns**: `chat_async` resumes via
+   `workflow.run(responses={request_id: HandoffAgentUserRequest.create_response(prompt)}, checkpoint_id=..., stream=True)`.
+   The current specialist sees the new user message; if the topic
+   shifts, it calls a `handoff_to_<target>` tool and routing happens
+   automatically.
 
 ## Domain Specialists
 
@@ -84,143 +105,115 @@ graph TD
 | **Product & Promotions** | Product catalog, promotions, eligibility, orders | `get_products`, `get_promotions`, `get_eligible_promotions`, `get_customer_orders` + 2 more |
 | **Security & Authentication** | Account security, lockouts, authentication, incidents | `get_security_logs`, `unlock_account`, `get_support_tickets`, `create_support_ticket` + 1 more |
 
-**Key Instruction**: Each specialist is instructed to respond with *"This is outside my area. Let me connect you with the right specialist."* when requests fall outside their domain.
-
-## Handoff Detection & Classification
-
-### Pattern-Based Handoff Detection
-
-When a specialist responds with out-of-domain phrases, the system detects them using regex patterns:
-
-**Detection Strategies:**
-1. **Exact Template**: `"outside my area.*connect you with.*specialist"`
-2. **Domain Boundaries**: `"outside my (domain|expertise|area)"`
-3. **Transfer Language**: `"let me (transfer|route|connect) you"`
-4. **Keyword Proximity**: Multiple keyword groups within 100 characters
-
-**Example:**
-```
-User: "Can you unlock my account?"
-Billing Agent: "This is outside my area. Let me connect you with the right specialist."
-System: ✓ Handoff detected via pattern match → Trigger classification
-```
-
-### Intent Classification (Structured Output)
-
-Uses Pydantic model with OpenAI's `beta.chat.completions.parse()` for reliable JSON:
-
-```python
-class IntentClassification(BaseModel):
-    domain: str  # Target domain
-    is_domain_change: bool  # Whether domain changed
-    confidence: float  # 0.0 - 1.0
-    reasoning: str  # Brief explanation
-```
-
-**When it runs:**
-- First message (initial routing)
-- When handoff phrase detected (lazy mode)
-- Every message (always-on mode)
-
-**Error handling:** If classification fails, randomly selects a different domain to avoid getting stuck.
+The agent **`description`** for each specialist is what `HandoffBuilder`
+embeds into the auto-generated handoff tool description, so descriptions
+should clearly state when control should transfer to that specialist.
 
 ## Key Implementation Details
 
 ### Tool Filtering
 
-Each specialist has filtered access to MCP tools. The system:
-1. Connects to MCP server once and loads all tools
-2. Filters tool list per domain using `create_filtered_tool_list()`
-3. Passes filtered tools to each specialist agent
+Each specialist receives a filtered subset of MCP tools via
+`create_filtered_tool_list()`. The MCP server is connected once and
+shared across all specialists.
 
-**Benefits:** Security, focus, reduced hallucination, efficient resource sharing
+**Benefits:** Security, focus, reduced hallucination, efficient resource
+sharing.
 
-### Thread Isolation
+### Cross-Request Continuity (Checkpointing)
 
-Each domain specialist maintains its own conversation thread:
-- Threads are serialized and persisted in state store
-- When switching domains, the new specialist's thread is restored
-- Allows specialists to maintain domain-specific context
+The workshop runs each chat turn as a separate HTTP request, so the
+workflow needs to persist its state between calls. We use
+`HandoffBuilder.with_checkpointing(storage)` with a dictionary-backed
+`CheckpointStorage` (`_DictCheckpointStorage`) keyed off the per-session
+state store.
 
-### Context Transfer
+- After every turn the workflow saves a checkpoint and pauses on a
+  `request_info` event waiting for the next user message.
+- The next call passes `checkpoint_id` and `responses={pending_id: ...}`
+  to resume the same conversation.
 
-On handoff, conversation history can transfer to the new specialist:
+The pending request ID and current speaking domain are also persisted in
+the state store so a process restart can re-create the workflow with the
+correct start agent.
 
-**Configuration:** `HANDOFF_CONTEXT_TRANSFER_TURNS`
-- `-1`: Transfer all history (default, best UX)
-- `0`: No context transfer (domain isolation)
-- `N`: Transfer last N turns only
+### Conversation Sharing
 
-**Example:**
-```
-User: "My customer ID is 251. What's my bill?"
-Billing: "Your bill is $150..."
-User: "Am I eligible for promotions?"
-[Context transfers → Product specialist sees customer ID 251]
-Product: "For customer 251, you're eligible for..."
-```
+`HandoffBuilder` automatically broadcasts each agent's cleaned response
+(without internal tool-call/result content) to all other agents in the
+group. There is no longer a need for the per-domain "context prefix" the
+previous implementation manually built.
+
+### Handoff Tool Filtering in the UI
+
+When streaming `function_call` content from the workflow, the agent
+filters out any tool whose name starts with `handoff_to_` — these are
+synthetic framework signals, not real tool invocations, and are already
+surfaced as the higher-level `handoff_announcement` WebSocket event.
 
 ## Example: Multi-Turn Conversation
 
-**Lazy Mode (Default):**
-
 ```
-Turn 1: Initial Routing
+Turn 1
 User: "What's my bill?"
-→ First message → Intent classifier runs → Route to Billing
-Billing: "Your bill is $45.99"
+→ Start agent (crm_billing) handles the message.
+crm_billing: "Your bill is $45.99…"
+→ Workflow pauses on request_info; checkpoint saved.
 
-Turn 2: Within Domain
-User: "Can I see the details?"
-→ Current domain = Billing → Skip classification → Direct to Billing
-Billing: "Here are the line items: Basic plan $30, Data $15.99..."
-→ No handoff marker → Done
+Turn 2 (within domain)
+User: "Can I see the line items?"
+→ Resume from checkpoint with responses={pending_id: ...}
+→ crm_billing answers directly.
+crm_billing: "Basic plan $30, Data $15.99…"
 
-Turn 3: Out-of-Domain Request
-User: "What about promotions?"
-→ Current domain = Billing → Skip classification → Direct to Billing
-Billing: "This is outside my area. Let me connect you with the right specialist."
-→ Handoff marker detected! → Intent classifier runs → Route to Promotions
-Promotions: "We have 3 active promotions available..."
+Turn 3 (out-of-domain)
+User: "What promotions am I eligible for?"
+→ Resume from checkpoint.
+→ crm_billing's instructions tell it to call handoff_to_product_promotions.
+→ HandoffBuilder middleware intercepts and emits handoff_sent.
+→ product_promotions sees the full conversation and responds.
+product_promotions: "You qualify for 3 active promotions…"
 ```
-
-**Performance:** Only 3 LLM calls total (Turn 1 classify, Turn 2 Billing, Turn 3 Billing → classify → Promotions)
-
-**Always-On Mode:**
-
-Every turn runs intent classification before routing (less efficient but useful for complex scenarios).
 
 ## Configuration
 
 | Environment Variable | Default | Description |
 |---------------------|---------|-------------|
-| `HANDOFF_LAZY_CLASSIFICATION` | `true` | Enable lazy mode (only classify on first message or handoff detection) |
-| `HANDOFF_DEFAULT_DOMAIN` | `crm_billing` | Starting domain for first message (`crm_billing` \| `product_promotions` \| `security_authentication`) |
-| `HANDOFF_CONTEXT_TRANSFER_TURNS` | `-1` | Context to transfer on handoff (`-1`=all, `0`=none, `N`=last N turns) |
-| `AZURE_OPENAI_API_KEY` | (required) | Azure OpenAI API key |
+| `HANDOFF_DEFAULT_DOMAIN` | `crm_billing` | Starting domain for the first turn (`crm_billing` \| `product_promotions` \| `security_authentication`) |
+| `AZURE_OPENAI_API_KEY` | (required for key auth) | Azure OpenAI API key |
 | `AZURE_OPENAI_ENDPOINT` | (required) | Azure OpenAI endpoint URL |
-| `AZURE_OPENAI_CHAT_DEPLOYMENT` | (required) | Deployment name (e.g., `gpt-4`) |
+| `AZURE_OPENAI_CHAT_DEPLOYMENT` | (required) | Azure deployment name (passed to `OpenAIChatClient` as `model=`) |
+| `AZURE_OPENAI_API_VERSION` | (required) | Azure OpenAI API version |
 | `MCP_SERVER_URI` | (optional) | MCP server endpoint for domain tools |
-| `AGENT_MODULE` | - | `agents.agent_framework.multi_agent.handoff_multi_domain_agent` |
+| `AGENT_MODULE` | – | `agents.agent_framework.multi_agent.handoff_multi_domain_agent` |
+
+> The legacy `HANDOFF_LAZY_CLASSIFICATION` and
+> `HANDOFF_CONTEXT_TRANSFER_TURNS` settings are no longer used: native
+> handoffs are always agent-driven and the workflow shares conversation
+> state between specialists automatically.
 
 ## Advantages
 
-✅ **Efficiency** - Minimal LLM calls, no orchestrator overhead  
-✅ **Scalability** - Add new specialists without coordination complexity  
-✅ **Autonomy** - Specialists don't need to know about other agents  
-✅ **Natural UX** - Direct agent-to-user communication  
-✅ **Cost-effective** - Classification only when needed  
-✅ **Maintainable** - Clean domain separation and tool filtering  
+✅ **Native framework support** — handoffs are part of the orchestration
+layer, not an application workaround.
+✅ **Less code to maintain** — no hand-rolled classifier, regex
+detection, or context prefix builder.
+✅ **Agent-decided routing** — the LLM decides when to hand off, with
+clear handoff-tool descriptions to guide it.
+✅ **Automatic shared conversation** — every specialist sees the cleaned
+conversation when it takes over.
+✅ **Resumable conversations** — workflow checkpointing persists state
+across HTTP requests.
 
 ## When to Use
 
 **Good fit:**
 - Support scenarios with clear domain boundaries
-- Conversations typically stay within one domain
 - Want to minimize latency and cost
 - Need to scale to many specialist agents
 
 **Not ideal:**
-- Tasks requiring simultaneous multi-agent collaboration
-- Complex workflows with dependencies between agents
-- Need centralized orchestration and planning
+- Tasks requiring simultaneous multi-agent collaboration → use
+  `MagenticBuilder` instead.
+- Complex workflows with explicit dependencies between agents → use
+  `WorkflowBuilder` with custom edges.
