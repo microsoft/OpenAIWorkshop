@@ -643,6 +643,30 @@ class TestMagenticGroupIntegration:
         none = asyncio.get_event_loop().run_until_complete(storage.get_latest(workflow_name="other"))
         assert none is None
 
+    def test_get_latest_checkpoint_id_uses_workflow_name_kwarg(self):
+        """_get_latest_checkpoint_id resumes from a 1.2.x-protocol-only storage.
+
+        Storages that follow the 1.2.x ``CheckpointStorage`` protocol require
+        the keyword-only ``workflow_name`` argument on ``get_latest`` /
+        ``list_checkpoints`` / ``list_checkpoint_ids`` and do not expose the
+        nonstandard ``latest_checkpoint_id`` convenience. The resume helper
+        must call those methods with ``workflow_name=`` so it can still find
+        the latest checkpoint.
+        """
+        from agents.agent_framework.multi_agent.magentic_group import Agent, DictCheckpointStorage
+        from agent_framework import WorkflowCheckpoint
+
+        # Back the storage with a dict that records the workflow_name so
+        # _workflow_name_for_storage can recover it (mirrors how save() works).
+        backing: dict = {"workflow_name": "wf-resume"}
+        storage = DictCheckpointStorage(backing)
+        cp = WorkflowCheckpoint(workflow_name="wf-resume", graph_signature_hash="h", checkpoint_id="cp-latest")
+        asyncio.get_event_loop().run_until_complete(storage.save(cp))
+
+        agent = Agent(state_store={}, session_id="test")
+        latest_id = asyncio.get_event_loop().run_until_complete(agent._get_latest_checkpoint_id(storage))
+        assert latest_id == "cp-latest"
+
     def test_magentic_sanitize_final_answer(self):
         """FINAL_ANSWER prefix is stripped from workflow output."""
         from agents.agent_framework.multi_agent.magentic_group import Agent

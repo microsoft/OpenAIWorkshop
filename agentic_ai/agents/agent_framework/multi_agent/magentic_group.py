@@ -1108,7 +1108,8 @@ DO NOT OUTPUT ANYTHING OTHER THAN JSON, AND DO NOT DEVIATE FROM THIS SCHEMA:
 
     async def _get_latest_checkpoint_id(self, storage: CheckpointStorage) -> Optional[str]:
         """Get the most recent checkpoint ID from storage."""
-        # Try latest_checkpoint_id property/method first
+        # Try latest_checkpoint_id property/method first (nonstandard convenience
+        # exposed by the in-process DictCheckpointStorage in this module).
         latest_id_attr = getattr(storage, "latest_checkpoint_id", None)
         if callable(latest_id_attr):
             try:
@@ -1120,11 +1121,28 @@ DO NOT OUTPUT ANYTHING OTHER THAN JSON, AND DO NOT DEVIATE FROM THIS SCHEMA:
         elif isinstance(latest_id_attr, str):
             return latest_id_attr
 
-        # Try list_checkpoints and get latest
-        list_checkpoints_fn = getattr(storage, "list_checkpoints", None)
-        if callable(list_checkpoints_fn):
+        # Best-effort: the 1.2.x ``CheckpointStorage`` protocol requires a
+        # keyword-only ``workflow_name`` on ``get_latest`` / ``list_checkpoints``
+        # / ``list_checkpoint_ids``. Without one we cannot call those methods.
+        workflow_name = self._workflow_name_for_storage(storage)
+
+        # Try the 1.2.x ``get_latest`` shortcut.
+        get_latest_fn = getattr(storage, "get_latest", None)
+        if callable(get_latest_fn) and workflow_name:
             try:
-                checkpoints = await self._call_maybe_async(list_checkpoints_fn)
+                latest = await self._call_maybe_async(get_latest_fn, workflow_name=workflow_name)
+                if latest is not None:
+                    checkpoint_id = getattr(latest, "checkpoint_id", None)
+                    if isinstance(checkpoint_id, str):
+                        return checkpoint_id
+            except Exception:
+                pass
+
+        # Try list_checkpoints and pick the most recent entry.
+        list_checkpoints_fn = getattr(storage, "list_checkpoints", None)
+        if callable(list_checkpoints_fn) and workflow_name:
+            try:
+                checkpoints = await self._call_maybe_async(list_checkpoints_fn, workflow_name=workflow_name)
                 if checkpoints:
                     latest = max(checkpoints, key=lambda cp: (
                         getattr(cp, "timestamp", ""),
@@ -1134,11 +1152,11 @@ DO NOT OUTPUT ANYTHING OTHER THAN JSON, AND DO NOT DEVIATE FROM THIS SCHEMA:
             except Exception:
                 pass
 
-        # Fallback: list checkpoint IDs and return last
+        # Fallback: list checkpoint IDs and return last.
         list_ids_fn = getattr(storage, "list_checkpoint_ids", None)
-        if callable(list_ids_fn):
+        if callable(list_ids_fn) and workflow_name:
             try:
-                checkpoint_ids = await self._call_maybe_async(list_ids_fn)
+                checkpoint_ids = await self._call_maybe_async(list_ids_fn, workflow_name=workflow_name)
                 if checkpoint_ids:
                     return checkpoint_ids[-1]
             except Exception:
