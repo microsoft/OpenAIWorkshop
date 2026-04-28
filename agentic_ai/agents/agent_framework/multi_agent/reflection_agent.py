@@ -11,7 +11,7 @@ import logging
 from typing import Any, Dict, List
 
 from agent_framework import Agent as FrameworkAgent, AgentSession, ChatOptions, MCPStreamableHTTPTool
-from agent_framework.azure import AzureOpenAIChatClient
+from agent_framework.openai import OpenAIChatClient
 
 from agents.base_agent import BaseAgent, ToolCallTrackingMixin
 
@@ -97,7 +97,7 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
         else:
             client_kwargs["credential"] = self.azure_credential
         
-        chat_client = AzureOpenAIChatClient(**client_kwargs)
+        chat_client = OpenAIChatClient(**client_kwargs)
 
         # Create MCP tools
         tools = await self._create_mcp_tools()

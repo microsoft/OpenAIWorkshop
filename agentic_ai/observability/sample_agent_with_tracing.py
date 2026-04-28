@@ -67,7 +67,7 @@ async def run_agent_with_tracing():
     """Run a sample agent with full observability."""
     
     from agent_framework import ChatAgent, MCPStreamableHTTPTool
-    from agent_framework.azure import AzureOpenAIChatClient
+    from agent_framework.openai import OpenAIChatClient
     from azure.identity import DefaultAzureCredential
     
     # Get tracer for custom spans
@@ -77,8 +77,8 @@ async def run_agent_with_tracing():
     mcp_url = os.environ.get("MCP_SERVER_URI", "http://localhost:8000/mcp")
     
     # Azure OpenAI configuration
-    azure_endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
-    deployment_name = os.environ.get("AZURE_OPENAI_CHAT_DEPLOYMENT", "gpt-4o")
+    endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
+    model= os.environ.get("AZURE_OPENAI_CHAT_DEPLOYMENT", "gpt-4o")
     
     if not azure_endpoint:
         print("❌ AZURE_OPENAI_ENDPOINT not set")
@@ -107,9 +107,9 @@ async def run_agent_with_tracing():
         )
         
         # Create chat client
-        chat_client = AzureOpenAIChatClient(
-            endpoint=azure_endpoint,
-            deployment_name=deployment_name,
+        chat_client = OpenAIChatClient(
+            azure_endpoint=azure_endpoint,
+            model=deployment_name,
             credential=DefaultAzureCredential(),
         )
         

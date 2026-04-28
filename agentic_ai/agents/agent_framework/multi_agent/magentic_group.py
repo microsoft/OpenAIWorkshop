@@ -23,7 +23,7 @@ from agent_framework_orchestrations import (
     MagenticPlanReviewRequest,
     MagenticPlanReviewResponse,
 )
-from agent_framework.azure import AzureOpenAIChatClient  # type: ignore[import]
+from agent_framework.openai import OpenAIChatClient
 
 from agents.base_agent import BaseAgent, ToolCallTrackingMixin
 from agents.agent_framework.utils import create_filtered_tool_list
@@ -214,8 +214,8 @@ DO NOT OUTPUT ANYTHING OTHER THAN JSON, AND DO NOT DEVIATE FROM THIS SCHEMA:
             logger.warning(
                 "[AgentFramework-Magentic] Ignoring checkpoint storage override because it does not implement CheckpointStorage."
             )
-        self._participant_client: Optional[AzureOpenAIChatClient] = None
-        self._manager_client: Optional[AzureOpenAIChatClient] = None
+        self._participant_client: Optional[OpenAIChatClient] = None
+        self._manager_client: Optional[OpenAIChatClient] = None
         self._workflow_event_logging_enabled = bool(self._config.get("log_workflow_events", False))
         self._enable_plan_review = bool(self._config.get("enable_plan_review", False))
         self._manager_instructions = self._config.get(
@@ -353,32 +353,32 @@ DO NOT OUTPUT ANYTHING OTHER THAN JSON, AND DO NOT DEVIATE FROM THIS SCHEMA:
 
         return None
 
-    def _get_participant_client(self) -> AzureOpenAIChatClient:
+    def _get_participant_client(self) -> OpenAIChatClient:
         if self._participant_client is None:
             self._participant_client = self._build_chat_client()
         return self._participant_client
 
-    def _get_manager_client(self) -> AzureOpenAIChatClient:
+    def _get_manager_client(self) -> OpenAIChatClient:
         if self._manager_client is None:
             self._manager_client = self._build_chat_client()
         return self._manager_client
 
-    def _build_chat_client(self) -> AzureOpenAIChatClient:
+    def _build_chat_client(self) -> OpenAIChatClient:
         # Use API key if available, otherwise use credential-based authentication
         if self.azure_openai_key:
             logger.info("[AgentFramework-Magentic] Using API key authentication for Azure OpenAI")
-            return AzureOpenAIChatClient(
+            return OpenAIChatClient(
                 api_key=self.azure_openai_key,
-                deployment_name=self.azure_deployment,
-                endpoint=self.azure_openai_endpoint,
+                model=self.azure_deployment,
+                azure_endpoint=self.azure_openai_endpoint,
                 api_version=self.api_version,
             )
         elif self.azure_credential:
             logger.info("[AgentFramework-Magentic] Using managed identity authentication for Azure OpenAI")
-            return AzureOpenAIChatClient(
+            return OpenAIChatClient(
                 credential=self.azure_credential,
-                deployment_name=self.azure_deployment,
-                endpoint=self.azure_openai_endpoint,
+                model=self.azure_deployment,
+                azure_endpoint=self.azure_openai_endpoint,
                 api_version=self.api_version,
             )
         else:
@@ -436,8 +436,8 @@ DO NOT OUTPUT ANYTHING OTHER THAN JSON, AND DO NOT DEVIATE FROM THIS SCHEMA:
 
     async def _build_workflow(
         self,
-        participant_client: AzureOpenAIChatClient,
-        manager_client: AzureOpenAIChatClient,
+        participant_client: OpenAIChatClient,
+        manager_client: OpenAIChatClient,
         tools: List[MCPStreamableHTTPTool] | None,
         checkpoint_storage: CheckpointStorage,
     ) -> Any:
@@ -471,7 +471,7 @@ DO NOT OUTPUT ANYTHING OTHER THAN JSON, AND DO NOT DEVIATE FROM THIS SCHEMA:
 
     async def _create_participants(
         self,
-        participant_client: AzureOpenAIChatClient,
+        participant_client: OpenAIChatClient,
         tools: Iterable[MCPStreamableHTTPTool] | None,
     ) -> Dict[str, FrameworkAgent]:
         # Get base MCP tool (connect once, filter per agent)

@@ -25,7 +25,7 @@ from agent_framework import (
     WorkflowContext,
     MCPStreamableHTTPTool,
 )
-from agent_framework.azure import AzureOpenAIChatClient
+from agent_framework.openai import OpenAIChatClient
 
 logger = logging.getLogger(__name__)
 
@@ -190,7 +190,7 @@ class AlertRouterExecutor(Executor):
 class UsagePatternExecutor(Executor):
     """Analyzes data usage patterns using MCP tools."""
 
-    def __init__(self, mcp_tool: MCPStreamableHTTPTool, chat_client: AzureOpenAIChatClient):
+    def __init__(self, mcp_tool: MCPStreamableHTTPTool, chat_client: OpenAIChatClient):
         super().__init__(id="usage_pattern_executor")
         
         # Filter MCP tools for usage analysis
@@ -263,7 +263,7 @@ RISK_SCORE: [0.0-1.0]
 class LocationAnalysisExecutor(Executor):
     """Analyzes geolocation data for anomalies."""
 
-    def __init__(self, mcp_tool: MCPStreamableHTTPTool, chat_client: AzureOpenAIChatClient):
+    def __init__(self, mcp_tool: MCPStreamableHTTPTool, chat_client: OpenAIChatClient):
         super().__init__(id="location_analysis_executor")
         
         # Filter MCP tools for location analysis
@@ -335,7 +335,7 @@ RISK_SCORE: [0.0-1.0]
 class BillingChargeExecutor(Executor):
     """Analyzes billing and charge patterns."""
 
-    def __init__(self, mcp_tool: MCPStreamableHTTPTool, chat_client: AzureOpenAIChatClient):
+    def __init__(self, mcp_tool: MCPStreamableHTTPTool, chat_client: OpenAIChatClient):
         super().__init__(id="billing_charge_executor")
         
         # Filter MCP tools for billing analysis
@@ -415,7 +415,7 @@ class FraudRiskAggregatorExecutor(Executor):
     Receives a list of results from fan-in edges (all 3 specialists at once).
     """
 
-    def __init__(self, chat_client: AzureOpenAIChatClient):
+    def __init__(self, chat_client: OpenAIChatClient):
         super().__init__(id="fraud_risk_aggregator")
         self._chat_client = chat_client
 
@@ -560,7 +560,7 @@ Provide:
 
 def create_fraud_analysis_workflow(
     mcp_tool: MCPStreamableHTTPTool,
-    chat_client: AzureOpenAIChatClient,
+    chat_client: OpenAIChatClient,
 ) -> Any:
     """
     Create the inner fraud analysis workflow.
@@ -622,9 +622,9 @@ async def main():
     
     async with mcp_tool:
         # Initialize chat client
-        chat_client = AzureOpenAIChatClient(
+        chat_client = OpenAIChatClient(
             credential=AzureCliCredential(),
-            deployment_name=os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT", "gpt-4o"),
+            model=os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT", "gpt-4o"),
         )
         
         # Create workflow

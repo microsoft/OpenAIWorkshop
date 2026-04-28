@@ -69,7 +69,7 @@ load_dotenv(env_path)
 
 from agent_framework import Agent, AgentResponse
 from agent_framework._sessions import AgentSession
-from agent_framework.azure import AzureOpenAIChatClient
+from agent_framework.openai import OpenAIChatClient
 from fastmcp import FastMCP
 from fastmcp.server.context import Context
 
@@ -227,7 +227,7 @@ class IncidentResponse(BaseModel):
 
 
 def main() -> None:
-    endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
+    endpoint= os.environ.get("AZURE_OPENAI_ENDPOINT")
     api_key = os.environ.get("AZURE_OPENAI_API_KEY")
     deployment = os.environ.get("AZURE_OPENAI_CHAT_DEPLOYMENT", "gpt-4.1")
     api_version = os.environ.get("AZURE_OPENAI_API_VERSION", "2025-03-01-preview")
@@ -239,10 +239,10 @@ def main() -> None:
     print(f"🔧 Azure OpenAI endpoint : {endpoint}")
     print(f"🔧 Deployment            : {deployment}")
 
-    llm_client = AzureOpenAIChatClient(
+    llm_client = OpenAIChatClient(
         api_key=api_key,
-        endpoint=endpoint,
-        deployment_name=deployment,
+        azure_endpoint=endpoint,
+        model=deployment,
         api_version=api_version,
     )
 

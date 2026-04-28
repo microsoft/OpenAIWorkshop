@@ -61,7 +61,7 @@ from agent_framework import (
     Message,
     WorkflowEvent,
 )
-from agent_framework.azure import AzureOpenAIChatClient
+from agent_framework.openai import OpenAIChatClient
 from agent_framework_durabletask import (
     DurableAIAgentOrchestrationContext,
     DurableAIAgentWorker,
@@ -140,9 +140,9 @@ class FraudAnalysisAgent(BaseAgent):
                 if azure_client_id
                 else DefaultAzureCredential()
             )
-            chat_client = AzureOpenAIChatClient(
+            chat_client = OpenAIChatClient(
                 credential=credential,
-                deployment_name=self._deployment_name,
+                model=self._deployment_name,
             )
 
             # If re-investigating, enrich the alert description with previous context

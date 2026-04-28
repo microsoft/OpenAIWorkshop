@@ -6,10 +6,10 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     # Agent Framework (includes azure sub-package)
-    "agent-framework==1.0.0rc1",
+    "agent-framework==1.2.1",
     
     # Durable Task Agent Framework integration
-    "agent-framework-durabletask>=1.0.0b260212",
+    "agent-framework-durabletask>=1.0.0b260428",
     
     # Observability
     "azure-monitor-opentelemetry>=1.8.5",

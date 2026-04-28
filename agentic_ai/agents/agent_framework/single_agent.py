@@ -2,7 +2,7 @@ import logging
 from typing import Any, Dict, List
 
 from agent_framework import Agent as FrameworkAgent, AgentSession, ChatOptions, MCPStreamableHTTPTool
-from agent_framework.azure import AzureOpenAIChatClient
+from agent_framework.openai import OpenAIChatClient
 
 from agents.base_agent import BaseAgent, ToolCallTrackingMixin
 
@@ -55,18 +55,18 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
 
         # Use API key if available, otherwise use credential-based authentication
         if has_api_key:
-            chat_client = AzureOpenAIChatClient(
+            chat_client = OpenAIChatClient(
                 api_key=self.azure_openai_key,
-                deployment_name=self.azure_deployment,
-                endpoint=self.azure_openai_endpoint,
+                model=self.azure_deployment,
+                azure_endpoint=self.azure_openai_endpoint,
                 api_version=self.api_version,
             )
             logger.info("[AgentFramework] Using API key authentication for Azure OpenAI")
         else:
-            chat_client = AzureOpenAIChatClient(
+            chat_client = OpenAIChatClient(
                 credential=self.azure_credential,
-                deployment_name=self.azure_deployment,
-                endpoint=self.azure_openai_endpoint,
+                model=self.azure_deployment,
+                azure_endpoint=self.azure_openai_endpoint,
                 api_version=self.api_version,
             )
             logger.info("[AgentFramework] Using managed identity authentication for Azure OpenAI")
