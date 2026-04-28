@@ -66,7 +66,7 @@ if not success:
 async def run_agent_with_tracing():
     """Run a sample agent with full observability."""
     
-    from agent_framework import ChatAgent, MCPStreamableHTTPTool
+    from agent_framework import Agent, MCPStreamableHTTPTool
     from agent_framework.openai import OpenAIChatClient
     from azure.identity import DefaultAzureCredential
     
@@ -77,8 +77,8 @@ async def run_agent_with_tracing():
     mcp_url = os.environ.get("MCP_SERVER_URI", "http://localhost:8000/mcp")
     
     # Azure OpenAI configuration
-    endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
-    model= os.environ.get("AZURE_OPENAI_CHAT_DEPLOYMENT", "gpt-4o")
+    azure_endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
+    deployment_name = os.environ.get("AZURE_OPENAI_CHAT_DEPLOYMENT", "gpt-4o")
     
     if not azure_endpoint:
         print("❌ AZURE_OPENAI_ENDPOINT not set")
@@ -106,7 +106,7 @@ async def run_agent_with_tracing():
             timeout=30,
         )
         
-        # Create chat client
+        # Create chat client (passing azure_endpoint routes to Azure OpenAI)
         chat_client = OpenAIChatClient(
             azure_endpoint=azure_endpoint,
             model=deployment_name,
@@ -114,8 +114,8 @@ async def run_agent_with_tracing():
         )
         
         # Create agent
-        agent = ChatAgent(
-            chat_client=chat_client,
+        agent = Agent(
+            client=chat_client,
             tools=[mcp_tool],
             name="CustomerServiceAgent",
             instructions="""You are a helpful customer service agent for Contoso Wireless.
@@ -130,7 +130,7 @@ async def run_agent_with_tracing():
             "Show me the data usage for subscription 1 from 2025-01-01 to 2025-01-15",
         ]
         
-        thread = agent.get_new_thread()
+        session = agent.create_session()
         
         for query in queries:
             print(f"\n👤 User: {query}")
@@ -143,7 +143,7 @@ async def run_agent_with_tracing():
             ) as query_span:
                 query_span.set_attribute("user.query", query)
                 
-                async for update in agent.run_stream(query, thread=thread):
+                async for update in agent.run(query, session=session, stream=True):
                     if update.text:
                         print(update.text, end="")
         print("\n" + "=" * 60)

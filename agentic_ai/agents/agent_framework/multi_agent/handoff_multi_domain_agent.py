@@ -163,11 +163,11 @@ class _DictCheckpointStorage(CheckpointStorage):
         self._async_lock = asyncio.Lock()
         self._sync_lock = ThreadLock()
 
-    async def save_checkpoint(self, checkpoint: WorkflowCheckpoint) -> str:
+    async def save(self, checkpoint: WorkflowCheckpoint) -> str:
         async with self._async_lock:
             self._checkpoints[checkpoint.checkpoint_id] = checkpoint.to_dict()
             self._backing["latest_checkpoint"] = checkpoint.checkpoint_id
-            self._backing["workflow_id"] = checkpoint.workflow_id
+            self._backing["workflow_name"] = checkpoint.workflow_name
 
             if len(self._checkpoints) > self._RETENTION:
                 sorted_ids = sorted(
@@ -178,33 +178,38 @@ class _DictCheckpointStorage(CheckpointStorage):
                     self._checkpoints.pop(cid, None)
             return checkpoint.checkpoint_id
 
-    async def load_checkpoint(self, checkpoint_id: str) -> WorkflowCheckpoint | None:
+    async def load(self, checkpoint_id: str) -> WorkflowCheckpoint | None:
         async with self._async_lock:
             data = self._checkpoints.get(checkpoint_id)
             if not data:
                 return None
             return WorkflowCheckpoint.from_dict(data)
 
-    async def list_checkpoint_ids(self, workflow_id: str | None = None) -> List[str]:
+    async def list_checkpoint_ids(self, *, workflow_name: str) -> List[str]:
         async with self._async_lock:
-            if workflow_id is None:
-                return list(self._checkpoints.keys())
-            return [cid for cid, d in self._checkpoints.items() if d.get("workflow_id") == workflow_id]
+            return [cid for cid, d in self._checkpoints.items() if d.get("workflow_name") == workflow_name]
 
-    async def list_checkpoints(self, workflow_id: str | None = None) -> List[WorkflowCheckpoint]:
+    async def list_checkpoints(self, *, workflow_name: str) -> List[WorkflowCheckpoint]:
         async with self._async_lock:
-            if workflow_id is None:
-                ids = list(self._checkpoints.keys())
-            else:
-                ids = [cid for cid, d in self._checkpoints.items() if d.get("workflow_id") == workflow_id]
+            ids = [cid for cid, d in self._checkpoints.items() if d.get("workflow_name") == workflow_name]
             return [WorkflowCheckpoint.from_dict(self._checkpoints[cid]) for cid in ids]
 
-    async def delete_checkpoint(self, checkpoint_id: str) -> bool:
+    async def delete(self, checkpoint_id: str) -> bool:
         async with self._async_lock:
             removed = self._checkpoints.pop(checkpoint_id, None)
             if removed and self._backing.get("latest_checkpoint") == checkpoint_id:
                 self._backing.pop("latest_checkpoint", None)
             return removed is not None
+
+    async def get_latest(self, *, workflow_name: str) -> WorkflowCheckpoint | None:
+        async with self._async_lock:
+            latest_id = self._backing.get("latest_checkpoint")
+            if not latest_id:
+                return None
+            data = self._checkpoints.get(latest_id)
+            if not data or data.get("workflow_name") != workflow_name:
+                return None
+            return WorkflowCheckpoint.from_dict(data)
 
     @property
     def latest_checkpoint_id(self) -> str | None:

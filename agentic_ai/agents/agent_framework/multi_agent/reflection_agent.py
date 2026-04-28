@@ -88,8 +88,8 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
 
         # Create chat client
         client_kwargs = {
-            "deployment_name": self.azure_deployment,
-            "endpoint": self.azure_openai_endpoint,
+            "model": self.azure_deployment,
+            "azure_endpoint": self.azure_openai_endpoint,
             "api_version": self.api_version,
         }
         if self.azure_openai_key:

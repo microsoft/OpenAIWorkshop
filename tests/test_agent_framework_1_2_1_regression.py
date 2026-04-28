@@ -537,6 +537,28 @@ class TestReflectionAgentIntegration:
         assert agent._is_approved("APPROVE - looks good")
         assert not agent._is_approved("Needs improvement on point 3")
 
+    def test_reflection_agent_uses_1_2_1_chat_client_kwargs(self):
+        """The reflection agent must use 1.2.x kwarg names (model, azure_endpoint).
+
+        The chat client is constructed via ``OpenAIChatClient(**client_kwargs)``,
+        so the kwarg dict keys must match the new API names — this is a
+        common foot-gun when migrating from 1.0.0rc1.
+        """
+        import inspect
+        from agents.agent_framework.multi_agent import reflection_agent as mod
+        src = inspect.getsource(getattr(mod.Agent, "_setup_agents"))
+        # Old-API key strings should not appear in the setup code path
+        assert '"deployment_name"' not in src, (
+            "reflection_agent passes 'deployment_name' to OpenAIChatClient; "
+            "rename to 'model' for the 1.2.x API."
+        )
+        # Note: a literal `'endpoint':` could also match the unrelated HTTP endpoint
+        # field, so we look for the specific Azure key-rename pattern instead.
+        assert '"endpoint": self.azure_openai_endpoint' not in src, (
+            "reflection_agent passes 'endpoint' to OpenAIChatClient; "
+            "rename to 'azure_endpoint' for the 1.2.x API."
+        )
+
 
 class TestMagenticGroupIntegration:
     """Test magentic group agent construction."""
@@ -556,6 +578,70 @@ class TestMagenticGroupIntegration:
         backing = {}
         storage = DictCheckpointStorage(backing)
         assert storage.latest_checkpoint_id is None
+
+    def test_magentic_checkpoint_storage_implements_1_2_1_protocol(self):
+        """DictCheckpointStorage implements the 1.2.x CheckpointStorage protocol.
+
+        In 1.0.0rc1 the methods were named save_checkpoint/load_checkpoint/...; in
+        1.2.x they are save/load/delete/get_latest with workflow_name kwargs.
+        """
+        from agents.agent_framework.multi_agent.magentic_group import DictCheckpointStorage
+        import inspect
+        for name in ("save", "load", "delete", "get_latest", "list_checkpoints", "list_checkpoint_ids"):
+            assert callable(getattr(DictCheckpointStorage, name, None)), (
+                f"DictCheckpointStorage must implement 1.2.x method {name!r}"
+            )
+        # Old method names should NOT exist
+        assert not hasattr(DictCheckpointStorage, "save_checkpoint"), \
+            "save_checkpoint was renamed to save in 1.2.x"
+        assert not hasattr(DictCheckpointStorage, "load_checkpoint"), \
+            "load_checkpoint was renamed to load in 1.2.x"
+        # workflow_name keyword-only enforcement
+        for name in ("list_checkpoints", "list_checkpoint_ids", "get_latest"):
+            sig = inspect.signature(getattr(DictCheckpointStorage, name))
+            assert "workflow_name" in sig.parameters, (
+                f"{name} must accept workflow_name keyword in 1.2.x"
+            )
+
+    def test_handoff_checkpoint_storage_implements_1_2_1_protocol(self):
+        """The handoff agent's _DictCheckpointStorage matches the 1.2.x protocol."""
+        from agents.agent_framework.multi_agent.handoff_multi_domain_agent import _DictCheckpointStorage
+        for name in ("save", "load", "delete", "get_latest", "list_checkpoints", "list_checkpoint_ids"):
+            assert callable(getattr(_DictCheckpointStorage, name, None)), (
+                f"_DictCheckpointStorage must implement 1.2.x method {name!r}"
+            )
+
+    def test_workflow_checkpoint_uses_workflow_name(self):
+        """WorkflowCheckpoint uses workflow_name (was workflow_id in 1.0.0rc1)."""
+        from agent_framework import WorkflowCheckpoint
+        import inspect
+        sig = inspect.signature(WorkflowCheckpoint.__init__)
+        assert "workflow_name" in sig.parameters
+        assert "workflow_id" not in sig.parameters, \
+            "workflow_id was renamed to workflow_name in 1.2.x"
+
+    def test_dict_checkpoint_storage_save_load_roundtrip(self):
+        """save() persists a checkpoint that load()/get_latest() can recover."""
+        from agents.agent_framework.multi_agent.magentic_group import DictCheckpointStorage
+        from agent_framework import WorkflowCheckpoint
+
+        storage = DictCheckpointStorage({})
+        cp = WorkflowCheckpoint(workflow_name="wf-A", graph_signature_hash="hash-1", checkpoint_id="cp-1")
+
+        cid = asyncio.get_event_loop().run_until_complete(storage.save(cp))
+        assert cid == "cp-1"
+
+        loaded = asyncio.get_event_loop().run_until_complete(storage.load("cp-1"))
+        assert loaded is not None
+        assert loaded.workflow_name == "wf-A"
+        assert loaded.checkpoint_id == "cp-1"
+
+        latest = asyncio.get_event_loop().run_until_complete(storage.get_latest(workflow_name="wf-A"))
+        assert latest is not None and latest.checkpoint_id == "cp-1"
+
+        # get_latest with a non-matching workflow_name returns None
+        none = asyncio.get_event_loop().run_until_complete(storage.get_latest(workflow_name="other"))
+        assert none is None
 
     def test_magentic_sanitize_final_answer(self):
         """FINAL_ANSWER prefix is stripped from workflow output."""
