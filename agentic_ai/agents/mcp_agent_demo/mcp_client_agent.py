@@ -28,7 +28,7 @@ from agent_framework.openai import OpenAIChatClient
 
 
 async def main() -> None:
-    endpoint= os.environ.get("AZURE_OPENAI_ENDPOINT")
+    endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
     api_key = os.environ.get("AZURE_OPENAI_API_KEY")
     deployment = os.environ.get("AZURE_OPENAI_CHAT_DEPLOYMENT", "gpt-4.1")
     api_version = os.environ.get("AZURE_OPENAI_API_VERSION", "2025-03-01-preview")
