@@ -592,7 +592,7 @@ python-dotenv==1.2.1
     #   microsoft-agents-hosting-core
     #   pydantic-settings
     #   uvicorn
-python-multipart==0.0.20
+python-multipart==0.0.22
     # via mcp
 python-ulid==3.1.0
     # via redisvl
