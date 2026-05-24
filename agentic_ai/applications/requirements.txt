@@ -522,7 +522,7 @@ propcache==0.4.1
     #   yarl
 proto-plus==1.26.1
     # via google-api-core
-protobuf==5.29.5
+protobuf==5.29.6
     # via
     #   a2a-sdk
     #   durabletask
