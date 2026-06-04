@@ -31,6 +31,50 @@ from typing import Any, Dict, List
 warnings.filterwarnings("ignore", message=".*async_generator.*")
 warnings.filterwarnings("ignore", category=RuntimeWarning, message=".*cancel scope.*")
 
+# ---------------------------------------------------------------------------
+# Optional: inject `reasoning_effort` into every OpenAI chat.completions call.
+# Useful for evaluating with reasoning models (gpt-5+, o-series) at lower
+# effort levels to control latency/cost.
+#
+# Enable by setting:  REASONING_EFFORT=minimal | low | medium | high
+# Applies to both sync (AzureOpenAI) and async (AsyncAzureOpenAI) clients used
+# by the Azure AI Evaluation SDK and our custom graders.
+# ---------------------------------------------------------------------------
+_REASONING_EFFORT = os.environ.get("REASONING_EFFORT", "").strip().lower()
+if _REASONING_EFFORT in {"minimal", "low", "medium", "high"}:
+    try:
+        from openai.resources.chat.completions import AsyncCompletions, Completions  # type: ignore
+
+        def _wrap(orig):
+            def _wrapped(self, *args, **kwargs):
+                kwargs.setdefault("reasoning_effort", _REASONING_EFFORT)
+                return orig(self, *args, **kwargs)
+            return _wrapped
+
+        async def _wrap_async(orig):
+            async def _wrapped(self, *args, **kwargs):
+                kwargs.setdefault("reasoning_effort", _REASONING_EFFORT)
+                return await orig(self, *args, **kwargs)
+            return _wrapped
+
+        # Sync client
+        Completions.create = _wrap(Completions.create)  # type: ignore[assignment]
+
+        # Async client — wrap the coroutine factory.
+        _orig_async_create = AsyncCompletions.create
+
+        async def _async_create_with_effort(self, *args, **kwargs):
+            kwargs.setdefault("reasoning_effort", _REASONING_EFFORT)
+            return await _orig_async_create(self, *args, **kwargs)
+
+        AsyncCompletions.create = _async_create_with_effort  # type: ignore[assignment]
+        print(f"⚙ reasoning_effort={_REASONING_EFFORT} injected into OpenAI client")
+    except Exception as _e:
+        print(f"⚠ Failed to inject reasoning_effort: {_e}")
+elif _REASONING_EFFORT:
+    print(f"⚠ Ignoring REASONING_EFFORT={_REASONING_EFFORT!r} "
+          f"(expected one of: minimal, low, medium, high)")
+
 # Add parent directory to Python path so we can import agents module
 current_dir = Path(__file__).parent
 parent_dir = current_dir.parent
@@ -650,6 +694,38 @@ async def main():
         print(f"❌ Cannot connect to backend: {e}")
         print(f"   Make sure backend is running on {backend_url}")
         return
+
+    # 2b. If --agent was specified, switch the backend's active agent module
+    #     so the eval actually exercises the requested agent (not just labels it).
+    AGENT_ALIASES = {
+        "single": "agents.agent_framework.single_agent",
+        "reflection": "agents.agent_framework.multi_agent.reflection_agent",
+        "reflection_workflow": "agents.agent_framework.multi_agent.reflection_workflow_agent",
+        "handoff": "agents.agent_framework.multi_agent.handoff_multi_domain_agent",
+        "magentic": "agents.agent_framework.multi_agent.magentic_group",
+    }
+    if args.agent and args.agent in AGENT_ALIASES:
+        target_module = AGENT_ALIASES[args.agent]
+        try:
+            import httpx
+            async with httpx.AsyncClient() as client:
+                resp = await client.post(
+                    f"{backend_url}/agents/set",
+                    json={"module_path": target_module},
+                    timeout=30.0,
+                )
+                data = resp.json() if resp.status_code == 200 else {}
+                if data.get("status") == "success":
+                    print(f"✓ Backend agent switched to: {target_module}")
+                else:
+                    print(f"⚠ Could not switch backend agent (status {resp.status_code}): {data}")
+                    print(f"   Make sure '{target_module}' is listed in AGENT_MODULES in .env")
+        except Exception as e:
+            print(f"⚠ Failed to call /agents/set: {e}")
+            print(f"   Eval will run against whatever agent the backend currently has loaded.")
+    elif args.agent:
+        print(f"ℹ --agent={args.agent} is a label only (not a recognised alias). "
+              f"Backend agent unchanged. Known aliases: {list(AGENT_ALIASES.keys())}")
     
     # 3. Check MCP server (skip in CI — backend connects to deployed MCP internally)
     if not args.ci:
