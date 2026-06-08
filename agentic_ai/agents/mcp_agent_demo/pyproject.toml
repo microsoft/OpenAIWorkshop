@@ -5,7 +5,7 @@ description = "Demo: Expose agent-framework agent as MCP service, consume it fro
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "agent-framework==1.7.0",
+    "agent-framework==1.8.0",
     "azure-identity>=1.19.0",
     "fastmcp>=3.0.0",
     "langchain-core>=0.3.0",

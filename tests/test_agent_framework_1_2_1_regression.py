@@ -785,17 +785,17 @@ class TestMagenticGroupIntegration:
 
 
 class TestFrameworkVersion:
-    """Verify we're running against the expected 1.7.x version."""
+    """Verify we're running against the expected 1.8.x version."""
 
     def test_agent_framework_version(self):
-        """agent_framework is at 1.7.0."""
+        """agent_framework is at 1.8.0."""
         import agent_framework
-        assert agent_framework.__version__ == "1.7.0", \
-            f"Expected 1.7.0, got {agent_framework.__version__}"
+        assert agent_framework.__version__ == "1.8.0", \
+            f"Expected 1.8.0, got {agent_framework.__version__}"
 
     def test_agent_framework_core_installed(self):
-        """agent-framework-core is installed at 1.7.0 as a dependency."""
+        """agent-framework-core is installed at 1.8.0 as a dependency."""
         import importlib.metadata
         version = importlib.metadata.version('agent-framework-core')
-        assert version == "1.7.0", \
-            f"Expected 1.7.0, got {version}"
+        assert version == "1.8.0", \
+            f"Expected 1.8.0, got {version}"
