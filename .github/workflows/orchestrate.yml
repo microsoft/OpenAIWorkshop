@@ -95,6 +95,14 @@ permissions:
   pull-requests: write
   id-token: write
 
+# Prevent overlapping runs for the same PR/branch. Never cancel an in-flight
+# run on `main` (cancelling a production deploy mid-apply is dangerous);
+# cancel superseded runs on dev branches / PRs to save minutes and avoid
+# concurrent Terraform state access on the same environment.
+concurrency:
+  group: cicd-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 
 jobs:
   # ────────────────────────────────────────────────────────────────────
@@ -102,6 +110,9 @@ jobs:
   # ────────────────────────────────────────────────────────────────────
   pipeline-config:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
     outputs:
       environment: ${{ steps.config.outputs.environment }}
       full_deploy: ${{ steps.config.outputs.full_deploy }}
@@ -176,6 +187,50 @@ jobs:
           echo "──────────────────────────────────────"
 
   # ────────────────────────────────────────────────────────────────────
+  # Fast unit / regression tests (no Azure)
+  #   Deterministic, mock-based tests that validate the agent-framework
+  #   API surface used by every agent. A cheap, fast signal that catches
+  #   breakage (e.g. a dependency upgrade) long before the expensive
+  #   build/deploy path. Runs on PRs and pushes; skipped only for the
+  #   lightweight *-dev "create PR" pass (the resulting PR re-runs them).
+  # ────────────────────────────────────────────────────────────────────
+  unit-tests:
+    name: Unit & Regression Tests (no Azure)
+    needs: pipeline-config
+    if: needs.pipeline-config.outputs.create_pr_only != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Sync application environment
+        working-directory: agentic_ai/applications
+        run: uv sync
+
+      - name: Run agent-framework regression tests
+        working-directory: agentic_ai/applications
+        run: >-
+          uv run --with pytest python -m pytest
+          ../../tests/test_agent_framework_1_2_1_regression.py
+          -v --junitxml=../../junit-unit.xml
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-results
+          path: junit-unit.xml
+          if-no-files-found: ignore
+          retention-days: 14
+
+  # ────────────────────────────────────────────────────────────────────
   # Step 0.5: Create PR to int-agentic (*-dev push only)
   #   When a developer pushes to their *-dev branch, we just create
   #   (or update) a PR to int-agentic. The PR triggers the full pipeline
@@ -185,6 +240,10 @@ jobs:
     needs: pipeline-config
     if: needs.pipeline-config.outputs.create_pr_only == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Create or update PR to int-agentic
         env:
@@ -227,6 +286,10 @@ jobs:
     needs: pipeline-config
     if: needs.pipeline-config.outputs.full_deploy == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write
     environment: ${{ needs.pipeline-config.outputs.environment }}
     steps:
       - name: Azure OIDC Login
@@ -306,6 +369,10 @@ jobs:
       needs.pipeline-config.outputs.full_deploy == 'false'
       && needs.pipeline-config.outputs.create_pr_only == 'false'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write
     environment: ${{ needs.pipeline-config.outputs.environment }}
     outputs:
       backend_endpoint: ${{ steps.lookup.outputs.backend_endpoint }}
@@ -363,6 +430,9 @@ jobs:
       backend_endpoint: ${{ needs.deploy-infrastructure.outputs.backend_endpoint || needs.resolve-endpoints.outputs.backend_endpoint }}
       mcp_endpoint: ${{ needs.deploy-infrastructure.outputs.mcp_endpoint || needs.resolve-endpoints.outputs.mcp_endpoint }}
       mcp_internal_only: true
+      # Tests-only mode (PR → main) runs against a pre-existing shared env that
+      # is NOT built from this PR, so a degraded env must not block the PR.
+      advisory: ${{ needs.pipeline-config.outputs.full_deploy == 'false' }}
     secrets: inherit
 
   # ────────────────────────────────────────────────────────────────────
@@ -396,6 +466,10 @@ jobs:
       && github.event_name == 'pull_request'
       && github.base_ref == 'int-agentic'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Auto-merge PR into int-agentic
         env:

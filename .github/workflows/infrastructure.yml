@@ -41,6 +41,7 @@ jobs:
   tf:
     name: Terraform Deployment
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     environment: ${{ inputs.environment }}
     if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.iac-tool || 'tf') == 'tf' }}
     permissions:
@@ -166,6 +167,7 @@ jobs:
 
   bicep:
       runs-on: ubuntu-latest
+      timeout-minutes: 45
       environment: ${{ inputs.environment }}
       if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.iac-tool || 'tf') == 'bicep' }}
       permissions:
