@@ -15,6 +15,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import { API_CONFIG } from '../constants/config';
 
 const MAX_EVENTS = 80;
@@ -51,6 +52,7 @@ export default function EventFeed({ onAnomalyDetected, onWorkflowAutoStarted }) 
   const [connected, setConnected] = useState(false);
   const [anomalyCount, setAnomalyCount] = useState(0);
   const [autoStartedAlerts, setAutoStartedAlerts] = useState([]);
+  const [producerRunning, setProducerRunning] = useState(false);
   const scrollRef = useRef(null);
   const pausedRef = useRef(false);
   const eventsRef = useRef([]);
@@ -58,6 +60,40 @@ export default function EventFeed({ onAnomalyDetected, onWorkflowAutoStarted }) 
 
   // Keep ref in sync with state
   useEffect(() => { pausedRef.current = paused; }, [paused]);
+
+  // Poll server-side ambient producer status so the toggle reflects reality.
+  useEffect(() => {
+    let cancelled = false;
+    const fetchStatus = async () => {
+      try {
+        const res = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.PRODUCER_STATUS}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (!cancelled) setProducerRunning(!!data.running);
+        }
+      } catch {
+        /* backend not ready yet — ignore */
+      }
+    };
+    fetchStatus();
+    const t = setInterval(fetchStatus, 5000);
+    return () => { cancelled = true; clearInterval(t); };
+  }, []);
+
+  const toggleProducer = useCallback(async () => {
+    const endpoint = producerRunning
+      ? API_CONFIG.ENDPOINTS.PRODUCER_STOP
+      : API_CONFIG.ENDPOINTS.PRODUCER_START;
+    try {
+      const res = await fetch(`${API_CONFIG.BASE_URL}${endpoint}`, { method: 'POST' });
+      if (res.ok) {
+        const data = await res.json();
+        setProducerRunning(!!data.running);
+      }
+    } catch (err) {
+      console.error('Failed to toggle ambient feed:', err);
+    }
+  }, [producerRunning]);
 
   // Auto-scroll to bottom when new events arrive
   useEffect(() => {
@@ -185,7 +221,12 @@ export default function EventFeed({ onAnomalyDetected, onWorkflowAutoStarted }) 
           )}
         </Box>
         <Box>
-          <Tooltip title={paused ? 'Resume' : 'Pause'}>
+          <Tooltip title={producerRunning ? 'Stop ambient feed (server)' : 'Start ambient feed (server)'}>
+            <IconButton size="small" onClick={toggleProducer} color={producerRunning ? 'success' : 'default'}>
+              <PowerSettingsNewIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={paused ? 'Resume rendering' : 'Pause rendering'}>
             <IconButton size="small" onClick={() => setPaused(p => !p)}>
               {paused ? <PlayArrowIcon fontSize="small" /> : <PauseIcon fontSize="small" />}
             </IconButton>
@@ -250,7 +291,11 @@ export default function EventFeed({ onAnomalyDetected, onWorkflowAutoStarted }) 
       >
         {events.length === 0 && (
           <Typography variant="body2" color="text.secondary" sx={{ p: 2, textAlign: 'center', fontSize: 12 }}>
-            {connected ? 'Waiting for events…' : 'Connecting to event stream…'}
+            {!connected
+              ? 'Connecting to event stream…'
+              : producerRunning
+                ? 'Waiting for events…'
+                : 'Ambient feed is idle — press the ⏻ power button above to start it.'}
           </Typography>
         )}
         {events.map((evt, i) => (

@@ -22,6 +22,13 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+# Force UTF-8 console so emoji/unicode in logs never crash on Windows cp1252.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 # Load environment first so observability can read connection string
 load_dotenv()
 
@@ -50,7 +57,7 @@ from durabletask.client import OrchestrationState
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse, StreamingResponse, JSONResponse
 from pydantic import BaseModel
 
 from event_producer import EventProducer, CUSTOMER_PROFILES, TelemetryEvent
@@ -267,6 +274,75 @@ event_producer = EventProducer(
 _event_producer_task: asyncio.Task | None = None
 
 
+async def _auto_submit_alert_callback(alert_id, customer_id, alert_type, description, severity):
+    """Auto-submit a detected anomaly (Layer 1) to the durable workflow (Layer 2)."""
+    try:
+        client = get_dts_client()
+        alert = {
+            "alert_id": alert_id,
+            "customer_id": customer_id,
+            "alert_type": alert_type,
+            "description": description,
+            "timestamp": datetime.now().isoformat(),
+            "severity": severity,
+            "approval_timeout_hours": 0.05,
+            "auto_detected": True,
+        }
+        instance_id = client.schedule_new_orchestration(
+            ORCHESTRATION_NAME,
+            input=alert,
+            instance_id=f"fraud-{alert_id}-{int(time.time())}",
+        )
+        logger.info(f"🤖 Auto-submitted alert {alert_id} → orchestration {instance_id}")
+
+        started_event = TelemetryEvent(
+            id=f"WF-{alert_id}",
+            timestamp=alert["timestamp"],
+            customer_id=customer_id,
+            customer_name=CUSTOMER_PROFILES.get(customer_id, {}).get("name", f"Customer {customer_id}"),
+            event_type="workflow_auto_started",
+            details={
+                "instance_id": instance_id,
+                "alert_id": alert_id,
+                "alert_type": alert_type,
+                "description": description,
+                "severity": severity,
+            },
+            is_anomaly=True,
+            anomaly_rule=alert_type,
+            alert_triggered=True,
+        )
+        await event_producer._broadcast(started_event)
+    except Exception as e:
+        logger.error(f"Failed to auto-submit alert: {e}")
+
+
+def _start_event_producer() -> bool:
+    """Start the ambient event producer if not already running. Returns running state."""
+    global _event_producer_task
+    if _event_producer_task and not _event_producer_task.done():
+        return True
+    event_producer.set_alert_callback(_auto_submit_alert_callback)
+    _event_producer_task = asyncio.create_task(event_producer.run())
+    logger.info("▶ Event producer started (Layer 1 ambient detection)")
+    return True
+
+
+def _stop_event_producer() -> bool:
+    """Stop the ambient event producer if running. Returns running state."""
+    global _event_producer_task
+    event_producer.stop()
+    if _event_producer_task:
+        _event_producer_task.cancel()
+        _event_producer_task = None
+    logger.info("⏸ Event producer stopped")
+    return False
+
+
+def _event_producer_running() -> bool:
+    return bool(_event_producer_task and not _event_producer_task.done())
+
+
 # ============================================================================
 # Background Task: Poll DTS for Status Updates
 # ============================================================================
@@ -383,8 +459,96 @@ async def read_root():
 
 @app.get("/health")
 async def health():
-    """Health check endpoint."""
-    return {"status": "healthy", "timestamp": datetime.now().isoformat()}
+    """Deep readiness check.
+
+    Verifies the three external dependencies the demo needs so a presenter can
+    confirm everything is wired *before* starting a scenario:
+      - DTS      : can we reach the Durable Task Scheduler taskhub?
+      - MCP      : is the Contoso MCP server responding?
+      - OpenAI   : can DefaultAzureCredential acquire a token (Entra auth)?
+
+    Returns 200 when all checks pass, 503 otherwise. Each check is best-effort
+    and time-boxed so the endpoint stays fast and never hangs the UI.
+    """
+    checks: dict[str, dict] = {}
+
+    # 1) DTS connectivity — a metadata lookup on a non-existent instance returns
+    #    None when the gRPC channel + auth are healthy.
+    try:
+        client = get_dts_client()
+        await asyncio.wait_for(
+            asyncio.to_thread(client.get_orchestration_state, "health-check-probe"),
+            timeout=5.0,
+        )
+        checks["dts"] = {"ok": True, "endpoint": os.getenv("DTS_ENDPOINT", "http://localhost:8080")}
+    except Exception as e:
+        checks["dts"] = {"ok": False, "error": f"{type(e).__name__}: {e}"}
+
+    # 2) MCP server reachability. FastMCP serves only the /mcp endpoint (no
+    #    /health route), and that endpoint expects specific POST semantics, so
+    #    we verify reachability with a lightweight TCP connect to host:port.
+    mcp_uri = os.getenv("MCP_SERVER_URI", "http://localhost:8000/mcp")
+    try:
+        from urllib.parse import urlparse
+        parsed = urlparse(mcp_uri)
+        host = parsed.hostname or "localhost"
+        port = parsed.port or (443 if parsed.scheme == "https" else 80)
+        fut = asyncio.open_connection(host, port)
+        reader, writer = await asyncio.wait_for(fut, timeout=5.0)
+        writer.close()
+        try:
+            await writer.wait_closed()
+        except Exception:
+            pass
+        checks["mcp"] = {"ok": True, "host": host, "port": port}
+    except Exception as e:
+        checks["mcp"] = {"ok": False, "error": f"{type(e).__name__}: {e}", "uri": mcp_uri}
+
+    # 3) Azure OpenAI auth — can we get an Entra token for the cognitive
+    #    services scope? (The worker/backend authenticate via DefaultAzureCredential.)
+    try:
+        cred = DefaultAzureCredential()
+        token = await asyncio.wait_for(
+            asyncio.to_thread(cred.get_token, "https://cognitiveservices.azure.com/.default"),
+            timeout=5.0,
+        )
+        checks["openai_auth"] = {"ok": bool(token and token.token)}
+    except Exception as e:
+        checks["openai_auth"] = {"ok": False, "error": f"{type(e).__name__}: {e}"}
+
+    healthy = all(c.get("ok") for c in checks.values())
+    body = {
+        "status": "healthy" if healthy else "degraded",
+        "timestamp": datetime.now().isoformat(),
+        "checks": checks,
+    }
+    if not healthy:
+        return JSONResponse(status_code=503, content=body)
+    return body
+
+
+@app.get("/api/producer/status")
+async def producer_status():
+    """Return whether the ambient event producer is running."""
+    return {
+        "running": _event_producer_running(),
+        "interval_seconds": event_producer.interval,
+        "anomaly_probability": event_producer.anomaly_probability,
+    }
+
+
+@app.post("/api/producer/start")
+async def producer_start():
+    """Start the ambient event producer (Layer 1 detection feed)."""
+    running = _start_event_producer()
+    return {"running": running}
+
+
+@app.post("/api/producer/stop")
+async def producer_stop():
+    """Stop the ambient event producer."""
+    running = _stop_event_producer()
+    return {"running": running}
 
 
 @app.get("/api/alerts", response_model=list[AlertInfo])
@@ -592,56 +756,15 @@ async def startup():
     # with asyncio's ProactorEventLoop signal handling.
     logger.info("✓ DTS client will initialize on first request (lazy)")
     
-    # Start Layer 1 event producer (ambient detection)
-    if os.getenv("EVENT_PRODUCER_ENABLED", "true").lower() in ("1", "true", "yes"):
-        async def alert_callback(alert_id, customer_id, alert_type, description, severity):
-            """Auto-submit detected anomaly to the durable workflow."""
-            try:
-                client = get_dts_client()
-                alert = {
-                    "alert_id": alert_id,
-                    "customer_id": customer_id,
-                    "alert_type": alert_type,
-                    "description": description,
-                    "timestamp": datetime.now().isoformat(),
-                    "severity": severity,
-                    "approval_timeout_hours": 0.05,
-                    "auto_detected": True,
-                }
-                instance_id = client.schedule_new_orchestration(
-                    ORCHESTRATION_NAME,
-                    input=alert,
-                    instance_id=f"fraud-{alert_id}-{int(time.time())}",
-                )
-                logger.info(f"🤖 Auto-submitted alert {alert_id} → orchestration {instance_id}")
-
-                # Broadcast workflow_auto_started to SSE so the UI can connect
-                started_event = TelemetryEvent(
-                    id=f"WF-{alert_id}",
-                    timestamp=alert["timestamp"],
-                    customer_id=customer_id,
-                    customer_name=CUSTOMER_PROFILES.get(customer_id, {}).get("name", f"Customer {customer_id}"),
-                    event_type="workflow_auto_started",
-                    details={
-                        "instance_id": instance_id,
-                        "alert_id": alert_id,
-                        "alert_type": alert_type,
-                        "description": description,
-                        "severity": severity,
-                    },
-                    is_anomaly=True,
-                    anomaly_rule=alert_type,
-                    alert_triggered=True,
-                )
-                await event_producer._broadcast(started_event)
-            except Exception as e:
-                logger.error(f"Failed to auto-submit alert: {e}")
-        
-        event_producer.set_alert_callback(alert_callback)
-        _event_producer_task = asyncio.create_task(event_producer.run())
-        logger.info("✓ Event producer started (Layer 1 ambient detection)")
+    # Start Layer 1 event producer (ambient detection).
+    # Default OFF so a presenter controls when the demo's ambient feed begins
+    # (use the UI toggle or POST /api/producer/start). Set EVENT_PRODUCER_ENABLED=true
+    # to auto-start on boot.
+    if os.getenv("EVENT_PRODUCER_ENABLED", "false").lower() in ("1", "true", "yes"):
+        _start_event_producer()
+        logger.info("✓ Event producer auto-started (EVENT_PRODUCER_ENABLED=true)")
     else:
-        logger.info("⏸ Event producer disabled (set EVENT_PRODUCER_ENABLED=true to enable)")
+        logger.info("⏸ Event producer idle — start it from the UI or POST /api/producer/start")
     
     logger.info("Backend ready! 🚀")
 

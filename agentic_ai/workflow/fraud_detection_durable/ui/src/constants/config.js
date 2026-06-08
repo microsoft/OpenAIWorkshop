@@ -29,6 +29,9 @@ export const API_CONFIG = {
     WORKFLOW_START: '/api/workflow/start',
     WORKFLOW_DECISION: '/api/workflow/decision',
     EVENTS_STREAM: '/api/events/stream',
+    PRODUCER_STATUS: '/api/producer/status',
+    PRODUCER_START: '/api/producer/start',
+    PRODUCER_STOP: '/api/producer/stop',
   },
 };
 

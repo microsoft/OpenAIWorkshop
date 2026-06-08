@@ -549,18 +549,59 @@ This section covers how to run the reference implementation locally to see the p
 
 ### Prerequisites
 
-- **Docker** — for DTS emulator
 - **Python 3.12+** with **uv**
 - **Node.js 18+** — for React UI
 - **Azure OpenAI** — with a deployed chat model
 - **MCP Server** — Contoso tools on port 8000
+- **A Durable Task Scheduler** — either the local Docker emulator **or** an Azure DTS endpoint (see modes below)
+- **Docker** — only if you use the local DTS emulator (Mode A)
 
-### Service Startup Order
+### Choose your DTS mode
+
+The code picks the mode automatically from the `DTS_ENDPOINT` prefix in `.env`:
+
+| | **Mode A — Local emulator** | **Mode B — Azure DTS** |
+|---|---|---|
+| `DTS_ENDPOINT` | `http://localhost:8080` | `https://<scheduler>.<region>.durabletask.io` |
+| Channel | insecure | secure (TLS) |
+| Auth | none | `DefaultAzureCredential` (`az login`) |
+| Needs Docker | ✅ yes | ❌ no |
+| Setup | `docker run … dts-emulator` | [provision_dts.ps1](provision_dts.ps1) |
+
+> ⚠️ Make sure `DTS_ENDPOINT` in your `.env` matches the mode you actually start.
+> A common mistake is starting the Docker emulator while `.env` points at Azure DTS
+> (or vice-versa).
+
+### Quick start (Windows)
+
+The fastest path on Windows — handles UTF-8, startup order, and health gating:
+
+```powershell
+cd agentic_ai/workflow/fraud_detection_durable
+uv sync
+# Mode B (Azure DTS, default in .env):
+.\start.ps1
+# Mode A (also start the local Docker emulator):
+.\start.ps1 -StartEmulator
+
+# When done:
+.\stop.ps1            # add -StopEmulator if you used Mode A
+```
+
+`start.ps1` launches MCP → worker → backend → UI in order, each in its own
+window with logs under `.\logs\`, then prints the `/health` readiness summary.
+
+> The ambient event feed starts **OFF** by default so you control when Scenario 1
+> begins — press the ⏻ power button in the **Live Feed** panel, or
+> `POST http://localhost:8001/api/producer/start`. Set `EVENT_PRODUCER_ENABLED=true`
+> in `.env` to auto-start it.
+
+### Manual startup (cross-platform)
 
 ```mermaid
 %%{init: {'theme': 'base'}}%%
 flowchart LR
-    S1["1️⃣ DTS Emulator<br/>Port 8080"]
+    S1["1️⃣ DTS<br/>emulator :8080 or Azure"]
     S2["2️⃣ MCP Server<br/>Port 8000"]
     S3["3️⃣ Worker<br/>Pulls from DTS"]
     S4["4️⃣ Backend<br/>Port 8001"]
@@ -575,7 +616,7 @@ flowchart LR
     style S5 fill:#e8f4fd,stroke:#4A90D9
 ```
 
-#### 1. Start DTS Emulator
+#### 1. Start the DTS (Mode A only)
 
 ```bash
 docker run -d --name dts-emulator \
@@ -585,7 +626,8 @@ docker run -d --name dts-emulator \
 
 Dashboard: http://localhost:8082
 
-> **Production:** Replace with Azure DTS — same SDK, just change `DTS_ENDPOINT`. See [provision_dts.ps1](provision_dts.ps1).
+> **Mode B (Azure DTS):** skip this step — just `az login` and set `DTS_ENDPOINT`
+> to your scheduler. See [provision_dts.ps1](provision_dts.ps1).
 
 #### 2. Start MCP Server
 
@@ -612,6 +654,19 @@ uv run python backend.py
 cd ui && npm install && npm run dev
 # Open http://localhost:3000
 ```
+
+> **Windows note:** the services force UTF-8 stdout/stderr so emoji in logs
+> render correctly. If you launch them yourself with a custom wrapper, set
+> `PYTHONUTF8=1` to be safe.
+
+#### Verify readiness
+
+```bash
+curl http://localhost:8001/health
+```
+
+Returns `status: healthy` only when DTS, MCP, and the Azure OpenAI credential
+all pass; otherwise `503` with a per-dependency breakdown.
 
 ---
 

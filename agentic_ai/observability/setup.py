@@ -17,6 +17,7 @@ Usage:
 """
 
 import os
+import sys
 import logging
 from typing import Optional
 
@@ -24,6 +25,43 @@ logger = logging.getLogger(__name__)
 
 # Track initialization state
 _initialized = False
+
+
+def _ensure_utf8_console() -> None:
+    """Force stdout/stderr to UTF-8 so emoji/unicode never crash a print().
+
+    On Windows the default console encoding is cp1252, which raises
+    UnicodeEncodeError when printing emoji (✅, ⚠️, 🚀, etc.). Because this
+    module is imported at process startup (before any agent output), calling
+    this here makes every downstream print()/log safe. Uses errors="replace"
+    as a final guard so even an un-encodable glyph degrades gracefully instead
+    of crashing the service.
+    """
+    for stream_name in ("stdout", "stderr"):
+        stream = getattr(sys, stream_name, None)
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is None:
+            continue
+        try:
+            reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            # Never let console hardening break startup.
+            pass
+
+
+# Harden the console as soon as this module is imported.
+_ensure_utf8_console()
+
+
+def _safe_print(message: str) -> None:
+    """print() that can never raise on un-encodable characters."""
+    try:
+        print(message)
+    except Exception:
+        try:
+            print(message.encode("ascii", "replace").decode("ascii"))
+        except Exception:
+            pass
 
 
 def setup_observability(
@@ -89,19 +127,19 @@ def setup_observability(
         pydantic.BaseModel.model_dump_json = _safe_model_dump_json  # type: ignore[assignment]
         
         _initialized = True
-        print(f"✅ Application Insights observability enabled (service: {service_name})")
+        _safe_print(f"✅ Application Insights observability enabled (service: {service_name})")
         logger.info(f"✅ Application Insights observability enabled (service: {service_name})")
         return True
         
     except ImportError as e:
-        print(f"❌ Observability dependencies not installed: {e}")
+        _safe_print(f"❌ Observability dependencies not installed: {e}")
         logger.warning(f"Observability dependencies not installed: {e}")
         return False
     except BaseException as e:
         # Catch ALL errors including KeyboardInterrupt from import deadlocks
         # in azure-ai-projects telemetry instrumentor (openai SDK version conflicts).
         # Observability is never worth crashing the service.
-        print(f"⚠️ Observability setup failed (non-fatal): {type(e).__name__}: {e}")
+        _safe_print(f"⚠️ Observability setup failed (non-fatal): {type(e).__name__}: {e}")
         logger.warning(f"Observability setup failed (non-fatal): {type(e).__name__}: {e}")
         return False
 

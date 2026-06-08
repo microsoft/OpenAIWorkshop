@@ -29,6 +29,13 @@ from typing import Any
 
 from dotenv import load_dotenv
 
+# Force UTF-8 console so emoji/unicode in logs never crash on Windows cp1252.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 # Load environment first so observability can read connection string
 load_dotenv()
 
