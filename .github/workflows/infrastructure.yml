@@ -124,7 +124,13 @@ jobs:
 
             terraform plan -out tfplan "${TF_VARS[@]}"
 
-            if terraform apply -auto-approve tfplan 2>&1 | tee /tmp/tf_apply.log; then
+            # Capture Terraform's exit code via PIPESTATUS — the pipe through
+            # `tee` otherwise reports tee's (success) status and masks a failed
+            # apply, which can leave the environment partially destroyed while
+            # the job reports success.
+            terraform apply -auto-approve tfplan 2>&1 | tee /tmp/tf_apply.log
+            apply_rc=${PIPESTATUS[0]}
+            if [ "$apply_rc" -eq 0 ]; then
               echo "✅ Terraform apply succeeded"
               break
             fi
