@@ -37,6 +37,7 @@ from agent_framework import (
     ChatOptions,
     CheckpointStorage,
     MCPStreamableHTTPTool,
+    Message,
     WorkflowCheckpoint,
 )
 from agent_framework.openai import OpenAIChatClient
@@ -408,7 +409,17 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
         # responding to the pending HandoffAgentUserRequest with the new user
         # message. Otherwise start a fresh run.
         if latest_checkpoint and self._pending_request_id:
-            user_msgs = HandoffAgentUserRequest.create_response(prompt)
+            # NOTE: HandoffAgentUserRequest.create_response() in
+            # agent-framework-orchestrations (1.0.0rc2) builds Message(text=...),
+            # which is incompatible with agent-framework-core's
+            # Message(role, contents=...) API and raises TypeError, 500-ing every
+            # follow-up turn of a handoff conversation. Build the response
+            # messages directly with the supported constructor, falling back to
+            # the SDK helper only if a future version fixes it.
+            try:
+                user_msgs = HandoffAgentUserRequest.create_response(prompt)
+            except TypeError:
+                user_msgs = [Message(role="user", contents=[prompt])]
             stream = self._workflow.run(
                 responses={self._pending_request_id: user_msgs},
                 checkpoint_id=latest_checkpoint,
