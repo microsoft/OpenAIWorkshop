@@ -17,6 +17,17 @@ resource "azurerm_subnet" "container_apps" {
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet[0].name
   address_prefixes     = [var.container_apps_subnet_prefix]
+
+  # Container App Environments require the infrastructure subnet to be
+  # delegated to Microsoft.App/environments, otherwise creation fails with
+  # ManagedEnvironmentSubnetDelegationError (400).
+  delegation {
+    name = "Microsoft.App.environments"
+    service_delegation {
+      name    = "Microsoft.App/environments"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
+    }
+  }
 }
 
 # Subnet for Private Endpoints

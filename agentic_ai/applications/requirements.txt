@@ -4,7 +4,7 @@ a2a-sdk==1.1.0
     # via agent-framework-a2a
 ag-ui-protocol==0.1.19
     # via agent-framework-ag-ui
-agent-framework==1.7.0
+agent-framework==1.8.0
     # via applications (pyproject.toml)
 agent-framework-a2a==1.0.0b260528
     # via agent-framework-core
@@ -26,7 +26,7 @@ agent-framework-claude==1.0.0b260521
     # via agent-framework-core
 agent-framework-copilotstudio==1.0.0b260521
     # via agent-framework-core
-agent-framework-core==1.7.0
+agent-framework-core==1.8.0
     # via
     #   agent-framework
     #   agent-framework-a2a
@@ -61,7 +61,7 @@ agent-framework-durabletask==1.0.0b260521
     # via
     #   agent-framework-azurefunctions
     #   agent-framework-core
-agent-framework-foundry==1.7.0
+agent-framework-foundry==1.8.0
     # via agent-framework-core
 agent-framework-foundry-local==1.0.0b260521
     # via agent-framework-core
@@ -75,7 +75,7 @@ agent-framework-mem0==1.0.0b260521
     # via agent-framework-core
 agent-framework-ollama==1.0.0b260521
     # via agent-framework-core
-agent-framework-openai==1.7.0
+agent-framework-openai==1.8.0
     # via
     #   agent-framework-core
     #   agent-framework-foundry

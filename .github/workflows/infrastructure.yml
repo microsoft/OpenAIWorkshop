@@ -41,6 +41,7 @@ jobs:
   tf:
     name: Terraform Deployment
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     environment: ${{ inputs.environment }}
     if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.iac-tool || 'tf') == 'tf' }}
     permissions:
@@ -82,8 +83,22 @@ jobs:
           export ARM_TENANT_ID="${{ vars.AZURE_TENANT_ID }}"
           export ARM_SUBSCRIPTION_ID="${{ vars.AZURE_SUBSCRIPTION_ID }}"
 
-          # Common -var flags used by plan and import
+          # Select the per-environment Terraform variable file. This is the
+          # single source of truth for networking, model deployments, and
+          # other env config (e.g. enable_networking / enable_private_endpoint).
+          #   production → prod.tfvars ; everything else → dev.tfvars
+          case "${{ inputs.environment }}" in
+            production|prod) VAR_FILE="prod.tfvars" ;;
+            *)               VAR_FILE="dev.tfvars" ;;
+          esac
+          echo "Using -var-file=${VAR_FILE} for environment '${{ inputs.environment }}'"
+
+          # -var-file is listed FIRST so the explicit -var flags below (env,
+          # subscription, location, ACR, images, iteration) override the
+          # matching keys from the tfvars file. Terraform applies -var/-var-file
+          # in command-line order, with later values winning.
           TF_VARS=(
+            -var-file=${VAR_FILE}
             -var project_name=${{ github.event.repository.name }}
             -var environment=${{ inputs.environment }}
             -var tenant_id=${{ vars.AZURE_TENANT_ID }}
@@ -109,7 +124,13 @@ jobs:
 
             terraform plan -out tfplan "${TF_VARS[@]}"
 
-            if terraform apply -auto-approve tfplan 2>&1 | tee /tmp/tf_apply.log; then
+            # Capture Terraform's exit code via PIPESTATUS — the pipe through
+            # `tee` otherwise reports tee's (success) status and masks a failed
+            # apply, which can leave the environment partially destroyed while
+            # the job reports success.
+            terraform apply -auto-approve tfplan 2>&1 | tee /tmp/tf_apply.log
+            apply_rc=${PIPESTATUS[0]}
+            if [ "$apply_rc" -eq 0 ]; then
               echo "✅ Terraform apply succeeded"
               break
             fi
@@ -166,6 +187,7 @@ jobs:
 
   bicep:
       runs-on: ubuntu-latest
+      timeout-minutes: 45
       environment: ${{ inputs.environment }}
       if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.iac-tool || 'tf') == 'bicep' }}
       permissions:

@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     # Agent Framework (includes azure sub-package)
-    "agent-framework==1.7.0",
+    "agent-framework==1.8.0",
     
     # Durable Task Agent Framework integration
     "agent-framework-durabletask>=1.0.0b260521",
