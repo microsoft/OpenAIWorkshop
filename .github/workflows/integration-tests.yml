@@ -20,6 +20,14 @@ on:
         required: false
         default: true
         description: 'Whether MCP is internal-only (skip MCP tests)'
+      advisory:
+        type: boolean
+        required: false
+        default: false
+        description: >-
+          When true, a degraded/unreachable shared environment is reported but
+          does not fail the job (used for tests-only PRs to main, where the env
+          is pre-deployed and not built from the PR).
 
   workflow_dispatch:
     inputs:
@@ -35,45 +43,129 @@ on:
         description: 'MCP service endpoint URL (optional if internal)'
         required: false
 
+# Least-privilege: this workflow only reads the repo.
+permissions:
+  contents: read
+
 jobs:
   integration-tests:
     name: Run Integration Tests
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       contents: read
-    # No environment needed - uses repo-level variables
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: tests/requirements.txt
 
       - name: Install test dependencies
-        run: |
-          pip install -r tests/requirements.txt
+        run: pip install -r tests/requirements.txt
 
-      - name: Wait for Container Apps to warm up
+      # ------------------------------------------------------------------
+      # Liveness gate: poll the backend until it responds, instead of a
+      # blind `sleep 30`. Distinguishes "environment unreachable/degraded"
+      # from "tests failed", so a broken *shared* env doesn't masquerade as
+      # a code regression.
+      # ------------------------------------------------------------------
+      - name: Wait for backend to become reachable
+        id: liveness
         run: |
-          echo "Waiting 30 seconds for Container Apps to be ready..."
-          sleep 30
+          BE="${{ inputs.backend_endpoint }}"
+          if [ -z "$BE" ]; then
+            echo "reachable=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::No backend endpoint provided"
+            exit 0
+          fi
+
+          echo "Polling $BE for readiness (up to ~90s)..."
+          reachable=false
+          for i in $(seq 1 18); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "$BE/" || echo 000)
+            # Any HTTP response below 500 means the app is up and serving.
+            if [ "$code" != "000" ] && [ "$code" -lt 500 ]; then
+              echo "Backend reachable (HTTP $code) after $((i*5))s"
+              reachable=true
+              break
+            fi
+            echo "  attempt $i: HTTP $code — retrying in 5s"
+            sleep 5
+          done
+          echo "reachable=$reachable" >> "$GITHUB_OUTPUT"
+
+      - name: Skip note (environment unreachable)
+        if: steps.liveness.outputs.reachable != 'true'
+        run: |
+          {
+            echo "## Integration Tests — SKIPPED (environment unreachable)"
+            echo ""
+            echo "The target backend did not return a healthy response, so the"
+            echo "integration suite was not run. This usually means the shared"
+            echo "environment is degraded (e.g. backend down, model key invalid),"
+            echo "not that this change is broken."
+            echo ""
+            echo "- Backend: \`${{ inputs.backend_endpoint }}\`"
+            echo "- Environment: \`${{ inputs.environment }}\`"
+            echo "- Advisory mode: \`${{ inputs.advisory }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ inputs.advisory }}" = "true" ]; then
+            echo "Advisory mode: not failing the pipeline for a degraded shared env."
+            exit 0
+          fi
+          echo "::error::Backend unreachable and not in advisory mode."
+          exit 1
 
       - name: Run integration tests
+        if: steps.liveness.outputs.reachable == 'true'
+        id: pytest
+        # In advisory mode (tests-only PRs to main) the shared env is not built
+        # from this PR, so we report results without blocking the PR.
+        continue-on-error: ${{ inputs.advisory }}
         run: |
           cd tests
-          pytest -v -m "integration" --tb=short
+          pytest -v -m "integration" --tb=short \
+            --junitxml="junit-integration.xml"
         env:
           BACKEND_API_ENDPOINT: ${{ inputs.backend_endpoint }}
           MCP_ENDPOINT: ${{ inputs.mcp_endpoint }}
           MCP_INTERNAL_ONLY: ${{ inputs.mcp_internal_only && 'true' || 'false' }}
 
-      - name: Test Summary
+      - name: Upload test results
+        if: always() && steps.liveness.outputs.reachable == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-results-${{ inputs.environment }}
+          path: tests/junit-integration.xml
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Test summary
         if: always()
         run: |
-          echo "## Integration Test Results" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- Backend Endpoint: ${{ inputs.backend_endpoint }}" >> $GITHUB_STEP_SUMMARY
-          echo "- MCP Endpoint: ${{ inputs.mcp_endpoint || 'Internal (skipped)' }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Environment: ${{ inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+          {
+            echo "## Integration Test Results"
+            echo ""
+            echo "- Backend Endpoint: ${{ inputs.backend_endpoint }}"
+            echo "- MCP Endpoint: ${{ inputs.mcp_endpoint || 'Internal (skipped)' }}"
+            echo "- Environment: ${{ inputs.environment }}"
+            echo "- Reachable: ${{ steps.liveness.outputs.reachable }}"
+            echo "- Outcome: ${{ steps.pytest.outcome }}"
+            echo "- Advisory: ${{ inputs.advisory }}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # In advisory mode we surface failures as a warning but keep the job green
+      # so a degraded shared env can't block unrelated PRs to main.
+      - name: Advisory failure note
+        if: >-
+          steps.liveness.outputs.reachable == 'true'
+          && steps.pytest.outcome == 'failure'
+          && inputs.advisory
+        run: |
+          echo "::warning::Integration tests failed against the shared environment, but this is advisory (tests-only PR to main). Not blocking."
+

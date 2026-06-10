@@ -26,10 +26,17 @@ on:
         default: tf
         required: true
 
+# Never run two destroys against the same environment at once, and don't
+# cancel a destroy in progress (interrupting Terraform mid-destroy is unsafe).
+concurrency:
+  group: destroy-${{ inputs.environment }}
+  cancel-in-progress: false
+
 jobs:
   terraform_destroy:
     name: Terraform Destroy
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     environment: ${{ inputs.environment || 'integration' }}
     permissions:
       id-token: write

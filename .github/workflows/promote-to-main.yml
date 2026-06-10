@@ -36,9 +36,15 @@ permissions:
   contents: read
   pull-requests: write
 
+# Only the most recent promotion attempt matters; supersede older ones.
+concurrency:
+  group: promote-to-main
+  cancel-in-progress: true
+
 jobs:
   promote:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v6

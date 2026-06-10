@@ -35,6 +35,7 @@ jobs:
   update-containers:
     name: Update Container Apps
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     environment: ${{ inputs.environment }}
     permissions:
       id-token: write
