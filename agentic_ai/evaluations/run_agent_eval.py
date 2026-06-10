@@ -275,12 +275,21 @@ async def run_foundry_evaluation(traces: List[AgentTrace], data_file: Path, agen
         )
         
         with project_client:
-            # Get OpenAI client from the project
-            # Explicitly set api-version to ensure azure_ai_evaluator support
-            # (the SDK default should be 2025-11-15-preview but we force it to be safe)
-            openai_client = project_client.get_openai_client(
-                default_query={"api-version": "2025-11-15-preview"}
-            )
+            # Get the OpenAI-compatible client from the project.
+            #
+            # azure-ai-projects >= 2.1.0 routes get_openai_client() at the new
+            # unified "/v1" path, which REJECTS the legacy "api-version" query
+            # parameter ("api-version query parameter is not allowed when using
+            # /v1 path"). Older pre-release SDKs needed api-version forced. So we
+            # try the modern (no api-version) call first and only fall back to
+            # forcing api-version if the installed SDK requires it.
+            try:
+                openai_client = project_client.get_openai_client()
+            except TypeError:
+                # Very old SDKs require an explicit api_version kwarg.
+                openai_client = project_client.get_openai_client(
+                    api_version="2025-11-15-preview"
+                )
             
             # Diagnostic logging for CI debugging
             import azure.ai.projects
