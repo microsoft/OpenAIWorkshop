@@ -48,12 +48,33 @@ class ToolCallTrackingMixin:
         """
         return self._tool_calls.copy()
     
-    def track_function_call_start(self, name: str) -> None:
-        """Start tracking a new function call. Call when function_call content is received."""
-        # Finalize any previous function call first
+    def track_function_call_start(self, name: str, call_id: str | None = None) -> bool:
+        """Begin tracking a function call, returning True only for a genuinely new call.
+
+        Streaming SDKs chunk function-call deltas differently. Some emit the tool
+        ``name`` only on the first chunk; agent-framework >= 1.7 repeats both the
+        ``name`` and a stable ``call_id`` on *every* delta chunk for the same
+        call. Without de-duplicating on ``call_id`` we would treat each argument
+        fragment (``{"``, ``customer``, ``_id`` ...) as a separate, malformed
+        tool call, which destroys tool-call-accuracy and task-adherence scoring.
+
+        When ``call_id`` matches the call already in progress, this is a
+        continuation: we keep accumulating and return False. Otherwise we
+        finalize the previous call, start a new one, and return True (useful for
+        one-shot side effects such as broadcasting a ``tool_called`` event).
+        """
+        if (
+            call_id is not None
+            and self._current_function_call is not None
+            and self._current_function_call.get("call_id") == call_id
+        ):
+            # Same streaming call continuing — do not finalize or restart.
+            return False
+        # Finalize any previous function call first, then start the new one.
         self._finalize_current_function_call()
-        self._current_function_call = {"name": name}
+        self._current_function_call = {"name": name, "call_id": call_id}
         self._current_function_args = []
+        return True
     
     def track_function_call_arguments(self, arguments: str) -> None:
         """Accumulate streaming function call arguments."""
@@ -79,12 +100,41 @@ class ToolCallTrackingMixin:
         
         self._tool_calls.append({
             "name": self._current_function_call["name"],
-            "args": args
+            "args": args,
+            "call_id": self._current_function_call.get("call_id"),
+            "result": None,
         })
         
         # Reset accumulators
         self._current_function_call = None
         self._current_function_args = []
+    
+    def track_function_result(self, call_id: str | None, result: Any) -> None:
+        """Attach a tool result to its matching captured call.
+
+        Tool results are needed so that downstream evaluators (e.g.
+        task-adherence) can verify that the agent's claims are grounded in
+        actual tool output rather than fabricated. Finalizes the in-progress
+        call first, then matches the result to the most recent call sharing the
+        same ``call_id``.
+        """
+        # The result signals the in-progress call has completed.
+        self._finalize_current_function_call()
+        if result is None:
+            return
+        result_str = str(result)
+        if len(result_str) > 2000:
+            result_str = result_str[:2000] + "…(truncated)"
+        if call_id:
+            for tc in reversed(self._tool_calls):
+                if tc.get("call_id") == call_id:
+                    tc["result"] = result_str
+                    return
+        # No call_id match — attach to the most recent call missing a result.
+        for tc in reversed(self._tool_calls):
+            if tc.get("result") is None:
+                tc["result"] = result_str
+                return
     
     def finalize_tool_tracking(self) -> None:
         """Finalize any pending function calls. Call at end of streaming."""
@@ -94,7 +144,9 @@ class ToolCallTrackingMixin:
         """Directly add a tool call (for non-streaming scenarios)."""
         self._tool_calls.append({
             "name": name,
-            "args": args or {}
+            "args": args or {},
+            "call_id": None,
+            "result": None,
         })
 
 

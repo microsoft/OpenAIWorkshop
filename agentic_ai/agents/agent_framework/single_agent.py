@@ -174,13 +174,16 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
             if hasattr(chunk, 'contents') and chunk.contents:
                 for content in chunk.contents:
                     if content.type == "function_call":
-                        # Function call chunks come in pieces:
-                        # 1. First chunk has name, empty arguments
-                        # 2. Subsequent chunks have no name, partial arguments
+                        # Function call chunks come in pieces. Older SDKs sent
+                        # the name only on the first chunk; agent-framework >= 1.7
+                        # repeats name + a stable call_id on every chunk, so we
+                        # de-duplicate on call_id to avoid fragmenting one call
+                        # into many malformed ones.
                         if content.name:
-                            # New function call starting - finalize previous if any
-                            self.track_function_call_start(content.name)
-                        
+                            self.track_function_call_start(
+                                content.name, getattr(content, "call_id", None)
+                            )
+
                         # Accumulate arguments
                         args_chunk = getattr(content, 'arguments', '')
                         if args_chunk:
@@ -188,7 +191,10 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
                     
                     elif content.type == "function_result":
                         # Function result means the call is complete
-                        self.finalize_tool_tracking()
+                        self.track_function_result(
+                            getattr(content, "call_id", None),
+                            getattr(content, "result", None),
+                        )
             
             # Extract text
             if hasattr(chunk, 'text') and chunk.text:
@@ -238,11 +244,14 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
                         # Handle function calls - accumulate arguments across chunks
                         if content.type == "function_call":
                             if content.name:
-                                # New function call - finalize previous and start new
-                                self.track_function_call_start(content.name)
-                                
-                                # Broadcast that a tool is being called
-                                if self._ws_manager:
+                                # Only the first chunk of a given call_id starts a
+                                # new call; later chunks just accumulate arguments.
+                                is_new_call = self.track_function_call_start(
+                                    content.name, getattr(content, "call_id", None)
+                                )
+
+                                # Broadcast that a tool is being called (once per call)
+                                if is_new_call and self._ws_manager:
                                     await self._ws_manager.broadcast(
                                         self.session_id,
                                         {
@@ -259,8 +268,11 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
                                 self.track_function_call_arguments(args_chunk)
                         
                         elif content.type == "function_result":
-                            # Function completed - finalize
-                            self.finalize_tool_tracking()
+                            # Function completed - finalize and capture result
+                            self.track_function_result(
+                                getattr(content, "call_id", None),
+                                getattr(content, "result", None),
+                            )
                 
                 # Extract text from chunk
                 if hasattr(chunk, 'text') and chunk.text:

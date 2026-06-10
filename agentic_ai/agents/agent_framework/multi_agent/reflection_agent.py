@@ -181,14 +181,19 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
                 for content in chunk.contents:
                     if content.type == "function_call":
                         if content.name:
-                            self.track_function_call_start(content.name)
+                            self.track_function_call_start(
+                                content.name, getattr(content, "call_id", None)
+                            )
                         
                         args_chunk = getattr(content, 'arguments', '')
                         if args_chunk:
                             self.track_function_call_arguments(args_chunk)
                     
                     elif content.type == "function_result":
-                        self.finalize_tool_tracking()
+                        self.track_function_result(
+                            getattr(content, "call_id", None),
+                            getattr(content, "result", None),
+                        )
             
             # Collect text
             if hasattr(chunk, 'text') and chunk.text:
@@ -223,20 +228,26 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
                 for content in chunk.contents:
                     if content.type == "function_call":
                         if content.name:
-                            self.track_function_call_start(content.name)
+                            is_new_call = self.track_function_call_start(
+                                content.name, getattr(content, "call_id", None)
+                            )
                             
-                            await self._broadcast_raw({
-                                "type": "tool_called",
-                                "agent_id": agent_id,
-                                "tool_name": content.name,
-                            })
+                            if is_new_call:
+                                await self._broadcast_raw({
+                                    "type": "tool_called",
+                                    "agent_id": agent_id,
+                                    "tool_name": content.name,
+                                })
                         
                         args_chunk = getattr(content, 'arguments', '')
                         if args_chunk:
                             self.track_function_call_arguments(args_chunk)
                     
                     elif content.type == "function_result":
-                        self.finalize_tool_tracking()
+                        self.track_function_result(
+                            getattr(content, "call_id", None),
+                            getattr(content, "result", None),
+                        )
             
             # Stream text
             if hasattr(chunk, 'text') and chunk.text:

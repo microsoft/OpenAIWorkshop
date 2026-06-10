@@ -957,17 +957,30 @@ You must:
                         except json.JSONDecodeError:
                             tool_args = {}
                     
+                    tool_call_id = tc.get("call_id") or tc.get("id") or f"call_{tool_name}"
+                    
                     response_messages.append({
                         "role": "assistant",
                         "content": None,
                         "tool_calls": [{
-                            "id": tc.get("id", f"call_{tool_name}"),
+                            "id": tool_call_id,
                             "type": "function",
                             "function": {
                                 "name": tool_name,
                                 "arguments": json.dumps(tool_args) if isinstance(tool_args, dict) else str(tool_args),
                             }
                         }]
+                    })
+                    
+                    # Include the tool RESULT so the judge can verify that the
+                    # agent's claims are grounded in actual tool output. Without
+                    # this, grounded responses look fabricated and task-adherence
+                    # collapses to ~0.
+                    tool_result = tc.get("result")
+                    response_messages.append({
+                        "role": "tool",
+                        "tool_call_id": tool_call_id,
+                        "content": str(tool_result) if tool_result else "(no tool result captured)",
                     })
             
             # Add final response
@@ -980,18 +993,32 @@ You must:
                 task=task_description,
             )
             
-            # TaskAdherenceEvaluator returns a numeric score
-            # Keep 1-5 scale for portal parity (0 for failures)
+            # Parse the score robustly across SDK versions.
+            #
+            # azure-ai-evaluation 1.14.0 changed TaskAdherenceEvaluator into a
+            # binary "flagged" grader: it returns ``task_adherence`` in {0.0, 1.0}
+            # (1.0 == adhered / not flagged) plus an authoritative
+            # ``task_adherence_result`` of "pass"/"fail". Older/other versions
+            # return a genuine 1-5 score. Treating the binary 1.0 as a 1-5 score
+            # and thresholding at >= 3.0 mis-records every PASS as a fail and
+            # displays it as "1.0/5". Normalize both shapes here.
             raw_score = result.get("task_adherence", 0)
-            
-            # Handle boolean or numeric
+            result_label = result.get("task_adherence_result")
+
             if isinstance(raw_score, bool):
-                score = 5.0 if raw_score else 0.0
+                score = 5.0 if raw_score else 1.0
+                passed = bool(raw_score)
+            elif result_label in ("pass", "fail"):
+                # Binary "flagged" grader (SDK >= 1.14.0): trust the result label.
+                passed = result_label == "pass"
+                numeric = _safe_float(raw_score)
+                # If the SDK still reports a real 1-5 score (> 1), preserve it;
+                # otherwise map the binary verdict to the 1-5 display scale.
+                score = numeric if numeric > 1.0 else (5.0 if passed else 1.0)
             else:
+                # Legacy 1-5 numeric score.
                 score = _safe_float(raw_score)
-            
-            # Threshold: score >= 3 is passing
-            passed = score >= 3.0
+                passed = score >= 3.0
             
             return EvaluationResult(
                 metric_name="task_adherence",
@@ -1000,6 +1027,7 @@ You must:
                 passed=passed,
                 details={
                     "raw_result": result,
+                    "task_adherence_result": result_label,
                     "tool_calls_count": len(tool_calls) if tool_calls else 0,
                     "task_description_length": len(task_description),
                 },

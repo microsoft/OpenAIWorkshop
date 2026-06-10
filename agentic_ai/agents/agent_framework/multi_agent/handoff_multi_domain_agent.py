@@ -518,8 +518,10 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
                     # Real domain tool — track for the UI. Synthetic handoff
                     # tools are filtered out because the framework already
                     # surfaces those as ``handoff_sent`` events.
-                    self.track_function_call_start(name)
-                    if self._ws_manager:
+                    is_new_call = self.track_function_call_start(
+                        name, getattr(content, "call_id", None)
+                    )
+                    if is_new_call and self._ws_manager:
                         await self._ws_manager.broadcast(
                             self.session_id,
                             {
@@ -533,7 +535,10 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
                 if args_chunk:
                     self.track_function_call_arguments(args_chunk)
             elif ctype == "function_result":
-                self.finalize_tool_tracking()
+                self.track_function_result(
+                    getattr(content, "call_id", None),
+                    getattr(content, "result", None),
+                )
 
         text = getattr(update, "text", None)
         if text:
