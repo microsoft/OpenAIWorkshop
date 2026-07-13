@@ -275,7 +275,7 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
 
     def _is_approved(self, review: str) -> bool:
         """Check if the reviewer approved the response."""
-        return "APPROVE" in review.upper()
+        return review.strip().upper() == "APPROVE"
 
     async def chat_async(self, prompt: str) -> str:
         """Run the reflection workflow: Primary → Reviewer → Refine (if needed)."""
@@ -325,16 +325,16 @@ class Agent(ToolCallTrackingMixin, BaseAgent):
                 f"Provide only the improved response, no meta-commentary."
             )
             response = await self._run_agent(self._primary_agent, refine_prompt, "primary_agent")
-            
-            # Re-review if not last attempt
-            if attempt < self._max_refinements - 1:
-                review_prompt = (
-                    f"Review this refined response:\n\n"
-                    f"**Question:** {prompt}\n\n"
-                    f"**Response:** {response}"
-                )
-                review = await self._run_agent(self._reviewer, review_prompt, "reviewer_agent")
-                logger.info(f"[Reflection] Re-review: approved={self._is_approved(review)}")
+
+            # Every candidate response must pass through the reviewer, including
+            # the final refinement allowed by the configured attempt budget.
+            review_prompt = (
+                f"Review this refined response:\n\n"
+                f"**Question:** {prompt}\n\n"
+                f"**Response:** {response}"
+            )
+            review = await self._run_agent(self._reviewer, review_prompt, "reviewer_agent")
+            logger.info(f"[Reflection] Re-review: approved={self._is_approved(review)}")
 
         # Complete
         await self._broadcast("result", "✅ Reflection Complete\n\nFinal response delivered with quality assurance!")

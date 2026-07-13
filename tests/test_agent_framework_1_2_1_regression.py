@@ -547,11 +547,45 @@ class TestReflectionAgentIntegration:
         assert agent._max_refinements == 2
 
     def test_reflection_approval_detection(self):
-        """Reviewer approval detection works."""
+        """Only the reviewer's exact approval token is accepted."""
         from agents.agent_framework.multi_agent.reflection_agent import Agent
         agent = Agent(state_store={}, session_id="test")
-        assert agent._is_approved("APPROVE - looks good")
+        assert agent._is_approved("APPROVE")
+        assert agent._is_approved("  approve\n")
+        assert not agent._is_approved("APPROVE - looks good")
+        assert not agent._is_approved("I cannot APPROVE this response")
         assert not agent._is_approved("Needs improvement on point 3")
+
+    def test_final_refinement_is_reviewed(self):
+        """The reviewer must inspect the final candidate before it is returned."""
+        from agents.agent_framework.multi_agent.reflection_agent import Agent
+
+        agent = Agent(state_store={}, session_id="test", max_refinements=2)
+        agent._initialized = True
+        agent._primary_agent = MagicMock()
+        agent._reviewer = MagicMock()
+        agent._session = MagicMock()
+        agent._session.to_dict.return_value = {}
+        agent._run_agent = AsyncMock(side_effect=[
+            "DRAFT v1: ok",
+            "Reject. Missing context.",
+            "DRAFT v2: contains a credit card number",
+            "Reject. Redact the credit card number.",
+            "DRAFT v3: contains an SSN",
+            "Reject. Redact the SSN.",
+        ])
+
+        response = asyncio.run(agent.chat_async("What's my account status?"))
+
+        assert response == "DRAFT v3: contains an SSN"
+        assert agent._run_agent.await_count == 6
+        reviewer_calls = [
+            call
+            for call in agent._run_agent.await_args_list
+            if call.args[2] == "reviewer_agent"
+        ]
+        assert len(reviewer_calls) == 3
+        assert response in reviewer_calls[-1].args[1]
 
     def test_reflection_agent_uses_1_2_1_chat_client_kwargs(self):
         """The reflection agent must use 1.2.x kwarg names (model, azure_endpoint).
