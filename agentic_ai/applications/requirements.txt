@@ -218,7 +218,7 @@ colorama==0.4.6
     #   griffe
     #   tqdm
     #   uvicorn
-cryptography==45.0.7
+cryptography==46.0.5
     # via
     #   azure-identity
     #   azure-storage-blob
