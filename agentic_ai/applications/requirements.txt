@@ -527,7 +527,7 @@ pandas==2.3.3
     # via
     #   azure-ai-evaluation
     #   streamlit
-pillow==11.3.0
+pillow==12.1.1
     # via streamlit
 portalocker==3.2.0
     # via qdrant-client
