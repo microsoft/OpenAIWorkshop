@@ -102,7 +102,7 @@ annotated-types==0.7.0
     # via pydantic
 anthropic==0.80.0
     # via agent-framework-anthropic
-anyio==4.13.0
+anyio==4.14.2
     # via
     #   anthropic
     #   claude-agent-sdk
