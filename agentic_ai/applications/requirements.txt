@@ -409,7 +409,7 @@ numpy==2.5.0rc1
     #   qdrant-client
     #   redisvl
     #   streamlit
-oauthlib==3.3.1
+oauthlib==4.0.0
     # via requests-oauthlib
 ollama==0.5.3
     # via agent-framework-ollama
