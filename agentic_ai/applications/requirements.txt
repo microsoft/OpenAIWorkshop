@@ -398,7 +398,7 @@ multidict==6.7.1
     #   yarl
 narwhals==2.22.0
     # via altair
-nltk==3.9.4
+nltk==3.10.3
     # via azure-ai-evaluation
 numpy==2.5.0rc1
     # via
