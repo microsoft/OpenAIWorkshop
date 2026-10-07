@@ -1,0 +1,1 @@
+Authorized MSRC validation file. No application behavior is changed.
