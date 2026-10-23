@@ -7,7 +7,7 @@ authlib==1.6.4
 autogen-agentchat==0.7.4
 autogen-core==0.7.4
 autogen-ext==0.7.4
-certifi==2025.8.3
+certifi==2026.10.19
 cffi==2.0.0
 charset-normalizer==3.4.3
 click==8.3.0
