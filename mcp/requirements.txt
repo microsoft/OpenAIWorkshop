@@ -45,7 +45,7 @@ openapi-core==0.19.5
 openapi-pydantic==0.5.1
 openapi-schema-validator==0.6.3
 openapi-spec-validator==0.7.2
-opentelemetry-api==1.37.0
+opentelemetry-api==1.45.1
 parse==1.20.2
 pathable==0.4.4
 pillow==11.3.0
