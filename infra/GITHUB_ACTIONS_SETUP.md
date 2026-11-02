@@ -23,7 +23,7 @@ The CI/CD pipeline uses:
 │    │     ├── nicole-dev branch → integration-nicole environment     │
 │    │     └── <name>-dev branch → integration-<name> environment     │
 │    │                                                                 │
-│    ├── [Full Deploy – push/manual]                                   │
+│    ├── [Full Deploy – push / PR → int-agentic / manual]             │
 │    │     ├── preflight (enable storage access)                      │
 │    │     ├── infrastructure.yml (Terraform deploy)                  │
 │    │     ├── docker-application.yml (build backend image)           │
@@ -32,10 +32,8 @@ The CI/CD pipeline uses:
 │    │     ├── integration-tests.yml (smoke tests)                    │
 │    │     └── agent-evaluation.yml (AI quality evaluation)           │
 │    │                                                                 │
-│    ├── [Tests Only – pull requests]                                  │
-│    │     └── resolve-endpoints (az containerapp show)               │
-│    │                                                                 │
-│    └── integration-tests.yml (runs in both modes)                   │
+│    └── [Unit Tests Only – PR → main, fork PRs]                       │
+│          └── unit-tests (no Azure access)                           │
 └─────────────────────────────────────────────────────────────────────┘
                               │
                               │ OIDC (no secrets)
@@ -269,20 +267,22 @@ The orchestrator has two modes determined by the trigger:
 
 | Trigger | Mode | What runs | Environment |
 |---------|------|-----------|-------------|
-| **PR → `main`** | Tests only | `resolve-endpoints` → `integration-tests` | `production` |
-| **PR → `int-agentic`** | Tests only | `resolve-endpoints` → `integration-tests` | `integration` |
+| **PR → `main`** | Unit tests only | `unit-tests` (no Azure access) | — |
+| **PR from a fork** | Unit tests only | `unit-tests` (no Azure access) | — |
+| **PR → `int-agentic`** (same repo) | Full deploy (merge commit) | Preflight → Infra → Build → Update → Tests → Eval → Auto-merge | `integration-<name>` |
 | **Push to `main`** (after merge) | Full deploy | Preflight → Infra → Build → Update → Tests → Eval | `production` |
-| **Push to `<name>-dev`** | Full deploy | Preflight → Infra → Build → Update → Tests → Eval | `integration-<name>` |
+| **Push to `<name>-dev`** | Create PR | Creates/updates PR to `int-agentic` | — |
 | **Manual dispatch** | Full deploy | Preflight → Infra → Build → Update → Tests → Eval | Chosen env |
 
-### Tests-Only Mode (PRs)
+### Unit-Tests-Only Mode (PRs to `main`, fork PRs)
 
-PRs do **not** deploy infrastructure or build containers. Instead, the `resolve-endpoints` job
-looks up the existing Container App FQDNs via `az containerapp show` and passes them to the
-integration tests. This validates the PR against the already-deployed target environment.
+PRs to `main` and PRs from forks do **not** access Azure. They run the fast, mock-based
+unit/regression tests only. Changes reaching `main` have already been deployed and
+integration-tested from `int-agentic`, and `production` is deployed only after merge.
 
-> **Prerequisite:** The target environment must already be deployed. If the Container Apps
-> don't exist, the `resolve-endpoints` job will fail with an error.
+> **Security:** The `production` GitHub Environment must have a deployment branch policy
+> that allows only `main`, and OIDC federated credentials should use `environment:<name>`
+> subjects only (no `pull_request` or branch subjects).
 
 ### Full Deploy Mode (Pushes / Manual)
 
@@ -294,7 +294,7 @@ environment.
 
 | Workflow | Trigger | What it does |
 |----------|---------|--------------|
-| `orchestrate.yml` | PRs, push to main/*-dev, manual | Orchestrates full or tests-only pipeline |
+| `orchestrate.yml` | PRs, push to main/*-dev, manual | Orchestrates full-deploy or unit-tests-only pipeline |
 | `infrastructure.yml` | Called by orchestrate (full deploy) | Terraform plan/apply |
 | `docker-application.yml` | Called by orchestrate (full deploy) | Build backend container |
 | `docker-mcp.yml` | Called by orchestrate (full deploy) | Build MCP container |
