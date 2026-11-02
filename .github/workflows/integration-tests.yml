@@ -26,8 +26,8 @@ on:
         default: false
         description: >-
           When true, a degraded/unreachable shared environment is reported but
-          does not fail the job (used for tests-only PRs to main, where the env
-          is pre-deployed and not built from the PR).
+          does not fail the job (for runs against a pre-deployed environment
+          that was not built from the change under test).
 
   workflow_dispatch:
     inputs:
@@ -124,8 +124,8 @@ jobs:
       - name: Run integration tests
         if: steps.liveness.outputs.reachable == 'true'
         id: pytest
-        # In advisory mode (tests-only PRs to main) the shared env is not built
-        # from this PR, so we report results without blocking the PR.
+        # In advisory mode the shared env is not built from the change under
+        # test, so we report results without blocking.
         continue-on-error: ${{ inputs.advisory }}
         run: |
           cd tests
@@ -160,12 +160,12 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       # In advisory mode we surface failures as a warning but keep the job green
-      # so a degraded shared env can't block unrelated PRs to main.
+      # so a degraded shared env can't block unrelated changes.
       - name: Advisory failure note
         if: >-
           steps.liveness.outputs.reachable == 'true'
           && steps.pytest.outcome == 'failure'
           && inputs.advisory
         run: |
-          echo "::warning::Integration tests failed against the shared environment, but this is advisory (tests-only PR to main). Not blocking."
+          echo "::warning::Integration tests failed against the shared environment, but this run is advisory. Not blocking."
 
