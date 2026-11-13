@@ -427,7 +427,7 @@ openai-agents==0.4.2
     # via openai-chatkit
 openai-chatkit==1.6.5
     # via agent-framework-chatkit
-opentelemetry-api==1.42.1
+opentelemetry-api==1.45.2
     # via
     #   agent-framework-core
     #   azure-core-tracing-opentelemetry
