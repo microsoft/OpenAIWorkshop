@@ -693,7 +693,7 @@ tenacity==8.5.0
     #   streamlit
 toml==0.10.2
     # via streamlit
-tornado==6.5.6
+tornado==6.6.1
     # via streamlit
 tqdm==4.67.3
     # via
