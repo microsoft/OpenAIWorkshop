@@ -377,7 +377,7 @@ microsoft-agents-copilotstudio-client==0.3.1
     # via agent-framework-copilotstudio
 microsoft-agents-hosting-core==0.3.1
     # via microsoft-agents-copilotstudio-client
-mistune==3.2.1
+mistune==3.3.4
     # via flasgger
 ml-dtypes==0.5.4
     # via redisvl
