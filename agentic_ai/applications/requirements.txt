@@ -392,7 +392,7 @@ msrest==0.7.1
     # via
     #   azure-ai-evaluation
     #   azure-monitor-opentelemetry-exporter
-multidict==6.7.1
+multidict==6.9.1
     # via
     #   aiohttp
     #   yarl
