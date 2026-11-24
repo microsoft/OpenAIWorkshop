@@ -189,7 +189,7 @@ botocore==1.43.21
     #   s3transfer
 cachetools==5.5.2
     # via streamlit
-certifi==2026.5.20
+certifi==2026.10.18
     # via
     #   httpcore
     #   httpx
