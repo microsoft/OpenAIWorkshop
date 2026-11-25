@@ -88,7 +88,7 @@ agent-framework-redis==1.0.0b260521
     # via agent-framework-core
 aiohappyeyeballs==2.6.2
     # via aiohttp
-aiohttp==3.14.0
+aiohttp==3.14.4
     # via
     #   azure-ai-evaluation
     #   azure-functions-durable
