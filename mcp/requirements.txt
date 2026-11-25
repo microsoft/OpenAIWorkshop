@@ -79,5 +79,5 @@ typing-extensions==4.15.0
 typing-inspection==0.4.1
 urllib3==2.5.0
 uvicorn==0.37.0
-werkzeug==3.1.1
+werkzeug==3.1.5
 zipp==3.23.0
