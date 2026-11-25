@@ -3,7 +3,7 @@
 annotated-types==0.7.0
 anyio==4.11.0
 attrs==25.3.0
-authlib==1.6.4
+authlib==1.6.6
 autogen-agentchat==0.7.4
 autogen-core==0.7.4
 autogen-ext==0.7.4
